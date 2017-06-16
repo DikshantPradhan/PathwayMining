@@ -3,8 +3,8 @@ data(Ec_core);
 model=Ec_core;
 #solver="cplexAPI"
 solver="glpkAPI"
-W=500
-nPnts=1000
+W=5000
+nPnts=20000
 
 lm_fitting <- function(model, rxn_idx){
   sample_df = sampler(model)# ACHR(model,W,nPoints=nPnts,stepsPerPoint=10)
@@ -18,30 +18,12 @@ lm_fitting <- function(model, rxn_idx){
   return(fit)
 }
 
-lm_fitting_probit <- function(model, rxn_idx){
-  sample_df = sampler(model)# ACHR(model,W,nPoints=nPnts,stepsPerPoint=10)
-  sample_df2 = sampler(suppressed_model(model, rxn_idx)) # phosphate exchange
-  
-  sample_df[,rxn_idx] = rep(1, nrow(sample_df))
-  
-  sample_df <- rbind.data.frame(sample_df, sample_df2)
-  
-  #output <- logical(length = nrow(sample_df))
-  #output <- !output
+lm_fitting_probit <- function(sample_df, rxn_idx){
   fit <- glm(sample_df[,rxn_idx] ~ ., family = binomial(link = "probit"), data = sample_df, maxit = 100)
   return(fit)
 }
 
-lm_fitting_logit <- function(model, rxn_idx){
-  sample_df = sampler(model)# ACHR(model,W,nPoints=nPnts,stepsPerPoint=10)
-  sample_df2 = sampler(suppressed_model(model, rxn_idx)) # phosphate exchange
-  
-  sample_df[,rxn_idx] = rep(1, nrow(sample_df))
-  
-  sample_df <- rbind.data.frame(sample_df, sample_df2)
-  
-  #output <- logical(length = nrow(sample_df))
-  #output <- !output
+lm_fitting_logit <- function(sample_df, rxn_idx){
   fit <- glm(sample_df[,rxn_idx] ~ ., family = "binomial", data = sample_df, maxit = 100)
   return(fit)
 }
@@ -117,7 +99,7 @@ fcf_analysis <- function(R){
       return(1) # directional
     }
   }
-
+  
   return(-1)
 }
 
@@ -137,6 +119,17 @@ sampler <- function(model){
   sample = t(sample$Points)
   colnames(sample) <- model@react_id
   sample_df <- as.data.frame(sample)
+  return(sample_df)
+}
+
+sampler_lm_fitting <- function(model, rxn_idx){
+  sample_df = sampler(model)# ACHR(model,W,nPoints=nPnts,stepsPerPoint=10)
+  sample_df2 = sampler(suppressed_model(model, rxn_idx)) # phosphate exchange
+  
+  sample_df[,rxn_idx] = rep(1, nrow(sample_df))
+  
+  sample_df <- rbind.data.frame(sample_df, sample_df2)
+  
   return(sample_df)
 }
 
@@ -164,3 +157,19 @@ main <- function(){
 
 # fit <- lm_fitting(model, 37)
 # sample_diff <- flux_comparison(model, 37)
+
+sample_df <- sampler_lm_fitting(model, 37)
+fit_probit <- lm_fitting_probit(sample_df, 37)
+fit_logit <- lm_fitting_logit(sample_df, 37)
+
+fit_diff = c()
+
+for (i in which(!is.na(fit_probit$coefficients), arr.ind = TRUE)){
+  rxn_id = names(fit_probit$coefficients[i])
+  diff = fit_probit$coefficients[rxn_id] - fit_logit$coefficients[rxn_id]
+  fit_diff[rxn_id] = diff
+}
+print("probit")
+print(sort(fit_probit$coefficients, decreasing = TRUE))
+print("logit")
+print(sort(fit_logit$coefficients, decreasing = TRUE))
