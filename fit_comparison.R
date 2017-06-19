@@ -3,8 +3,8 @@ data(Ec_core);
 model=Ec_core;
 #solver="cplexAPI"
 solver="glpkAPI"
-W=5000
-nPnts=20000
+W=500
+nPnts=5000
 
 lm_fitting <- function(model, rxn_idx){
   sample_df = sampler(model)# ACHR(model,W,nPoints=nPnts,stepsPerPoint=10)
@@ -44,19 +44,52 @@ flux_comparison <- function(model, rxn_idx){
   return(sample_diff)
 }
 
-flux_coupling <- function(sample){
-  rxn_ct = ncol(samples)
+flux_coupling <- function(sample, binary = TRUE){
+  rxn_ct = ncol(sample)
   
-  coupling = array(0, dim = c(2, rxn_ct, rxn_ct)) # layer 1 is coupling ratio, layer 2 is r-squared
+  coupling = array(0, dim = c(2, rxn_ct, rxn_ct), 
+                   dimnames = list(c("coupling ratio", "r-squared"), colnames(sample), colnames(sample))) # layer 1 is coupling ratio, layer 2 is r-squared
   
   for(i in 1:rxn_ct){
     for(j in i:rxn_ct){
-      fit <- lm(sample[,i] ~ sample[,j], data = sample)
-      coupling[1,i,j] <- fit$coefficients[[2]]
-      coupling[2,i,j] <- summary(fit)[[8]]
+      if (binary){
+        fit <- glm(sample[,i] ~ sample[,j], family = "binomial", data = sample_df, maxit = 100)
+      }
+      else{
+        fit <- lm(sample[,i] ~ sample[,j], data = sample)
+      }
+      sfit <- summary(fit)
+      coupling[1,i,j] <- sfit$coefficients[2] #fit$coefficients[[2]]
+      coupling[2,i,j] <- sfit$coefficients[4] #summary(fit)[[8]]
+      # fit <- lm(sample[,i] ~ sample[,j], data = sample)
+      # coupling[1,i,j] <- fit$coefficients[[2]]
+      # coupling[2,i,j] <- summary(fit)[[8]]
     }
   }
+  #colnames(coupling) <- colnames(sample)
+  #rownames(coupling) <- colnames(sample)
+  coupling[1, ,] <- coupling_generalize(coupling[1, ,])
+  return(coupling)
+}
+
+flux_coupling_specific <- function(sample, rxn_idx, binary = TRUE){ # samples, # of rxn to compare with all others
+  rxn_ct = ncol(sample)
   
+  coupling = array(0, dim = c(2, rxn_ct)) # row 1 is coupling ratio, row 2 is standard error
+  
+  for(i in 1:rxn_ct){
+    #fit <- lm(sample[,rxn_idx] ~ sample[,i], data = sample)
+    if (binary){
+      fit <- glm(sample[,rxn_idx] ~ sample[,i], family = "binomial", data = sample_df, maxit = 100)
+    }
+    else{
+      fit <- lm(sample[,rxn_idx] ~ sample[,i], data = sample)
+    }
+    sfit <- summary(fit)
+    coupling[1,i] <- sfit$coefficients[2] #fit$coefficients[[2]]
+    coupling[2,i] <- sfit$coefficients[4] #summary(fit)[[8]]
+  }
+  colnames(coupling) <- colnames(sample)
   return(coupling)
 }
 
@@ -74,6 +107,8 @@ flux_coupling_fcf <- function(sample){
       coupling[i,j] <- fcf_analysis(R)
     }
   }
+  
+  colnames(coupling) <- colnames(sample)
   
   return(coupling)
 }
@@ -114,6 +149,33 @@ fcf_R <- function(sample, v1, v2){
   return(R)
 }
 
+coupling_generalize <- function(array){
+  
+  for (i in 1:nrow(array)){
+    for (j in 1:ncol(array)){
+      if (array[i,j] > 0.7){
+        array[i,j] = 1
+      }
+      else if (array[i,j] > 0.2){
+        array[i,j] = 0.5
+      }
+      else if (array[i,j] < -0.2){
+        array[i,j] = -0.5
+      }
+      else if (array[i,j] < -0.7){
+        array[i,j] = -1
+      }
+      else {
+        array[i,j] = 0
+      }
+    }
+  }
+  
+  return(array)
+}
+
+#coupling_change_analysis <- function()
+
 sampler <- function(model){
   sample = ACHR(model,W,nPoints=nPnts,stepsPerPoint=10)
   sample = t(sample$Points)
@@ -122,15 +184,32 @@ sampler <- function(model){
   return(sample_df)
 }
 
-sampler_lm_fitting <- function(model, rxn_idx){
+sampler_lm_fitting <- function(model, rxn_idx, binary = FALSE){
   sample_df = sampler(model)# ACHR(model,W,nPoints=nPnts,stepsPerPoint=10)
   sample_df2 = sampler(suppressed_model(model, rxn_idx)) # phosphate exchange
   
-  sample_df[,rxn_idx] = rep(1, nrow(sample_df))
+  if (binary){
+    sample_df[,rxn_idx] = rep(1, nrow(sample_df)) 
+  }
   
   sample_df <- rbind.data.frame(sample_df, sample_df2)
   
-  return(sample_df)
+  return(sample_df["Biomass_Ecoli_core_w_GAM" > 0])
+}
+
+rescale_sample <- function(sample, rxn_idx = 0){
+  rxn_list = c(1:ncol(sample))
+  if (rxn_idx != 0){
+    rxn_list <- rxn_list[-rxn_idx]
+  }
+  
+  #print(rxn_list)
+  
+  for(i in rxn_list){
+    sample[,i] <- rescale(sample[,i], c(-1,1))
+  }
+  
+  return(sample)
 }
 
 suppressed_model <- function(model, rxn_idx){
@@ -152,24 +231,14 @@ main <- function(){
 
 #main()
 
-# sample <- sampler(model)
-# coupling <- flux_coupling_fcf(sample)
+# sample <- sampler_lm_fitting(model, 37, binary = TRUE)
+# coupling1 <- flux_coupling_specific(rescale_sample(sample,37), 37, binary = TRUE)
 
-# fit <- lm_fitting(model, 37)
-# sample_diff <- flux_comparison(model, 37)
+sample_og <- sampler(model)
+#sample_og[,37] = rep(1, nrow(sample_og))
+sample_suppr <- sampler(suppressed_model(model, 37))
 
-sample_df <- sampler_lm_fitting(model, 37)
-fit_probit <- lm_fitting_probit(sample_df, 37)
-fit_logit <- lm_fitting_logit(sample_df, 37)
+coupling_og <- flux_coupling(rescale_sample(sample_og), binary = FALSE)
 
-fit_diff = c()
-
-for (i in which(!is.na(fit_probit$coefficients), arr.ind = TRUE)){
-  rxn_id = names(fit_probit$coefficients[i])
-  diff = fit_probit$coefficients[rxn_id] - fit_logit$coefficients[rxn_id]
-  fit_diff[rxn_id] = diff
-}
-print("probit")
-print(sort(fit_probit$coefficients, decreasing = TRUE))
-print("logit")
-print(sort(fit_logit$coefficients, decreasing = TRUE))
+coupling_suppr <- flux_coupling(rescale_sample(sample_suppr), binary = FALSE)
+#coupling_suppr <- flux_coupling(rescale_sample(sample_suppr, 37))
