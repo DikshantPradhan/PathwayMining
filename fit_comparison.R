@@ -1,10 +1,5 @@
 library(sybilcycleFreeFlux)
-data(Ec_core);
-model=Ec_core;
-#solver="cplexAPI"
-solver="glpkAPI"
-W=500
-nPnts=5000
+library(plotrix)
 
 lm_fitting <- function(model, rxn_idx){
   sample_df = sampler(model)# ACHR(model,W,nPoints=nPnts,stepsPerPoint=10)
@@ -174,10 +169,55 @@ coupling_generalize <- function(array){
   return(array)
 }
 
+return_couples <- function(array){ # difference array (input 3d array)
+  
+  couple_list <- c()
+  
+  row <- dimnames(array)[[2]]
+  col <- dimnames(array)[[3]]
+  
+  for (i in 1:dim(array)[2]){
+    for (j in 1:dim(array)[3]){
+      if (array[1,i,j] == 1 | array[1,i,j] == -1){
+        couple_list <- c(couple_list, paste(row[i],col[j], sep = "__"))
+      }
+    }
+  }
+  
+  return(couple_list)
+}
+
+return_coupling_change <- function(og_array, suppr_array, couples_list){
+  
+  row <- dimnames(og_array)[[2]]
+  col <- dimnames(og_array)[[3]]
+  
+  changes <- c()
+  
+  for (i in couples_list){
+    rxns = strsplit(i, split = "__")[[1]]
+    idx_i = which(row == rxns[1])
+    idx_j = which(col == rxns[2])
+    
+    change_string <- paste(i, ": ", og_array[1, idx_i, idx_j], " --> ", suppr_array[1, idx_i, idx_j])
+    changes <- c(changes, change_string)
+  }
+  
+  return(changes)
+}
+
+coupling_change <- function(og_array, suppr_array){
+  
+  couples <- return_couples(suppr_array - og_array)
+  d_couples <- return_coupling_change(coupling_og, coupling_suppr, couples)
+  
+  return(d_couples)
+}
+
 #coupling_change_analysis <- function()
 
 sampler <- function(model){
-  sample = ACHR(model,W,nPoints=nPnts,stepsPerPoint=10)
+  sample = ACHR(model,W,nPoints=nPnts,stepsPerPoint=steps)
   sample = t(sample$Points)
   colnames(sample) <- model@react_id
   sample_df <- as.data.frame(sample)
@@ -218,27 +258,26 @@ suppressed_model <- function(model, rxn_idx){
   return(model)
 }
 
-main <- function(){
-  # fit <- lm_fitting(model)
-  # 
-  # model2 <- suppressed_model(model = model, 54)
-  # 
-  # fit2 <- lm_fitting(model2)
+maxDiff_dist <- function(sample){
   
-  sample <- sampler(model)
-  coupling <- flux_coupling(sample)
+  rescaled <- rescale_sample(sample)
+  
+  maxDiff <- c()#array(0, dim = c(nrow(sample)-1, rxn_ct))
+  #colnames(maxDiff) <- colnames(sample)
+  
+  for (i in 1:ncol(rescaled)){
+    sorted <- sort(rescaled[,i])
+    max = 0
+    for (j in 1:(length(sorted)-1)){
+      temp_max <- sorted[j+1] - sorted[j]
+      if (temp_max > max){
+        max <- temp_max
+      }
+    }
+    maxDiff <- c(maxDiff, max)
+  }
+  
+  names(maxDiff) <- colnames(sample)
+  
+  return(maxDiff)
 }
-
-#main()
-
-# sample <- sampler_lm_fitting(model, 37, binary = TRUE)
-# coupling1 <- flux_coupling_specific(rescale_sample(sample,37), 37, binary = TRUE)
-
-sample_og <- sampler(model)
-#sample_og[,37] = rep(1, nrow(sample_og))
-sample_suppr <- sampler(suppressed_model(model, 37))
-
-coupling_og <- flux_coupling(rescale_sample(sample_og), binary = FALSE)
-
-coupling_suppr <- flux_coupling(rescale_sample(sample_suppr), binary = FALSE)
-#coupling_suppr <- flux_coupling(rescale_sample(sample_suppr, 37))
