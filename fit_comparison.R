@@ -42,20 +42,20 @@ flux_comparison <- function(model, rxn_idx){
 flux_coupling <- function(sample, binary = TRUE){
   rxn_ct = ncol(sample)
   
-  coupling = array(0, dim = c(2, rxn_ct, rxn_ct), 
-                   dimnames = list(c("coupling ratio", "r-squared"), colnames(sample), colnames(sample))) # layer 1 is coupling ratio, layer 2 is r-squared
+  coupling = array(0, dim = c(rxn_ct, rxn_ct), 
+                   dimnames = list(colnames(sample), colnames(sample))) # layer 1 is coupling ratio, layer 2 is r-squared
   
   for(i in 1:rxn_ct){
     for(j in i:rxn_ct){
       if (binary){
-        fit <- glm(sample[,i] ~ sample[,j], family = "binomial", data = sample_df, maxit = 100)
+        fit <- glm(sample[,i] ~ sample[,j], family = "binomial", data = sample, maxit = 100)
       }
       else{
         fit <- lm(sample[,i] ~ sample[,j], data = sample)
       }
       sfit <- summary(fit)
-      coupling[1,i,j] <- sfit$coefficients[2] #fit$coefficients[[2]]
-      coupling[2,i,j] <- sfit$coefficients[4] #summary(fit)[[8]]
+      coupling[i,j] <- sfit$coefficients[2] #fit$coefficients[[2]]
+      #coupling[2,i,j] <- sfit$coefficients[4] #summary(fit)[[8]]
       # fit <- lm(sample[,i] ~ sample[,j], data = sample)
       # coupling[1,i,j] <- fit$coefficients[[2]]
       # coupling[2,i,j] <- summary(fit)[[8]]
@@ -63,7 +63,28 @@ flux_coupling <- function(sample, binary = TRUE){
   }
   #colnames(coupling) <- colnames(sample)
   #rownames(coupling) <- colnames(sample)
-  coupling[1, ,] <- coupling_generalize(coupling[1, ,])
+  #coupling <- coupling_generalize(coupling)
+  return(coupling)
+}
+
+flux_coupling_cor <- function(sample){
+  rxn_ct = ncol(sample)
+  
+  coupling = array(0, dim = c(rxn_ct, rxn_ct), 
+                   dimnames = list(colnames(sample), colnames(sample))) # layer 1 is coupling ratio, layer 2 is r-squared
+  
+  for(i in 1:rxn_ct){
+    for(j in i:rxn_ct){
+      cor <- cor(sample[,i], sample[,j])
+      if (is.na(cor)){
+        cor <- 0
+      }
+      coupling[i,j] <- cor
+    }
+  }
+  #colnames(coupling) <- colnames(sample)
+  #rownames(coupling) <- colnames(sample)
+  #coupling <- coupling_generalize(coupling)
   return(coupling)
 }
 
@@ -148,7 +169,10 @@ coupling_generalize <- function(array){
   
   for (i in 1:nrow(array)){
     for (j in 1:ncol(array)){
-      if (array[i,j] > 0.7){
+      if (is.na(array[i,j])){
+        # do nothing
+      }
+      else if (array[i,j] > 0.7){
         array[i,j] = 1
       }
       else if (array[i,j] > 0.2){
@@ -173,12 +197,15 @@ return_couples <- function(array){ # difference array (input 3d array)
   
   couple_list <- c()
   
-  row <- dimnames(array)[[2]]
-  col <- dimnames(array)[[3]]
+  row <- dimnames(array)[[1]]
+  col <- dimnames(array)[[2]]
   
-  for (i in 1:dim(array)[2]){
-    for (j in 1:dim(array)[3]){
-      if (array[1,i,j] == 1 | array[1,i,j] == -1){
+  for (i in 1:dim(array)[1]){
+    for (j in 1:dim(array)[2]){
+      if (is.na(array[i,j])){
+        # do nothing
+      }
+      else if (abs(array[i,j]) > 0.75){
         couple_list <- c(couple_list, paste(row[i],col[j], sep = "__"))
       }
     }
@@ -189,8 +216,11 @@ return_couples <- function(array){ # difference array (input 3d array)
 
 return_coupling_change <- function(og_array, suppr_array, couples_list){
   
-  row <- dimnames(og_array)[[2]]
-  col <- dimnames(og_array)[[3]]
+  #print(dim(og_array))
+  #print(dim(suppr_array))
+  
+  row <- dimnames(og_array)[[1]]
+  col <- dimnames(og_array)[[2]]
   
   changes <- c()
   
@@ -199,7 +229,7 @@ return_coupling_change <- function(og_array, suppr_array, couples_list){
     idx_i = which(row == rxns[1])
     idx_j = which(col == rxns[2])
     
-    change_string <- paste(i, ": ", og_array[1, idx_i, idx_j], " --> ", suppr_array[1, idx_i, idx_j])
+    change_string <- paste(i, ": ", og_array[idx_i, idx_j], " --> ", suppr_array[idx_i, idx_j])
     changes <- c(changes, change_string)
   }
   
@@ -245,6 +275,8 @@ rescale_sample <- function(sample, rxn_idx = 0){
   
   #print(rxn_list)
   
+  
+  
   for(i in rxn_list){
     sample[,i] <- rescale(sample[,i], c(-1,1))
   }
@@ -262,7 +294,7 @@ maxDiff_dist <- function(sample){
   
   rescaled <- rescale_sample(sample)
   
-  maxDiff <- c()#array(0, dim = c(nrow(sample)-1, rxn_ct))
+  maxDiff <- array(0, dim = c(nrow(sample)-1, ncol(sample)))
   #colnames(maxDiff) <- colnames(sample)
   
   for (i in 1:ncol(rescaled)){
@@ -270,14 +302,16 @@ maxDiff_dist <- function(sample){
     max = 0
     for (j in 1:(length(sorted)-1)){
       temp_max <- sorted[j+1] - sorted[j]
-      if (temp_max > max){
-        max <- temp_max
-      }
+      maxDiff[j,i] <- temp_max
+      # if (temp_max > max){
+      #   max <- temp_max
+      #   print(temp_max)
+      # }
     }
-    maxDiff <- c(maxDiff, max)
+    # maxDiff <- c(maxDiff, max)
   }
   
-  names(maxDiff) <- colnames(sample)
+  colnames(maxDiff) <- colnames(sample)
   
   return(maxDiff)
 }
