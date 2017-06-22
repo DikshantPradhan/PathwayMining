@@ -277,8 +277,9 @@ rescale_sample <- function(sample, rxn_idx = 0){
   
   
   
-  for(i in rxn_list){
-    sample[,i] <- rescale(sample[,i], c(-1,1))
+  for(i in rxn_list){ # rescale to flux variability range
+    rescaled <- rescale(c(fva_min[i], sample[,i], fva_max[i]), c(-1,1))
+    sample[,i] <- rescaled[-c(1, length(rescaled))]
   }
   
   return(sample)
