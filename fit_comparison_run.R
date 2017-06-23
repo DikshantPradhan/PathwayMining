@@ -2,9 +2,9 @@ data(Ec_core);
 model=Ec_core;
 #solver="cplexAPI"
 solver="glpkAPI"
-W=5000
+W=500
 nPnts=10000
-steps=20
+steps=5
 
 opt <- fluxVar(model, percentage = 99)
 model_fva <- opt@lp_obj
@@ -15,11 +15,12 @@ S <- model@S
 
 sample_og <- sampler(model)
 #rescaled_sample <- rescale_sample(sample)
-sample_suppr <- sampler(suppressed_model(model, 37))
+
+sample_suppr <- sampler(suppressed_model(model, 34))
 
 d_coupling <-find_coupling_change(sample_og, sample_suppr)
 
-find_coupling_connections(d_coupling)
+# find_coupling_connections(d_coupling)
 
 # sample <- sampler_lm_fitting(model, 37, binary = TRUE)
 # coupling1 <- flux_coupling_specific(rescale_sample(sample,37), 37, binary = TRUE)

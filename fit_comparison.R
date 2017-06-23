@@ -250,6 +250,7 @@ sampler <- function(model){
   sample = t(sample$Points)
   colnames(sample) <- model@react_id
   sample_df <- as.data.frame(sample)
+  sample_df <- sample_df[which(sample_df[,13] > 0),]
   return(sample_df)
 }
 
