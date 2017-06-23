@@ -3,8 +3,7 @@ library(plotrix)
 
 lm_fitting <- function(model, rxn_idx){
   sample_df = sampler(model)# ACHR(model,W,nPoints=nPnts,stepsPerPoint=10)
-  sample_df2 = sampler(suppressed_model(model, rxn_idx)) # phosphate exchange
-  
+  sample_df2 = sampler(suppressed_model(model, rxn_idx))
   sample_df <- rbind.data.frame(sample_df, sample_df2)
   
   #output <- logical(length = nrow(sample_df))
@@ -26,7 +25,6 @@ lm_fitting_logit <- function(sample_df, rxn_idx){
 flux_comparison <- function(model, rxn_idx){
   sample_df = sampler(model)
   sample_df2 = sampler(suppressed_model(model, rxn_idx))
-  
   sample_diff = c()
   
   for (i in 1:ncol(sample_df)){
@@ -34,14 +32,11 @@ flux_comparison <- function(model, rxn_idx){
     sample_diff = c(sample_diff, diff)
   }
   
-  #colnames(sample_diff) <- model@react_id
-  
   return(sample_diff)
 }
 
 flux_coupling <- function(sample, binary = TRUE){
   rxn_ct = ncol(sample)
-  
   coupling = array(0, dim = c(rxn_ct, rxn_ct), 
                    dimnames = list(colnames(sample), colnames(sample))) # layer 1 is coupling ratio, layer 2 is r-squared
   
@@ -61,15 +56,12 @@ flux_coupling <- function(sample, binary = TRUE){
       # coupling[2,i,j] <- summary(fit)[[8]]
     }
   }
-  #colnames(coupling) <- colnames(sample)
-  #rownames(coupling) <- colnames(sample)
   #coupling <- coupling_generalize(coupling)
   return(coupling)
 }
 
 flux_coupling_cor <- function(sample){
   rxn_ct = ncol(sample)
-  
   coupling = array(0, dim = c(rxn_ct, rxn_ct), 
                    dimnames = list(colnames(sample), colnames(sample))) # layer 1 is coupling ratio, layer 2 is r-squared
   
@@ -82,15 +74,12 @@ flux_coupling_cor <- function(sample){
       coupling[i,j] <- cor
     }
   }
-  #colnames(coupling) <- colnames(sample)
-  #rownames(coupling) <- colnames(sample)
   #coupling <- coupling_generalize(coupling)
   return(coupling)
 }
 
 flux_coupling_specific <- function(sample, rxn_idx, binary = TRUE){ # samples, # of rxn to compare with all others
   rxn_ct = ncol(sample)
-  
   coupling = array(0, dim = c(2, rxn_ct)) # row 1 is coupling ratio, row 2 is standard error
   
   for(i in 1:rxn_ct){
@@ -112,20 +101,16 @@ flux_coupling_specific <- function(sample, rxn_idx, binary = TRUE){ # samples, #
 flux_coupling_fcf <- function(sample){
   rxn_ct = ncol(sample)
   obs_ct = nrow(sample)
-  
   coupling = array(0, dim = c(rxn_ct, rxn_ct)) # layer 1 is coupling ratio, layer 2 is r-squared
   
   for(i in 1:rxn_ct){
     for(j in i:rxn_ct){
       R <- fcf_R(sample, i, j)
-      #print(length(R))
-      #print(length(coupling[ ,i,j]))
       coupling[i,j] <- fcf_analysis(R)
     }
   }
   
   colnames(coupling) <- colnames(sample)
-  
   return(coupling)
 }
 
@@ -150,7 +135,6 @@ fcf_analysis <- function(R){
       return(1) # directional
     }
   }
-  
   return(-1)
 }
 
@@ -195,10 +179,12 @@ coupling_generalize <- function(array){
 
 return_couples <- function(array){ # difference array (input 3d array)
   
-  couple_list <- c()
-  
+  #couple_list <- c()
   row <- dimnames(array)[[1]]
   col <- dimnames(array)[[2]]
+  
+  rxn_col1 <- c()
+  rxn_col2 <- c()
   
   for (i in 1:dim(array)[1]){
     for (j in 1:dim(array)[2]){
@@ -206,45 +192,58 @@ return_couples <- function(array){ # difference array (input 3d array)
         # do nothing
       }
       else if (abs(array[i,j]) > 0.75){
-        couple_list <- c(couple_list, paste(row[i],col[j], sep = "__"))
+        #couple_list <- c(couple_list, paste(row[i],col[j], sep = "__"))
+        rxn_col1 <- c(rxn_col1, row[i])
+        rxn_col2 <- c(rxn_col2, col[j])
       }
     }
   }
   
-  return(couple_list)
+  rxns <- cbind(rxn_col1, rxn_col2)
+  colnames(rxns) <- c("rxn1", "rxn2")
+  return(rxns)
 }
 
 return_coupling_change <- function(og_array, suppr_array, couples_list){
   
-  #print(dim(og_array))
-  #print(dim(suppr_array))
-  
   row <- dimnames(og_array)[[1]]
   col <- dimnames(og_array)[[2]]
+  #changes <- c()
   
-  changes <- c()
+  rxn_col1 <- c()
+  rxn_col2 <- c()
   
-  for (i in couples_list){
-    rxns = strsplit(i, split = "__")[[1]]
+  for (i in 1:nrow(couples_list)){
+    rxns = couples_list[i,] #strsplit(i, split = "__")[[1]]
     idx_i = which(row == rxns[1])
     idx_j = which(col == rxns[2])
+    change_string <- paste(rxns[1], " & ", rxns[2], ": ", og_array[idx_i, idx_j], " --> ", suppr_array[idx_i, idx_j])
+    print(change_string)
     
-    change_string <- paste(i, ": ", og_array[idx_i, idx_j], " --> ", suppr_array[idx_i, idx_j])
-    changes <- c(changes, change_string)
+    rxn_col1 <- c(rxn_col1, rxns[1])
+    rxn_col2 <- c(rxn_col2, rxns[2])
+    #changes <- c(changes, change_string)
   }
   
-  return(changes)
+  rxns <- cbind(rxn_col1, rxn_col2)
+  colnames(rxns) <- c("rxn1", "rxn2")
+  return(rxns)
 }
 
 coupling_change <- function(og_array, suppr_array){
   
   couples <- return_couples(suppr_array - og_array)
-  d_couples <- return_coupling_change(coupling_og, coupling_suppr, couples)
+  d_couples <- return_coupling_change(og_array, suppr_array, couples)
   
   return(d_couples)
 }
 
-#coupling_change_analysis <- function()
+find_coupling_change <- function(sample_og, sample_suppr){
+  coupling_og <- flux_coupling_cor(sample_og)
+  coupling_suppr <- flux_coupling_cor(sample_suppr)
+  
+  return(coupling_change(coupling_og, coupling_suppr))
+}
 
 sampler <- function(model){
   sample = ACHR(model,W,nPoints=nPnts,stepsPerPoint=steps)
@@ -263,7 +262,6 @@ sampler_lm_fitting <- function(model, rxn_idx, binary = FALSE){
   }
   
   sample_df <- rbind.data.frame(sample_df, sample_df2)
-  
   return(sample_df["Biomass_Ecoli_core_w_GAM" > 0])
 }
 
@@ -272,10 +270,6 @@ rescale_sample <- function(sample, rxn_idx = 0){
   if (rxn_idx != 0){
     rxn_list <- rxn_list[-rxn_idx]
   }
-  
-  #print(rxn_list)
-  
-  
   
   for(i in rxn_list){ # rescale to flux variability range
     rescaled <- rescale(c(fva_min[i], sample[,i], fva_max[i]), c(-1,1))
@@ -286,17 +280,17 @@ rescale_sample <- function(sample, rxn_idx = 0){
 }
 
 suppressed_model <- function(model, rxn_idx){
-  model@lowbnd[rxn_idx] <- 0
-  model@uppbnd[rxn_idx] <- 0
+  # model@lowbnd[rxn_idx] <- 0
+  # model@uppbnd[rxn_idx] <- 0
+  model <- changeBounds(model, rxn_idx, lb = 0, ub = 0)
+  
   return(model)
 }
 
 maxDiff_dist <- function(sample){
   
   rescaled <- rescale_sample(sample)
-  
   maxDiff <- array(0, dim = c(nrow(sample)-1, ncol(sample)))
-  #colnames(maxDiff) <- colnames(sample)
   
   for (i in 1:ncol(rescaled)){
     sorted <- sort(rescaled[,i])
@@ -304,15 +298,10 @@ maxDiff_dist <- function(sample){
     for (j in 1:(length(sorted)-1)){
       temp_max <- sorted[j+1] - sorted[j]
       maxDiff[j,i] <- temp_max
-      # if (temp_max > max){
-      #   max <- temp_max
-      #   print(temp_max)
-      # }
     }
     # maxDiff <- c(maxDiff, max)
   }
   
   colnames(maxDiff) <- colnames(sample)
-  
   return(maxDiff)
 }
