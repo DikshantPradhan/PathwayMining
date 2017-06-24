@@ -3,8 +3,16 @@ model=Ec_core;
 
 S <- model@S
 
-get_rxn_idx <- function(rxn_name){
-  return(which(model@react_id == rxn_name))
+get_rxn_idx <- function(rxn_id){
+  return(which(model@react_id == rxn_id))
+}
+
+get_rxn_name_from_id <- function(rxn_id){
+  return(model@react_name[which(model@react_id == rxn_id)])
+}
+
+get_rxn_name_from_idx <- function(rxn_idx){
+  return(model@react_name[rxn_idx])
 }
 
 find_dwnst_rxns <- function(rxn_idx){

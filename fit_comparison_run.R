@@ -2,8 +2,8 @@ data(Ec_core);
 model=Ec_core;
 #solver="cplexAPI"
 solver="glpkAPI"
-W=500
-nPnts=10000
+W=200
+nPnts=5000
 steps=5
 
 opt <- fluxVar(model, percentage = 99)
@@ -16,9 +16,10 @@ S <- model@S
 sample_og <- sampler(model)
 #rescaled_sample <- rescale_sample(sample)
 
-sample_suppr <- sampler(suppressed_model(model, 34))
-
-d_coupling <-find_coupling_change(sample_og, sample_suppr)
+sample_comparison <- function(rxn_idx){
+  sample_suppr <- sampler(suppressed_model(model, rxn_idx)) # exchange reactions: 20 - 39
+  d_coupling <-find_coupling_change(sample_og, sample_suppr)
+}
 
 # find_coupling_connections(d_coupling)
 
