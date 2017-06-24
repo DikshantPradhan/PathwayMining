@@ -118,3 +118,33 @@ find_coupling_connections <- function(coupling_list){
     }
   }
 }
+
+find_lost_pairs <- function(coupling_list){
+  lost_pairs <- c()
+  for (i in 1:nrow(coupling_list)){
+    if (abs(as.numeric(coupling_list[i,4])) < 0.15){
+      lost_pairs <- c(lost_pairs, paste(coupling_list[i,1], coupling_list[i, 2], sep = "__"))
+    }
+  }
+  
+  if (length(lost_pairs) == 0){
+    return("__")
+  }
+  
+  return(lost_pairs)
+}
+
+find_gained_pairs <- function(coupling_list){
+  gained_pairs <- c()
+  for (i in 1:nrow(coupling_list)){
+    if (abs(as.numeric(coupling_list[i,4])) > 0.85){
+      gained_pairs <- c(gained_pairs, paste(coupling_list[i,1], coupling_list[i, 2], sep = "__"))
+    }
+  }
+  
+  if (length(gained_pairs) == 0){
+    return("__")
+  }
+  
+  return(gained_pairs)
+}

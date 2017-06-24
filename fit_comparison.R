@@ -212,6 +212,8 @@ return_coupling_change <- function(og_array, suppr_array, couples_list){
   
   rxn_col1 <- c()
   rxn_col2 <- c()
+  old_cor <- c()
+  new_cor <- c()
   
   for (i in 1:nrow(couples_list)){
     rxns = couples_list[i,] #strsplit(i, split = "__")[[1]]
@@ -222,11 +224,16 @@ return_coupling_change <- function(og_array, suppr_array, couples_list){
     
     rxn_col1 <- c(rxn_col1, rxns[1])
     rxn_col2 <- c(rxn_col2, rxns[2])
+    old_cor <- c(old_cor, as.numeric(og_array[idx_i, idx_j]))
+    new_cor <- c(new_cor, as.numeric(suppr_array[idx_i, idx_j]))
     #changes <- c(changes, change_string)
   }
   
-  rxns <- cbind(rxn_col1, rxn_col2)
-  colnames(rxns) <- c("rxn1", "rxn2")
+  old_cor <- as.numeric(old_cor)
+  new_cor <- as.numeric(new_cor)
+  
+  rxns <- cbind(rxn_col1, rxn_col2, old_cor, new_cor)
+  colnames(rxns) <- c("rxn1", "rxn2", "old_cor", "new_cor")
   return(rxns)
 }
 

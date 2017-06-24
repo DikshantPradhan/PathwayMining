@@ -19,6 +19,28 @@ sample_og <- sampler(model)
 sample_comparison <- function(rxn_idx){
   sample_suppr <- sampler(suppressed_model(model, rxn_idx)) # exchange reactions: 20 - 39
   d_coupling <-find_coupling_change(sample_og, sample_suppr)
+  return(d_coupling)
+}
+
+media_cond <- data.frame("rxn_idx" <- numeric(20))
+names(media_cond) <- c("rxn_idx")
+
+for (i in 20:30){
+  coupling <- sample_comparison(i)
+  j <- i- 19
+  
+  media_cond$rxn_idx[j] <- i
+  media_cond$rxn_name[j] <- get_rxn_name_from_idx(i)
+  
+  if ("Biomass_Ecoli_core_w_GAM" %in% coupling[,1] | "Biomass_Ecoli_core_w_GAM" %in% coupling[,2]){
+    media_cond$essential[j] <- TRUE
+  }
+  else {
+    media_cond$essential[j] <- FALSE
+  }
+  
+  media_cond$gained_pairs[j] <- find_gained_pairs(coupling)
+  media_cond$lost_pairs[j] <- find_lost_pairs(coupling)
 }
 
 # find_coupling_connections(d_coupling)
