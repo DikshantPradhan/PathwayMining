@@ -25,9 +25,9 @@ sample_comparison <- function(rxn_idx){
 media_cond <- data.frame("rxn_idx" <- numeric(20))
 names(media_cond) <- c("rxn_idx")
 
-for (i in 20:30){
+for (i in 20:39){
   coupling <- sample_comparison(i)
-  j <- i- 19
+  j <- i - 19
   
   media_cond$rxn_idx[j] <- i
   media_cond$rxn_name[j] <- get_rxn_name_from_idx(i)
@@ -39,8 +39,8 @@ for (i in 20:30){
     media_cond$essential[j] <- FALSE
   }
   
-  media_cond$gained_pairs[j] <- find_gained_pairs(coupling)
-  media_cond$lost_pairs[j] <- find_lost_pairs(coupling)
+  media_cond$gained_pairs[j] <- list(find_gained_pairs(coupling))
+  media_cond$lost_pairs[j] <- list(find_lost_pairs(coupling))
 }
 
 # find_coupling_connections(d_coupling)

@@ -120,31 +120,26 @@ find_coupling_connections <- function(coupling_list){
 }
 
 find_lost_pairs <- function(coupling_list){
-  lost_pairs <- c()
-  for (i in 1:nrow(coupling_list)){
-    if (abs(as.numeric(coupling_list[i,4])) < 0.15){
-      lost_pairs <- c(lost_pairs, paste(coupling_list[i,1], coupling_list[i, 2], sep = "__"))
-    }
-  }
-  
-  if (length(lost_pairs) == 0){
-    return("__")
-  }
-  
+  lost_pairs <- find_changed_pairs(coupling_list, gained = FALSE)
   return(lost_pairs)
 }
 
 find_gained_pairs <- function(coupling_list){
-  gained_pairs <- c()
+  gained_pairs <- find_changed_pairs(coupling_list, gained = TRUE)
+  return(gained_pairs)
+}
+
+find_changed_pairs <- function(coupling_list, gained = TRUE){
+  pairs <- c()
   for (i in 1:nrow(coupling_list)){
-    if (abs(as.numeric(coupling_list[i,4])) > 0.85){
-      gained_pairs <- c(gained_pairs, paste(coupling_list[i,1], coupling_list[i, 2], sep = "__"))
+    if ((gained == TRUE & abs(as.numeric(coupling_list[i,4])) > 0.85) | (gained == FALSE & abs(as.numeric(coupling_list[i,4])) < 0.15)){
+      pairs <- c(pairs, paste(coupling_list[i,1], coupling_list[i, 2], sep = " & "))
     }
   }
   
-  if (length(gained_pairs) == 0){
+  if (length(pairs) == 0){
     return("__")
   }
   
-  return(gained_pairs)
+  return(pairs)
 }
