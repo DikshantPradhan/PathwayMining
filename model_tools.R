@@ -1,3 +1,5 @@
+library(rstack)
+
 data(Ec_core);
 model=Ec_core;
 
@@ -15,8 +17,16 @@ get_rxn_name_from_idx <- function(rxn_idx){
   return(model@react_name[rxn_idx])
 }
 
+get_rxn_id_from_idx <- function(rxn_idx){
+  return(model@react_id[rxn_idx])
+}
+
 find_dwnst_rxns <- function(rxn_idx){
   dwnst_mets <- which(S[,rxn_idx] > 0)
+  
+  # if (model@react_rev[rxn_idx]){
+  #   dwnst_mets <- c(dwnst_mets, which(S[,rxn_idx] < 0))
+  # }
   
   dwnst_rxns <- c()
   
@@ -29,6 +39,10 @@ find_dwnst_rxns <- function(rxn_idx){
 
 find_upst_rxns <- function(rxn_idx){
   upst_mets <- which(S[,rxn_idx] < 0)
+  
+  # if (model@react_rev[rxn_idx]){
+  #   upst_mets <- c(upst_mets, which(S[,rxn_idx] > 0))
+  # }
   
   upst_rxns <- c()
   
@@ -142,4 +156,125 @@ find_changed_pairs <- function(coupling_list, gained = TRUE){
   }
   
   return(pairs)
+}
+
+find_replacement_EX_rxns <- function(gained_pairs){
+  replacements <- c()
+  for (i in 1:length(gained_pairs)){
+    repl <- c()
+    for (j in gained_pairs[[i]]){
+      # print(j)
+      rxns <- strsplit(j, split = " & ")[[1]]
+      # print(rxns)
+      if (j != "__" & rxns[1] == rxns[2] & grepl("EX_", rxns[1])){
+        repl <- c(repl, rxns[1])
+      }
+      #print(rxns)
+    }
+    replacements[i] <- list(repl)
+  }
+  return(replacements)
+}
+
+find_new_essential_rxns <- function(gained_pairs){
+  essential <- c()
+  for (i in 1:length(gained_pairs)){
+    ess <- c()
+    for (j in gained_pairs[[i]]){
+      # print(j)
+      rxns <- strsplit(j, split = " & ")[[1]]
+      # print(rxns)
+      if (j != "__" & rxns[1] == "Biomass_Ecoli_core_w_GAM"){
+        ess <- c(ess, rxns[2])
+      }
+      if (j != "__" & rxns[2] == "Biomass_Ecoli_core_w_GAM"){
+        ess <- c(ess, rxns[1])
+      }
+      #print(rxns)
+    }
+    essential[i] <- list(ess)
+  }
+  return(essential)
+}
+
+convert_pair_strings_to_vector <- function(pair_string_list){
+  rxn1 <- c()
+  rxn2 <- c()
+  
+  for (i in pair_string_list[[1]]){
+    #print(i)
+    if (i == "__"){
+      rxn1 <- c(rxn1, NA)
+      rxn2 <- c(rxn2, NA)
+    }
+    else{
+      rxns <- strsplit(i, split = " & ")[[1]]
+      rxn1 <- c(rxn1, rxns[1])
+      rxn2 <- c(rxn2, rxns[2])
+    }
+  }
+  
+  pair_vec <- cbind(rxn1, rxn2)
+  #names(pair_vec) <- c("rxn1", "rxn2")
+  return(pair_vec)
+}
+
+core_rxn_id <- function(rxn_id){ # rxn id with parenthesis
+  return(strsplit(rxn_id, split = "\\(")[[1]][1])
+}
+
+get_list_of_sets <- function(pairs){ #2d columns
+  rxns <- unique(union(pairs[,1], pairs[,2]))
+  rxns_list <- c()
+  
+  for (i in rxns){
+    #print(i)
+    rxns_list <- c(rxns_list, list(i))
+  }
+  
+  # rxn_list <- c(rxn_list[-c(1, 13)], list(union(rxn_list[1], rxn_list[13])))
+  # grep("MALt2_2", rxn_list)
+  
+  for (i in 1:nrow(pairs)){
+    print(paste("round ",i))
+    idx1 <- grep(core_rxn_id(pairs[i,1]), rxns_list)
+    idx2 <- grep(core_rxn_id(pairs[i,2]), rxns_list)
+    
+    # print(idx1)
+    # print(idx2)
+    
+    for (j in idx1){
+      # print(j)
+      # print(rxns_list[j])
+      if (pairs[i,1] %in% rxns_list[[j]]){
+        idx1 <- c()
+        idx1 <- j
+        # print(paste("found: ", j))
+      }
+    }
+    for (j in idx2){
+      # print(j)
+      # print(rxns_list[j])
+      if (pairs[i,2] %in% rxns_list[[j]]){
+        idx2 <- c()
+        idx2 <- j
+        # print(paste("found: ", j))
+      }
+    }
+    
+    # if (length(idx1) == 0){
+    #   idx1 <- which(rxns_list == pairs[i,1])
+    # }
+    # if (length(idx2) == 0){
+    #   idx2 <- which(rxns_list == pairs[i,2])
+    # }
+    # print(i)
+    print(pairs[i,])
+    print(idx1)
+    print(idx2)
+    print(rxns_list)
+    rxns_list <- c(rxns_list[-c(idx1, idx2)], list(union(unlist(rxns_list[idx1]), unlist(rxns_list[idx2]))))
+  }
+  #print(rxns_list)
+  return(rxns_list)
 }
