@@ -24,6 +24,10 @@ get_rxn_id_from_idx <- function(rxn_idx){
 get_dwnst_rxns <- function(rxn_idx){
   dwnst_mets <- which(S[,rxn_idx] > 0)
   
+  if (length(model@react_rev[rxn_idx]) == 0){
+    print(rxn_idx)
+  }
+  
   if (model@react_rev[rxn_idx]){
     dwnst_mets <- c(dwnst_mets, which(S[,rxn_idx] < 0))
   }
