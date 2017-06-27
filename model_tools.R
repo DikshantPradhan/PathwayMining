@@ -286,3 +286,15 @@ get_list_of_sets <- function(pairs){ #2d columns
   #print(rxns_list)
   return(rxns_list)
 }
+
+correlating_sets_from_sample <- function(sample){
+  pairs <- return_couples(flux_coupling_cor(sample))
+  rxn_set <- get_list_of_sets(pairs)
+  return(rxn_set)
+}
+
+set_lists <- c()
+
+for (i in 1:5){
+  set_lists[i] <- list(correlating_sets_from_sample(sampler(suppressed_model(model, i))))
+}

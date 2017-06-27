@@ -30,7 +30,22 @@ add_edge <- function(graph, v1, v2, color){
   return(graph)
 }
 
-graph_rxn_sets <- function(set_list, edge_color = "grey", show_theorietical = FALSE, direct = FALSE){
+add_vertex <- function(graph, v, color = "green"){
+  if (!(v %in% names(V(graph)))){
+    graph <- graph + vertices(v, color = color)
+  }
+  return(graph)
+}
+
+add_set_vertices <- function(graph, set_list, color = "green"){
+  for (vertex in unlist(set_list)){
+    graph <- add_vertex(graph, vertex)
+  }
+  
+  return(graph)
+}
+
+graph_rxn_sets <- function(set_list, edge_color = "grey", show_theorietical = FALSE, direct = TRUE){
   graph <- make_empty_graph()
   graph <- graph + vertices(unique(unlist(set_list)), color = "green")
   
@@ -43,7 +58,10 @@ graph_rxn_sets <- function(set_list, edge_color = "grey", show_theorietical = FA
   return(graph)
 }
 
-rxn_set_edges <- function(graph, set_list, edge_color, direct = FALSE){
+rxn_set_edges <- function(graph, set_list, edge_color, direct = TRUE){
+  for (vertex in unlist(set_list)){
+    graph <- add_vertex(graph, vertex)
+  }
   
   for (set in set_list){
     for (rxn in set){
@@ -73,16 +91,25 @@ rxn_set_edges <- function(graph, set_list, edge_color, direct = FALSE){
   return(graph)
 }
 
-graph_correlation_set <- function(sample){
-  pairs <- return_couples(flux_coupling_cor(sample))
-  rxn_set <- get_list_of_sets(pairs)
-  
-  g <- graph_rxn_sets(rxn_set, edge_color = "blue", show_theorietical = FALSE)
-  
+graph_correlation_set <- function(set_list){
+  g <- graph_rxn_sets(set_list, edge_color = "blue", show_theorietical = FALSE)
   plot(g)
 }
 
-compare_containing_sets <- function(rxn_id, og_rxn_set, suppr_rxn_set, direct = FALSE){
+graph_containing_set <- function(rxn_id, set_list, g = make_empty_graph()){
+  set_idx <- grep(rxn_id, set_list)
+  
+  # g <- make_empty_graph()
+  # g <- g + vertices(unique(set_list[[set_idx]]), color = "green")
+  g <- add_set_vertices(g, unique(set_list[[set_idx]]))
+  g <- rxn_set_edges(g, set_list[set_idx], edge_color = "blue")
+  
+  plot(g)
+  
+  return(g)
+}
+
+compare_containing_sets <- function(rxn_id, og_rxn_set, suppr_rxn_set, direct = TRUE){
   og_set_idx <- grep(rxn_id, og_rxn_set)
   suppr_set_idx <- grep(rxn_id, suppr_rxn_set)
   
