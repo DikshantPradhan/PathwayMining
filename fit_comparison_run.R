@@ -43,13 +43,20 @@ for (i in 20:39){
   media_cond$lost_pairs[j] <- list(find_lost_pairs(coupling))
 }
 
-# find_coupling_connections(d_coupling)
+compare_correlation_sets <- function(comparison_num){
+  og_pairs <- return_couples(flux_coupling_cor(sample_og))
+  og_rxn_set <- get_list_of_sets(og_pairs)
+  
+  g <- make_empty_graph()
+  g <- g + vertices(model@react_id, color = "green")
+  g <- rxn_set_edges(g, og_rxn_set, "grey")
+  
+  added_rxns <- get_list_of_sets(convert_pair_strings_to_vector(media_cond$gained_pairs[comparison_num]))
+  lost_rxns <- get_list_of_sets(convert_pair_strings_to_vector(media_cond$lost_pairs[comparison_num]))
+  
+  g <- rxn_set_edges(g, added_rxns, "green")
+  g <- rxn_set_edges(g, lost_rxns, "red")
+  plot(g)
+}
 
-# sample <- sampler_lm_fitting(model, 37, binary = TRUE)
-# coupling1 <- flux_coupling_specific(rescale_sample(sample,37), 37, binary = TRUE)
-
-# plotMaxDiff <- function(maxDiff, idx){
-#   hist(maxDiff[,idx], breaks = seq(0, max(maxDiff[,idx])+0.005, 0.0001))
-# }
-# 
-# hist(rescaled_sample_[,40], breaks = seq(-1, 1, 0.001))
+compare_correlation_sets(12)

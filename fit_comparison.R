@@ -191,7 +191,7 @@ return_couples <- function(array){ # difference array (input 3d array)
       if (is.na(array[i,j])){
         # do nothing
       }
-      else if (abs(array[i,j]) > 0.75){
+      else if (abs(array[i,j]) > 0.85){
         #couple_list <- c(couple_list, paste(row[i],col[j], sep = "__"))
         rxn_col1 <- c(rxn_col1, row[i])
         rxn_col2 <- c(rxn_col2, col[j])

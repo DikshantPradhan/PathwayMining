@@ -21,33 +21,37 @@ get_rxn_id_from_idx <- function(rxn_idx){
   return(model@react_id[rxn_idx])
 }
 
-find_dwnst_rxns <- function(rxn_idx){
+get_dwnst_rxns <- function(rxn_idx){
   dwnst_mets <- which(S[,rxn_idx] > 0)
   
-  # if (model@react_rev[rxn_idx]){
-  #   dwnst_mets <- c(dwnst_mets, which(S[,rxn_idx] < 0))
-  # }
+  if (model@react_rev[rxn_idx]){
+    dwnst_mets <- c(dwnst_mets, which(S[,rxn_idx] < 0))
+  }
+
+  # print(c("mets: ", dwnst_mets))
   
   dwnst_rxns <- c()
   
   for (i in dwnst_mets){
-    dwnst_rxns <- which(S[i,] < 0)
+    # print(paste("i: ", i))
+    dwnst_rxns <- c(dwnst_rxns, which(S[i,] < 0))
+    # print(dwnst_rxns)
   }
   
   return(unique(dwnst_rxns))
 }
 
-find_upst_rxns <- function(rxn_idx){
+get_upst_rxns <- function(rxn_idx){
   upst_mets <- which(S[,rxn_idx] < 0)
   
-  # if (model@react_rev[rxn_idx]){
-  #   upst_mets <- c(upst_mets, which(S[,rxn_idx] > 0))
-  # }
+  if (model@react_rev[rxn_idx]){
+    upst_mets <- c(upst_mets, which(S[,rxn_idx] > 0))
+  }
   
   upst_rxns <- c()
   
   for (i in upst_mets){
-    upst_rxns <- which(S[i,] > 0)
+    upst_rxns <- c(upst_rxns, which(S[i,] > 0)) 
   }
   
   return(unique(upst_rxns))
@@ -80,10 +84,10 @@ get_paths <- function(rxn_idx, downstream = TRUE){
     
     # new reactants and species to add
     if (downstream == TRUE){
-      new_rxns = find_dwnst_rxns(rxn)
+      new_rxns = get_dwnst_rxns(rxn)
     }
     else {
-      new_rxns = find_upst_rxns(rxn)
+      new_rxns = get_upst_rxns(rxn)
     }
     #new_spcs = c()
     
@@ -128,7 +132,7 @@ find_coupling_connections <- function(coupling_list){
         overlap <- intersect(get_dwnst_paths(rxn2), get_dwnst_paths(rxn1))
       }
       
-      print(c(paste(rxn1, " & ", rxn2, "(", length(overlap), ")"), overlap))
+      # print(c(paste(rxn1, " & ", rxn2, "(", length(overlap), ")"), overlap))
     }
   }
 }
@@ -236,7 +240,7 @@ get_list_of_sets <- function(pairs){ #2d columns
   # grep("MALt2_2", rxn_list)
   
   for (i in 1:nrow(pairs)){
-    print(paste("round ",i))
+    # print(paste("round ",i))
     idx1 <- grep(core_rxn_id(pairs[i,1]), rxns_list)
     idx2 <- grep(core_rxn_id(pairs[i,2]), rxns_list)
     
@@ -269,10 +273,10 @@ get_list_of_sets <- function(pairs){ #2d columns
     #   idx2 <- which(rxns_list == pairs[i,2])
     # }
     # print(i)
-    print(pairs[i,])
-    print(idx1)
-    print(idx2)
-    print(rxns_list)
+    # print(pairs[i,])
+    # print(idx1)
+    # print(idx2)
+    # print(rxns_list)
     rxns_list <- c(rxns_list[-c(idx1, idx2)], list(union(unlist(rxns_list[idx1]), unlist(rxns_list[idx2]))))
   }
   #print(rxns_list)
