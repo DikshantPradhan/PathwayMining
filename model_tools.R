@@ -32,14 +32,10 @@ get_dwnst_rxns <- function(rxn_idx){
     dwnst_mets <- c(dwnst_mets, which(S[,rxn_idx] < 0))
   }
 
-  # print(c("mets: ", dwnst_mets))
-  
   dwnst_rxns <- c()
   
   for (i in dwnst_mets){
-    # print(paste("i: ", i))
     dwnst_rxns <- c(dwnst_rxns, which(S[i,] < 0))
-    # print(dwnst_rxns)
   }
   
   return(unique(dwnst_rxns))
@@ -75,15 +71,12 @@ get_upst_paths <- function(rxn_idx){
 get_paths <- function(rxn_idx, downstream = TRUE){
   #list of reactions to return
   rxns <- c()
-  #spcs <- c()
   s <- stack$new()
   
   s$push(rxn_idx)
   
   while(!s$is_empty()){
     rxn = s$pop()
-    #rxns = c(rxns, rxn)
-    
     new_rxns = c()
     
     # new reactants and species to add
@@ -93,7 +86,6 @@ get_paths <- function(rxn_idx, downstream = TRUE){
     else {
       new_rxns = get_upst_rxns(rxn)
     }
-    #new_spcs = c()
     
     # get reactants of new reactions
     for(new_rxn in new_rxns){
@@ -104,15 +96,6 @@ get_paths <- function(rxn_idx, downstream = TRUE){
         s$push(new_rxn)
       }
     }
-    
-    # # add reactions to stack
-    # for(new_spc in new_spcs){
-    #   # check to see if reactants have already been checked
-    #   if (!(new_spc %in% spcs)){
-    #     spcs <- c(spcs, new_spc)
-    #     s$push(new_spc)
-    #   }
-    # }
   }
   
   return(rxns) # reaction names
@@ -135,8 +118,6 @@ find_coupling_connections <- function(coupling_list){
       if (length(overlap) == 0){
         overlap <- intersect(get_dwnst_paths(rxn2), get_dwnst_paths(rxn1))
       }
-      
-      # print(c(paste(rxn1, " & ", rxn2, "(", length(overlap), ")"), overlap))
     }
   }
 }
@@ -236,7 +217,6 @@ get_list_of_sets <- function(pairs){ #2d columns
   rxns_list <- c()
   
   for (i in rxns){
-    #print(i)
     rxns_list <- c(rxns_list, list(i))
   }
   
@@ -244,47 +224,25 @@ get_list_of_sets <- function(pairs){ #2d columns
   # grep("MALt2_2", rxn_list)
   
   for (i in 1:nrow(pairs)){
-    # print(paste("round ",i))
-    idx1 <- grep(core_rxn_id(pairs[i,1]), rxns_list)
-    idx2 <- grep(core_rxn_id(pairs[i,2]), rxns_list)
+    idx1 <- get_set_idx(pairs[i,1], rxns_list) #grep(core_rxn_id(pairs[i,1]), rxns_list)
+    idx2 <- get_set_idx(pairs[i,2], rxns_list) #grep(core_rxn_id(pairs[i,2]), rxns_list)
     
-    # print(idx1)
-    # print(idx2)
-    
-    for (j in idx1){
-      # print(j)
-      # print(rxns_list[j])
-      if (pairs[i,1] %in% rxns_list[[j]]){
-        idx1 <- c()
-        idx1 <- j
-        # print(paste("found: ", j))
-      }
-    }
-    for (j in idx2){
-      # print(j)
-      # print(rxns_list[j])
-      if (pairs[i,2] %in% rxns_list[[j]]){
-        idx2 <- c()
-        idx2 <- j
-        # print(paste("found: ", j))
-      }
-    }
-    
-    # if (length(idx1) == 0){
-    #   idx1 <- which(rxns_list == pairs[i,1])
-    # }
-    # if (length(idx2) == 0){
-    #   idx2 <- which(rxns_list == pairs[i,2])
-    # }
-    # print(i)
-    # print(pairs[i,])
-    # print(idx1)
-    # print(idx2)
-    # print(rxns_list)
     rxns_list <- c(rxns_list[-c(idx1, idx2)], list(union(unlist(rxns_list[idx1]), unlist(rxns_list[idx2]))))
   }
-  #print(rxns_list)
   return(rxns_list)
+}
+
+get_set_idx <- function(rxn, rxns_list){
+  idx <- grep(core_rxn_id(rxn), rxns_list)
+  
+  for (j in idx){
+    if (rxn %in% rxns_list[[j]]){
+      # idx <- c()
+      # idx <- j
+      return(j)
+    }
+  }
+  return(integer(0))
 }
 
 correlating_sets_from_sample <- function(sample){
@@ -293,8 +251,12 @@ correlating_sets_from_sample <- function(sample){
   return(rxn_set)
 }
 
-set_lists <- c()
-
-for (i in 1:5){
-  set_lists[i] <- list(correlating_sets_from_sample(sampler(suppressed_model(model, i))))
+generate_set_lists <- function(suppression_idxs){
+  set_lists <- c()
+  
+  for (i in suppression_idxs){
+    set_lists[i] <- list(correlating_sets_from_sample(sampler(suppressed_model(model, i))))
+  }
+  
+  return(set_lists)
 }

@@ -3,7 +3,7 @@ model=Ec_core;
 #solver="cplexAPI"
 solver="glpkAPI"
 W=200
-nPnts=5000
+nPnts=500
 steps=5
 
 opt <- fluxVar(model, percentage = 99)

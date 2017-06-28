@@ -45,6 +45,10 @@ add_set_vertices <- function(graph, set_list, color = "green"){
   return(graph)
 }
 
+plot_graph <- function(graph){
+  plot(graph,edge.arrow.size=0.3,vertex.label.color = "black",vertex.size=10)
+}
+
 graph_rxn_sets <- function(set_list, edge_color = "grey", show_theorietical = FALSE, direct = TRUE){
   graph <- make_empty_graph()
   graph <- graph + vertices(unique(unlist(set_list)), color = "green")
@@ -93,32 +97,50 @@ rxn_set_edges <- function(graph, set_list, edge_color, direct = TRUE){
 
 graph_correlation_set <- function(set_list){
   g <- graph_rxn_sets(set_list, edge_color = "blue", show_theorietical = FALSE)
-  plot(g)
+  plot_graph(g)
 }
 
-graph_containing_set <- function(rxn_id, set_list, g = make_empty_graph()){
-  set_idx <- grep(rxn_id, set_list)
+graph_containing_set <- function(rxn_id, set_list, g = make_empty_graph(), plot = TRUE){
+  set_idx <- get_set_idx(rxn_id, set_list) #grep(rxn_id, set_list)
   
   # g <- make_empty_graph()
   # g <- g + vertices(unique(set_list[[set_idx]]), color = "green")
+  # print(paste(set_idx, ", ", rxn_id, ", "))
+  
+  if (length(set_idx) == 0){
+    print(paste(rxn_id, " not found in set"))
+    return(g)
+  }
+  
   g <- add_set_vertices(g, unique(set_list[[set_idx]]))
   g <- rxn_set_edges(g, set_list[set_idx], edge_color = "blue")
   
-  plot(g)
-  
+  if (plot){
+    plot_graph(g)
+  }
   return(g)
 }
 
-compare_containing_sets <- function(rxn_id, og_rxn_set, suppr_rxn_set, direct = TRUE){
-  og_set_idx <- grep(rxn_id, og_rxn_set)
-  suppr_set_idx <- grep(rxn_id, suppr_rxn_set)
+graph_multiple_sets <- function(rxn_ids, set_lists, graph = make_empty_graph(), plot = TRUE){
   
-  # print(og_set_idx)
-  # print(suppr_set_idx)
+  for (i in 1:length(rxn_ids)){
+    # print(rxn_ids[i])
+    for (j in 1:length(set_lists)){
+      graph <- graph_containing_set(rxn_ids[i], set_lists[[j]], graph, plot = FALSE)
+    }
+  }
+  
+  if (plot){
+    plot_graph(graph)
+  }
+  return(graph)
+}
+
+compare_containing_sets <- function(rxn_id, og_rxn_set, suppr_rxn_set, direct = TRUE){
+  og_set_idx <- get_set_idx(rxn_id, og_rxn_set) #grep(rxn_id, og_rxn_set)
+  suppr_set_idx <- get_set_idx(rxn_id, suppr_rxn_set) #grep(rxn_id, suppr_rxn_set)
   
   rxns <- union(og_rxn_set[[og_set_idx]], suppr_rxn_set[[suppr_set_idx]])
-  
-  # print(suppr_rxn_set[[suppr_set_idx]])
   
   g <- make_empty_graph()
   g <- g + vertices(unique(rxns), color = "green")
@@ -126,7 +148,7 @@ compare_containing_sets <- function(rxn_id, og_rxn_set, suppr_rxn_set, direct = 
   g <- rxn_set_edges(g, suppr_rxn_set[suppr_set_idx], edge_color = "blue", direct = direct)
   g <- rxn_set_edges(g, og_rxn_set[og_set_idx], edge_color = "red", direct = direct)
   
-  plot(g)
+  plot_graph(g)
 }
 
 compare_model_sets <- function(comparison_num){
@@ -148,7 +170,7 @@ compare_model_sets <- function(comparison_num){
   # 
   # g <- rxn_set_edges(g, added_rxns, "green", direct = TRUE)
   # g <- rxn_set_edges(g, lost_rxns, "red", direct = TRUE)
-  plot(g)
+  plot_graph(g)
   
   return(suppr_rxn_set)
 }
