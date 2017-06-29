@@ -39,7 +39,7 @@ add_vertex <- function(graph, v, color = "green"){
 
 add_set_vertices <- function(graph, set_list, color = "green"){
   for (vertex in unlist(set_list)){
-    graph <- add_vertex(graph, vertex)
+    graph <- add_vertex(graph, vertex, color = color)
   }
   
   return(graph)
@@ -62,9 +62,9 @@ graph_rxn_sets <- function(set_list, edge_color = "grey", show_theorietical = FA
   return(graph)
 }
 
-rxn_set_edges <- function(graph, set_list, edge_color, direct = TRUE){
+rxn_set_edges <- function(graph, set_list, edge_color, vertex_color = "green", direct = TRUE, addition = ""){
   for (vertex in unlist(set_list)){
-    graph <- add_vertex(graph, vertex)
+    graph <- add_vertex(graph, paste(vertex, addition, sep = ""), color = vertex_color)
   }
   
   for (set in set_list){
@@ -83,11 +83,11 @@ rxn_set_edges <- function(graph, set_list, edge_color, direct = TRUE){
       
       for (ds_rxn in ds_rxns){
         # graph <- graph + edge(rxn, get_rxn_id_from_idx(ds_rxn), color = edge_color)
-        graph <- add_edge(graph, rxn, ds_rxn, color = edge_color)
+        graph <- add_edge(graph, paste(rxn, addition, sep = ""), paste(ds_rxn, addition, sep = ""), color = edge_color)
       }
       for (us_rxn in us_rxns){
         # graph <- graph + edge(get_rxn_id_from_idx(us_rxn), rxn, color = edge_color)
-        graph <- add_edge(graph, us_rxn, rxn, color = edge_color)
+        graph <- add_edge(graph, paste(us_rxn, addition, sep = ""), paste(rxn, addition, sep = ""), color = edge_color)
       }
     }
   }
@@ -173,6 +173,52 @@ compare_model_sets <- function(comparison_num){
   plot_graph(g)
   
   return(suppr_rxn_set)
+}
+
+compare_degen_sets_to_og <- function(rxn_id, og_rxn_set, suppr_rxn_set, addition = "", graph = make_empty_graph(), plot = TRUE){
+  
+  og_set_idx <- get_set_idx(rxn_id, og_rxn_set)
+  suppr_set_idx <- get_set_idx(rxn_id, suppr_rxn_set)
+  
+  graph <- rxn_set_edges(graph, og_rxn_set[og_set_idx], edge_color = "black")
+  graph <- rxn_set_edges(graph, og_rxn_set[og_set_idx], edge_color = "grey", direct = FALSE)
+  
+  # print(suppr_set_idx)
+  
+  if (length(og_set_idx) > 0 & length(suppr_set_idx) > 0){
+    if (!setequal(og_rxn_set[[og_set_idx]], suppr_rxn_set[[suppr_set_idx]])){
+      # print("unequal set: ")
+      # print(og_rxn_set[[og_set_idx]])
+      # print(suppr_rxn_set[[suppr_set_idx]])
+      graph <- rxn_set_edges(graph, suppr_rxn_set[suppr_set_idx], edge_color = "blue", vertex_color = "white", addition = addition)
+      graph <- rxn_set_edges(graph, suppr_rxn_set[suppr_set_idx], edge_color = "grey", vertex_color = "white",
+                             addition = addition, direct = FALSE)
+      graph <- add_edge(graph, rxn_id, paste(rxn_id, addition, sep = ""), color = "red")
+    }
+  }
+  
+  if (plot){
+    plot_graph(graph)
+  }
+  return(graph)
+}
+
+compare_multiple_degen_sets <- function(rxn_ids, og_rxn_set, suppr_rxn_sets, graph = make_empty_graph(), plot = TRUE){
+  
+  # used_sets <- c()
+  
+  for (i in 1:length(rxn_ids)){
+    # print(rxn_ids[i])
+    for (j in 1:length(suppr_rxn_sets)){ # addition = paste("_", j, sep = ""),
+      graph <- compare_degen_sets_to_og(rxn_ids[i], og_rxn_set, suppr_rxn_sets[[j]], addition = "_", graph = graph, plot = FALSE) #graph_containing_set(rxn_ids[i], set_lists[[j]], graph, plot = FALSE)
+      # used_sets <- c(used_sets, list())
+    }
+  }
+  
+  if (plot){
+    plot_graph(graph)
+  }
+  return(graph)
 }
 
 # graph_rxn_sets(list(unlist(rxn_set)))
