@@ -186,6 +186,14 @@ find_new_essential_rxns <- function(gained_pairs){
   return(essential)
 }
 
+convert_pair_vector_to_string <- function(coupling_list){
+  pairs <- c()
+  for (i in 1:nrow(coupling_list)){
+    pairs <- c(pairs, paste(coupling_list[i,1], coupling_list[i, 2], sep = " & "))
+  }
+  return(pairs)
+}
+
 convert_pair_strings_to_vector <- function(pair_string_list){
   rxn1 <- c()
   rxn2 <- c()
@@ -212,12 +220,16 @@ core_rxn_id <- function(rxn_id){ # rxn id with parenthesis
   return(strsplit(rxn_id, split = "\\(")[[1]][1])
 }
 
-get_list_of_sets <- function(pairs){ #2d columns
-  rxns <- unique(union(pairs[,1], pairs[,2]))
-  rxns_list <- c()
+get_list_of_sets <- function(pairs, rxns_list = c()){ #2d columns
   
-  for (i in rxns){
-    rxns_list <- c(rxns_list, list(i))
+  if (length(rxns_list) == 0){
+    print("new rxn list")
+    rxns <- unique(union(pairs[,1], pairs[,2]))
+    # rxns_list <- c()
+    
+    for (i in rxns){
+      rxns_list <- c(rxns_list, list(i))
+    }
   }
   
   # rxn_list <- c(rxn_list[-c(1, 13)], list(union(rxn_list[1], rxn_list[13])))
@@ -227,8 +239,11 @@ get_list_of_sets <- function(pairs){ #2d columns
     idx1 <- get_set_idx(pairs[i,1], rxns_list) #grep(core_rxn_id(pairs[i,1]), rxns_list)
     idx2 <- get_set_idx(pairs[i,2], rxns_list) #grep(core_rxn_id(pairs[i,2]), rxns_list)
     
+    # print(paste(pairs[i, 1], "&", pairs[i,2], ":", idx1, idx2))
+    
     rxns_list <- c(rxns_list[-c(idx1, idx2)], list(union(unlist(rxns_list[idx1]), unlist(rxns_list[idx2]))))
   }
+  
   return(rxns_list)
 }
 
@@ -251,12 +266,29 @@ correlating_sets_from_sample <- function(sample){
   return(rxn_set)
 }
 
+generate_pair_lists <- function(suppression_idxs){
+  pair_lists <- c()
+  for (i in suppression_idxs){
+    pair_lists[i] <- list(return_couples(flux_coupling_cor(sampler(suppressed_model(model, i)))))
+  }
+  return(pair_lists)
+}
+
 generate_set_lists <- function(suppression_idxs){
   set_lists <- c()
-  
   for (i in suppression_idxs){
     set_lists[i] <- list(correlating_sets_from_sample(sampler(suppressed_model(model, i))))
   }
-  
   return(set_lists)
+}
+
+get_union_set_from_degen_pairs <- function(set_list = model@react_id, pair_lists){
+  
+  for (i in 1:length(pair_lists)){
+    set_list <- get_list_of_sets(pair_lists[[i]], rxns_list = set_list)
+    # print(set_list)
+    print(paste(i, ": ", length(set_list)))
+  }
+  
+  return(set_list)
 }

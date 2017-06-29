@@ -49,11 +49,7 @@ flux_coupling <- function(sample, binary = TRUE){
         fit <- lm(sample[,i] ~ sample[,j], data = sample)
       }
       sfit <- summary(fit)
-      coupling[i,j] <- sfit$coefficients[2] #fit$coefficients[[2]]
-      #coupling[2,i,j] <- sfit$coefficients[4] #summary(fit)[[8]]
-      # fit <- lm(sample[,i] ~ sample[,j], data = sample)
-      # coupling[1,i,j] <- fit$coefficients[[2]]
-      # coupling[2,i,j] <- summary(fit)[[8]]
+      coupling[i,j] <- sfit$coefficients[2]
     }
   }
   #coupling <- coupling_generalize(coupling)
@@ -63,7 +59,7 @@ flux_coupling <- function(sample, binary = TRUE){
 flux_coupling_cor <- function(sample){
   rxn_ct = ncol(sample)
   coupling = array(0, dim = c(rxn_ct, rxn_ct), 
-                   dimnames = list(colnames(sample), colnames(sample))) # layer 1 is coupling ratio, layer 2 is r-squared
+                   dimnames = list(colnames(sample), colnames(sample)))
   
   for(i in 1:rxn_ct){
     for(j in i:rxn_ct){
@@ -91,8 +87,8 @@ flux_coupling_specific <- function(sample, rxn_idx, binary = TRUE){ # samples, #
       fit <- lm(sample[,rxn_idx] ~ sample[,i], data = sample)
     }
     sfit <- summary(fit)
-    coupling[1,i] <- sfit$coefficients[2] #fit$coefficients[[2]]
-    coupling[2,i] <- sfit$coefficients[4] #summary(fit)[[8]]
+    coupling[1,i] <- sfit$coefficients[2]
+    coupling[2,i] <- sfit$coefficients[4]
   }
   colnames(coupling) <- colnames(sample)
   return(coupling)
@@ -101,7 +97,7 @@ flux_coupling_specific <- function(sample, rxn_idx, binary = TRUE){ # samples, #
 flux_coupling_fcf <- function(sample){
   rxn_ct = ncol(sample)
   obs_ct = nrow(sample)
-  coupling = array(0, dim = c(rxn_ct, rxn_ct)) # layer 1 is coupling ratio, layer 2 is r-squared
+  coupling = array(0, dim = c(rxn_ct, rxn_ct))
   
   for(i in 1:rxn_ct){
     for(j in i:rxn_ct){
@@ -177,7 +173,7 @@ coupling_generalize <- function(array){
   return(array)
 }
 
-return_couples <- function(array){ # difference array (input 3d array)
+return_couples <- function(array){ # correlation array (output from flux_coupling_???)
   
   #couple_list <- c()
   row <- dimnames(array)[[1]]
@@ -299,7 +295,9 @@ rescale_sample <- function(sample, rxn_idx = 0){
 suppressed_model <- function(model, rxn_idx){
   # model@lowbnd[rxn_idx] <- 0
   # model@uppbnd[rxn_idx] <- 0
-  model <- changeBounds(model, rxn_idx, lb = 0, ub = 0)
+  for (i in rxn_idx){
+    model <- changeBounds(model, rxn_idx, lb = 0, ub = 0)
+  }
   
   return(model)
 }
