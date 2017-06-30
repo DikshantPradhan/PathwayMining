@@ -50,18 +50,19 @@ plot_graph <- function(graph){
 
 graph_rxn_sets <- function(set_list, edge_color = "grey", show_theorietical = FALSE, direct = TRUE){
   graph <- make_empty_graph()
-  graph <- graph + vertices(unique(unlist(set_list)), color = "green")
+  # graph <- graph + vertices(unique(unlist(set_list)), color = "green")
   
-  graph <- rxn_set_edges(graph, set_list, edge_color, direct = direct)
+  graph <- rxn_set_edges(set_list, graph, edge_color, direct = direct)
   
   if (show_theorietical){
-    graph <- rxn_set_edges(graph, list(unlist(set_list)), edge_color = "grey")
+    graph <- rxn_set_edges(list(unlist(set_list)), graph, edge_color = "grey")
   }
   
   return(graph)
 }
 
-rxn_set_edges <- function(graph = make_empty_graph(), set_list, edge_color = "blue", vertex_color = "green", direct = TRUE, addition = ""){
+rxn_set_edges <- function(set_list, graph = make_empty_graph(), edge_color = "blue", vertex_color = "green", 
+                          direct = TRUE, addition = "", sample = NULL){
   for (vertex in unlist(set_list)){
     graph <- add_vertex(graph, paste(vertex, addition, sep = ""), color = vertex_color)
   }
@@ -71,23 +72,25 @@ rxn_set_edges <- function(graph = make_empty_graph(), set_list, edge_color = "bl
       ds_rxns <- c()
       us_rxns <- c()
       
+      rxn_idx <- get_rxn_idx(rxn)
+      
       if (direct){
-        ds_rxns <- intersect(get_rxn_id_from_idx(get_dwnst_rxns(get_rxn_idx(rxn))), set)
-        us_rxns <- intersect(get_rxn_id_from_idx(get_upst_rxns(get_rxn_idx(rxn))), set)
+        ds_rxns <- intersect(get_rxn_id_from_idx(get_dwnst_rxns(rxn_idx, sample)), set)
+        # us_rxns <- intersect(get_rxn_id_from_idx(get_upst_rxns(get_rxn_idx(rxn))), set)
       }
       else {
-        ds_rxns <- intersect(get_rxn_id_from_idx(get_dwnst_paths(get_rxn_idx(rxn))), set)
-        us_rxns <- intersect(get_rxn_id_from_idx(get_upst_paths(get_rxn_idx(rxn))), set)
+        ds_rxns <- intersect(get_rxn_id_from_idx(get_dwnst_paths(rxn_idx, sample)), set)
+        # us_rxns <- intersect(get_rxn_id_from_idx(get_upst_paths(get_rxn_idx(rxn))), set)
       }
       
       for (ds_rxn in ds_rxns){
         # graph <- graph + edge(rxn, get_rxn_id_from_idx(ds_rxn), color = edge_color)
         graph <- add_edge(graph, paste(rxn, addition, sep = ""), paste(ds_rxn, addition, sep = ""), color = edge_color)
       }
-      for (us_rxn in us_rxns){
-        # graph <- graph + edge(get_rxn_id_from_idx(us_rxn), rxn, color = edge_color)
-        graph <- add_edge(graph, paste(us_rxn, addition, sep = ""), paste(rxn, addition, sep = ""), color = edge_color)
-      }
+      # for (us_rxn in us_rxns){
+      #   # graph <- graph + edge(get_rxn_id_from_idx(us_rxn), rxn, color = edge_color)
+      #   graph <- add_edge(graph, paste(us_rxn, addition, sep = ""), paste(rxn, addition, sep = ""), color = edge_color)
+      # }
     }
   }
   
@@ -112,7 +115,7 @@ graph_containing_set <- function(rxn_id, set_list, g = make_empty_graph(), plot 
   }
   
   g <- add_set_vertices(g, unique(set_list[[set_idx]]))
-  g <- rxn_set_edges(g, set_list[set_idx], edge_color = "blue")
+  g <- rxn_set_edges(set_list[set_idx], g, edge_color = "blue")
   
   if (plot){
     plot_graph(g)
@@ -144,8 +147,8 @@ compare_containing_sets <- function(rxn_id, og_rxn_set, suppr_rxn_set, direct = 
   g <- make_empty_graph()
   g <- g + vertices(unique(rxns), color = "green")
   
-  g <- rxn_set_edges(g, suppr_rxn_set[suppr_set_idx], edge_color = "blue", direct = direct)
-  g <- rxn_set_edges(g, og_rxn_set[og_set_idx], edge_color = "red", direct = direct)
+  g <- rxn_set_edges(suppr_rxn_set[suppr_set_idx], g, edge_color = "blue", direct = direct)
+  g <- rxn_set_edges(og_rxn_set[og_set_idx], g, edge_color = "red", direct = direct)
   
   plot_graph(g)
 }
@@ -156,7 +159,7 @@ compare_model_sets <- function(comparison_num){
   
   g <- make_empty_graph()
   g <- g + vertices(model@react_id, color = "green")
-  g <- rxn_set_edges(g, og_rxn_set, "grey", direct = TRUE)
+  g <- rxn_set_edges(og_rxn_set, g, "grey", direct = TRUE)
   
   compar_sample <- sampler(suppressed_model(model, comparison_num)) #sample_suppr[comparison_num, , ]
   suppr_pairs <- return_couples(flux_coupling_cor(compar_sample))
@@ -179,7 +182,7 @@ compare_degen_sets_to_og <- function(rxn_id, og_rxn_set, suppr_rxn_set, addition
   og_set_idx <- get_set_idx(rxn_id, og_rxn_set)
   suppr_set_idx <- get_set_idx(rxn_id, suppr_rxn_set)
   
-  graph <- rxn_set_edges(graph, og_rxn_set[og_set_idx], edge_color = "black")
+  graph <- rxn_set_edges(og_rxn_set[og_set_idx], graph, edge_color = "black")
   # graph <- rxn_set_edges(graph, og_rxn_set[og_set_idx], edge_color = "grey", direct = FALSE)
   
   # print(suppr_set_idx)
@@ -189,7 +192,7 @@ compare_degen_sets_to_og <- function(rxn_id, og_rxn_set, suppr_rxn_set, addition
       # print("unequal set: ")
       # print(og_rxn_set[[og_set_idx]])
       # print(suppr_rxn_set[[suppr_set_idx]])
-      graph <- rxn_set_edges(graph, suppr_rxn_set[suppr_set_idx], edge_color = "blue", vertex_color = "white", addition = addition)
+      graph <- rxn_set_edges(suppr_rxn_set[suppr_set_idx], graph, edge_color = "blue", vertex_color = "white", addition = addition)
       # graph <- rxn_set_edges(graph, suppr_rxn_set[suppr_set_idx], edge_color = "grey", vertex_color = "white",
       #                        addition = addition, direct = FALSE)
       graph <- add_edge(graph, rxn_id, paste(rxn_id, addition, sep = ""), color = "red")

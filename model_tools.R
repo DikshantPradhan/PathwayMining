@@ -21,17 +21,30 @@ get_rxn_id_from_idx <- function(rxn_idx){
   return(model@react_id[rxn_idx])
 }
 
-get_dwnst_rxns <- function(rxn_idx){
-  dwnst_mets <- which(S[,rxn_idx] > 0)
+get_dwnst_rxns <- function(rxn_idx, sample = NULL){
+  fwd_dwnst_mets <- which(S[,rxn_idx] > 0)
   
-  if (length(model@react_rev[rxn_idx]) == 0){
-    print(rxn_idx)
-  }
-  
+  # if (length(model@react_rev[rxn_idx]) == 0){
+  #   print(rxn_idx)
+  # }
+  rev_dwnst_mets <- c()
   if (model@react_rev[rxn_idx]){
-    dwnst_mets <- c(dwnst_mets, which(S[,rxn_idx] < 0))
+    rev_dwnst_mets <- which(S[,rxn_idx] < 0)
   }
 
+  if (!is.null(sample)){
+    flux <- sample[, rxn_idx]
+    if (length(which(flux < 0)) == 0){ # all positive
+      dwnst_rxns <- fwd_dwnst_mets
+    }
+    if (length(which(flux > 0)) == 0){ # all negative
+      dwnst_rxns <- rev_dwnst_mets
+    }
+  }
+  else {
+    dwnst_mets <- c(fwd_dwnst_mets, rev_dwnst_mets)
+  }
+  
   dwnst_rxns <- c()
   
   for (i in dwnst_mets){
@@ -245,19 +258,6 @@ get_list_of_sets <- function(pairs, rxns_list = c()){ #2d columns
   }
   
   return(rxns_list)
-}
-
-get_set_idx <- function(rxn, rxns_list){
-  idx <- grep(core_rxn_id(rxn), rxns_list)
-  
-  for (j in idx){
-    if (rxn %in% rxns_list[[j]]){
-      # idx <- c()
-      # idx <- j
-      return(j)
-    }
-  }
-  return(integer(0))
 }
 
 correlating_sets_from_sample <- function(sample){
