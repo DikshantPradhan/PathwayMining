@@ -278,7 +278,13 @@ sampler_lm_fitting <- function(model, rxn_idx, binary = FALSE){
   return(sample_df["Biomass_Ecoli_core_w_GAM" > 0])
 }
 
-rescale_sample <- function(sample, rxn_idx = 0){
+rescale_sample <- function(sample, model, rxn_idx = 0){ # rxn_idx is idx of blocked reaction, 0 if nothing is blocked
+  
+  opt <- fluxVar(model, percentage = 99)
+  model_fva <- opt@lp_obj
+  fva_min <- model_fva[1:95]
+  fva_max <- model_fva[96:190]
+  
   rxn_list = c(1:ncol(sample))
   if (rxn_idx != 0){
     rxn_list <- rxn_list[-rxn_idx]
@@ -302,9 +308,9 @@ suppressed_model <- function(model, rxn_idx){
   return(model)
 }
 
-maxDiff_dist <- function(sample){
+maxDiff_dist <- function(sample, model){
   
-  rescaled <- rescale_sample(sample)
+  rescaled <- rescale_sample(sample, model = model)
   maxDiff <- array(0, dim = c(nrow(sample)-1, ncol(sample)))
   
   for (i in 1:ncol(rescaled)){

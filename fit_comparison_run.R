@@ -6,10 +6,10 @@ W=200
 nPnts=500
 steps=5
 
-opt <- fluxVar(model, percentage = 99)
-model_fva <- opt@lp_obj
-fva_min <- model_fva[1:95]
-fva_max <- model_fva[96:190]
+# opt <- fluxVar(model, percentage = 99)
+# model_fva <- opt@lp_obj
+# fva_min <- model_fva[1:95]
+# fva_max <- model_fva[96:190]
 
 S <- model@S
 
