@@ -257,7 +257,7 @@ find_coupling_change <- function(sample_og, sample_suppr){
   return(coupling_change(coupling_og, coupling_suppr))
 }
 
-sampler <- function(model, W=200, nPnts=500, steps=5){
+sampler <- function(model, W=200, nPnts=500, steps=10){
   sample = ACHR(model,W,nPoints=nPnts,stepsPerPoint=steps)
   sample = t(sample$Points)
   colnames(sample) <- model@react_id
