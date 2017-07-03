@@ -1,3 +1,5 @@
+library(tree)
+
 get_set_idx <- function(rxn, rxns_list){
   idx <- grep(core_rxn_id(rxn), rxns_list)
   
@@ -41,46 +43,37 @@ find_all_sets_for_rxn <- function(rxn_id, set_lists){
   }
 }
 
-correlation_predictor <- function(sample_df){ # need to complete this function
-  #
+correlation_predictor <- function(sample_df, rxn1, rxn2){
   cor_list <- rep(FALSE, 95)
-  cor_list[check_set_list_for_containing(c("CYTBD", "NADH16"), set_lists)] <- TRUE
+  cor_list[check_set_list_for_containing(c(rxn1, rxn2), set_lists)] <- TRUE
   
   correlation_list <- c()
   
-  sample_df = sampler(model, nPnts = 500)# ACHR(model,W,nPoints=nPnts,stepsPerPoint=10)
-  for (i in 1:nrow(sample_df)){
-    if (check_sets_for_containing(c("CYTBD", "NADH16"), og_set_list)){
-      correlation_list <- c(correlation_list, TRUE)
-    }
-    else {
-      correlation_list <- c(correlation_list, FALSE)
-    }
+  
+  for (j in which(sample_df["block"] == 0)){
+    correlation_list[j] <- check_sets_for_containing(c(rxn1, rxn2), og_set_list)
   }
-  
-  
-  report <- paste(i, "::", "sample_df:", nrow(sample_df), ";", "corr:", length(correlation_list))
-  
+
   for (i in 1:95){
-    sample_df2 = sampler(suppressed_model(model, i), nPnts = 500)
-    sample_df <- rbind.data.frame(sample_df, sample_df2)
-    for (j in 1:(nrow(sample_df) - length(correlation_list))){
-      correlation_list <- c(correlation_list, cor_list[i])
+    for (j in which(sample_df["block"] == i)){
+      correlation_list[j] <- check_sets_for_containing(c(rxn1, rxn2), set_lists[[i]]) #cor_list[i]
     }
-    report <- c(report, paste(i, "::", "sample_df:", nrow(sample_df), ";", "corr:", length(correlation_list)))
   }
-  sample_df <- data.frame(sample_df)
-  fit <- tree(correlation_list ~ ., data = sample_df)
+  
+  correlation_list <- as.factor(correlation_list)
+  
+  # sample_df <- data.frame(sample_df)
+  sample <- sample_df[-c(96)]
+  fit <- tree(correlation_list ~ ., data = sample)
   
   plot(fit)
   text(fit)
   return(fit)
 }
 
-predictor_matrix_generator <- function(){ # need to complete this function
+predictor_matrix_generator <- function(sample_df){ # need to complete this function
   
-  sample_df <- c() # fill this in
-  predictors <- c()
+  predictors <- array()
   
   for (i in 1:95){
     for (j in i:95){
@@ -107,36 +100,57 @@ pair_lists_from_predictors <- function(predictors){
   return(pairs)
 }
 
-cor_list <- rep(FALSE, 95)
-cor_list[check_set_list_for_containing(c("CYTBD", "NADH16"), set_lists)] <- TRUE
+sample_df_generator <- function(nPnts = 500, steps = 10){
+  sample_df = sampler(model, nPnts = nPnts, steps = steps)# ACHR(model,W,nPoints=nPnts,stepsPerPoint=10)
 
-correlation_list <- c()
+  sample_df["block"] <- rep(0, nrow(sample_df))
 
-sample_df = sampler(model, nPnts = 500)# ACHR(model,W,nPoints=nPnts,stepsPerPoint=10)
-for (i in 1:nrow(sample_df)){
-  if (check_sets_for_containing(c("CYTBD", "NADH16"), og_set_list)){
-    correlation_list <- c(correlation_list, TRUE)
+  for (i in 1:95){
+    sample_df2 = sampler(suppressed_model(model, i), nPnts = nPnts, steps = steps)
+    sample_df2["block"] <- rep(i, nrow(sample_df2))
+    sample_df <- rbind.data.frame(sample_df, sample_df2)
   }
-  else {
-    correlation_list <- c(correlation_list, FALSE)
-  }
+  sample_df <- data.frame(sample_df)
+  return(sample_df)
 }
 
-sample_df["block"] <- rep(0, nrow(sample_df))
-
-report <- paste(i, "::", "sample_df:", nrow(sample_df), ";", "corr:", length(correlation_list))
-
-for (i in 1:95){
-  sample_df2 = sampler(suppressed_model(model, i), nPnts = 500)
-  sample_df2["block"] <- rep(i, nrow(sample_df2))
-  sample_df <- rbind.data.frame(sample_df, sample_df2)
-  for (j in 1:(nrow(sample_df) - length(correlation_list))){
-    correlation_list <- c(correlation_list, cor_list[i])
+test_fit <- function(fit, rxn1, rxn2){
+  report <- c()
+  
+  # data <- data.frame(sampler(suppressed_model(model, i), nPnts = 10))
+  # 
+  # df <- rep(0, 95)
+  # for (i in 1:95){
+  #   df[i] <- mean(data[,i])
+  # }
+  # names(df) <- colnames(data)
+  
+  # print(df)
+  
+  df <- data <- data.frame(sampler(suppressed_model(model, i), nPnts = 1))
+  
+  for (i in 1:95){
+    data <- data.frame(sampler(suppressed_model(model, i), nPnts = 100))
+    
+    # df <- rep(0, 95)
+    for (j in 1:95){
+      df[j] <- mean(data[,j])
+    }
+    # names(df) <- colnames(data)
+    
+    result <- predict(fit, newdata = data.frame(df))
+    prediction <- colnames(result)[which.max(result)]
+    known <- check_sets_for_containing(c(rxn1, rxn2), set_lists[[i]])
+    
+    # report <- c(report, paste(i, ":", prediction, known))
+    
+    if (prediction == "TRUE" & !known){
+      report <- c(report, paste(i, ":", prediction, known))
+    }
+    if (prediction == "FALSE" & known){
+      report <- c(report, paste(i, ":", prediction, known))
+    }
+  
   }
-  report <- c(report, paste(i, "::", "sample_df:", nrow(sample_df), ";", "corr:", length(correlation_list)))
+  return(report)
 }
-sample_df <- data.frame(sample_df)
-fit1 <- tree(correlation_list ~ ., data = sample_df)
-
-plot(fit1)
-text(fit1)
