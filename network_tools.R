@@ -48,16 +48,16 @@ plot_graph <- function(graph){
   plot(graph,edge.arrow.size=0.3,vertex.label.color = "black",vertex.size=10)
 }
 
-graph_rxn_sets <- function(set_list, edge_color = "grey", show_theorietical = FALSE, direct = TRUE){
+graph_rxn_sets <- function(set_list, edge_color = "grey", show_theorietical = FALSE, direct = TRUE, sample = NULL){
   graph <- make_empty_graph()
   # graph <- graph + vertices(unique(unlist(set_list)), color = "green")
   
   graph <- rxn_set_edges(set_list, graph, edge_color, direct = direct)
   
   if (show_theorietical){
-    graph <- rxn_set_edges(list(unlist(set_list)), graph, edge_color = "grey")
+    graph <- rxn_set_edges(list(unlist(set_list)), graph, edge_color = "grey", sample = sample)
   }
-  
+  plot(graph)
   return(graph)
 }
 
@@ -102,7 +102,7 @@ graph_correlation_set <- function(set_list){
   plot_graph(g)
 }
 
-graph_containing_set <- function(rxn_id, set_list, g = make_empty_graph(), plot = TRUE){
+graph_containing_set <- function(rxn_id, set_list, g = make_empty_graph(), plot = TRUE, sample = NULL){
   set_idx <- get_set_idx(rxn_id, set_list) #grep(rxn_id, set_list)
   
   # g <- make_empty_graph()
@@ -115,7 +115,7 @@ graph_containing_set <- function(rxn_id, set_list, g = make_empty_graph(), plot 
   }
   
   g <- add_set_vertices(g, unique(set_list[[set_idx]]))
-  g <- rxn_set_edges(set_list[set_idx], g, edge_color = "blue")
+  g <- rxn_set_edges(set_list[set_idx], g, edge_color = "blue", sample = sample)
   
   if (plot){
     plot_graph(g)
@@ -221,6 +221,14 @@ compare_multiple_degen_sets <- function(rxn_ids, og_rxn_set, suppr_rxn_sets, gra
   if (plot){
     plot_graph(graph)
   }
+  return(graph)
+}
+
+graph_redundancies <- function(rxn_id){
+  graph <- make_empty_graph()
+  graph <- add_vertex(graph = graph, rxn_id, color = "red")
+  graph <- rxn_set_edges(set_list = list(total_union(find_all_sets_for_rxn(rxn_id, set_lists))), graph = graph, sample = NULL)
+  plot_graph(graph)
   return(graph)
 }
 

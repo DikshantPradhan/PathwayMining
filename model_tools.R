@@ -22,6 +22,95 @@ get_rxn_id_from_idx <- function(rxn_idx){
 }
 
 get_dwnst_rxns <- function(rxn_idx, sample = NULL){
+  # fwd_dwnst_mets <- which(S[,rxn_idx] > 0)
+  
+  # if (length(model@react_rev[rxn_idx]) == 0){
+  #   print(rxn_idx)
+  # }
+  # if (model@react_rev[rxn_idx]){ # add reactants to downstream metabolites if rxn is reversible
+  #   dwnst_mets <- c(dwnst_mets, which(S[,rxn_idx] < 0))
+  # }
+  
+  dwnst_rxns <- c()
+  for (i in which(S[,rxn_idx] > 0)){ # considering forward flux: products
+    
+    if (!is.null(sample)){
+      if (length(which(sample[, rxn_idx] > 0)) > 0){ # rxn has fwd flux
+    
+        for (j in which(S[i,] < 0)){ # reactions w downstream metabolite as reactant
+          if (length(which(sample[, j] > 0)) != 0){ # rxn has fwd flux & ds_rxn has fwd flux
+            # print(paste(get_rxn_id_from_idx(rxn_idx), "fwd,", get_rxn_id_from_idx(j), "fwd:", model@met_id[i]))
+            dwnst_rxns <- c(dwnst_rxns, j)
+          }
+        }
+      
+        for (j in which(S[i,] > 0)){ # reactions w downstream metabolite as product
+          if (length(which(sample[, j] < 0)) != 0){ # rxn has fwd flux & ds_rxn has rev flux
+            # print(paste(get_rxn_id_from_idx(rxn_idx), "fwd,", get_rxn_id_from_idx(j), "rev:", model@met_id[i]))
+            dwnst_rxns <- c(dwnst_rxns, j)
+          }
+        }
+        
+      }
+    } 
+    else {
+      # print("null sample")
+      for (j in which(S[i,] < 0)){ # reactions w downstream metabolite as reactant
+        dwnst_rxns <- c(dwnst_rxns, j)
+      }
+      
+      for (j in which(S[i,] > 0)){ # reactions w downstream metabolite as product
+        if (model@react_rev[j]){ # downstream rxn is reversible
+          dwnst_rxns <- c(dwnst_rxns, j)
+        }
+      }
+      # dwnst_rxns <- c(dwnst_rxns, j)
+    }
+  }
+  
+  for (i in which(S[,rxn_idx] < 0)){ # considering reverse flux: reactants
+    
+    if (!is.null(sample)){
+      if (length(which(sample[, rxn_idx] < 0)) > 0){ # rxn has rev flux
+    
+        for (j in which(S[i,] < 0)){ # reactions w upstream metabolite as reactant
+          if (length(which(sample[, j] > 0)) != 0){ # rxn has rev flux & ds_rxn has fwd flux
+            # print(paste(get_rxn_id_from_idx(rxn_idx), "rev,", get_rxn_id_from_idx(j), "fwd:", model@met_id[i]))
+            dwnst_rxns <- c(dwnst_rxns, j)
+          }
+        }
+      
+        for (j in which(S[i,] > 0)){ # reactions w upstream metabolite as product
+          if (length(which(sample[, j] < 0)) != 0){ # rxn has rev flux & ds_rxn has rev flux
+            # print(paste(get_rxn_id_from_idx(rxn_idx), "rev,", get_rxn_id_from_idx(j), "rev:", model@met_id[i]))
+            dwnst_rxns <- c(dwnst_rxns, j)
+          }
+        }
+        
+      }
+    } else {
+      # print("null reverse")
+      if (model@react_rev[rxn_idx]){ # rxn has rev flux
+        # print("null sample")
+        for (j in which(S[i,] < 0)){ # reactions w downstream metabolite as reactant
+          dwnst_rxns <- c(dwnst_rxns, j)
+        }
+        
+        for (j in which(S[i,] > 0)){ # reactions w downstream metabolite as product
+          if (model@react_rev[j]){ # downstream rxn is reversible
+            dwnst_rxns <- c(dwnst_rxns, j)
+          }
+        }
+        # dwnst_rxns <- c(dwnst_rxns, j)
+        
+      }
+    }
+  }
+  
+  return(unique(dwnst_rxns))
+}
+
+get_dwnst_rxns_2 <- function(rxn_idx, sample = NULL){
   fwd_dwnst_mets <- which(S[,rxn_idx] > 0)
   
   # if (length(model@react_rev[rxn_idx]) == 0){
@@ -32,25 +121,82 @@ get_dwnst_rxns <- function(rxn_idx, sample = NULL){
     rev_dwnst_mets <- which(S[,rxn_idx] < 0)
   }
 
+  dwnst_mets <- c()
+  
+  # if sample data is given, isolate products if flux is positive and reactants if flux is negative; both if flux goes both ways
   if (!is.null(sample)){
     flux <- sample[, rxn_idx]
     if (length(which(flux < 0)) == 0){ # all positive
-      dwnst_rxns <- fwd_dwnst_mets
+      # print(paste("fwd:", get_rxn_id_from_idx(rxn_idx)))
+      dwnst_mets <- fwd_dwnst_mets
     }
     if (length(which(flux > 0)) == 0){ # all negative
-      dwnst_rxns <- rev_dwnst_mets
+      # print(paste("rev:", get_rxn_id_from_idx(rxn_idx)))
+      dwnst_mets <- rev_dwnst_mets
     }
   }
   else {
+    # print(paste("both ways:", get_rxn_id_from_idx(rxn_idx)))
     dwnst_mets <- c(fwd_dwnst_mets, rev_dwnst_mets)
   }
   
   dwnst_rxns <- c()
-  
+  # dwnst_search <- c()
+  fwd_rxns <- c()
+  rev_rxns <- c()
   for (i in dwnst_mets){
-    dwnst_rxns <- c(dwnst_rxns, which(S[i,] < 0))
+    # dwnst_rxns <- c(dwnst_rxns, which(S[i,] < 0))
+    for (j in which(S[i,] < 0)){ # reactions w downstream metabolite as reactant
+      if (!is.null(sample)){
+        flux <- sample[, j]
+        if (length(which(sample[, j] < 0)) == 0){ # all positive
+          dwnst_rxns <- c(dwnst_rxns, i)
+          print(paste(get_rxn_id_from_idx(rxn_idx), "(fwd):", get_rxn_id_from_idx(i)))
+        }
+      }
+      else {
+        print(paste(get_rxn_id_from_idx(rxn_idx), "(fwd_):", get_rxn_id_from_idx(i)))
+        dwnst_rxns <- c(dwnst_rxns, fwd_rxns)
+      }
+    }
+    
+    fwd_rxns <- c(fwd_rxns, which(S[i,] < 0)) # reactions w downstream metabolite as reactant
+    rev_rxns <- c(rev_rxns, which(S[i,] > 0)) # reactions w downstream metabolite as product (helpful if reversible)
+    # dwnst_search <- c(dwnst_search, paste(model@met_id[i], ": ", get_rxn_id_from_idx(which(S[i,] < 0)), sep = ""))
   }
   
+  for (i in fwd_rxns){
+    # if sample data is given, 
+    if (!is.null(sample)){
+      flux <- sample[, i]
+      if (length(which(flux < 0)) == 0){ # all positive
+        dwnst_rxns <- c(dwnst_rxns, i)
+        print(paste(get_rxn_id_from_idx(rxn_idx), "(fwd):", get_rxn_id_from_idx(i)))
+      }
+    }
+    else {
+      print(paste(get_rxn_id_from_idx(rxn_idx), "(fwd_):", get_rxn_id_from_idx(i)))
+      dwnst_rxns <- c(dwnst_rxns, fwd_rxns)
+    }
+  }
+  for (i in rev_rxns){
+    if (!is.null(sample)){
+      flux <- sample[, i]
+      if (length(which(flux > 0)) == 0){ # all negative
+        print(paste(get_rxn_id_from_idx(rxn_idx), "(rev):", get_rxn_id_from_idx(i)))
+        dwnst_rxns <- c(dwnst_rxns, i)
+      }
+    }
+    else {
+      if (model@react_rev[i]){
+        print(paste(get_rxn_id_from_idx(rxn_idx), "(rev_):", get_rxn_id_from_idx(i)))
+        dwnst_rxns <- c(dwnst_rxns, i)
+      }
+    }
+  }
+  
+  # print(paste(get_rxn_id_from_idx(rxn_idx), ":", get_rxn_id_from_idx(dwnst_rxns)))
+  # print(dwnst_search)
   return(unique(dwnst_rxns))
 }
 
