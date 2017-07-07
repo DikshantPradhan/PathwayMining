@@ -224,10 +224,13 @@ compare_multiple_degen_sets <- function(rxn_ids, og_rxn_set, suppr_rxn_sets, gra
   return(graph)
 }
 
-graph_redundancies <- function(rxn_id){
+graph_redundancies <- function(rxns){
   graph <- make_empty_graph()
-  graph <- add_vertex(graph = graph, rxn_id, color = "red")
-  graph <- rxn_set_edges(set_list = list(total_union(find_all_sets_for_rxn(rxn_id, set_lists))), graph = graph, sample = NULL)
+  for (rxn in rxns){
+    graph <- add_vertex(graph = graph, rxn, color = "red")
+  }
+  graph <- rxn_set_edges(set_list = list(rxns), graph = graph, sample = NULL)
+  graph <- rxn_set_edges(set_list = list(total_union(find_all_sets_for_rxns(rxns, set_lists))), graph = graph, sample = NULL)
   plot_graph(graph)
   return(graph)
 }

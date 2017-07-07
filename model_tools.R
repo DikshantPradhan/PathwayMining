@@ -423,7 +423,7 @@ generate_pair_lists <- function(suppression_idxs){
 generate_set_lists <- function(suppression_idxs){
   set_lists <- c()
   for (i in suppression_idxs){
-    set_lists[i] <- list(correlating_sets_from_sample(sampler(suppressed_model(model, i))))
+    set_lists[i] <- list(correlating_sets_from_sample(sampler(suppressed_model(model, i), Biomass = FALSE)))
   }
   return(set_lists)
 }

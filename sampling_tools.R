@@ -257,12 +257,14 @@ find_coupling_change <- function(sample_og, sample_suppr){
   return(coupling_change(coupling_og, coupling_suppr))
 }
 
-sampler <- function(model, W=200, nPnts=500, steps=10){
+sampler <- function(model, W=200, nPnts=500, steps=10, Biomass = TRUE){
   sample = ACHR(model,W,nPoints=nPnts,stepsPerPoint=steps)
   sample = t(sample$Points)
   colnames(sample) <- model@react_id
   sample_df <- as.data.frame(sample)
-  sample_df <- sample_df[which(sample_df[,13] > 0),]
+  if (Biomass){
+    sample_df <- sample_df[which(sample_df[,13] > 0),]
+  }
   return(sample_df)
 }
 
@@ -301,6 +303,10 @@ rescale_sample <- function(sample, model, rxn_idx = 0){ # rxn_idx is idx of bloc
 suppressed_model <- function(model, rxn_idx){
   # model@lowbnd[rxn_idx] <- 0
   # model@uppbnd[rxn_idx] <- 0
+  if (rxn_idx == 0){
+    return(model)
+  }
+  
   for (i in rxn_idx){
     model <- changeBounds(model, rxn_idx, lb = 0, ub = 0)
   }
