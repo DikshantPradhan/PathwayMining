@@ -81,3 +81,22 @@ total_union <- function(sets){
   
   return(u)
 }
+
+compare_r1_sets <- function(og_set_list, set_lists){
+  for (i in 1:length(set_lists)){
+    print(i)
+    containment <- "TRUE"
+    for (j in 1:length(og_set_list)){
+      if (check_sets_for_containing(og_set_list[[j]], set_lists[[i]]) == FALSE){
+        print(og_set_list[[j]])
+        for (rxn in og_set_list[[j]]){
+          if (check_sets_for_containing(rxn, set_lists[[i]]) == TRUE){
+            print(paste(rxn, "exists"))
+          }
+        }
+        containment <- "FALSE"
+      }
+    }
+    # print(containment)
+  }
+}

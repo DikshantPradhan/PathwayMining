@@ -423,9 +423,17 @@ generate_pair_lists <- function(suppression_idxs){
 generate_set_lists <- function(suppression_idxs){
   set_lists <- c()
   for (i in suppression_idxs){
-    set_lists[i] <- list(correlating_sets_from_sample(sampler(suppressed_model(model, i), Biomass = FALSE)))
+    set_lists[i] <- list(correlating_sets_from_sample(sampler(suppressed_model(model, i))))
   }
   return(set_lists)
+}
+
+generate_og_set_list <- function(){
+  return(correlating_sets_from_sample(sampler(model)))
+}
+
+generate_og_pair_list <- function(){
+  return(return_couples(flux_coupling_cor(sampler(suppressed_model(model, i)))))
 }
 
 get_union_set_from_degen_pairs <- function(set_list = model@react_id, pair_lists){

@@ -179,8 +179,11 @@ return_couples <- function(array){ # correlation array (output from flux_couplin
   row <- dimnames(array)[[1]]
   col <- dimnames(array)[[2]]
   
-  rxn_col1 <- c("Biomass_Ecoli_core_w_GAM")
-  rxn_col2 <- c("Biomass_Ecoli_core_w_GAM")
+  # rxn_col1 <- c("Biomass_Ecoli_core_w_GAM")
+  # rxn_col2 <- c("Biomass_Ecoli_core_w_GAM")
+  
+  rxn_col1 <- c()
+  rxn_col2 <- c()
   
   # print(dim(array))
   
@@ -257,13 +260,22 @@ find_coupling_change <- function(sample_og, sample_suppr){
   return(coupling_change(coupling_og, coupling_suppr))
 }
 
-sampler <- function(model, W=200, nPnts=500, steps=10, Biomass = TRUE){
+sampler <- function(model, W=200, nPnts=1000, steps=5, Biomass = FALSE, Floor = TRUE){
   sample = ACHR(model,W,nPoints=nPnts,stepsPerPoint=steps)
   sample = t(sample$Points)
   colnames(sample) <- model@react_id
   sample_df <- as.data.frame(sample)
+  if (Floor){
+    for (i in 1:nrow(sample_df)){
+      for (j in 1:ncol(sample_df)){
+        if (abs(sample_df[i,j]) < 1.0e-11){
+          sample_df[i,j] <- 0
+        }
+      }
+    }
+  }
   if (Biomass){
-    sample_df <- sample_df[which(sample_df[,13] > 0),]
+    # sample_df <- sample_df[which(sample_df[,13] > 0),]
   }
   return(sample_df)
 }
