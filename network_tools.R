@@ -57,7 +57,7 @@ graph_rxn_sets <- function(set_list, edge_color = "grey", show_theorietical = FA
   if (show_theorietical){
     graph <- rxn_set_edges(list(unlist(set_list)), graph, edge_color = "grey", sample = sample)
   }
-  plot(graph)
+  plot_graph(graph)
   return(graph)
 }
 
@@ -227,7 +227,7 @@ compare_multiple_degen_sets <- function(rxn_ids, og_rxn_set, suppr_rxn_sets, gra
 graph_redundancies <- function(rxns){
   graph <- make_empty_graph()
   for (rxn in rxns){
-    graph <- add_vertex(graph = graph, rxn, color = "red")
+    graph <- add_vertex(graph = graph, rxn, color = "yellow")
   }
   graph <- rxn_set_edges(set_list = list(rxns), graph = graph, sample = NULL)
   graph <- rxn_set_edges(set_list = list(total_union(find_all_sets_for_rxns(rxns, set_lists))), graph = graph, sample = NULL)

@@ -1,9 +1,19 @@
 data(Ec_core);
 model=Ec_core;
+model <- changeBounds(model, 11, lb = 0) # this and next lead to no PGI in GND coset
+model <- changeBounds(model, 13, lb = 0, ub = 0)
+model <- rmReact(model = model, react = 13)
+for (i in findExchReact(model)@react_pos){
+  model <- changeBounds(model, i, lb = -1000, ub = 1000)
+  # if (model@lowbnd[i] == 0){
+  #   model <- changeBounds(model, i, lb = -1000)
+  # }
+}
+
 #solver="cplexAPI"
 solver="glpkAPI"
 W=200
-nPnts=500
+nPnts=1000
 steps=5
 
 # opt <- fluxVar(model, percentage = 99)
