@@ -72,6 +72,27 @@ find_all_sets_for_rxns <- function(rxns, set_lists){
   return(sets)
 }
 
+find_recurring_rxns <- function(rxns, set_lists){
+  all_sets <- find_all_sets_for_rxns(rxns, set_lists)
+  sets <- c()
+  for (i in 1:length(all_sets)){
+    if (length(all_sets[[i]]) > 0){
+      sets <- c(sets, list(all_sets[[i]]))
+    }
+  }
+  
+  redundant <- c()
+  
+  for (i in 1:length(sets)){
+    diff <- setdiff(sets[[i]], rxns)
+    if (length(diff) > 0){
+      redundant <- c(redundant, list(setdiff(sets[[i]], rxns)))
+    }
+  }
+  redundant <- redundant[which(duplicated(redundant) == FALSE)]
+  return(redundant)
+}
+
 total_union <- function(sets){
   u <- c()
   
@@ -82,7 +103,7 @@ total_union <- function(sets){
   return(u)
 }
 
-compare_r1_sets <- function(og_set_list, set_lists){
+compare_r1_sets <- function(og_set_list, set_lists){ # see which og_sets don't appear in each set_list
   for (i in 1:length(set_lists)){
     print(i)
     containment <- "TRUE"
@@ -98,5 +119,54 @@ compare_r1_sets <- function(og_set_list, set_lists){
       }
     }
     # print(containment)
+  }
+}
+
+compare_r1_sets_further <- function(og_set_list, set_lists){
+  composition <- c()
+  for (i in 1:length(set_lists)){
+    print(paste(i, ":"))
+    sets <- c()
+    for (j in 1:length(set_lists[[i]])){
+      composing <- find_composing_sets(set_lists[[i]][[j]], og_set_list)
+      if (length(composing) > 1){
+        print(paste(composing))
+        sets <- c(sets, list(composing))
+      }
+    }
+    if (length(sets) > 0){
+      composition[i] <- list(sets)
+    }
+  }
+  
+  return(composition)
+}
+
+find_composing_sets <- function(rxns, sets){
+  composition <- c()
+  for (i in 1:length(sets)){
+    if (sets[[i]] %in% rxns){
+      composition <- c(composition, i)
+    }
+  }
+  
+  return(composition)
+}
+
+find_redundancies <- function(composition_set){
+  redundancies <- c()
+  
+  for (i in 1:length(composition_set)){ # deleted reaction
+    print(paste(i, ":"))
+    if (length(composition_set[[i]]) > 0){
+      for (j in 1:length(composition_set[[i]])){ # newly created sets
+        for (k in 1:length(composition_set[[i]][[j]])){ # rxns in new sets
+          rxn <- composition_set[[i]][[j]][k]
+          if (i %in% unlist(composition_set[[rxn]])){
+            print(paste(rxn, composition_set[[rxn]], sep = "- "))
+          }
+        }
+      }
+    }
   }
 }
