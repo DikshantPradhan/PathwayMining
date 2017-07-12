@@ -157,15 +157,36 @@ find_redundancies <- function(composition_set){
   redundancies <- c()
   
   for (i in 1:length(composition_set)){ # deleted reaction
-    print(paste(i, ":"))
-    if (length(composition_set[[i]]) > 0){
+    a <- get_set_idx(get_rxn_id_from_idx(i), og_set_list) # containing set
+    # print(paste(a, "/", i, ":"))
+    if (length(a) > 0 & length(composition_set[[i]]) > 0){
+      print(paste(a, "/", i, ":"))
       for (j in 1:length(composition_set[[i]])){ # newly created sets
-        for (k in 1:length(composition_set[[i]][[j]])){ # rxns in new sets
-          rxn <- composition_set[[i]][[j]][k]
-          if (i %in% unlist(composition_set[[rxn]])){
-            print(paste(rxn, composition_set[[rxn]], sep = "- "))
+        for (k in 1:length(composition_set[[i]][[j]])){ # sets composing new sets
+          set <- composition_set[[i]][[j]][k]
+          rxns <- get_rxn_idx(og_set_list[[set]][1]) # first reaction in each set
+          # print(rxns)
+          new_compositions <- unlist(composition_set[[rxns]]) # sets creating by deletion of deleted rxn/set
+          # print(rxns)
+          # print(new_compositions[1])
+          print(paste(set, "--"))
+          for (new_set in composition_set[[rxns]]){
+            if (a %in% new_set){
+              # print(paste(set, "-"))
+              print(new_set)
+              # print(paste(set, new_compositions, sep = "- "))
+            }
           }
+          
+          # if (a %in% new_compositions){
+          #   print(paste(set, "-"))
+          #   print(new_compositions)
+          #   # print(paste(set, new_compositions, sep = "- "))
+          # }
+          
+          
         }
+        print("-- end set")
       }
     }
   }
