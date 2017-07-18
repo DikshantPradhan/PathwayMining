@@ -153,20 +153,20 @@ find_composing_sets <- function(rxns, sets){
   return(composition)
 }
 
-find_redundancies <- function(composition_set){
-  redundancies <- c()
+find_redundancies <- function(composition_set){ # composition set is list of joined sets at each rxn deletion
+  redundancies <- matrix(nrow = 54, ncol = 54)
   
   for (i in 1:length(composition_set)){ # deleted reaction
-    a <- get_set_idx(get_rxn_id_from_idx(i), og_set_list) # containing set
+    a <- get_set_idx(get_rxn_id_from_idx(i), og_set_list) # containing set in og_set_list
     # print(paste(a, "/", i, ":"))
-    if (length(a) > 0 & length(composition_set[[i]]) > 0){
+    if (length(a) > 0 & length(composition_set[[i]]) > 0){ # check to make sure there are any changes due to this deletion
       print(paste(a, "/", i, ":"))
       for (j in 1:length(composition_set[[i]])){ # newly created sets
         for (k in 1:length(composition_set[[i]][[j]])){ # sets composing new sets
-          set <- composition_set[[i]][[j]][k]
+          set <- composition_set[[i]][[j]][k] # number
           rxns <- get_rxn_idx(og_set_list[[set]][1]) # first reaction in each set
           # print(rxns)
-          new_compositions <- unlist(composition_set[[rxns]]) # sets creating by deletion of deleted rxn/set
+          # new_compositions <- unlist(composition_set[[rxns]]) # sets creating by deletion of deleted rxn/set
           # print(rxns)
           # print(new_compositions[1])
           print(paste(set, "--"))
@@ -174,6 +174,7 @@ find_redundancies <- function(composition_set){
             if (a %in% new_set){
               # print(paste(set, "-"))
               print(new_set)
+              redundancies[a, set] <- as.character(list(new_set))
               # print(paste(set, new_compositions, sep = "- "))
             }
           }
@@ -190,4 +191,6 @@ find_redundancies <- function(composition_set){
       }
     }
   }
+  
+  return(redundancies)
 }
