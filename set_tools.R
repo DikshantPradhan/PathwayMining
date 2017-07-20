@@ -1,6 +1,6 @@
 get_set_idx <- function(rxn, rxns_list){
   idx <- grep(core_rxn_id(rxn), rxns_list)
-  
+  # print(idx)
   for (j in idx){
     if (rxn %in% rxns_list[[j]]){
       # idx <- c()
@@ -154,7 +154,11 @@ find_composing_sets <- function(rxns, sets){
 }
 
 find_redundancies <- function(composition_set){ # composition set is list of joined sets at each rxn deletion
-  redundancies <- matrix(nrow = 54, ncol = 54)
+  # redundancies <- matrix(nrow = 54, ncol = 54)
+  # redundancies2 <- c()
+  red1 <- c()
+  red2 <- c()
+  
   
   for (i in 1:length(composition_set)){ # deleted reaction
     a <- get_set_idx(get_rxn_id_from_idx(i), og_set_list) # containing set in og_set_list
@@ -174,8 +178,17 @@ find_redundancies <- function(composition_set){ # composition set is list of joi
             if (a %in% new_set){
               # print(paste(set, "-"))
               print(new_set)
-              redundancies[a, set] <- as.character(list(new_set))
+              # redundancies[a, set] <- as.character(list(new_set))
               # print(paste(set, new_compositions, sep = "- "))
+              # print(paste("lengths:", length(new_set), length(composition_set[[i]][[j]][k]), length(set), length(a)))
+              # print(new_set[-which(new_set == a)])
+              # print(composition_set[[i]][[j]][-which(composition_set[[i]][[j]] == set)])
+              if (all(new_set[-which(new_set == a)] == composition_set[[i]][[j]][-which(composition_set[[i]][[j]] == set)])){
+                print(paste("~redundant~", a, "&", set))
+                # redundancies2 <- c(redundancies2, paste(a, "&", set))
+                red1 <- c(red1, a)
+                red2 <- c(red2, set)
+              }
             }
           }
           
@@ -192,5 +205,14 @@ find_redundancies <- function(composition_set){ # composition set is list of joi
     }
   }
   
+  redundancies <- cbind(red1, red2)
+  
+  for (i in 1:(length(redundancies)-1)){
+    for (j in (i+1):length(redundancies)){
+      
+    }
+  }
+  
+  # print(redundancies2)
   return(redundancies)
 }
