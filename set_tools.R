@@ -122,7 +122,7 @@ compare_r1_sets <- function(og_set_list, set_lists){ # see which og_sets don't a
   }
 }
 
-compare_r1_sets_further <- function(og_set_list, set_lists){
+return_composition_sets <- function(og_set_list, set_lists){
   composition <- c()
   for (i in 1:length(set_lists)){
     print(paste(i, ":"))
@@ -205,14 +205,36 @@ find_redundancies <- function(composition_set){ # composition set is list of joi
     }
   }
   
-  redundancies <- cbind(red1, red2)
+  # redundancies <- cbind(red1, red2)
   
-  for (i in 1:(length(redundancies)-1)){
-    for (j in (i+1):length(redundancies)){
+  # remove duplicates
+  delete <- c()
+  print(paste("removing deuplicates; ", length(red1), length(red2)))
+  for (i in 1:(length(red1)-1)){
+    for (j in (i+1):length(red1)){
+      # print(i)
+      # print(j)
+      # print(paste(red1[i], red2[i], red1[j], red2[j]))
+      # print(((red1[j] == red1[i]) & (red2[j] == red2[i])) | ((red1[j] == red2[i]) & (red2[j] == red1[i])))
+      if (((red1[j] == red1[i]) & (red2[j] == red2[i])) | ((red1[j] == red2[i]) & (red2[j] == red1[i]))){
+        delete <- c(delete, j)
+        # print(paste("~",j))
+        # red1 <- red1[-j]
+        # red2 <- red2[-j]
+      }
+      # if ((red1[j] == red2[i]) & (red2[j] == red1[i])){
+      #   # delete <- j
+      #   print(j)
+      #   red1 <- red1[-j]
+      #   red2 <- red2[-j]
+      # }
       
     }
   }
   
+  red1 <- red1[-delete]
+  red2 <- red2[-delete]
+  redundancies <- cbind(red1, red2)
   # print(redundancies2)
   return(redundancies)
 }
