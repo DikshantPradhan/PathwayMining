@@ -1,9 +1,7 @@
 library(rstack)
 
-data(Ec_core);
-model=Ec_core;
-
-S <- model@S
+# data(Ec_core);
+# model=Ec_core;
 
 get_rxn_idx <- function(rxn_id){
   return(which(model@react_id == rxn_id))

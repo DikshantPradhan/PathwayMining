@@ -162,9 +162,9 @@ find_redundancies <- function(composition_set){ # composition set is list of joi
   
   for (i in 1:length(composition_set)){ # deleted reaction
     a <- get_set_idx(get_rxn_id_from_idx(i), og_set_list) # containing set in og_set_list
-    # print(paste(a, "/", i, ":"))
+    print(paste(a, "/", i, ":"))
     if (length(a) > 0 & length(composition_set[[i]]) > 0){ # check to make sure there are any changes due to this deletion
-      print(paste(a, "/", i, ":"))
+      # print(paste(a, "/", i, ":"))
       for (j in 1:length(composition_set[[i]])){ # newly created sets
         for (k in 1:length(composition_set[[i]][[j]])){ # sets composing new sets
           set <- composition_set[[i]][[j]][k] # number
