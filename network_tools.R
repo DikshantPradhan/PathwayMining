@@ -1,4 +1,4 @@
-library(igraph)
+# library(igraph)
 
 # og_pairs <- return_couples(flux_coupling_cor(sample_og))
 # og_rxn_set <- get_list_of_sets(og_pairs)

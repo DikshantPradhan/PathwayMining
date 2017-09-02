@@ -3,23 +3,28 @@
 # use minval to convert to tsv for sybil (writeTSVmod)
 # use sybil to read tsv (readTSVmod)
 
+
+## NECESSARY PRESETS FOR USAGE:
+# model
+# S
+
 ## ECOLI MODEL
 
-data(Ec_core);
-model=Ec_core;
-model <- changeBounds(model, 11, lb = 0) # this and next lead to no PGI in GND coset
-# model <- changeBounds(model, 13, lb = 0, ub = 0)
-model <- rmReact(model = model, react = 13)
-for (i in findExchReact(model)@react_pos){
-  model <- changeBounds(model, i, lb = -1000, ub = 1000)
-  # if (model@lowbnd[i] == 0){
-  #   model <- changeBounds(model, i, lb = -1000)
-  # }
-}
+# data(Ec_core);
+# model=Ec_core;
+# model <- changeBounds(model, 11, lb = 0) # this and next lead to no PGI in GND coset
+# # model <- changeBounds(model, 13, lb = 0, ub = 0)
+# model <- rmReact(model = model, react = 13)
+# for (i in findExchReact(model)@react_pos){
+#   model <- changeBounds(model, i, lb = -1000, ub = 1000)
+#   # if (model@lowbnd[i] == 0){
+#   #   model <- changeBounds(model, i, lb = -1000)
+#   # }
+# }
 
 #solver="cplexAPI"
 solver="glpkAPI"
-W=200
+W=8000
 nPnts=3000
 steps=2
 
@@ -27,5 +32,14 @@ steps=2
 # model_fva <- opt@lp_obj
 # fva_min <- model_fva[1:95]
 # fva_max <- model_fva[96:190]
+
+## YEAST MODEL
+
+setwd("~/GitHub/PathwayMining/data/yeast_model")
+model <- readTSVmod(reactList = "Y7_test_react.tsv", metList = "Y7_met.tsv")
+
+# model <- yeast_model
+
+## ALL
 
 S <- model@S
