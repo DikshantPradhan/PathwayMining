@@ -260,7 +260,7 @@ find_coupling_change <- function(sample_og, sample_suppr){
   return(coupling_change(coupling_og, coupling_suppr))
 }
 
-sampler <- function(model, W = W, nPnts=5000, steps=1, Biomass = FALSE, Floor = TRUE){
+sampler <- function(model, W=warmup, nPnts=5000, steps=1, Biomass = FALSE, Floor = TRUE){
   sample = ACHR(model,W,nPoints=nPnts,stepsPerPoint=steps)
   sample = t(sample$Points)
   colnames(sample) <- model@react_id

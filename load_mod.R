@@ -25,6 +25,7 @@
 #solver="cplexAPI"
 solver="glpkAPI"
 W=8000
+warmup=8000
 nPnts=3000
 steps=2
 
