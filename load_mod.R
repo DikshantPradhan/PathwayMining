@@ -37,10 +37,10 @@ steps=2
 ## YEAST MODEL
 
 setwd("~/GitHub/PathwayMining/data/yeast_model")
-model <- readTSVmod(reactList = "Y7_test_react.tsv", metList = "Y7_met.tsv")
+yeast_model <- readTSVmod(reactList = "Y7_test_react.tsv", metList = "Y7_met.tsv")
 
 # model <- yeast_model
 
 ## ALL
 
-S <- model@S
+# S <- model@S
