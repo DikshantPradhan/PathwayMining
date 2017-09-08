@@ -1,3 +1,5 @@
+# Functions related to sampling
+
 library(sybilcycleFreeFlux)
 library(plotrix)
 

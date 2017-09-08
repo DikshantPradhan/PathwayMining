@@ -1,3 +1,5 @@
+# functions related to analysis on a network level, including visualization
+
 # library(igraph)
 
 # og_pairs <- return_couples(flux_coupling_cor(sample_og))

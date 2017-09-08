@@ -1,3 +1,5 @@
+# scripts for loading different models
+
 # HOW TO HANDLE YEAST MODEL
 # read txt to data frame
 # use minval to convert to tsv for sybil (writeTSVmod)

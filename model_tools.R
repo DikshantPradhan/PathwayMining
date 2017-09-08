@@ -1,3 +1,5 @@
+# functions related to model access and usage
+
 library(rstack)
 
 # data(Ec_core);
