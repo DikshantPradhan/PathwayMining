@@ -195,7 +195,7 @@ return_couples <- function(array){ # correlation array (output from flux_couplin
       if (is.na(array[i,j])){
         # do nothing
       }
-      else if (abs(array[i,j]) > 0.99){
+      else if (abs(array[i,j]) > 0.99 || array[i,j] == TRUE){
         # print("ok")
         #couple_list <- c(couple_list, paste(row[i],col[j], sep = "__"))
         rxn_col1 <- c(rxn_col1, row[i])
