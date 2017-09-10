@@ -3,22 +3,122 @@
 # SUB-ROUTINES
 
 update_flux <- function(global, newflux, max){
-  for (i in 1:length(global)){
-    if (max == TRUE){
-      global[i] = max(global[i], newflux[i])
-    }
-    if (max == FALSE){
-      global[i] = min(global[i], newflux[i])
-    }
+  if (max == TRUE){
+    global[i] = pmax(global, newflux)
   }
+  if (max == FALSE){
+    global[i] = pmin(global, newflux)
+  }
+
+  #for (i in 1:length(global)){
+  #  if (max == TRUE){
+  #    global[i] = max(global[i], newflux[i])
+  #  }
+  #  if (max == FALSE){
+  #    global[i] = min(global[i], newflux[i])
+  #  }
+  #}
 
   return(global)
 }
 
+set_model_bounds <- function(model, rxn, UB, LB){
+  model$setattr("UB", setNames(UB, rxn))
+  model$setattr("LB", setNames(LB, rxn))
 
+  return(model)
+}
+
+optimize_rxn <- function(model, rxn, max){
+  model$setattr("Obj", setNames(1.0, rxn))
+  if (max){
+    model$set_model_sense(maximize=TRUE)
+  }
+  else {
+    model$set_model_sense(minimize=TRUE)
+  }
+  model$optimize()
+  sol <- model$get_solution()
+
+  return(sol)
+}
+
+initialize_rxn_fix <- function(model, rxn){
+  max <- optimize_rxn(model, rxn, max = TRUE)$X[rxn]
+  min <- optimize_rxn(model, rxn, max = FALSE)$X[rxn]
+
+  avg <- mean(c(max, min))
+  if (avg == 0){
+    avg <- mean(c(avg, max))
+  }
+
+  return(avg)
+}
 
 # MAIN FUNCTION
-flux_coupling <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01) {
+flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01) {
+  n <- model$get_sizes()$NumVars
+  vars <- model$get_names()$VarName
+  prev_obj <- model$getattr("Obj")
+  model$setattr("Obj", setNames(numeric(n), vars)) # clear the objective
+  prev_sense <- model$getattr("ModelSense")
+
+  set_list <- vars
+
+  coupled <- rep(FALSE, n)
+
+  not_fixed <- function(x,y) { # check for variability in flux, return TRUE or FALSE
+    !is.infinite(x) && !is.infinite(y) && abs(x - y) > fix_tol_frac*max(abs(x), abs(y))
+  }
+
+  for (i in 1:(n-1)){
+    sub_max <- rep(-Inf, n)
+    sub_min <- rep(Inf, n)
+
+    fixed_val <- initialize_rxn_fix(model, vars[i])
+    if (fixed_val == 0) next
+    model_i <- set_model_bounds(model, vars[i], UB = fixed_val + 0.5*fix_tol_frac*abs(fixed_val),
+      LB = fixed_val - 0.5*fix_tol_frac*abs(fixed_val))
+
+    for (j in (i+1):n){
+      if (coupled[j] == TRUE) next
+
+      max_sol <- optimize_rxn(model_i, vars[j], max = TRUE)$X
+      min_sol <- optimize_rxn(model_i, vars[j], max = FALSE)$X
+
+      if (abs(max_sol[vars[j]] - min_sol[vars[j]]) < fix_tol_frac){
+        print(c(vars[i], vars[j]))
+        set_list <- group_sets(set_list, vars[i], vars[j])
+        coupled[i] = TRUE
+        coupled[j] = TRUE
+
+        if (j < n){ # epilogue
+          for (k in (j+1):n){
+            if (abs(max_sol[vars[j]] - min_sol[vars[j]]) < fix_tol_frac){
+              ## THINK ABOUT THIS PROCESS
+
+              max_sol <- optimize_rxn(model_i, vars[k], max = TRUE)$X
+              min_sol <- optimize_rxn(model_i, vars[k], max = FALSE)$X
+
+              if (abs(max_sol[vars[k]] - min_sol[vars[k]]) < fix_tol_frac){
+                print(c(vars[i], vars[k]))
+                set_list <- group_sets(set_list, vars[i], vars[k])
+                coupled[k] = TRUE
+              }
+            }
+          }
+        }
+
+
+      }
+
+    }
+  }
+
+  return(set_list)
+}
+
+flux_coupling_raptor_test <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01) {
   n <- model$get_sizes()$NumVars
   vars <- model$get_names()$VarName
   prev_obj <- model$getattr("Obj")
