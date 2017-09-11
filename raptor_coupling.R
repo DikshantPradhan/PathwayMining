@@ -61,22 +61,42 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
   vars <- model$get_names()$VarName
   prev_obj <- model$getattr("Obj")
   model$setattr("Obj", setNames(numeric(n), vars)) # clear the objective
-  prev_sense <- model$getattr("ModelSense")
+  # prev_sense <- model$getattr("ModelSense")
 
   set_list <- vars
-
+  
+  global_max <- rep(-Inf, n)
+  global_min <- rep(Inf, n)
   coupled <- rep(FALSE, n)
 
   not_fixed <- function(x,y) { # check for variability in flux, return TRUE or FALSE
     !is.infinite(x) && !is.infinite(y) && abs(x - y) > fix_tol_frac*max(abs(x), abs(y))
   }
+  
+  start_idx <- 1
+  start = FALSE
+  while(!start){
+    fixed_val <- initialize_rxn_fix(model, vars[start_idx])
+    if (fixed_val == 0){
+      start_idx = start_idx + 1
+    }
+    else {
+      start = TRUE
+    }
+  }
 
-  for (i in 1:(n-1)){
+  for (i in start_idx:(n-1)){
     sub_max <- rep(-Inf, n)
     sub_min <- rep(Inf, n)
 
-    fixed_val <- initialize_rxn_fix(model, vars[i])
-    if (fixed_val == 0) next
+    # fixed_val <- initialize_rxn_fix(model, vars[i])
+    # if (fixed_val == 0) next
+    
+    fixed_val <- mean(c(global_max[i], global_min[i]))
+    if (avg == 0){
+      fixed_val <- mean(c(avg, global_max[i]))
+    }
+    
     model_i <- set_model_bounds(model, vars[i], UB = fixed_val + 0.5*fix_tol_frac*abs(fixed_val),
       LB = fixed_val - 0.5*fix_tol_frac*abs(fixed_val))
 
@@ -85,8 +105,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
 
       max_sol <- optimize_rxn(model_i, vars[j], max = TRUE)$X
       min_sol <- optimize_rxn(model_i, vars[j], max = FALSE)$X
+      
+      global_max <- pmax(global_max, max_sol)
+      global_min <- pmax(global_min, min_sol)
 
-      if (abs(max_sol[vars[j]] - min_sol[vars[j]]) < fix_tol_frac){
+      if (!not_fixed(max_sol[vars[j]], min_sol[vars[j]])){
         print(c(vars[i], vars[j]))
         set_list <- group_sets(set_list, vars[i], vars[j])
         coupled[i] = TRUE
@@ -94,13 +117,13 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
 
         if (j < n){ # epilogue
           for (k in (j+1):n){
-            if (abs(max_sol[vars[j]] - min_sol[vars[j]]) < fix_tol_frac){
-              ## THINK ABOUT THIS PROCESS
+            if (!not_fixed(max_sol[vars[k]], min_sol[vars[k]])){
+              ## ???
 
               max_sol <- optimize_rxn(model_i, vars[k], max = TRUE)$X
               min_sol <- optimize_rxn(model_i, vars[k], max = FALSE)$X
 
-              if (abs(max_sol[vars[k]] - min_sol[vars[k]]) < fix_tol_frac){
+              if (!not_fixed(max_sol[vars[k]], min_sol[vars[k]])){
                 print(c(vars[i], vars[k]))
                 set_list <- group_sets(set_list, vars[i], vars[k])
                 coupled[k] = TRUE
