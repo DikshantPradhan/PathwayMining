@@ -1,5 +1,7 @@
 # new coupling protocol adapted from jensenlab/raptor
 
+library('raptor')
+
 # SUB-ROUTINES
 
 update_flux <- function(global, newflux, max){
@@ -430,4 +432,4 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
 ecoli <- as_GRBmodel(model)
 ecoli$show_output(FALSE)
 #print(flux_coupling_raptor(ecoli))
-print(get_list_of_sets(return_couples(flux_coupling_raptor(ecoli)$coupled)))
+#print(get_list_of_sets(return_couples(flux_coupling_raptor(ecoli)$coupled)))

@@ -43,6 +43,8 @@ yeast_model <- readTSVmod(reactList = "Y7_test_react.tsv", metList = "Y7_met.tsv
 yeast_model <- rmReact(model = yeast_model, react = 1606)
 yeast_model <- rmReact(model = yeast_model, react = 1590)
 
+setwd("~/GitHub/PathwayMining/")
+
 # model <- yeast_model
 
 ## ALL
