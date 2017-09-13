@@ -62,7 +62,7 @@ rxn_fix <- function(max, min){
 
 # MAIN FUNCTION
 
-flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01) {
+flux_coupling_raptor_2 <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01) {
   n <- model$get_sizes()$NumVars
   vars <- model$get_names()$VarName
   prev_obj <- model$getattr("Obj")
@@ -283,7 +283,7 @@ flux_coupling_raptor_test <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_
   )
 }
 
-flux_coupling_raptor_2 <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01) {
+flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01, stored_obs = 30) {
   n <- model$get_sizes()$NumVars
   vars <- model$get_names()$VarName
   prev_obj <- model$getattr("Obj")
@@ -311,7 +311,7 @@ flux_coupling_raptor_2 <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol
     !is.infinite(x) && !is.infinite(y) && abs(x - y) > fix_tol_frac*max(abs(x), abs(y))
   }
 
-  flux <- data.frame()
+  flux <- matrix(c(0), nrow = stored_obs, ncol = n) #data.frame()
 
   lp_calls <- 0
   for (i in 1:(n-1)) {
@@ -332,7 +332,8 @@ flux_coupling_raptor_2 <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
 
-        flux <- rbind(flux, sol$X)
+        # flux <- rbind(flux, sol$X)
+        flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
         #flux_idx <- flux_idx +1
         fixed_val <- rxn_fix(global_max[i], global_min[i])
       }
@@ -342,7 +343,8 @@ flux_coupling_raptor_2 <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
 
-        flux <- rbind(flux, sol$X)
+        # flux <- rbind(flux, sol$X)
+        flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
         #flux_idx <- flux_idx +1
         fixed_val <- rxn_fix(global_max[i], global_min[i])
       }
@@ -376,7 +378,8 @@ flux_coupling_raptor_2 <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
 
-        flux <- rbind(flux, sol$X)
+        # flux <- rbind(flux, sol$X)
+        flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
 
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
@@ -391,7 +394,8 @@ flux_coupling_raptor_2 <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
 
-        flux <- rbind(flux, sol$X)
+        # flux <- rbind(flux, sol$X)
+        flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
 
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
@@ -426,4 +430,4 @@ flux_coupling_raptor_2 <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol
 ecoli <- as_GRBmodel(model)
 ecoli$show_output(FALSE)
 #print(flux_coupling_raptor(ecoli))
-print(get_list_of_sets(return_couples(flux_coupling_raptor_2(ecoli)$coupled)))
+print(get_list_of_sets(return_couples(flux_coupling_raptor(ecoli)$coupled)))
