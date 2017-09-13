@@ -445,7 +445,8 @@ generate_og_pair_list <- function(){
   return(return_couples(flux_coupling_cor(sampler(suppressed_model(model, i)))))
 }
 
-get_union_set_from_degen_pairs <- function(set_list = model@react_id, pair_lists){
+get_union_set_from_degen_pairs <- function(model, pair_lists){
+  set_list = model@react_id
 
   for (i in 1:length(pair_lists)){
     set_list <- get_list_of_sets(pair_lists[[i]], rxns_list = set_list)
