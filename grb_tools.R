@@ -50,6 +50,8 @@ GRB_generate_pair_lists <- function(model, suppression_idxs){
     prev_ub <- model$getattr("UB")[vars[i]]
     prev_lb <- model$getattr("LB")[vars[i]]
 
+    #model <- GRB_ecoli_model()
+
     # block i
     model$setattr("UB", setNames(0, vars[i]))
     model$setattr("LB", setNames(0, vars[i]))
@@ -73,6 +75,8 @@ GRB_generate_set_lists <- function(model, suppression_idxs){
 
     prev_ub <- model$getattr("UB")[vars[i]]
     prev_lb <- model$getattr("LB")[vars[i]]
+
+    #model <- GRB_ecoli_model()
 
     # block i
     model$setattr("UB", setNames(0, vars[i]))
