@@ -32,11 +32,11 @@ GRB_yeast_model <- function(){
 }
 
 GRB_generate_pair_list <- function(model){
-  return(return_couples(flux_coupling_raptor(model)$coupled))
+  return(return_couples(raptor::flux_coupling(model)$coupled))
 }
 
 GRB_generate_set_list <- function(model){
-  return(get_list_of_sets(return_couples(flux_coupling_raptor(model)$coupled)))
+  return(get_list_of_sets(return_couples(raptor::flux_coupling(model)$coupled)))
 }
 
 GRB_generate_pair_lists <- function(model, suppression_idxs){
