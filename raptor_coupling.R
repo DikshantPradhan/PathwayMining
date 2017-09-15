@@ -152,6 +152,10 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       if (not_fixed(sub_max[j], sub_min[j])) next
 
       skip <- FALSE
+
+      max <- 0
+      min <- 0
+
       model$setattr("Obj", setNames(1.0, vars[j]))
       if (!skip) {
         model$set_model_sense(maximize=TRUE)
@@ -166,6 +170,9 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         global_min <- pmin(global_min, sol$X)
         sub_max <- pmax(sub_max, sol$X)
         sub_min <- pmin(sub_min, sol$X)
+
+        max <- sol$X[j]
+
         skip <- not_fixed(sub_max[j], sub_min[j])
       }
 
@@ -182,8 +189,13 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         global_min <- pmin(global_min, sol$X)
         sub_max <- pmax(sub_max, sol$X)
         sub_min <- pmin(sub_min, sol$X)
+
+        min <- sol$X[j]
+
         skip <- not_fixed(sub_max[j], sub_min[j])
       }
+
+      if (max == 0 & min == 0){skip = TRUE}
 
       if (!skip) { # finally label as coupled
         coupled[i,j] <- TRUE

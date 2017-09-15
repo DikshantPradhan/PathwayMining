@@ -8,17 +8,17 @@ source('~/GitHub/PathwayMining/set_tools.R')
 
 # source('~/GitHub/PathwayMining/load_mod.R')
 
-rxns <- c()
+#rxns <- c()
 
 # for (i in 1:length(ecoli_r1_set)){
 #   # test_set <- get_list_of_sets(ecoli_pair_lists[[i]])
-#   
+#
 #   check <- check_sets_for_containing(union_set_list_2[[i]], ecoli_r1_set)
 #   if (!check){
 #     print(c(i))
 #   }
 #   # else{print("good")}
-#   
+#
 #   # for (j in 1:length(test_set)){
 #   #   check <- check_sets_for_containing(test_set[[j]], set_lists[[i]])
 #   #   if (!check){
@@ -29,22 +29,22 @@ rxns <- c()
 #   # }
 # }
 
-for (i in 1:length(ecoli_og_set_list)){
+#for (i in 1:length(ecoli_og_set_list)){
+#
+#  for (j in 1:length(ecoli_og_set_list[[i]])){
+#    check <- check_sets_for_containing(ecoli_og_set_list[[i]][[j]], set_lists[[i]])
+#    if (!check){
+#      print(c(i,j))
+#      print(ecoli_og_set_list[[i]][[j]])
+#      # rxns <- c(rxns, unlist(test_set[[j]]))
+#    }
+#  }
+#}
 
-  for (j in 1:length(ecoli_og_set_list[[i]])){
-    check <- check_sets_for_containing(ecoli_og_set_list[[i]][[j]], set_lists[[i]])
-    if (!check){
-      print(c(i,j))
-      print(ecoli_og_set_list[[i]][[j]])
-      # rxns <- c(rxns, unlist(test_set[[j]]))
-    }
-  }
-}
-
-#for (i in 1:length(ecoli_r1_set)){
-#  check <- check_sets_for_containing(union_set_list[[i]], ecoli_r1_set)
+#for (i in 1:length(ecoli_r1_set_test)){
+#  check <- check_sets_for_containing(ecoli_r1_set_test[[i]], union_set_list)
 #  if (!check){print(c(i))}
-#  else{print("good")}
+#  #else{print("good")}
 #}
 
 #for (i in 1:length(ecoli_set_lists_2)){
@@ -65,3 +65,11 @@ for (i in 1:length(ecoli_og_set_list)){
   #  if (!all.equal(ecoli_pair_lists_2[[i]][j,],ecoli_pair_lists_2[[i]][j,])){print(c(i,j))}
   #}
 #}
+
+for (i in 1:94){
+  #print(c(length(ecoli_set_lists_1[[i]]), length(ecoli_set_lists_2[[i]])))
+  for (j in 1:length(ecoli_set_lists_1[[i]])){
+    check <- check_sets_for_containing(ecoli_set_lists_1[[i]][[j]], ecoli_set_lists_2[[i]])
+    if (!check){print(c(i,j)); print(ecoli_set_lists_1[[i]][[j]])}
+  }
+}

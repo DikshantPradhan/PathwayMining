@@ -36,7 +36,7 @@ GRB_generate_pair_list <- function(model){
 }
 
 GRB_generate_set_list <- function(model){
-  return(get_list_of_sets(return_couples(raptor::flux_coupling(model)$coupled)))
+  return(get_list_of_sets(return_couples(flux_coupling_raptor(model)$coupled)))
 }
 
 GRB_generate_pair_lists <- function(model, suppression_idxs){
@@ -47,21 +47,21 @@ GRB_generate_pair_lists <- function(model, suppression_idxs){
 
   for (i in suppression_idxs){
 
-    #prev_ub <- model$getattr("UB")[vars[i]]
-    #prev_lb <- model$getattr("LB")[vars[i]]
+    prev_ub <- model$getattr("UB")[vars[i]]
+    prev_lb <- model$getattr("LB")[vars[i]]
 
-    model <- GRB_ecoli_model()
+    #model <- GRB_ecoli_model()
 
     # block i
     model$setattr("UB", setNames(0, vars[i]))
     model$setattr("LB", setNames(0, vars[i]))
 
-    pair_lists[i] <- list(return_couples(flux_coupling_raptor(model, min_fva_cor=0.99)$coupled))
+    pair_lists[i] <- list(return_couples(flux_coupling_raptor(model)$coupled))
     #pair_lists[i] <- list(return_couples(raptor::flux_coupling(model)$coupled))
 
     # unfix i
-    #model$setattr("UB", prev_ub)
-    #model$setattr("LB", prev_lb)
+    model$setattr("UB", prev_ub)
+    model$setattr("LB", prev_lb)
   }
   return(pair_lists)
 }
@@ -105,4 +105,8 @@ GRB_get_union_set_from_degen_pairs <- function(model, pair_lists){
   }
 
   return(set_list)
+}
+
+GRB_r1_set <- function(model){
+  return(GRB_get_union_set_from_degen_pairs(model, GRB_generate_pair_lists(model, 1:model$get_sizes()$NumVars)))
 }
