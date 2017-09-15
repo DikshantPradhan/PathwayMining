@@ -10,23 +10,35 @@ source('~/GitHub/PathwayMining/set_tools.R')
 
 rxns <- c()
 
-for (i in 1:length(ecoli_r1_set)){
-  # test_set <- get_list_of_sets(ecoli_pair_lists[[i]])
-  
-  check <- check_sets_for_containing(union_set_list_2[[i]], ecoli_r1_set)
-  if (!check){
-    print(c(i))
+# for (i in 1:length(ecoli_r1_set)){
+#   # test_set <- get_list_of_sets(ecoli_pair_lists[[i]])
+#   
+#   check <- check_sets_for_containing(union_set_list_2[[i]], ecoli_r1_set)
+#   if (!check){
+#     print(c(i))
+#   }
+#   # else{print("good")}
+#   
+#   # for (j in 1:length(test_set)){
+#   #   check <- check_sets_for_containing(test_set[[j]], set_lists[[i]])
+#   #   if (!check){
+#   #     print(c(i,j))
+#   #     print(test_set[[j]])
+#   #     # rxns <- c(rxns, unlist(test_set[[j]]))
+#   #   }
+#   # }
+# }
+
+for (i in 1:length(ecoli_og_set_list)){
+
+  for (j in 1:length(ecoli_og_set_list[[i]])){
+    check <- check_sets_for_containing(ecoli_og_set_list[[i]][[j]], set_lists[[i]])
+    if (!check){
+      print(c(i,j))
+      print(ecoli_og_set_list[[i]][[j]])
+      # rxns <- c(rxns, unlist(test_set[[j]]))
+    }
   }
-  # else{print("good")}
-  
-  # for (j in 1:length(test_set)){
-  #   check <- check_sets_for_containing(test_set[[j]], set_lists[[i]])
-  #   if (!check){
-  #     print(c(i,j))
-  #     print(test_set[[j]])
-  #     # rxns <- c(rxns, unlist(test_set[[j]]))
-  #   }
-  # }
 }
 
 #for (i in 1:length(ecoli_r1_set)){
