@@ -3,24 +3,30 @@ source('~/GitHub/PathwayMining/sampling_tools.R')
 # source('~/GitHub/PathwayMining/fit_comparison_run.R')
 source('~/GitHub/PathwayMining/model_tools.R')
 source('~/GitHub/PathwayMining/set_tools.R')
-source('~/GitHub/PathwayMining/raptor_coupling.R')
-source('~/GitHub/PathwayMining/grb_tools.R')
+# source('~/GitHub/PathwayMining/raptor_coupling.R')
+# source('~/GitHub/PathwayMining/grb_tools.R')
 
-source('~/GitHub/PathwayMining/load_mod.R')
+# source('~/GitHub/PathwayMining/load_mod.R')
 
 rxns <- c()
 
-for (i in 1:length(ecoli_set_lists)){
-  test_set <- get_list_of_sets(ecoli_pair_lists[[i]])
-
-  for (j in 1:length(test_set)){
-    check <- check_sets_for_containing(test_set[[j]], set_lists[[i]])
-    if (!check){
-      print(c(i,j))
-      print(test_set[[j]])
-      rxns <- c(rxns, unlist(test_set[[j]]))
-    }
+for (i in 1:length(ecoli_r1_set)){
+  # test_set <- get_list_of_sets(ecoli_pair_lists[[i]])
+  
+  check <- check_sets_for_containing(union_set_list_2[[i]], ecoli_r1_set)
+  if (!check){
+    print(c(i))
   }
+  # else{print("good")}
+  
+  # for (j in 1:length(test_set)){
+  #   check <- check_sets_for_containing(test_set[[j]], set_lists[[i]])
+  #   if (!check){
+  #     print(c(i,j))
+  #     print(test_set[[j]])
+  #     # rxns <- c(rxns, unlist(test_set[[j]]))
+  #   }
+  # }
 }
 
 #for (i in 1:length(ecoli_r1_set)){
