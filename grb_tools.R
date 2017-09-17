@@ -31,6 +31,11 @@ GRB_yeast_model <- function(){
   return(yeast)
 }
 
+GRB_get_rxn_idx <- function(model, rxn){
+  vars <- model$get_names()$VarName
+  return(return(which(vars == rxn)))
+}
+
 GRB_generate_pair_list <- function(model){
   return(return_couples(raptor::flux_coupling(model)$coupled))
 }
