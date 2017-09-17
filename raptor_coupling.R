@@ -138,6 +138,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     # set new bounds for selected rxn (temporarily)
     model$setattr("UB", setNames(fixed_val + 0.5*fix_tol_frac*abs(fixed_val), vars[i]))
     model$setattr("LB", setNames(fixed_val - 0.5*fix_tol_frac*abs(fixed_val), vars[i]))
+    
+    # couple reactions to themself if not blocked
+    if (!blocked[i]){
+      coupled[i,i] <- TRUE
+    }
 
     for (j in (i+1):n) {
       # check for fixed or blocked
@@ -212,7 +217,8 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
   model$setattr("Obj", prev_obj)
   model$setattr("ModelSense", prev_sense)
 
-  print(nrow(flux))
+  # print(nrow(flux))
+  print(lp_calls)
 
   list(
     coupled = coupled,
