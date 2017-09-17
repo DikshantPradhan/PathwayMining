@@ -66,10 +66,27 @@ source('~/GitHub/PathwayMining/set_tools.R')
   #}
 #}
 
-for (i in 1:94){
-  #print(c(length(ecoli_set_lists_1[[i]]), length(ecoli_set_lists_2[[i]])))
-  for (j in 1:length(ecoli_set_lists_1[[i]])){
-    check <- check_sets_for_containing(ecoli_set_lists_1[[i]][[j]], ecoli_set_lists_2[[i]])
-    if (!check){print(c(i,j)); print(ecoli_set_lists_1[[i]][[j]])}
+#for (i in 1:94){
+#  #print(c(length(ecoli_set_lists_1[[i]]), length(ecoli_set_lists_2[[i]])))
+#  for (j in 1:length(ecoli_set_lists_1[[i]])){
+#    check <- check_sets_for_containing(ecoli_set_lists_1[[i]][[j]], ecoli_set_lists_2[[i]])
+#    if (!check){print(c(i,j)); print(ecoli_set_lists_1[[i]][[j]])}
+#  }
+#}
+
+# test composition of set_lists (make sure that blocking any reaction in an og_set results in the same r1 set)
+ecoli <- GRB_ecoli_model()
+ecoli_og_set_list <- GRB_generate_set_list(ecoli)
+
+ecoli <- GRB_ecoli_model()
+ecoli_set_lists <- GRB_generate_set_lists(ecoli, 1:94)
+
+ecoli_composition_set <- return_composition_sets(ecoli_og_set_list, ecoli_set_lists)
+
+for (i in 1:length(ecoli_og_set_list)){ # print sets joined by each deletion
+  print(ecoli_og_set_list[[i]])
+  for (j in ecoli_og_set_list[[i]]){
+    print(j)
+    print(ecoli_composition_set[[GRB_get_rxn_idx(ecoli, j)]])
   }
 }

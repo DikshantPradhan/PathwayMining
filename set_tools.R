@@ -14,25 +14,25 @@ get_set_idx <- function(rxn, rxns_list){
 }
 
 check_sets_for_containing <- function(rxns, set_list){
-  
+
   for (i in 1:length(set_list)){
     if (all(rxns %in% set_list[[i]])){
       return(TRUE)
     }
   }
-  
+
   return(FALSE)
 }
 
 check_set_list_for_containing <- function(rxns, set_lists){
   lists <- c()
-  
+
   for (i in 1:length(set_lists)){
     if (check_sets_for_containing(rxns, set_lists[[i]])){
       lists <- c(lists, i)
     }
   }
-  
+
   return(lists)
 }
 
@@ -49,13 +49,13 @@ find_all_sets_for_rxn <- function(rxn_id, set_lists){
       sets[i] <- set
     }
   }
-  
+
   return(sets)
 }
 
 find_all_sets_for_rxns <- function(rxns, set_lists){
   sets <- c()
-  
+
   for (i in check_set_list_for_containing(rxns, set_lists)){
     # print(get_set_idx(rxns[1], set_lists[[i]]))
     # for (j in which(check_sets_for_containing(rxns, set_lists[[i]]))){
@@ -70,7 +70,7 @@ find_all_sets_for_rxns <- function(rxns, set_lists){
       sets[i] <- set
     }
   }
-  
+
   return(sets)
 }
 
@@ -82,9 +82,9 @@ find_recurring_rxns <- function(rxns, set_lists){
       sets <- c(sets, list(all_sets[[i]]))
     }
   }
-  
+
   redundant <- c()
-  
+
   for (i in 1:length(sets)){
     diff <- setdiff(sets[[i]], rxns)
     if (length(diff) > 0){
@@ -97,11 +97,11 @@ find_recurring_rxns <- function(rxns, set_lists){
 
 total_union <- function(sets){
   u <- c()
-  
+
   for (i in 1:(length(sets))){ # length sets - 1
     u <- union(u, sets[[i]])
   }
-  
+
   return(u)
 }
 
@@ -140,7 +140,7 @@ return_composition_sets <- function(og_set_list, set_lists){
       composition[i] <- list(sets)
     }
   }
-  
+
   return(composition)
 }
 
@@ -151,17 +151,16 @@ find_composing_sets <- function(rxns, sets){
       composition <- c(composition, i)
     }
   }
-  
+
   return(composition)
 }
 
-find_redundancies <- function(composition_set){ # composition set is list of joined sets at each rxn deletion
+find_redundancies <- function(og_set_list, composition_set){ # composition set is list of joined sets at each rxn deletion
   # redundancies <- matrix(nrow = 54, ncol = 54)
   # redundancies2 <- c()
   red1 <- c()
   red2 <- c()
-  
-  
+
   for (i in 1:length(composition_set)){ # deleted reaction
     a <- get_set_idx(get_rxn_id_from_idx(i), og_set_list) # containing set in og_set_list
     print(paste(a, "/", i, ":"))
@@ -193,22 +192,22 @@ find_redundancies <- function(composition_set){ # composition set is list of joi
               }
             }
           }
-          
+
           # if (a %in% new_compositions){
           #   print(paste(set, "-"))
           #   print(new_compositions)
           #   # print(paste(set, new_compositions, sep = "- "))
           # }
-          
-          
+
+
         }
         print("-- end set")
       }
     }
   }
-  
+
   # redundancies <- cbind(red1, red2)
-  
+
   # remove duplicates
   delete <- c()
   print(paste("removing deuplicates; ", length(red1), length(red2)))
@@ -230,13 +229,22 @@ find_redundancies <- function(composition_set){ # composition set is list of joi
       #   red1 <- red1[-j]
       #   red2 <- red2[-j]
       # }
-      
+
     }
   }
-  
+
   red1 <- red1[-delete]
   red2 <- red2[-delete]
   redundancies <- cbind(red1, red2)
   # print(redundancies2)
   return(redundancies)
+}
+
+optimize_suppression_idxs <- function(model, og_set_list){
+  idxs <- c()
+  for (i in og_set_list){
+    idxs <- c(idxs, GRB_get_rxn_idx(model, i[[1]]))
+  }
+
+  return(idxs)
 }
