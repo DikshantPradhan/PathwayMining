@@ -41,7 +41,7 @@ GRB_generate_pair_list <- function(model){
 }
 
 GRB_generate_set_list <- function(model){
-  return(get_list_of_sets(return_couples(flux_coupling_raptor(model)$coupled)))
+  return(get_list_of_sets(return_couples(flux_coupling_raptor(model, min_fva_cor=0.99)$coupled)))
 }
 
 GRB_generate_pair_lists <- function(model, suppression_idxs){
@@ -88,7 +88,7 @@ GRB_generate_set_lists <- function(model, suppression_idxs){
     model$setattr("UB", setNames(0, vars[i]))
     model$setattr("LB", setNames(0, vars[i]))
 
-    set_lists[i] <- list(get_list_of_sets(return_couples(flux_coupling_raptor(model)$coupled)))
+    set_lists[i] <- list(get_list_of_sets(return_couples(flux_coupling_raptor(model, min_fva_cor=0.99)$coupled)))
 
     # unfix i
     #model$setattr("UB", prev_ub)

@@ -11,7 +11,7 @@ source('~/GitHub/PathwayMining/set_tools.R')
 #     print(test_composition_set[[get_rxn_idx(j)]])
 #   }
 # }
-# 
+#
 # check_composing_sets <- function(idx){
 #   print(composition_set[[idx]])
 #   for (set in unlist(composition_set[[idx]])){
@@ -40,9 +40,9 @@ source('~/GitHub/PathwayMining/set_tools.R')
 # for (i in 1:94){
 #   set_lists_2[[i]] <- generate_set_lists(i)
 # }
-# 
+#
 # set_list_temp <- set_lists_2
-# 
+#
 # for (i in 1:94){
 #   set_lists_2[[i]] <- set_list_temp[[i]][[i]]
 # }
@@ -54,20 +54,20 @@ source('~/GitHub/PathwayMining/set_tools.R')
 # }
 
 # check for rxns in sets that aren't in og_set_list
-for (i in 1:94){
-  for (j in model@react_id){
-    if (!check_sets_for_containing(j, ecoli_og_set_list)){
-      if (check_sets_for_containing(j, ecoli_set_lists[[i]])){
-        print(c(i, get_rxn_id_from_idx(i), j, length(unlist(ecoli_set_lists[[i]]))))
-      }
-    }
+#for (i in 1:94){
+#  for (j in model@react_id){
+#    if (!check_sets_for_containing(j, ecoli_og_set_list)){
+#      if (check_sets_for_containing(j, ecoli_set_lists[[i]])){
+#        print(c(i, get_rxn_id_from_idx(i), j, length(unlist(ecoli_set_lists[[i]]))))
+#      }
+#    }
+#  }
+#}
+
+for (i in 1:length(ecoli_og_set_list)){ # print sets joined by each deletion
+  print(c(ecoli_og_set_list[[i]], "::"))
+  for (j in ecoli_og_set_list[[i]]){
+    print(c("~",j))
+    print(ecoli_deletion_list[[get_rxn_idx(j)]])
   }
 }
-
-# for (i in 1:length(ecoli_og_set_list)){ # print sets joined by each deletion
-#   print(c(ecoli_og_set_list[[i]], "::"))
-#   for (j in ecoli_og_set_list[[i]]){
-#     print(c("~",j))
-#     print(deletion_list[[get_rxn_idx(j)]])
-#   }
-# }

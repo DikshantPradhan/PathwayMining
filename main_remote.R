@@ -76,6 +76,8 @@ source('~/GitHub/PathwayMining/set_tools.R')
 
 # test composition of set_lists (make sure that blocking any reaction in an og_set results in the same r1 set)
 ecoli <- GRB_ecoli_model()
+vars <- ecoli$get_names()$VarName
+
 ecoli_og_set_list <- GRB_generate_set_list(ecoli)
 
 ecoli <- GRB_ecoli_model()
@@ -84,9 +86,39 @@ ecoli_set_lists <- GRB_generate_set_lists(ecoli, 1:94)
 ecoli_composition_set <- return_composition_sets(ecoli_og_set_list, ecoli_set_lists)
 
 for (i in 1:length(ecoli_og_set_list)){ # print sets joined by each deletion
-  print(ecoli_og_set_list[[i]])
-  for (j in ecoli_og_set_list[[i]]){
-    print(j)
-    print(ecoli_composition_set[[GRB_get_rxn_idx(ecoli, j)]])
+  #print(ecoli_og_set_list[[i]])
+  if (length(ecoli_og_set_list[[i]]) > 1){
+  for (j in 1:(length(ecoli_og_set_list[[i]])-1)){
+    rxn1 <- GRB_get_rxn_idx(ecoli, ecoli_og_set_list[[i]][[j]])
+    rxn2 <- GRB_get_rxn_idx(ecoli, ecoli_og_set_list[[i]][[j+1]])
+    #print(c(rxn1, rxn2))
+    if (length(ecoli_composition_set[[rxn1]]) != length(ecoli_composition_set[[rxn2]])){
+      print("composition error")
+      print(c(ecoli_og_set_list[[i]][[j]], ";", ecoli_og_set_list[[i]][[j+1]]))
+      print(c(ecoli_composition_set[[rxn1]], ";", ecoli_composition_set[[rxn2]]))
+    }
+    #print(j)
+    #print(ecoli_composition_set[[GRB_get_rxn_idx(ecoli, j)]])
+  }
+  }
+}
+
+ecoli_deletion_list <- check_set_list_for_deletion(vars, ecoli_set_lists)
+
+for (i in 1:length(ecoli_og_set_list)){ # print sets joined by each deletion
+  #print(ecoli_og_set_list[[i]])
+  if (length(ecoli_og_set_list[[i]]) > 1){
+  for (j in 1:(length(ecoli_og_set_list[[i]])-1)){
+    rxn1 <- GRB_get_rxn_idx(ecoli, ecoli_og_set_list[[i]][[j]])
+    rxn2 <- GRB_get_rxn_idx(ecoli, ecoli_og_set_list[[i]][[j+1]])
+    #print(c(rxn1, rxn2))
+    if (length(ecoli_deletion_list[[rxn1]]) != length(ecoli_deletion_list[[rxn2]])){
+      print("deletion error")
+      print(c(ecoli_og_set_list[[i]][[j]], ";", ecoli_og_set_list[[i]][[j+1]]))
+      print(c(ecoli_deletion_list[[rxn1]], ";", ecoli_deletion_list[[rxn2]]))
+    }
+    #print(j)
+    #print(ecoli_composition_set[[GRB_get_rxn_idx(ecoli, j)]])
+  }
   }
 }

@@ -43,7 +43,7 @@ check_sets_for_deletion <- function(rxn_list, sets){
       deleted <- c(deleted, i)
     }
   }
-  
+
   return(deleted)
 }
 
@@ -52,14 +52,14 @@ check_set_list_for_deletion <- function(rxn_list, set_list){
   for (i in 1:length(set_list)){
     deletions[[i]] <- check_sets_for_deletion(rxn_list, set_list[[i]])
   }
-  
+
   return(deletions)
 }
 
 find_all_sets_for_rxn <- function(rxn_id, set_lists){
   sets <- c()
 
-  for (i in 1:95){
+  for (i in 1:length(set_lists)){
     set <- set_lists[[i]][get_set_idx(rxn_id, set_lists[[i]])]
 
     # print(paste(i, ":"))
