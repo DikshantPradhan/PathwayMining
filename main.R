@@ -46,3 +46,28 @@ source('~/GitHub/PathwayMining/set_tools.R')
 # for (i in 1:94){
 #   set_lists_2[[i]] <- set_list_temp[[i]][[i]]
 # }
+
+# for (i in 1:94){
+#   if (length(unlist(ecoli_set_lists[[i]])) > 92){
+#     print(c(i, length(unlist(ecoli_set_lists[[i]]))))
+#   }
+# }
+
+# check for rxns in sets that aren't in og_set_list
+for (i in 1:94){
+  for (j in model@react_id){
+    if (!check_sets_for_containing(j, ecoli_og_set_list)){
+      if (check_sets_for_containing(j, ecoli_set_lists[[i]])){
+        print(c(i, get_rxn_id_from_idx(i), j, length(unlist(ecoli_set_lists[[i]]))))
+      }
+    }
+  }
+}
+
+# for (i in 1:length(ecoli_og_set_list)){ # print sets joined by each deletion
+#   print(c(ecoli_og_set_list[[i]], "::"))
+#   for (j in ecoli_og_set_list[[i]]){
+#     print(c("~",j))
+#     print(deletion_list[[get_rxn_idx(j)]])
+#   }
+# }

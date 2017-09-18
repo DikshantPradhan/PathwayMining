@@ -36,6 +36,26 @@ check_set_list_for_containing <- function(rxns, set_lists){
   return(lists)
 }
 
+check_sets_for_deletion <- function(rxn_list, sets){
+  deleted <- c()
+  for (i in rxn_list){
+    if (!check_sets_for_containing(i, sets)){
+      deleted <- c(deleted, i)
+    }
+  }
+  
+  return(deleted)
+}
+
+check_set_list_for_deletion <- function(rxn_list, set_list){
+  deletions <- c()
+  for (i in 1:length(set_list)){
+    deletions[[i]] <- check_sets_for_deletion(rxn_list, set_list[[i]])
+  }
+  
+  return(deletions)
+}
+
 find_all_sets_for_rxn <- function(rxn_id, set_lists){
   sets <- c()
 

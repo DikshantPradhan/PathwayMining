@@ -40,8 +40,16 @@ for (i in findExchReact(model)@react_pos){
 
 setwd("~/GitHub/PathwayMining/data/yeast_model")
 yeast_model <- readTSVmod(reactList = "Y7_test_react.tsv", metList = "Y7_met.tsv")
+library(readr)
+Y7_react_names <- read_delim("~/GitHub/PathwayMining/data/yeast_model/Y7_react_names.csv", ";", escape_double = FALSE, trim_ws = TRUE)
+yeast_model@react_name <- Y7_react_names$Description
 yeast_model <- rmReact(model = yeast_model, react = 1606)
 yeast_model <- rmReact(model = yeast_model, react = 1590)
+
+yeast_exch_rxns <- grep("exchange", yeast_model@react_name)
+for (i in yeast_exch_rxns){
+  yeast_model <- changeBounds(yeast_model, i, lb = -1000, ub = 1000)
+}
 
 setwd("~/GitHub/PathwayMining/")
 
