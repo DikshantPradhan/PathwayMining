@@ -5,19 +5,19 @@ library(rstack)
 # data(Ec_core);
 # model=Ec_core;
 
-get_rxn_idx <- function(rxn_id){
-  return(which(model@react_id == rxn_id))
+get_rxn_idx <- function(vars, rxn_id){
+  return(which(vars == rxn_id))
 }
 
-get_rxn_name_from_id <- function(rxn_id){
-  return(model@react_name[which(model@react_id == rxn_id)])
+get_rxn_name_from_id <- function(vars, rxn_id){
+  return(model@react_name[which(vars == rxn_id)])
 }
 
-get_rxn_name_from_idx <- function(rxn_idx){
+get_rxn_name_from_idx <- function(model, rxn_idx){
   return(model@react_name[rxn_idx])
 }
 
-get_rxn_id_from_idx <- function(rxn_idx){
+get_rxn_id_from_idx <- function(model, rxn_idx){
   return(model@react_id[rxn_idx])
 }
 

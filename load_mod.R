@@ -53,10 +53,18 @@ setwd("~/GitHub/PathwayMining/data/yeast_model")
 
 yeast_model <- readTSVmod(reactList = "Y4_react.tsv", metList = "Y4_met.tsv")
 library(readr)
-Y4_react_names <- read_delim("~/GitHub/PathwayMining/data/yeast_model/Y4_react_names.csv", ";", escape_double = FALSE, trim_ws = TRUE)
-yeast_model@react_name <- Y4_react_names$Description
-yeast_model <- rmReact(model = yeast_model, react = 1606)
-yeast_model <- rmReact(model = yeast_model, react = 1590)
+#yeast_model <- rmReact(model = yeast_model, react = 1606)
+#yeast_model <- rmReact(model = yeast_model, react = 1590)
+
+Y4_react_names <- read_delim("~/GitHub/PathwayMining/data/yeast_model/Y4_react_names.tsv", ";", escape_double = FALSE, trim_ws = TRUE)
+for (i in 1:length(yeast_model@react_id)){
+  num <- as.numeric(strsplit(yeast_model@react_id[i], split = "_")[[1]][2])
+  # print(num)
+  yeast_model@react_name[i] <- Y4_react_names$Description[num]
+}
+
+yeast_model <- rmReact(model = yeast_model, react = get_rxn_idx(yeast_model@react_name, "r_1812"))
+# yeast_model <- rmReact(model = yeast_model, react = get_rxn_idx(yeast_model@react_name, "r_1815")) # not sure if this one warrants removal
 
 yeast_exch_rxns <- grep("exchange", yeast_model@react_name)
 for (i in yeast_exch_rxns){
