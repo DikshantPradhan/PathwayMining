@@ -64,7 +64,7 @@ rxn_fix <- function(max, min){
 
 # MAIN FUNCTION
 
-flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01, stored_obs = 30) {
+flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.00001, stored_obs = 30) {
   n <- model$get_sizes()$NumVars
   vars <- model$get_names()$VarName
   prev_obj <- model$getattr("Obj")
@@ -103,11 +103,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     prev_lb <- model$getattr("LB")[vars[i]]
     #fixed_val <- fva$minflux[i] + fix_frac*(fva$maxflux[i] - fva$minflux[i])
 
-    if (global_max[i] != 0 | global_min[i] != 0){
+    if (global_max[i] > fix_tol_frac | global_min[i] < (-1*fix_tol_frac)){
       fixed_val <- rxn_fix(global_max[i], global_min[i])
     }
     else {
-      if (model$getattr("UB")[vars[i]] > 0){
+      if (model$getattr("UB")[vars[i]] > fix_tol_frac){
 
         sol <- optimize_rxn(model, vars[i], max = TRUE)
         global_max <- pmax(global_max, sol$X)
@@ -118,7 +118,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         #flux_idx <- flux_idx +1
         fixed_val <- rxn_fix(global_max[i], global_min[i])
       }
-      if (model$getattr("LB")[vars[i]] < 0){
+      if (model$getattr("LB")[vars[i]] < (-1*fix_tol_frac)){
 
         sol <- optimize_rxn(model, vars[i], max = FALSE)
         global_max <- pmax(global_max, sol$X)
@@ -129,7 +129,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         #flux_idx <- flux_idx +1
         fixed_val <- rxn_fix(global_max[i], global_min[i])
       }
-      if (global_max[i] == 0 & global_min[i] == 0){
+      if (abs(global_max[i]) < fix_tol_frac & abs(global_min[i]) < fix_tol_frac){
         blocked[i] <- TRUE
         next
       }
@@ -142,6 +142,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     # couple reaction to itself if not blocked
     if (!blocked[i]){
       coupled[i,i] <- TRUE
+      active[i] <- FALSE
+    }
+
+    if (i == 36 | i == 77){
+      print(c(i, global_max[i], global_min[i], blocked[i]))
     }
 
     for (j in (i+1):n) {
