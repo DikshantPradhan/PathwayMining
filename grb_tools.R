@@ -37,7 +37,7 @@ GRB_get_rxn_idx <- function(model, rxn){
 }
 
 GRB_generate_pair_list <- function(model){
-  return(return_couples(raptor::flux_coupling(model)$coupled))
+  return(return_couples(flux_coupling_raptor(model)$coupled))
 }
 
 GRB_generate_set_list <- function(model){

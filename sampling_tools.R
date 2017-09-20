@@ -175,39 +175,25 @@ coupling_generalize <- function(array){
   return(array)
 }
 
-return_couples <- function(array){ # correlation array (output from flux_coupling_???)
+return_couples <- function(array){ # correlation array (output from flux_coupling)
   
-  #couple_list <- c()
   row <- dimnames(array)[[1]]
   col <- dimnames(array)[[2]]
-  
-  # rxn_col1 <- c("Biomass_Ecoli_core_w_GAM")
-  # rxn_col2 <- c("Biomass_Ecoli_core_w_GAM")
   
   rxn_col1 <- c()
   rxn_col2 <- c()
   
-  # print(dim(array))
-  
   for (i in 1:dim(array)[1]){
     for (j in 1:dim(array)[2]){
-      # print(array[i,j])
       if (is.na(array[i,j])){
         # do nothing
       }
-      else if (abs(array[i,j]) > 0.99 || array[i,j] == TRUE){
-        # print("ok")
-        #couple_list <- c(couple_list, paste(row[i],col[j], sep = "__"))
+      else if (abs(array[i,j]) > 0.99 | array[i,j] == TRUE){ # allow for different inputs (correlation or T/F)
         rxn_col1 <- c(rxn_col1, row[i])
         rxn_col2 <- c(rxn_col2, col[j])
       }
     }
   }
-  
-  # if (length(rxn_col1) == 0){
-  #   rxn_col1 <- c(rxn_col1, "Biomass_Ecoli_core_w_GAM")
-  #   rxn_col2 <- c(rxn_col2, "Biomass_Ecoli_core_w_GAM")
-  # }
   
   rxns <- cbind(rxn_col1, rxn_col2)
   colnames(rxns) <- c("rxn1", "rxn2")
