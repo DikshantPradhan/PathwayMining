@@ -185,71 +185,36 @@ find_redundancies <- function(og_set_list, composition_set){ # composition set i
     a <- get_set_idx(get_rxn_id_from_idx(i), og_set_list) # containing set in og_set_list
     print(paste(a, "/", i, ":"))
     if (length(a) > 0 & length(composition_set[[i]]) > 0){ # check to make sure there are any changes due to this deletion
-      # print(paste(a, "/", i, ":"))
       for (j in 1:length(composition_set[[i]])){ # newly created sets
         for (k in 1:length(composition_set[[i]][[j]])){ # sets composing new sets
           set <- composition_set[[i]][[j]][k] # number
           rxns <- get_rxn_idx(og_set_list[[set]][1]) # first reaction in each set
-          # print(rxns)
-          # new_compositions <- unlist(composition_set[[rxns]]) # sets creating by deletion of deleted rxn/set
-          # print(rxns)
-          # print(new_compositions[1])
           print(paste(set, "--"))
           for (new_set in composition_set[[rxns]]){
             if (a %in% new_set){
-              # print(paste(set, "-"))
               print(new_set)
-              # redundancies[a, set] <- as.character(list(new_set))
-              # print(paste(set, new_compositions, sep = "- "))
-              # print(paste("lengths:", length(new_set), length(composition_set[[i]][[j]][k]), length(set), length(a)))
-              # print(new_set[-which(new_set == a)])
-              # print(composition_set[[i]][[j]][-which(composition_set[[i]][[j]] == set)])
               if (all(new_set[-which(new_set == a)] == composition_set[[i]][[j]][-which(composition_set[[i]][[j]] == set)])){
                 print(paste("~redundant~", a, "&", set))
-                # redundancies2 <- c(redundancies2, paste(a, "&", set))
                 red1 <- c(red1, a)
                 red2 <- c(red2, set)
               }
             }
           }
-
-          # if (a %in% new_compositions){
-          #   print(paste(set, "-"))
-          #   print(new_compositions)
-          #   # print(paste(set, new_compositions, sep = "- "))
-          # }
-
-
         }
         print("-- end set")
       }
     }
   }
 
-  # redundancies <- cbind(red1, red2)
-
   # remove duplicates
   delete <- c()
   print(paste("removing deuplicates; ", length(red1), length(red2)))
   for (i in 1:(length(red1)-1)){
     for (j in (i+1):length(red1)){
-      # print(i)
-      # print(j)
-      # print(paste(red1[i], red2[i], red1[j], red2[j]))
-      # print(((red1[j] == red1[i]) & (red2[j] == red2[i])) | ((red1[j] == red2[i]) & (red2[j] == red1[i])))
       if (((red1[j] == red1[i]) & (red2[j] == red2[i])) | ((red1[j] == red2[i]) & (red2[j] == red1[i]))){
         delete <- c(delete, j)
-        # print(paste("~",j))
-        # red1 <- red1[-j]
-        # red2 <- red2[-j]
       }
-      # if ((red1[j] == red2[i]) & (red2[j] == red1[i])){
-      #   # delete <- j
-      #   print(j)
-      #   red1 <- red1[-j]
-      #   red2 <- red2[-j]
-      # }
-
+      
     }
   }
 
@@ -267,4 +232,29 @@ optimize_suppression_idxs <- function(model, og_set_list){
   }
 
   return(idxs)
+}
+
+check_for_pairs <- function(pair, pair_list){
+  for (i in 1:(length(pair_list)/2)){
+    if ((pair[1] == pair_list[i, 1] & pair[2] == pair_list[i, 2]) | (pair[1] == pair_list[i, 2] & pair[2] == pair_list[i, 1])){
+      return(TRUE)
+    }
+  }
+  return(FALSE)
+}
+
+isolate_new_pairs <- function(og_pairs, pair_lists){
+  new_rxn1 <- c()
+  new_rxn2 <- c()
+  
+  for (i in 1:length(pair_lists)){
+    for (j in 1:(length(pair_lists[[i]])/2)){
+      if (!check_for_pairs(pair_lists[[i]][j,], og_pairs) & !check_for_pairs(pair_lists[[i]][j,], cbind(new_rxn1, new_rxn2))){
+        new_rxn1 <- c(new_rxn1, pair_lists[[i]][j,1])
+        new_rxn2 <- c(new_rxn2, pair_lists[[i]][j,2])
+      }
+    }
+  }
+  
+  return(cbind(new_rxn1, new_rxn2))
 }
