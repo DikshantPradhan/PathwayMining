@@ -214,7 +214,7 @@ find_redundancies <- function(og_set_list, composition_set){ # composition set i
       if (((red1[j] == red1[i]) & (red2[j] == red2[i])) | ((red1[j] == red2[i]) & (red2[j] == red1[i]))){
         delete <- c(delete, j)
       }
-      
+
     }
   }
 
@@ -235,7 +235,15 @@ optimize_suppression_idxs <- function(model, og_set_list){
 }
 
 check_for_pairs <- function(pair, pair_list){
-  for (i in 1:(length(pair_list)/2)){
+  #print(pair[1])
+  #print(length(pair_list[,1]))
+  if (length(pair_list[,1]) < 1){
+    return(FALSE)
+  }
+  for (i in 1:length(pair_list[,1])){
+    #print("~")
+    #print(pair)
+    #print(pair_list[i,])
     if ((pair[1] == pair_list[i, 1] & pair[2] == pair_list[i, 2]) | (pair[1] == pair_list[i, 2] & pair[2] == pair_list[i, 1])){
       return(TRUE)
     }
@@ -246,15 +254,16 @@ check_for_pairs <- function(pair, pair_list){
 isolate_new_pairs <- function(og_pairs, pair_lists){
   new_rxn1 <- c()
   new_rxn2 <- c()
-  
+
   for (i in 1:length(pair_lists)){
     for (j in 1:(length(pair_lists[[i]])/2)){
-      if (!check_for_pairs(pair_lists[[i]][j,], og_pairs) & !check_for_pairs(pair_lists[[i]][j,], cbind(new_rxn1, new_rxn2))){
+      #print(pair_lists[[i]][j,])
+      if ((pair_lists[[i]][j,1] != pair_lists[[i]][j,2]) & !check_for_pairs(pair_lists[[i]][j,], og_pairs) & !check_for_pairs(pair_lists[[i]][j,], cbind(new_rxn1, new_rxn2))){
         new_rxn1 <- c(new_rxn1, pair_lists[[i]][j,1])
         new_rxn2 <- c(new_rxn2, pair_lists[[i]][j,2])
       }
     }
   }
-  
+
   return(cbind(new_rxn1, new_rxn2))
 }
