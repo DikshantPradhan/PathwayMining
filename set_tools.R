@@ -155,6 +155,9 @@ return_composition_sets <- function(og_set_list, set_lists){
         print(paste(composing))
         sets <- c(sets, list(composing))
       }
+      if (length(composing) == 0){
+        print(c("error", i, j, set_lists[[i]][[j]]))
+      }
     }
     if (length(sets) > 0){
       composition[i] <- list(sets)
@@ -167,7 +170,7 @@ return_composition_sets <- function(og_set_list, set_lists){
 find_composing_sets <- function(rxns, sets){
   composition <- c()
   for (i in 1:length(sets)){
-    if (sets[[i]] %in% rxns){
+    if (all(sets[[i]] %in% rxns)){
       composition <- c(composition, i)
     }
   }
@@ -266,4 +269,70 @@ isolate_new_pairs <- function(og_pairs, pair_lists){
   }
 
   return(cbind(new_rxn1, new_rxn2))
+}
+
+isolate_new_pairs_from_sets <- function(og_set_list, full_set_lists){
+  new_rxn1 <- c()
+  new_rxn2 <- c()
+
+  og_pairs <- return_pairs_from_set_list(og_set_list)
+
+  for (i in 1:length(full_set_lists)){
+    pairs <- return_pairs_from_set_list(full_set_lists[[i]])
+
+    for (j in 1:length(pairs[,1])){
+      if(!check_for_pairs(pairs[j,], og_pairs) & !check_for_pairs(pairs[j,], cbind(new_rxn1, new_rxn2))){
+        new_rxn1 <- c(new_rxn1, pairs[j,1])
+        new_rxn2 <- c(new_rxn2, pairs[j,2])
+      }
+    }
+  }
+
+  return(cbind(new_rxn1, new_rxn2))
+}
+
+return_pairs_from_set <- function(set){
+  #print(length(set))
+  rxn1 <- c()
+  rxn2 <- c()
+  if (length(set) == 1){
+    return(cbind(c(set), c(set)))
+  }
+  for (i in 1:(length(set)-1)){
+    for (j in (i+1):length(set)){
+      #print(c(i,j))
+      #print(c(set[i], set[j]))
+      if (!is.na(set[i]) & !is.na(set[j])){
+        #print(c(set[i], set[j]))
+        rxn1 <- c(rxn1, set[i])
+        rxn2 <- c(rxn2, set[j])
+      }
+    }
+  }
+
+  return(cbind(rxn1, rxn2))
+}
+
+return_pairs_from_set_list <- function(set_list){
+
+  rxn1 <- c()
+  rxn2 <- c()
+
+  for (i in 1:length(set_list)){
+    pairs <- return_pairs_from_set(set_list[[i]])
+    rxn1 <- c(rxn1, pairs[,1])
+    rxn2 <- c(rxn2, pairs[,2])
+  }
+
+  return(cbind(rxn1, rxn2))
+}
+
+return_pair_lists_from_set_lists <- function(set_lists){
+  pair_lists <- c()
+
+  for (i in 1:length(set_lists)){
+    pair_lists[[i]] <- return_pairs_from_set(set_lists[[i]])
+  }
+
+  return(pair_lists)
 }
