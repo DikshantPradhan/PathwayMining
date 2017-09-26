@@ -146,6 +146,13 @@ compare_r1_sets <- function(og_set_list, set_lists){ # see which og_sets don't a
 
 return_composition_sets <- function(og_set_list, set_lists){
   composition <- c()
+
+  error <- c() # 94 is not a set number
+
+  for (i in 1:length(ecoli$get_names()$VarName)){
+    error[i] <- paste(ecoli$get_names()$VarName[i], ":", sep = "")
+  }
+
   for (i in 1:length(set_lists)){
     print(paste(i, ":"))
     sets <- c()
@@ -157,6 +164,7 @@ return_composition_sets <- function(og_set_list, set_lists){
       }
       if (length(composing) == 0){
         print(c("error", i, j, set_lists[[i]][[j]]))
+        error[get_rxn_idx(ecoli$get_names()$VarName, set_lists[[i]][[j]])] <- paste(error[get_rxn_idx(ecoli$get_names()$VarName, set_lists[[i]][[j]])], get_rxn_id_from_idx(model, i), sep = " ")
       }
     }
     if (length(sets) > 0){
@@ -164,7 +172,15 @@ return_composition_sets <- function(og_set_list, set_lists){
     }
   }
 
-  return(composition)
+  #rownames(error) <- ecoli$get_names()$VarName
+  #print(error)
+
+  composition_sets <- c()
+
+  composition_sets$composition <- composition
+  composition_sets$error <- error
+
+  return(composition_sets)
 }
 
 find_composing_sets <- function(rxns, sets){

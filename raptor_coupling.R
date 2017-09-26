@@ -45,26 +45,9 @@ optimize_rxn <- function(model, rxn, max){
   return(sol)
 }
 
-rxn_fix <- function(max, min){
-  #max <- optimize_rxn(model, rxn, max = TRUE)$X[rxn]
-  #min <- optimize_rxn(model, rxn, max = FALSE)$X[rxn]
-  if (is.infinite(max)){
-    max = 1000
-  }
-  if (is.infinite(min)){
-    min = -1000
-  }
-  avg <- mean(c(max, min))
-  if (avg == 0){
-    avg <- mean(c(avg, max))
-  }
-
-  return(avg)
-}
-
 # MAIN FUNCTION
 
-flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01, tol = 0.00001, stored_obs = 30) {
+flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.02, fix_tol_frac=0.01, tol = 0.00001, stored_obs = 100) {
   n <- model$get_sizes()$NumVars
   vars <- model$get_names()$VarName
   prev_obj <- model$getattr("Obj")
@@ -90,6 +73,24 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
 
   not_fixed <- function(x,y) { # check for variability in flux, return TRUE or FALSE
     !is.infinite(x) && !is.infinite(y) && abs(x - y) > fix_tol_frac*max(abs(x), abs(y))
+  }
+
+  rxn_fix <- function(max_, min_){
+
+    if (is.infinite(max_)){
+      max_ = 1000
+    }
+    if (is.infinite(min_)){
+      min_ = -1000
+    }
+    #avg <- mean(c(max_, min_))
+    #if (avg == 0){
+    #  avg <- avg  + fix_frac*(max_ - min_) #mean(c(avg, max_))
+    #}
+
+    avg <- min_ + fix_frac*(max_ - min_)
+
+    return(avg)
   }
 
   flux <- matrix(c(0), nrow = stored_obs, ncol = n) #data.frame()
