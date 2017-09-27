@@ -47,7 +47,7 @@ optimize_rxn <- function(model, rxn, max){
 
 # MAIN FUNCTION
 
-flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.02, fix_tol_frac=0.01, tol = 0.00001, stored_obs = 100) {
+flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01, tol = 0.00001, stored_obs = 100) {
   n <- model$get_sizes()$NumVars
   vars <- model$get_names()$VarName
   prev_obj <- model$getattr("Obj")
@@ -83,12 +83,12 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.02, fix_tol_
     if (is.infinite(min_)){
       min_ = -1000
     }
-    #avg <- mean(c(max_, min_))
-    #if (avg == 0){
-    #  avg <- avg  + fix_frac*(max_ - min_) #mean(c(avg, max_))
-    #}
+    avg <- mean(c(max_, min_))
+    if (near(avg, 0)){
+      avg <- avg  + fix_frac*(max_ - min_) #mean(c(avg, max_))
+    }
 
-    avg <- min_ + fix_frac*(max_ - min_)
+    #avg <- min_ + fix_frac*(max_ - min_)
 
     return(avg)
   }
