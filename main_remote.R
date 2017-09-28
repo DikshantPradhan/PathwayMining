@@ -3,8 +3,8 @@ source('~/GitHub/PathwayMining/sampling_tools.R')
 # source('~/GitHub/PathwayMining/fit_comparison_run.R')
 source('~/GitHub/PathwayMining/model_tools.R')
 source('~/GitHub/PathwayMining/set_tools.R')
-# source('~/GitHub/PathwayMining/raptor_coupling.R')
-# source('~/GitHub/PathwayMining/grb_tools.R')
+source('~/GitHub/PathwayMining/raptor_coupling.R')
+source('~/GitHub/PathwayMining/grb_tools.R')
 
 # source('~/GitHub/PathwayMining/load_mod.R')
 
@@ -83,7 +83,9 @@ ecoli_og_set_list <- GRB_generate_set_list(ecoli)
 ecoli <- GRB_ecoli_model()
 ecoli_set_lists <- GRB_generate_set_lists(ecoli, 1:94)
 
-ecoli_composition_set <- return_composition_sets(ecoli_og_set_list, ecoli_set_lists)
+ecoli_composition_set_full <- return_composition_sets(ecoli_og_set_list, ecoli_set_lists)
+
+ecoli_composition_set <- ecoli_composition_set_full$composition
 
 for (i in 1:length(ecoli_og_set_list)){ # print sets joined by each deletion
   #print(ecoli_og_set_list[[i]])
@@ -102,6 +104,8 @@ for (i in 1:length(ecoli_og_set_list)){ # print sets joined by each deletion
   }
   }
 }
+
+print(ecoli_composition_set_full$error)
 
 ecoli_deletion_list <- check_set_list_for_deletion(vars, ecoli_set_lists)
 
