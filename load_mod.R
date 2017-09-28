@@ -44,7 +44,7 @@ get_ecoli_model <- function(){
 
 get_yeast_model <- function(){
   
-  # setwd("~/GitHub/PathwayMining/data/yeast_model")
+  setwd("~/GitHub/PathwayMining/data/yeast_model")
   # yeast_model <- readTSVmod(reactList = "Y7_test_react.tsv", metList = "Y7_met.tsv")
   # library(readr)
   # Y7_react_names <- read_delim("~/GitHub/PathwayMining/data/yeast_model/Y7_react_names.csv", ";", escape_double = FALSE, trim_ws = TRUE)
@@ -86,6 +86,7 @@ get_yeast_model <- function(){
   # for (i in yeast_exch_rxns){
   #   yeast_model <- changeBounds(yeast_model, i, lb = -1000, ub = 1000)
   # }
+  setwd("~/GitHub/PathwayMining/")
   return(yeast_model)
 }
 
@@ -100,7 +101,6 @@ get_yeast_model <- function(){
 #   yeast_4_05_noCompartments_reaction$OBJECTIVE[i] <- Y4$OBJECTIVE[match]
 # }
 
-# setwd("~/GitHub/PathwayMining/")
 
 # model <- yeast_model
 
