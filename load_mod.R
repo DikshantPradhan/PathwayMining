@@ -60,9 +60,9 @@ get_yeast_model <- function(){
   yeast_model <- readTSVmod(reactList = "Y4_05_noCompart_react.tsv", metList = "Y4_05_noCompart_met.tsv")
   # yeast_4_05_compound <- read_delim("~/Documents/yeast_model/yeast_4/yeast_4_05_compound.csv", "\t", escape_double = FALSE, trim_ws = TRUE)
 
-  #yeast_4_05_noCompartments_compound <- read_delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t", escape_double = FALSE, trim_ws = TRUE)
+  yeast_4_05_noCompartments_compound <- read_delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t", escape_double = FALSE, trim_ws = TRUE)
 
-  yeast_4_05_noCompartments_compound <- read.delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t")
+  # yeast_4_05_noCompartments_compound <- read.delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t")
 
   for (i in 1:length(yeast_model@met_name)){
     # print(c(i, yeast_model@met_id[i], yeast_4_05_noCompartments_compound$NAME[which(yeast_4_05_noCompartments_compound$ID == yeast_model@met_id[i])]))
@@ -70,6 +70,18 @@ get_yeast_model <- function(){
     # print(yeast_4_05_compound$Name[which(yeast_4_05_compound$ID == yeast_model@met_id[i])])
     # print(which(yeast_4_05_compound$Name == yeast_model@met_id[i]))
   }
+  
+  exch <- findExchReact(yeast_model)
+  for (i in rev(exch@react_pos)){
+    yeast_model@lowbnd[i] <- -1000
+    yeast_model@uppbnd[i] <- 1000
+  }
+  
+  yeast_model@lowbnd[223] <- 0
+  
+  yeast_model <- rmReact(model = yeast_model, react = 1297)
+  yeast_model <- rmReact(model = yeast_model, react = 1295)
+  yeast_model <- rmReact(model = yeast_model, react = 1293)
   # library(readr)
   #yeast_model <- rmReact(model = yeast_model, react = 1606)
   #yeast_model <- rmReact(model = yeast_model, react = 1590)
