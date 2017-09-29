@@ -19,10 +19,15 @@ GRB_ecoli_model <- function(){
 GRB_yeast_model <- function(){
 
   setwd("~/GitHub/PathwayMining/data/yeast_model")
-  yeast_model <- readTSVmod(reactList = "Y7_test_react.tsv", metList = "Y7_met.tsv")
-  yeast_model <- rmReact(model = yeast_model, react = 1606)
-  yeast_model <- rmReact(model = yeast_model, react = 1590)
+  #yeast_model <- readTSVmod(reactList = "Y7_test_react.tsv", metList = "Y7_met.tsv")
+  #yeast_model <- rmReact(model = yeast_model, react = 1606)
+  #yeast_model <- rmReact(model = yeast_model, react = 1590)
 
+  #setwd("~/GitHub/PathwayMining/")
+
+  #yeast_model <- get_yeast_model()
+
+  #load('yeast_model.RData')
   setwd("~/GitHub/PathwayMining/")
 
   yeast <- as_GRBmodel(yeast_model)
@@ -40,7 +45,8 @@ GRB_generate_pair_list <- function(model){
   return(return_couples(flux_coupling_raptor(model)$coupled))
 }
 
-GRB_generate_set_list <- function(model){
+GRB_generate_set_list <- function(model_og){
+  model <- model_og$copy()
   return(get_list_of_sets(return_couples(flux_coupling_raptor(model)$coupled)))
 }
 

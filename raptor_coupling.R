@@ -104,6 +104,8 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
     prev_lb <- model$getattr("LB")[vars[i]]
     #fixed_val <- fva$minflux[i] + fix_frac*(fva$maxflux[i] - fva$minflux[i])
 
+    print(c(vars[i], global_min[i], global_max[i]))
+
     if ((global_max[i] > tol) | (global_min[i] < (-1*tol))){
       fixed_val <- rxn_fix(global_max[i], global_min[i])
     }
@@ -111,6 +113,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
       if (model$getattr("UB")[vars[i]] > tol){
 
         sol <- optimize_rxn(model, vars[i], max = TRUE)
+        sol$X[is.nan(sol$X)] <- 0
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
 
@@ -122,6 +125,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
       if (model$getattr("LB")[vars[i]] < (-1*tol)){
 
         sol <- optimize_rxn(model, vars[i], max = FALSE)
+        sol$X[is.nan(sol$X)] <- 0
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
 
@@ -169,6 +173,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         model$optimize()
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
+        sol$X[is.nan(sol$X)] <- 0
 
         # flux <- rbind(flux, sol$X)
         flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
@@ -188,6 +193,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         model$optimize()
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
+        sol$X[is.nan(sol$X)] <- 0
 
         # flux <- rbind(flux, sol$X)
         flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
@@ -211,6 +217,8 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
 
       model$setattr("Obj", setNames(0.0, vars[j]))
     }
+
+    #print(c(global_max[117], global_min[117]))
     # unfix i
     model$setattr("UB", prev_ub)
     model$setattr("LB", prev_lb)
@@ -228,7 +236,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
   )
 }
 
-ecoli <- as_GRBmodel(model)
-ecoli$show_output(FALSE)
+#ecoli <- as_GRBmodel(model)
+#ecoli$show_output(FALSE)
 #print(flux_coupling_raptor(ecoli))
 #print(get_list_of_sets(return_couples(flux_coupling_raptor(ecoli)$coupled)))

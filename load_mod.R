@@ -43,7 +43,7 @@ get_ecoli_model <- function(){
 ## YEAST MODEL
 
 get_yeast_model <- function(){
-  
+
   setwd("~/GitHub/PathwayMining/data/yeast_model")
   # yeast_model <- readTSVmod(reactList = "Y7_test_react.tsv", metList = "Y7_met.tsv")
   # library(readr)
@@ -51,17 +51,19 @@ get_yeast_model <- function(){
   # yeast_model@react_name <- Y7_react_names$Description
   # yeast_model <- rmReact(model = yeast_model, react = 1606)
   # yeast_model <- rmReact(model = yeast_model, react = 1590)
-  # 
+  #
   # yeast_exch_rxns <- grep("exchange", yeast_model@react_name)
   # for (i in yeast_exch_rxns){
   #   yeast_model <- changeBounds(yeast_model, i, lb = -1000, ub = 1000)
   # }
-  
+
   yeast_model <- readTSVmod(reactList = "Y4_05_noCompart_react.tsv", metList = "Y4_05_noCompart_met.tsv")
   # yeast_4_05_compound <- read_delim("~/Documents/yeast_model/yeast_4/yeast_4_05_compound.csv", "\t", escape_double = FALSE, trim_ws = TRUE)
-  
-  yeast_4_05_noCompartments_compound <- read_delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t", escape_double = FALSE, trim_ws = TRUE)
-  
+
+  #yeast_4_05_noCompartments_compound <- read_delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t", escape_double = FALSE, trim_ws = TRUE)
+
+  yeast_4_05_noCompartments_compound <- read.delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t")
+
   for (i in 1:length(yeast_model@met_name)){
     # print(c(i, yeast_model@met_id[i], yeast_4_05_noCompartments_compound$NAME[which(yeast_4_05_noCompartments_compound$ID == yeast_model@met_id[i])]))
     yeast_model@met_name[i] <- yeast_4_05_noCompartments_compound$NAME[which(yeast_4_05_noCompartments_compound$ID == yeast_model@met_id[i])]
@@ -71,17 +73,17 @@ get_yeast_model <- function(){
   # library(readr)
   #yeast_model <- rmReact(model = yeast_model, react = 1606)
   #yeast_model <- rmReact(model = yeast_model, react = 1590)
-  
+
   # Y4_react_names <- read_delim("~/GitHub/PathwayMining/data/yeast_model/Y4_react_names.tsv", ";", escape_double = FALSE, trim_ws = TRUE)
   # for (i in 1:length(yeast_model@react_id)){
   #   num <- as.numeric(strsplit(yeast_model@react_id[i], split = "_")[[1]][2])
   #   # print(num)
   #   yeast_model@react_name[i] <- Y4_react_names$Description[num]
   # }
-  # 
+  #
   # yeast_model <- rmReact(model = yeast_model, react = get_rxn_idx(yeast_model@react_name, "r_1812"))
   # yeast_model <- rmReact(model = yeast_model, react = get_rxn_idx(yeast_model@react_name, "r_1815")) # not sure if this one warrants removal
-  
+
   # yeast_exch_rxns <- grep("exchange", yeast_model@react_name)
   # for (i in yeast_exch_rxns){
   #   yeast_model <- changeBounds(yeast_model, i, lb = -1000, ub = 1000)
@@ -91,7 +93,7 @@ get_yeast_model <- function(){
 }
 
 
-## 
+##
 
 # for (i in 1:nrow(yeast_4_05_noCompartments_reaction)){
 #   match <- which(Y4$ID == yeast_4_05_noCompartments_reaction$X.ID[i])
