@@ -228,7 +228,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         active[j] <- FALSE
       }
 
-      print(lp_calls)
+      # print(lp_calls)
 
       model$setattr("Obj", setNames(0.0, vars[j]))
     }

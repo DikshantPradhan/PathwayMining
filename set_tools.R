@@ -125,6 +125,20 @@ total_union <- function(sets){
   return(u)
 }
 
+compare_sets <- function(set_1, set_2){
+  if (length(set_1) != length(set_2)){
+    return(FALSE)
+  }
+  
+  for (i in 1:length(set_1)){
+    if (!all.equal(set_1[[i]], set_2[[i]])){
+      return(FALSE)
+    }
+  }
+  
+  return(TRUE)
+}
+
 compare_r1_sets <- function(og_set_list, set_lists){ # see which og_sets don't appear in each set_list
   for (i in 1:length(set_lists)){
     print(i)
