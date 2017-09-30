@@ -17,8 +17,8 @@ get_rxn_name_from_idx <- function(model, rxn_idx){
   return(model@react_name[rxn_idx])
 }
 
-get_rxn_id_from_idx <- function(model, rxn_idx){
-  return(model@react_id[rxn_idx])
+get_rxn_id_from_idx <- function(vars, rxn_idx){
+  return(vars[rxn_idx])
 }
 
 get_dwnst_rxns <- function(rxn_idx, sample = NULL){

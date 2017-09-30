@@ -178,7 +178,7 @@ return_composition_sets <- function(og_set_list, set_lists, model){
       }
       if (length(composing) == 0){
         print(c("error", i, j, set_lists[[i]][[j]]))
-        error[get_rxn_idx(model$get_names()$VarName, set_lists[[i]][[j]])] <- paste(error[get_rxn_idx(model$get_names()$VarName, set_lists[[i]][[j]])], get_rxn_id_from_idx(model, i), sep = " ")
+        error[get_rxn_idx(model$get_names()$VarName, set_lists[[i]][[j]])] <- paste(error[get_rxn_idx(model$get_names()$VarName, set_lists[[i]][[j]])], get_rxn_id_from_idx(model$get_names()$VarName, i), sep = " ")
       }
     }
     if (length(sets) > 0){
