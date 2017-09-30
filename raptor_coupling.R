@@ -112,7 +112,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
     else {
       if (!near(model$getattr("UB")[vars[i]], tol_)){ #model$getattr("UB")[vars[i]] > tol
 
-        sol <- optimize_rxn(model, vars[i], max = TRUE)
+        # sol <- optimize_rxn(model, vars[i], max = TRUE)
+        model$set_model_sense(maximize=TRUE)
+        model$optimize()
+        lp_calls <- lp_calls + 1
+        sol <- model$get_solution()
         #sol$X[is.nan(sol$X)] <- 0
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
@@ -126,7 +130,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
       }
       if (!near(model$getattr("LB")[vars[i]], tol_)){ #model$getattr("LB")[vars[i]] < (-1*tol_)
 
-        sol <- optimize_rxn(model, vars[i], max = FALSE)
+        # sol <- optimize_rxn(model, vars[i], max = FALSE)
+        model$set_model_sense(minimize=TRUE)
+        model$optimize()
+        lp_calls <- lp_calls + 1
+        sol <- model$get_solution()
         #sol$X[is.nan(sol$X)] <- 0
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
