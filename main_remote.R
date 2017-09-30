@@ -127,3 +127,5 @@ for (i in 1:length(yeast_og_set_list)){ # print sets joined by each deletion
   }
   }
 }
+
+save(yeast_og_set_list, yeast_set_lists, yeast_composition_set_full, yeast_deletion_list, file = "yeast_run_data.RData")
