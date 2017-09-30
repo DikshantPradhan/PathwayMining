@@ -84,7 +84,7 @@ source('~/GitHub/PathwayMining/grb_tools.R')
 # yeast <- GRB_yeast_model()
 # yeast_set_lists <- GRB_generate_set_lists(yeast, 1:n)
 
-yeast_composition_set_full <- return_composition_sets(yeast_og_set_list, yeast_set_lists)
+yeast_composition_set_full <- return_composition_sets(yeast_og_set_list, yeast_set_lists, yeast)
 
 yeast_composition_set <- yeast_composition_set_full$composition
 
