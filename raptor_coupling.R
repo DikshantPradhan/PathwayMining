@@ -120,7 +120,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         # flux <- rbind(flux, sol$X)
         #flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
         flux[lp_calls%%stored_obs,] <- sol$X
-        lp_calls%%stored_obs
+        
         #flux_idx <- flux_idx +1
         fixed_val <- rxn_fix(global_max[i], global_min[i])
       }
