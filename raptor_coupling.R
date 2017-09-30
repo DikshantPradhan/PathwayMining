@@ -47,7 +47,7 @@ optimize_rxn <- function(model, rxn, max){
 
 # MAIN FUNCTION
 
-flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_frac=0.01, tol = 0.00001, stored_obs = 100) {
+flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_frac=0.01, tol_ = 0.00001, stored_obs = 100, cor_iter = 3) {
   n <- model$get_sizes()$NumVars
   vars <- model$get_names()$VarName
   prev_obj <- model$getattr("Obj")
@@ -84,7 +84,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
       min_ = -1000
     }
     avg <- mean(c(max_, min_))
-    if (near(avg, 0)){
+    if (near(avg, 0, tol = tol_)){
       avg <- avg  + fix_frac*(max_ - min_) #mean(c(avg, max_))
     }
 
@@ -104,37 +104,40 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
     prev_lb <- model$getattr("LB")[vars[i]]
     #fixed_val <- fva$minflux[i] + fix_frac*(fva$maxflux[i] - fva$minflux[i])
 
-    print(c(vars[i], global_min[i], global_max[i]))
+    #print(c(vars[i], global_min[i], global_max[i]))
 
-    if ((global_max[i] > tol) | (global_min[i] < (-1*tol))){
+    if (!near(global_max[i], 0, tol = tol_) | !near(global_min[i], 0, tol = tol_)){
       fixed_val <- rxn_fix(global_max[i], global_min[i])
     }
     else {
-      if (model$getattr("UB")[vars[i]] > tol){
+      if (!near(model$getattr("UB")[vars[i]], tol_)){ #model$getattr("UB")[vars[i]] > tol
 
         sol <- optimize_rxn(model, vars[i], max = TRUE)
-        sol$X[is.nan(sol$X)] <- 0
+        #sol$X[is.nan(sol$X)] <- 0
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
 
         # flux <- rbind(flux, sol$X)
-        flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
+        #flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
+        flux[lp_calls%%stored_obs,] <- sol$X
+        lp_calls%%stored_obs
         #flux_idx <- flux_idx +1
         fixed_val <- rxn_fix(global_max[i], global_min[i])
       }
-      if (model$getattr("LB")[vars[i]] < (-1*tol)){
+      if (!near(model$getattr("LB")[vars[i]], tol_)){ #model$getattr("LB")[vars[i]] < (-1*tol_)
 
         sol <- optimize_rxn(model, vars[i], max = FALSE)
-        sol$X[is.nan(sol$X)] <- 0
+        #sol$X[is.nan(sol$X)] <- 0
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
 
         # flux <- rbind(flux, sol$X)
-        flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
+        #flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
+        flux[lp_calls%%stored_obs,] <- sol$X
         #flux_idx <- flux_idx +1
         fixed_val <- rxn_fix(global_max[i], global_min[i])
       }
-      if ((abs(global_max[i]) < tol) & (abs(global_min[i]) < tol)){
+      if (near(global_max[i], 0, tol = tol_) & near(global_min[i], 0, tol = tol_)){ #(abs(global_max[i]) < tol) & (abs(global_min[i]) < tol)
         blocked[i] <- TRUE
         next
       }
@@ -155,7 +158,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
       if (!active[j] | blocked[j]) next
       # check for uncoupled
       #if (use_min_fva_cor && !is.na(fva_cor[i,j]) && abs(fva_cor[i,j]) < min_fva_cor) next
-      if (i > 3){
+      if (i > cor_iter){
         C <- cor(flux[,i], flux[,j])
         if (is.na(C) | (abs(C) < min_fva_cor)){next}
       }
@@ -173,10 +176,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         model$optimize()
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
-        sol$X[is.nan(sol$X)] <- 0
+        #sol$X[is.nan(sol$X)] <- 0
 
         # flux <- rbind(flux, sol$X)
-        flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
+        #flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
+        flux[lp_calls%%stored_obs,] <- sol$X
 
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
@@ -193,10 +197,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         model$optimize()
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
-        sol$X[is.nan(sol$X)] <- 0
+        #sol$X[is.nan(sol$X)] <- 0
 
         # flux <- rbind(flux, sol$X)
-        flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
+        #flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
+        flux[lp_calls%%stored_obs,] <- sol$X
 
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
@@ -208,17 +213,19 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         skip <- not_fixed(sub_max[j], sub_min[j])
       }
 
-      if (max == 0 & min == 0){skip = TRUE}
+      if (near(max, 0, tol = tol_) & near(min, 0, tol = tol_)){skip = TRUE}
 
       if (!skip) { # finally label as coupled
         coupled[i,j] <- TRUE
         active[j] <- FALSE
       }
 
+      print(lp_calls)
+
       model$setattr("Obj", setNames(0.0, vars[j]))
     }
 
-    #print(c(global_max[117], global_min[117]))
+
     # unfix i
     model$setattr("UB", prev_ub)
     model$setattr("LB", prev_lb)
