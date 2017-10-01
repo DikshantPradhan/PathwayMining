@@ -75,14 +75,14 @@ source('~/GitHub/PathwayMining/grb_tools.R')
 #}
 
 # test composition of set_lists (make sure that blocking any reaction in an og_set results in the same r1 set)
-# yeast <- GRB_yeast_model()
-# n <- yeast$get_sizes()$NumVars
-# vars <- yeast$get_names()$VarName
-# 
-# yeast_og_set_list <- GRB_generate_set_list(yeast)
-# 
-# yeast <- GRB_yeast_model()
-# yeast_set_lists <- GRB_generate_set_lists(yeast, 1:n)
+yeast <- GRB_yeast_model()
+n <- yeast$get_sizes()$NumVars
+vars <- yeast$get_names()$VarName
+
+yeast_og_set_list <- GRB_generate_set_list(yeast)
+
+yeast <- GRB_yeast_model()
+yeast_set_lists <- GRB_generate_set_lists(yeast, 1:n)
 
 yeast_composition_set_full <- return_composition_sets(yeast_og_set_list, yeast_set_lists, yeast)
 
