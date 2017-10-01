@@ -122,8 +122,8 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         global_min <- pmin(global_min, sol$X)
 
         # flux <- rbind(flux, sol$X)
-        #flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
-        flux[lp_calls%%stored_obs,] <- sol$X
+        flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
+        #flux[lp_calls%%stored_obs,] <- sol$X
         
         #flux_idx <- flux_idx +1
         fixed_val <- rxn_fix(global_max[i], global_min[i])
@@ -140,8 +140,8 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         global_min <- pmin(global_min, sol$X)
 
         # flux <- rbind(flux, sol$X)
-        #flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
-        flux[lp_calls%%stored_obs,] <- sol$X
+        flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
+        #flux[lp_calls%%stored_obs,] <- sol$X
         #flux_idx <- flux_idx +1
         fixed_val <- rxn_fix(global_max[i], global_min[i])
       }
@@ -187,8 +187,8 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         #sol$X[is.nan(sol$X)] <- 0
 
         # flux <- rbind(flux, sol$X)
-        #flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
-        flux[lp_calls%%stored_obs,] <- sol$X
+        flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
+        #flux[lp_calls%%stored_obs,] <- sol$X
 
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
@@ -208,8 +208,8 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         #sol$X[is.nan(sol$X)] <- 0
 
         # flux <- rbind(flux, sol$X)
-        #flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
-        flux[lp_calls%%stored_obs,] <- sol$X
+        flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
+        #flux[lp_calls%%stored_obs,] <- sol$X
 
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
