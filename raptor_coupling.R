@@ -110,7 +110,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
       fixed_val <- rxn_fix(global_max[i], global_min[i])
     }
     else {
-      if (!near(model$getattr("UB")[vars[i]], tol_)){ #model$getattr("UB")[vars[i]] > tol
+      if (model$getattr("UB")[vars[i]] > tol_){ #model$getattr("UB")[vars[i]] > tol
 
         # sol <- optimize_rxn(model, vars[i], max = TRUE)
         model$set_model_sense(maximize=TRUE)
@@ -128,7 +128,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         #flux_idx <- flux_idx +1
         fixed_val <- rxn_fix(global_max[i], global_min[i])
       }
-      if (!near(model$getattr("LB")[vars[i]], tol_)){ #model$getattr("LB")[vars[i]] < (-1*tol_)
+      if (model$getattr("LB")[vars[i]] < (-1*tol_)){ #model$getattr("LB")[vars[i]] < (-1*tol_)
 
         # sol <- optimize_rxn(model, vars[i], max = FALSE)
         model$set_model_sense(minimize=TRUE)
