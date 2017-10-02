@@ -118,6 +118,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         model$optimize()
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
+	model$setattr("Obj", setNames(0.0, vars[i]))
         #sol$X[is.nan(sol$X)] <- 0
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
@@ -137,6 +138,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         model$optimize()
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
+	model$setattr("Obj", setNames(0.0, vars[i]))
         #sol$X[is.nan(sol$X)] <- 0
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
