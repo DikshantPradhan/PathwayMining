@@ -10,10 +10,10 @@ source('~/GitHub/PathwayMining/grb_tools.R')
 
 #rxns <- c()
 
-# for (i in 1:length(ecoli_r1_set)){
-#   # test_set <- get_list_of_sets(ecoli_pair_lists[[i]])
+# for (i in 1:length(yeast_r1_set)){
+#   # test_set <- get_list_of_sets(yeast_pair_lists[[i]])
 #
-#   check <- check_sets_for_containing(union_set_list_2[[i]], ecoli_r1_set)
+#   check <- check_sets_for_containing(union_set_list_2[[i]], yeast_r1_set)
 #   if (!check){
 #     print(c(i))
 #   }
@@ -29,48 +29,48 @@ source('~/GitHub/PathwayMining/grb_tools.R')
 #   # }
 # }
 
-#for (i in 1:length(ecoli_og_set_list)){
+#for (i in 1:length(yeast_og_set_list)){
 #
-#  for (j in 1:length(ecoli_og_set_list[[i]])){
-#    check <- check_sets_for_containing(ecoli_og_set_list[[i]][[j]], set_lists[[i]])
+#  for (j in 1:length(yeast_og_set_list[[i]])){
+#    check <- check_sets_for_containing(yeast_og_set_list[[i]][[j]], set_lists[[i]])
 #    if (!check){
 #      print(c(i,j))
-#      print(ecoli_og_set_list[[i]][[j]])
+#      print(yeast_og_set_list[[i]][[j]])
 #      # rxns <- c(rxns, unlist(test_set[[j]]))
 #    }
 #  }
 #}
 
-#for (i in 1:length(ecoli_r1_set_test)){
-#  check <- check_sets_for_containing(ecoli_r1_set_test[[i]], union_set_list)
+#for (i in 1:length(yeast_r1_set_test)){
+#  check <- check_sets_for_containing(yeast_r1_set_test[[i]], union_set_list)
 #  if (!check){print(c(i))}
 #  #else{print("good")}
 #}
 
-#for (i in 1:length(ecoli_set_lists_2)){
-#  print(length(ecoli_set_lists[[i]]))
+#for (i in 1:length(yeast_set_lists_2)){
+#  print(length(yeast_set_lists[[i]]))
 #}
 
-#for (i in 1:length(ecoli_pair_lists)){
-  #print(c(length(ecoli_pair_lists[[i]]), length(ecoli_pair_lists_2[[i]])))
-#  test_set <- get_list_of_sets(ecoli_pair_lists[[i]])
-#  print(c(length(test_set), length(ecoli_set_lists[[i]])))
+#for (i in 1:length(yeast_pair_lists)){
+  #print(c(length(yeast_pair_lists[[i]]), length(yeast_pair_lists_2[[i]])))
+#  test_set <- get_list_of_sets(yeast_pair_lists[[i]])
+#  print(c(length(test_set), length(yeast_set_lists[[i]])))
   #for (j in 1:length(test_set)){
-  #  print(c(length(test_set[[j]]), length(ecoli_set_lists[[i]][[j]])))
+  #  print(c(length(test_set[[j]]), length(yeast_set_lists[[i]][[j]])))
   #  #for (k in 1:length(test_set[[i]])){
-  #  #  if (!all.equal(test_set[[i]][j], ecoli_set_lists[[i]][j])){print(c(i,j))}
+  #  #  if (!all.equal(test_set[[i]][j], yeast_set_lists[[i]][j])){print(c(i,j))}
   #  #}
   #}
-  #for (j in 1:length(ecoli_pair_lists[[i]])){
-  #  if (!all.equal(ecoli_pair_lists_2[[i]][j,],ecoli_pair_lists_2[[i]][j,])){print(c(i,j))}
+  #for (j in 1:length(yeast_pair_lists[[i]])){
+  #  if (!all.equal(yeast_pair_lists_2[[i]][j,],yeast_pair_lists_2[[i]][j,])){print(c(i,j))}
   #}
 #}
 
 #for (i in 1:94){
-#  #print(c(length(ecoli_set_lists_1[[i]]), length(ecoli_set_lists_2[[i]])))
-#  for (j in 1:length(ecoli_set_lists_1[[i]])){
-#    check <- check_sets_for_containing(ecoli_set_lists_1[[i]][[j]], ecoli_set_lists_2[[i]])
-#    if (!check){print(c(i,j)); print(ecoli_set_lists_1[[i]][[j]])}
+#  #print(c(length(yeast_set_lists_1[[i]]), length(yeast_set_lists_2[[i]])))
+#  for (j in 1:length(yeast_set_lists_1[[i]])){
+#    check <- check_sets_for_containing(yeast_set_lists_1[[i]][[j]], yeast_set_lists_2[[i]])
+#    if (!check){print(c(i,j)); print(yeast_set_lists_1[[i]][[j]])}
 #  }
 #}
 
@@ -89,7 +89,7 @@ yeast_composition_set_full <- return_composition_sets(yeast_og_set_list, yeast_s
 yeast_composition_set <- yeast_composition_set_full$composition
 
 for (i in 1:length(yeast_og_set_list)){ # print sets joined by each deletion
-  #print(ecoli_og_set_list[[i]])
+  #print(yeast_og_set_list[[i]])
   if (length(yeast_og_set_list[[i]]) > 1){
   for (j in 1:(length(yeast_og_set_list[[i]])-1)){
     rxn1 <- GRB_get_rxn_idx(yeast, yeast_og_set_list[[i]][[j]])
@@ -101,7 +101,7 @@ for (i in 1:length(yeast_og_set_list)){ # print sets joined by each deletion
       print(c(yeast_composition_set[[rxn1]], ";", yeast_composition_set[[rxn2]]))
     }
     #print(j)
-    #print(ecoli_composition_set[[GRB_get_rxn_idx(ecoli, j)]])
+    #print(yeast_composition_set[[GRB_get_rxn_idx(yeast, j)]])
   }
   }
 }
@@ -111,7 +111,7 @@ print(yeast_composition_set_full$error)
 yeast_deletion_list <- check_set_list_for_deletion(vars, yeast_set_lists)
 
 for (i in 1:length(yeast_og_set_list)){ # print sets joined by each deletion
-  #print(ecoli_og_set_list[[i]])
+  #print(yeast_og_set_list[[i]])
   if (length(yeast_og_set_list[[i]]) > 1){
   for (j in 1:(length(yeast_og_set_list[[i]])-1)){
     rxn1 <- GRB_get_rxn_idx(yeast, yeast_og_set_list[[i]][[j]])
@@ -123,7 +123,7 @@ for (i in 1:length(yeast_og_set_list)){ # print sets joined by each deletion
       print(c(yeast_deletion_list[[rxn1]], ";", yeast_deletion_list[[rxn2]]))
     }
     #print(j)
-    #print(ecoli_composition_set[[GRB_get_rxn_idx(ecoli, j)]])
+    #print(yeast_composition_set[[GRB_get_rxn_idx(yeast, j)]])
   }
   }
 }
