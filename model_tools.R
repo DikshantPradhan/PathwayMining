@@ -21,7 +21,7 @@ get_rxn_id_from_idx <- function(vars, rxn_idx){
   return(vars[rxn_idx])
 }
 
-get_dwnst_rxns <- function(rxn_idx, sample = NULL){
+get_dwnst_rxns <- function(rxn_idx, sample = NULL, S, model){
   # fwd_dwnst_mets <- which(S[,rxn_idx] > 0)
 
   # if (length(model@react_rev[rxn_idx]) == 0){

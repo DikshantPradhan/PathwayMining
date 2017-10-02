@@ -1,6 +1,6 @@
 # functions related to analysis on a network level, including visualization
 
-# library(igraph)
+library(igraph)
 
 # og_pairs <- return_couples(flux_coupling_cor(sample_og))
 # og_rxn_set <- get_list_of_sets(og_pairs)
@@ -63,7 +63,7 @@ graph_rxn_sets <- function(set_list, edge_color = "grey", show_theorietical = FA
 }
 
 rxn_set_edges <- function(set_list, graph = make_empty_graph(), edge_color = "blue", vertex_color = "green", 
-                          direct = TRUE, addition = "", sample = NULL){
+                          direct = TRUE, addition = "", sample = NULL, S, model){
   for (vertex in unlist(set_list)){
     graph <- add_vertex(graph, paste(vertex, addition, sep = ""), color = vertex_color)
   }
@@ -73,16 +73,18 @@ rxn_set_edges <- function(set_list, graph = make_empty_graph(), edge_color = "bl
       ds_rxns <- c()
       us_rxns <- c()
       
-      rxn_idx <- get_rxn_idx(rxn)
+      rxn_idx <- get_rxn_idx(model@react_id, rxn)
       
       if (direct){
-        ds_rxns <- intersect(get_rxn_id_from_idx(get_dwnst_rxns(rxn_idx, sample)), set)
+        ds_rxns <- intersect(get_rxn_id_from_idx(model@react_id, get_dwnst_rxns(rxn_idx, sample, S = S, model = model)), set)
         # us_rxns <- intersect(get_rxn_id_from_idx(get_upst_rxns(get_rxn_idx(rxn))), set)
       }
       else {
-        ds_rxns <- intersect(get_rxn_id_from_idx(get_dwnst_paths(rxn_idx, sample)), set)
+        ds_rxns <- intersect(get_rxn_id_from_idx(model@react_id, get_dwnst_paths(rxn_idx, sample, S = S, model = model)), set)
         # us_rxns <- intersect(get_rxn_id_from_idx(get_upst_paths(get_rxn_idx(rxn))), set)
       }
+      
+      print(ds_rxns)
       
       for (ds_rxn in ds_rxns){
         # graph <- graph + edge(rxn, get_rxn_id_from_idx(ds_rxn), color = edge_color)
