@@ -456,3 +456,14 @@ get_union_set_from_degen_pairs <- function(vars, pair_lists){
 
   return(set_list)
 }
+
+replace_names_in_set <- function(set, og_names, new_names){
+  for (i in 1:length(set)){
+    for (j in 1:length(set[[i]])){
+      idx <- which(og_names == set[[i]][[j]])
+      set[[i]][[j]] <- new_names[idx]
+    }
+  }
+
+  return(set)
+}
