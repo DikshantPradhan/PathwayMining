@@ -47,7 +47,7 @@ optimize_rxn <- function(model, rxn, max){
 
 # MAIN FUNCTION
 
-flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_frac=0.01, tol_ = 0.00001, stored_obs = 100, cor_iter = 3) {
+flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01, tol_ = 0.00001, stored_obs = 100, cor_iter = 3) {
   n <- model$get_sizes()$NumVars
   vars <- model$get_names()$VarName
   prev_obj <- model$getattr("Obj")
@@ -84,8 +84,13 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
       min_ = -1000
     }
     avg <- mean(c(max_, min_))
-    if (near(avg, 0, tol = tol_)){
+    #avg <- min_ + fix_frac*(max_ - min_)
+    #avg <- fix_frac*(max_ - min_)
+    ct = 0
+    while (near(avg, 0, tol = tol_) & ct < 10){
       avg <- avg  + fix_frac*(max_ - min_) #mean(c(avg, max_))
+      print(c(avg, max_, min_))
+      ct = ct + 1
     }
 
     #avg <- min_ + fix_frac*(max_ - min_)
@@ -107,10 +112,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
     #print(c(vars[i], global_min[i], global_max[i]))
 
     if (!near(global_max[i], 0, tol = tol_) | !near(global_min[i], 0, tol = tol_)){
+      #print('none zero')
       fixed_val <- rxn_fix(global_max[i], global_min[i])
     }
     else {
-      if (model$getattr("UB")[vars[i]] > tol_){ #model$getattr("UB")[vars[i]] > tol
+      if (!near(model$getattr("UB")[vars[i]], 0, tol = tol_)){ #model$getattr("UB")[vars[i]] > tol
 
         #sol <- optimize_rxn(model, vars[i], max = TRUE)
         model$setattr("Obj", setNames(1.0, vars[i]))
@@ -118,7 +124,6 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         model$optimize()
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
-	      model$setattr("Obj", setNames(0.0, vars[i]))
         #sol$X[is.nan(sol$X)] <- 0
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
@@ -128,9 +133,15 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         flux[lp_calls%%stored_obs,] <- sol$X
 
         #flux_idx <- flux_idx +1
-        fixed_val <- rxn_fix(global_max[i], global_min[i])
+
+        if (!near(global_max[i], 0, tol = tol_) | !near(global_min[i], 0, tol = tol_)){
+          fixed_val <- rxn_fix(global_max[i], global_min[i])
+        }
+
+        #fixed_val <- rxn_fix(global_max[i], global_min[i])
+        model$setattr("Obj", setNames(0.0, vars[i]))
       }
-      if (model$getattr("LB")[vars[i]] < (-1*tol_)){ #model$getattr("LB")[vars[i]] < (-1*tol_)
+      if (!near(model$getattr("LB")[vars[i]], 0, tol = tol_)){ #model$getattr("LB")[vars[i]] < (-1*tol_)
 
         #sol <- optimize_rxn(model, vars[i], max = FALSE)
         model$setattr("Obj", setNames(1.0, vars[i]))
@@ -138,7 +149,6 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         model$optimize()
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
-	      model$setattr("Obj", setNames(0.0, vars[i]))
         #sol$X[is.nan(sol$X)] <- 0
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
@@ -147,9 +157,16 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
         #flux[sample(1:stored_obs, 1, replace = TRUE),] <- sol$X
         flux[lp_calls%%stored_obs,] <- sol$X
         #flux_idx <- flux_idx +1
-        fixed_val <- rxn_fix(global_max[i], global_min[i])
+
+        if (!near(global_min[i], 0, tol = tol_) | !near(global_min[i], 0, tol = tol_)){
+          fixed_val <- rxn_fix(global_max[i], global_min[i])
+        }
+
+        #fixed_val <- rxn_fix(global_max[i], global_min[i])
+        model$setattr("Obj", setNames(0.0, vars[i]))
       }
       if (near(global_max[i], 0, tol = tol_) & near(global_min[i], 0, tol = tol_)){ #(abs(global_max[i]) < tol) & (abs(global_min[i]) < tol)
+        print(vars[i])
         blocked[i] <- TRUE
 	      active[i] <- FALSE
         next
@@ -157,8 +174,8 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.05, fix_tol_
     }
 
     # set new bounds for selected rxn (temporarily)
-    model$setattr("UB", setNames(fixed_val + 0.5*fix_tol_frac*abs(fixed_val), vars[i]))
-    model$setattr("LB", setNames(fixed_val - 0.5*fix_tol_frac*abs(fixed_val), vars[i]))
+    model$setattr("UB", setNames(fixed_val + 0.0*fix_tol_frac*abs(fixed_val), vars[i]))
+    model$setattr("LB", setNames(fixed_val - 0.0*fix_tol_frac*abs(fixed_val), vars[i]))
 
     # couple reaction to itself if not blocked
     if (!blocked[i]){
