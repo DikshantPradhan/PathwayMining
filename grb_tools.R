@@ -87,6 +87,7 @@ GRB_generate_set_lists <- function(model_og, suppression_idxs){
   vars <- model_og$get_names()$VarName
 
   for (i in suppression_idxs){
+    print(i)
 
     #prev_ub <- model$getattr("UB")[vars[i]]
     #prev_lb <- model$getattr("LB")[vars[i]]
