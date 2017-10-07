@@ -446,10 +446,10 @@ generate_og_pair_list <- function(){
 }
 
 get_union_set_from_degen_pairs <- function(vars, pair_lists){
-  set_list <- vars
+  # set_list <- vars
 
   for (i in 1:length(pair_lists)){
-    set_list <- get_list_of_sets(pair_lists[[i]], rxns_list = set_list)
+    set_list <- get_list_of_sets(pair_lists[[i]])
     # print(set_list)
     print(paste(i, ": ", length(set_list)))
   }
