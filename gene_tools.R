@@ -95,7 +95,7 @@ check_for_enrichment <- function(gene_pairs, gi_e_matrix, threshold = 0.05){
     }
 
     #e <- max(abs(gi_e_matrix[gene_1, gene_2]), abs(gi_e_matrix[gene_2, gene_1]))
-    if (e > threshold){
+    if (e_ > threshold){
       e_1 <- c(e_1, gene_1)
       e_2 <- c(e_2, gene_2)
       e <- c(e, e_)

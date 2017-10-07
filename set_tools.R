@@ -388,7 +388,7 @@ return_pairs_from_set_list <- function(set_list){
     # print(set_list[[i]])
     # print(set_list[i])
     pairs <- return_pairs_from_set(set_list[[i]])
-    print(pairs)
+    # print(pairs)
     if (length(pairs) == 0){next}
     rxn1 <- c(rxn1, pairs[,1])
     rxn2 <- c(rxn2, pairs[,2])
