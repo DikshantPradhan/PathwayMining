@@ -64,10 +64,19 @@ source('~/GitHub/PathwayMining/set_tools.R')
 #  }
 #}
 
-for (i in 1:length(ecoli_og_set_list)){ # print sets joined by each deletion
-  print(c(ecoli_og_set_list[[i]], "::"))
-  for (j in ecoli_og_set_list[[i]]){
-    print(c("~",j))
-    print(ecoli_deletion_list[[get_rxn_idx(j)]])
+# for (i in 1:length(ecoli_og_set_list)){ # print sets joined by each deletion
+#   print(c(ecoli_og_set_list[[i]], "::"))
+#   for (j in ecoli_og_set_list[[i]]){
+#     print(c("~",j))
+#     print(ecoli_deletion_list[[get_rxn_idx(j)]])
+#   }
+# }
+
+ecoli_r0_pairs <- return_pairs_from_set_list(ecoli_og_set_list)
+ecoli_all_pairs <- return_pairs_from_set(unlist(ecoli_og_set_list))
+
+for (i in 1:nrow(ecoli_r0_pairs)){
+  if (!check_for_pairs(ecoli_r0_pairs[i,], ecoli_all_pairs)){
+    print(ecoli_r0_pairs[i,])
   }
 }
