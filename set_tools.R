@@ -274,12 +274,14 @@ remove_duplicate_pairs <- function(pairs){
       
     }
   }
+
   if (length(delete) > 0){
 	red1 <- red1[-delete]
   	red2 <- red2[-delete]
   }
   #red1 <- red1[-delete]
   #red2 <- red2[-delete]
+
   new_pairs <- cbind(red1, red2)
   # print(redundancies2)
   return(new_pairs)

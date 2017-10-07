@@ -1,4 +1,5 @@
 
+
 # for (i in 1:nrow(Y4_GPR)){
 #   genes <- strsplit(Y4_GPR$GPR[i], split = c("\\(|\\)|and|or"))
 #   genes <- genes[[1]][which(nchar(genes[[1]]) > 1)]
@@ -102,6 +103,7 @@ check_for_enrichment <- function(gene_pairs, gi_e_matrix, threshold = 0.05){
   }
 
   return(cbind(e_1, e_2, e))
+
 }
 
 gene_set_from_rxn_set <- function(rxn_set_list){
@@ -125,11 +127,11 @@ find_recurring_genes_in_set_list <- function(gene_set_list){
   for (i in unique(unlist(gene_set_list))){
     recurring[i] <- 0
   }
-
+  
   for (i in 1:(length(gene_set_list)-1)){
     for (j in (i+1):length(gene_set_list)){
       repeating_genes <- intersect(gene_set_list[[i]], gene_set_list[[j]])
-
+      
       if (length(repeating_genes) > 0){
         # print(repeating_genes)
         for (k in repeating_genes){
@@ -228,3 +230,4 @@ generate_gene_pair_lists <- function(og_set_list, set_lists){
 
   return(data)
 }
+
