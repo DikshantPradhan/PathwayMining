@@ -352,17 +352,23 @@ isolate_new_pairs_from_sets <- function(og_set_list, full_set_lists){
 }
 
 return_pairs_from_set <- function(set){
+  # print(set)
   #print(length(set))
   rxn1 <- c()
   rxn2 <- c()
+  # if (length(set) == 1){
+  #   return(cbind(c(set), c(set)))
+  # }
+  
   if (length(set) == 1){
-    return(cbind(c(set), c(set)))
+    return(NULL)
   }
+  
   for (i in 1:(length(set)-1)){
     for (j in (i+1):length(set)){
       #print(c(i,j))
-      #print(c(set[i], set[j]))
-      if (!is.na(set[i]) & !is.na(set[j]) & !(set[i] == set[j])){
+      # print(c(set[i], set[j]))
+      if (!is.na(set[i]) & !is.na(set[j]) & (set[i] != set[j])){
         #print(c(set[i], set[j]))
         rxn1 <- c(rxn1, set[i])
         rxn2 <- c(rxn2, set[j])
@@ -379,11 +385,17 @@ return_pairs_from_set_list <- function(set_list){
   rxn2 <- c()
 
   for (i in 1:length(set_list)){
+    # print(set_list[[i]])
+    # print(set_list[i])
     pairs <- return_pairs_from_set(set_list[[i]])
-    if (pairs[1] != pairs[2]){
-      rxn1 <- c(rxn1, pairs[,1])
-      rxn2 <- c(rxn2, pairs[,2])
-    }
+    print(pairs)
+    if (length(pairs) == 0){next}
+    rxn1 <- c(rxn1, pairs[,1])
+    rxn2 <- c(rxn2, pairs[,2])
+    # if (pairs[1] != pairs[2]){
+    #   rxn1 <- c(rxn1, pairs[,1])
+    #   rxn2 <- c(rxn2, pairs[,2])
+    # }
 
   }
 
@@ -394,7 +406,7 @@ return_pair_lists_from_set_lists <- function(set_lists){
   pair_lists <- c()
 
   for (i in 1:length(set_lists)){
-    pair_lists[[i]] <- return_pairs_from_set(set_lists[[i]])
+    pair_lists[[i]] <- return_pairs_from_set_list(set_lists[[i]])
   }
 
   return(pair_lists)
