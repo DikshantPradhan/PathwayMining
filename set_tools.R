@@ -356,19 +356,19 @@ return_pairs_from_set <- function(set){
   #print(length(set))
   rxn1 <- c()
   rxn2 <- c()
-  # if (length(set) == 1){
-  #   return(cbind(c(set), c(set)))
-  # }
-  
   if (length(set) == 1){
-    return(NULL)
+    return(cbind(c(set), c(set)))
   }
   
-  for (i in 1:(length(set)-1)){
-    for (j in (i+1):length(set)){
+  # if (length(set) == 1){
+  #   return(NULL)
+  # }
+  
+  for (i in 1:(length(set))){
+    for (j in (i):length(set)){
       #print(c(i,j))
       # print(c(set[i], set[j]))
-      if (!is.na(set[i]) & !is.na(set[j]) & (set[i] != set[j])){
+      if (!is.na(set[i]) & !is.na(set[j])){ # & (set[i] != set[j])
         #print(c(set[i], set[j]))
         rxn1 <- c(rxn1, set[i])
         rxn2 <- c(rxn2, set[j])
