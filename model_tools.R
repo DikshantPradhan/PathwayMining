@@ -467,3 +467,28 @@ replace_names_in_set <- function(set, og_names, new_names){
 
   return(set)
 }
+
+pair_data <- function(og_sets, set_lists){
+  all_rxn_pairs <- return_pairs_from_set(unlist(og_sets))
+  r0_rxn_pairs <- return_pairs_from_set_list(og_sets)
+  new_r1_pairs <- isolate_new_pairs_from_sets(og_sets, set_lists)
+  r1_pairs <- append_pair_lists(r0_rxn_pairs, new_r1_pairs)
+  
+  all_gene_pairs <- get_gene_pairs_from_rxn_pair_list(all_rxn_pairs)
+  r0_gene_pairs <- get_gene_pairs_from_rxn_pair_list(r0_rxn_pairs)
+  r1_gene_pairs <- get_gene_pairs_from_rxn_pair_list(r1_rxn_pairs)
+  new_r1_gene_pairs <- get_gene_pairs_from_rxn_pair_list(new_r1_rxn_pairs)
+  
+  pair_data <- c()
+  pair_data$all_rxn_pairs <- all_rxn_pairs
+  pair_data$r0_rxn_pairs <- r0_rxn_pairs
+  pair_data$r1_rxn_pairs <- r1_rxn_pairs
+  pair_data$new_r1_rxn_pairs <- new_r1_rxn_pairs
+  
+  pair_data$all_gene_pairs <- all_gene_pairs
+  pair_data$r0_gene_pairs <- r0_gene_pairs
+  pair_data$r1_gene_pairs <- r1_gene_pairs
+  pair_data$new_r1_gene_pairs <- new_r1_gene_pairs
+  
+  return(pair_data)
+}
