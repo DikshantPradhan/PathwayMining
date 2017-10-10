@@ -1,3 +1,4 @@
+library(readr)
 # scripts for loading different models
 
 # HOW TO HANDLE YEAST MODEL
@@ -77,11 +78,17 @@ get_yeast_model <- function(){
     yeast_model@uppbnd[i] <- 1000
   }
   
+  blocked <- get_blocked(yeast_model)
+  
+  yeast_model@lowbnd[blocked] <- -1000
+  yeast_model@uppbnd[blocked] <- 1000
+  
   yeast_model@lowbnd[223] <- 0
   
-  yeast_model <- rmReact(model = yeast_model, react = 1297)
-  yeast_model <- rmReact(model = yeast_model, react = 1295)
-  yeast_model <- rmReact(model = yeast_model, react = 1293)
+  #yeast_model <- rmReact(model = yeast_model, react = 1297)
+  #yeast_model <- rmReact(model = yeast_model, react = 1295)
+  #yeast_model <- rmReact(model = yeast_model, react = 1293)
+  
   # library(readr)
   #yeast_model <- rmReact(model = yeast_model, react = 1606)
   #yeast_model <- rmReact(model = yeast_model, react = 1590)
@@ -115,6 +122,20 @@ get_yeast_model <- function(){
 #   yeast_4_05_noCompartments_reaction$OBJECTIVE[i] <- Y4$OBJECTIVE[match]
 # }
 
+get_blocked <- function(model){
+  lb <- which(model@lowbnd > -1000)
+  ub <- which(model@uppbnd < 1000)
+  
+  potential_blocked <- intersect(lb, ub)
+  blocked <- c()
+  for (i in potential_blocked){
+    if (model@lowbnd[i] == 0 & model@uppbnd[i] == 0){
+      blocked <- c(blocked, i)
+    }
+  }
+  
+  return(blocked)
+}
 
 # model <- yeast_model
 
