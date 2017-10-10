@@ -129,13 +129,13 @@ compare_sets <- function(set_1, set_2){
   if (length(set_1) != length(set_2)){
     return(FALSE)
   }
-  
+
   for (i in 1:length(set_1)){
     if (!all.equal(set_1[[i]], set_2[[i]])){
       return(FALSE)
     }
   }
-  
+
   return(TRUE)
 }
 
@@ -265,13 +265,13 @@ remove_duplicate_pairs <- function(pairs){
   red1 <- pairs[,1]
   red2 <- pairs[,2]
   delete <- c()
-  
+
   for (i in 1:(length(red1)-1)){
     for (j in (i+1):length(red1)){
       if (((red1[j] == red1[i]) & (red2[j] == red2[i])) | ((red1[j] == red2[i]) & (red2[j] == red1[i]))){
         delete <- c(delete, j)
       }
-      
+
     }
   }
 
@@ -359,11 +359,11 @@ return_pairs_from_set <- function(set){
   if (length(set) == 1){
     return(cbind(c(set), c(set)))
   }
-  
+
   # if (length(set) == 1){
   #   return(NULL)
   # }
-  
+
   for (i in 1:(length(set))){
     for (j in (i):length(set)){
       #print(c(i,j))
@@ -415,29 +415,45 @@ return_pair_lists_from_set_lists <- function(set_lists){
 append_pair_lists <- function(pairs1, pairs2){
   p1 <- c(pairs1[,1], pairs2[,1])
   p2 <- c(pairs1[,2], pairs2[,2])
-  
+
   return(cbind(p1,p2))
 }
 
 get_rxn_pairs_from_set_pairs <- function(og_sets, set_pairs){
   rxn1 <- c()
   rxn2 <- c()
-  
+
   for (i in 1:nrow(set_pairs)){
-    
+
     new_set <- union(og_sets[[set_pairs[i,1]]], og_sets[[set_pairs[i,2]]])
     # print(i)
     # print(new_set)
     new_pairs <- return_pairs_from_set(new_set)
-    
+
     # print(new_pairs)
-    
+
     rxn1 <- c(rxn1, new_pairs[,1])
     rxn2 <- c(rxn2, new_pairs[,2])
   }
-  
+
   pairs <- cbind(rxn1, rxn2)
   pairs <- remove_duplicate_pairs(pairs)
-  
+
   return(pairs)
+}
+
+isolate_pairs <- function(targets, pairs){
+  item1 <- c()
+  item2 <- c()
+
+  for (i in 1:nrow(pairs)){
+    for (j in 1:length(targets)){
+      if (pairs[i,1] == targets[j] | pairs[i,2] == targets[j]){
+        item1 <- c(item1, pairs[i,1])
+        item2 <- c(item2, pairs[i,2])
+      }
+    }
+  }
+
+  return(cbind(item1, item2))
 }

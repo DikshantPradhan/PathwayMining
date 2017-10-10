@@ -95,12 +95,17 @@ check_for_enrichment <- function(gene_pairs, gi_e_matrix, threshold = 0.05){
     }
 
     #e <- max(abs(gi_e_matrix[gene_1, gene_2]), abs(gi_e_matrix[gene_2, gene_1]))
-    if (e_ > threshold){
+    if (e_ >= threshold){
       e_1 <- c(e_1, gene_1)
       e_2 <- c(e_2, gene_2)
       e <- c(e, e_)
     }
   }
+
+  percent <- length(e)/nrow(gene_pairs)
+  mean <- mean(as.numeric(e))
+
+  print(paste('percent: ', percent, ', mean: ', mean))
 
   return(cbind(e_1, e_2, e))
 
@@ -127,11 +132,11 @@ find_recurring_genes_in_set_list <- function(gene_set_list){
   for (i in unique(unlist(gene_set_list))){
     recurring[i] <- 0
   }
-  
+
   for (i in 1:(length(gene_set_list)-1)){
     for (j in (i+1):length(gene_set_list)){
       repeating_genes <- intersect(gene_set_list[[i]], gene_set_list[[j]])
-      
+
       if (length(repeating_genes) > 0){
         # print(repeating_genes)
         for (k in repeating_genes){
@@ -143,6 +148,12 @@ find_recurring_genes_in_set_list <- function(gene_set_list){
   }
 
   return(recurring)
+}
+
+isolate_pairs_from_recurring_genes <- function(gene_pairs, gene_set_list, tol = 0){
+  recurring_genes <- find_recurring_genes_in_set_list(gene_set_list)
+  pairs <- isolate_pairs(names(recurring_genes)[which(recurring_genes >= tol)], gene_pairs)
+  return(pairs)
 }
 
 build_gi_matrix <- function(gi_ExE, gi_NxN, gi_ExN_NxE){
@@ -231,3 +242,51 @@ generate_gene_pair_lists <- function(og_set_list, set_lists){
   return(data)
 }
 
+multiple_enrichment_analysis <- function(all, r0, r1, new_r1, gi_e_matrix, e){
+  all_enriched <- check_for_enrichment(all, gi_e_matrix, e)
+  r0_enriched <- check_for_enrichment(r0, gi_e_matrix, e)
+  r1_enriched <- check_for_enrichment(r1, gi_e_matrix, e)
+  new_r1_enriched <- check_for_enrichment(new_r1, gi_e_matrix, e)
+
+  all_percent <- nrow(all_enriched)/nrow(all)
+  all_mean <- mean(as.numeric(all_enriched[,3]))
+
+  r0_percent <- nrow(r0_enriched)/nrow(r0)
+  r0_mean <- mean(as.numeric(r0_enriched[,3]))
+
+  r1_percent <- nrow(r1_enriched)/nrow(r1)
+  r1_mean <- mean(as.numeric(r1_enriched[,3]))
+
+  new_r1_percent <- nrow(new_r1_enriched)/nrow(new_r1)
+  new_r1_mean <- mean(as.numeric(new_r1_enriched[,3]))
+
+  print(c('all gene pairs~', paste('total:', nrow(all_enriched), '/', nrow(all)),
+    paste('percent:', all_percent),
+    paste('mean:', all_mean)
+  ))
+
+  print(c('r0 gene pairs~', paste('total:', nrow(r0_enriched), '/', nrow(r0)),
+    paste('percent:', r0_percent),
+    paste('mean:', r0_mean)
+  ))
+
+  print(c('r1 gene pairs~', paste('total:', nrow(r1_enriched), '/', nrow(r1)),
+    paste('percent:', r1_percent),
+    paste('mean:', r1_mean)
+  ))
+
+  print(c('new_r1 gene pairs~', paste('total:', nrow(new_r1_enriched), '/', nrow(new_r1)),
+    paste('percent:', new_r1_percent),
+    paste('mean:', new_r1_mean)
+  ))
+
+  percent <- c(all_percent, r0_percent, r1_percent, new_r1_percent)
+  mean <- c(all_mean, r0_mean, r1_mean, new_r1_mean)
+
+  data <- cbind(percent, mean)
+
+  colnames(data) <- c('percent', 'mean')
+  rownames(data) <- c('all', 'r0', 'r1', 'new_r1')
+
+  return(data)
+}

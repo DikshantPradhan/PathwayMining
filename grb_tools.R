@@ -27,7 +27,7 @@ GRB_yeast_model <- function(){
 
   #yeast_model <- get_yeast_model()
 
-  load('yeast_model_mod.RData')
+  load('yeast_model_mod_2.RData')
 
   #yeast_model@lowbnd[223] <- 0
 
@@ -44,7 +44,8 @@ GRB_get_rxn_idx <- function(model, rxn){
   return(return(which(vars == rxn)))
 }
 
-GRB_generate_pair_list <- function(model){
+GRB_generate_pair_list <- function(model_og){
+  model <- model_og$copy()
   return(return_couples(flux_coupling_raptor(model)$coupled))
 }
 
@@ -124,4 +125,19 @@ GRB_get_union_set_from_degen_pairs <- function(model, pair_lists){
 
 GRB_r1_set <- function(model){
   return(GRB_get_union_set_from_degen_pairs(model, GRB_generate_pair_lists(model, 1:model$get_sizes()$NumVars)))
+}
+
+GRB_get_blocked <- function(model){
+  lb <- which(model$getattr('LB') > -1000)
+  ub <- which(model$getattr('UB') < 1000)
+
+  potential_blocked <- intersect(lb, ub)
+  blocked <- c()
+  for (i in potential_blocked){
+    if (model$getattr('LB')[i] == 0 & model$getattr('UB')[i] == 0){
+      blocked <- c(blocked, i)
+    }
+  }
+
+  return(model$get_names()$VarName[blocked])
 }
