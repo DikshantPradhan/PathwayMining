@@ -27,7 +27,7 @@ optimize_rxn <- function(model, rxn, max){
 
 # MAIN FUNCTION
 
-flux_coupling_raptor <- function(model, min_fva_cor=0.99, fix_frac=0.1, fix_tol_frac=0.01, bnd_tol = 10, stored_obs = 2000, cor_iter = 3) {
+flux_coupling_raptor <- function(model, min_fva_cor=0.99, fix_frac=0.1, fix_tol_frac=0.01, bnd_tol = 0.01, stored_obs = 2000, cor_iter = 3) {
   n <- model$get_sizes()$NumVars
   vars <- model$get_names()$VarName
   prev_obj <- model$getattr("Obj")
@@ -80,6 +80,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.99, fix_frac=0.1, fix_tol_
   }
 
   for (i in 1:(n-1)) {
+    #print(paste('~', vars[i]))
     if (!active[i] | blocked[i]) next
     sub_max <- rep(-Inf, n)
     sub_min <- rep(Inf, n)
@@ -102,6 +103,9 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.99, fix_frac=0.1, fix_tol_
         model$optimize()
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
+
+        #print(sol$X[i])
+
         #sol$X[is.nan(sol$X)] <- 0
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
@@ -127,6 +131,9 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.99, fix_frac=0.1, fix_tol_
         model$optimize()
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
+
+        #print(sol$X[i])
+
         #sol$X[is.nan(sol$X)] <- 0
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
@@ -145,7 +152,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.99, fix_frac=0.1, fix_tol_
         model$setattr("Obj", setNames(0.0, vars[i]))
       }
       if (near(global_max[i], 0) & near(global_min[i], 0)){ #(abs(global_max[i]) < tol) & (abs(global_min[i]) < tol)
-        #print(vars[i])
+        #print(paste('blocking: ', vars[i], global_max[i], global_min[i], ";", model$getattr("UB")[vars[i]], model$getattr("LB")[vars[i]]))
         blocked[i] <- TRUE
 	      active[i] <- FALSE
         next

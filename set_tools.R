@@ -2,7 +2,7 @@
 
 get_set_idx <- function(rxn, rxns_list){
   idx <- grep(core_rxn_id(rxn), rxns_list)
-  print(idx)
+  #print(idx)
   for (j in idx){
     if (rxn %in% rxns_list[[j]]){
       # idx <- c()
