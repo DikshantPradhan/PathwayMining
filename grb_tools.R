@@ -81,14 +81,19 @@ GRB_generate_pair_lists <- function(model_og, suppression_idxs){
   return(pair_lists)
 }
 
-GRB_generate_set_lists <- function(model_og, suppression_idxs){
+GRB_generate_set_lists <- function(model_og, og_set_list, suppression_idxs){
   set_lists <- c()
+  unblocked_rxns <- unlist(og_set_list)
 
   n <- model_og$get_sizes()$NumVars
   vars <- model_og$get_names()$VarName
 
   for (i in suppression_idxs){
     print(i)
+    if (!(vars[i] %in% unblocked_rxns)){
+      print(paste(vars[i], ' blocked'))
+      next
+    }
 
     #prev_ub <- model$getattr("UB")[vars[i]]
     #prev_lb <- model$getattr("LB")[vars[i]]

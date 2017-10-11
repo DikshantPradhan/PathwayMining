@@ -160,9 +160,9 @@ get_yeast_compart_model <- function(){
   # 
   # yeast_model@lowbnd[223] <- 0
   
-  yeast_model <- rmReact(model = yeast_model, react = remove[3])
-  yeast_model <- rmReact(model = yeast_model, react = remove[2])
-  yeast_model <- rmReact(model = yeast_model, react = remove[1])
+  # yeast_model <- rmReact(model = yeast_model, react = remove[3])
+  # yeast_model <- rmReact(model = yeast_model, react = remove[2])
+  # yeast_model <- rmReact(model = yeast_model, react = remove[1])
   
   # library(readr)
   #yeast_model <- rmReact(model = yeast_model, react = 1606)
@@ -178,10 +178,6 @@ get_yeast_compart_model <- function(){
   # yeast_model <- rmReact(model = yeast_model, react = get_rxn_idx(yeast_model@react_name, "r_1812"))
   # yeast_model <- rmReact(model = yeast_model, react = get_rxn_idx(yeast_model@react_name, "r_1815")) # not sure if this one warrants removal
   
-  # yeast_exch_rxns <- grep("exchange", yeast_model@react_name)
-  # for (i in yeast_exch_rxns){
-  #   yeast_model <- changeBounds(yeast_model, i, lb = -1000, ub = 1000)
-  # }
   setwd("~/GitHub/PathwayMining/")
   return(yeast_model)
 }
