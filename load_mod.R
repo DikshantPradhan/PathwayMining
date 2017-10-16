@@ -126,7 +126,7 @@ get_yeast_compart_model <- function(){
   #   yeast_model <- changeBounds(yeast_model, i, lb = -1000, ub = 1000)
   # }
   
-  yeast_model <- readTSVmod(reactList = "Y4_05_react.tsv", metList = "Y4_05_met.tsv")
+  yeast_model <- readTSVmod(reactList = "Y4_05_open_react.tsv", metList = "Y4_05_met.tsv")
   yeast_4_05_compound <- read_delim("~/Documents/yeast_model/yeast_4/yeast_4_05_compound.csv", "\t") # , escape_double = FALSE, trim_ws = TRUE
   
   # yeast_4_05_noCompartments_compound <- read_delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t", escape_double = FALSE, trim_ws = TRUE)
@@ -160,9 +160,9 @@ get_yeast_compart_model <- function(){
   # 
   # yeast_model@lowbnd[223] <- 0
   
-  # yeast_model <- rmReact(model = yeast_model, react = remove[3])
-  # yeast_model <- rmReact(model = yeast_model, react = remove[2])
-  # yeast_model <- rmReact(model = yeast_model, react = remove[1])
+  yeast_model <- rmReact(model = yeast_model, react = remove[3])
+  yeast_model <- rmReact(model = yeast_model, react = remove[2])
+  yeast_model <- rmReact(model = yeast_model, react = remove[1])
   
   # library(readr)
   #yeast_model <- rmReact(model = yeast_model, react = 1606)
@@ -179,6 +179,37 @@ get_yeast_compart_model <- function(){
   # yeast_model <- rmReact(model = yeast_model, react = get_rxn_idx(yeast_model@react_name, "r_1815")) # not sure if this one warrants removal
   
   setwd("~/GitHub/PathwayMining/")
+  return(yeast_model)
+}
+
+get_yeast_open_model <- function(){
+  
+  yeast_model <- readTSVmod(reactList = "Y4open_reactions.csv", metList = "Y4open_metabolites.csv")
+  # yeast_4_compound <- read_delim("Y4open_metabolites.csv", "\t") # , escape_double = FALSE, trim_ws = TRUE
+  
+  # yeast_4_05_noCompartments_compound <- read_delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t", escape_double = FALSE, trim_ws = TRUE)
+  
+  # yeast_4_05_noCompartments_compound <- read.delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t")
+  
+  # for (i in 1:length(yeast_model@met_name)){
+  #   # print(c(i, yeast_model@met_id[i], yeast_4_05_compound$Name[which(yeast_4_05_compound$ID == yeast_model@met_id[i])]))
+  #   yeast_model@met_name[i] <- yeast_4_compound$name[which(yeast_4_compound$abbreviation == yeast_model@met_id[i])]
+  #   # print(yeast_4_05_compound$Name[which(yeast_4_05_compound$ID == yeast_model@met_id[i])])
+  #   # print(which(yeast_4_05_compound$Name == yeast_model@met_id[i]))
+  # }
+  
+  # for (i in 1:length(yeast_model@react_id)){
+  #   yeast_model@lowbnd[i] <- -1000
+  #   yeast_model@uppbnd[i] <- 1000
+  # }
+  
+  remove <- which(yeast_model@react_name %in% c("growth", "biomass production", "lipid production"))
+  
+  yeast_model <- rmReact(model = yeast_model, react = remove[3])
+  yeast_model <- rmReact(model = yeast_model, react = remove[2])
+  yeast_model <- rmReact(model = yeast_model, react = remove[1])
+  
+  # setwd("~/GitHub/PathwayMining/")
   return(yeast_model)
 }
 
