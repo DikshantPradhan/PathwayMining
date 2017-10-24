@@ -27,13 +27,18 @@ GRB_yeast_model <- function(){
 
   #yeast_model <- get_yeast_model()
 
-  load('yeast_compart_model.RData')
+  load('yeast_open_mod.RData')
+
+  for (i in 1:length(yeast_open_mod@react_id)){
+    yeast_open_mod@lowbnd[i] <- -1000
+    yeast_open_mod@uppbnd[i] <- 1000
+  }
 
   #yeast_model@lowbnd[223] <- 0
 
   setwd("~/GitHub/PathwayMining/")
 
-  yeast <- as_GRBmodel(yeast_compart_model)
+  yeast <- as_GRBmodel(yeast_open_mod)
   yeast$show_output(FALSE)
 
   return(yeast)

@@ -27,7 +27,7 @@ optimize_rxn <- function(model, rxn, max){
 
 # MAIN FUNCTION
 
-flux_coupling_raptor <- function(model, min_fva_cor=0.99, fix_frac=0.1, fix_tol_frac=0.01, bnd_tol = 0.01, stored_obs = 2000, cor_iter = 3) {
+flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01, bnd_tol = 0.1, stored_obs = 4000, cor_iter = 3) {
   n <- model$get_sizes()$NumVars
   vars <- model$get_names()$VarName
   prev_obj <- model$getattr("Obj")

@@ -183,7 +183,7 @@ build_gi_matrix <- function(gi_ExE, gi_NxN, gi_ExN_NxE){
     print(i)
     query <- gi_ExE$"Query Strain ID"[i]
     array <- gi_ExE$"Array Strain ID"[i]
-    e <- gi_ExE$"Genetic interaction score (ε)"[i]
+    #e <- gi_ExE$"Genetic interaction score (ε)"[i]
     p <- gi_ExE$"P-value"[i]
     gi_e_matrix[query, array] <- e
     gi_p_matrix[query, array] <- p
@@ -194,7 +194,7 @@ build_gi_matrix <- function(gi_ExE, gi_NxN, gi_ExN_NxE){
     print(i)
     query <- gi_NxN$"Query Strain ID"[i]
     array <- gi_NxN$"Array Strain ID"[i]
-    e <- gi_NxN$"Genetic interaction score (ε)"[i]
+    #e <- gi_NxN$"Genetic interaction score (ε)"[i]
     p <- gi_NxN$"P-value"[i]
     gi_e_matrix[query, array] <- e
     gi_p_matrix[query, array] <- p
@@ -205,7 +205,7 @@ build_gi_matrix <- function(gi_ExE, gi_NxN, gi_ExN_NxE){
     print(i)
     query <- gi_ExN_NxE$"Query Strain ID"[i]
     array <- gi_ExN_NxE$"Array Strain ID"[i]
-    e <- gi_ExN_NxE$"Genetic interaction score (ε)"[i]
+    #e <- gi_ExN_NxE$"Genetic interaction score (ε)"[i]
     p <- gi_ExN_NxE$"P-value"[i]
     gi_e_matrix[query, array] <- e
     gi_p_matrix[query, array] <- p
@@ -218,23 +218,41 @@ build_gi_matrix <- function(gi_ExE, gi_NxN, gi_ExN_NxE){
   return(gi_matrix)
 }
 
-generate_gene_pair_lists <- function(og_set_list, set_lists){
+generate_gene_data <- function(og_set_list, set_lists){
   data <- c()
 
-
-
+  all_pairs <- return_pairs_from_set(unique(unlist(og_set_list)))
   r0_pairs <- return_pairs_from_set_list(og_set_list)
   new_r1_pairs <- isolate_new_pairs_from_sets(og_set_list, set_lists)
   r1_pairs <- append_pair_lists(r0_pairs, new_r1_pairs)
 
-  r0_gene_pairs <- get_gene_pairs_from_rxn_pair_list(r0_pairs)
-  r1_gene_pairs <- get_gene_pairs_from_rxn_pair_list(r1_pairs)
-  new_r1_gene_pairs <- get_gene_pairs_from_rxn_pair_list(new_r1_pairs)
+  r1_set_list <- get_list_of_sets(r1_pairs)
 
-  data$r0_pairs <- r0_pairs
-  data$r1_pairs <- r1_pairs
-  data$new_r1_pairs <- new_r1_pairs
+  r0_gene_set_list <- gene_set_from_rxn_set(og_set_list)
+  r1_gene_set_list <- gene_set_from_rxn_set(r1_set_list)
 
+  all_gene_pairs <- return_pairs_from_set(unique(unlist(r0_gene_set_list)))
+  r0_gene_pairs <- return_pairs_from_set_list(r0_gene_set_list)
+  r1_gene_pairs <- return_pairs_from_set_list(r1_gene_set_list)
+  new_r1_pairs <- isolate_new_pairs(r0_gene_pairs, r1_gene_pairs)
+
+  #r0_gene_pairs <- get_gene_pairs_from_rxn_pair_list(r0_pairs)
+  #r1_gene_pairs <- get_gene_pairs_from_rxn_pair_list(r1_pairs)
+  #new_r1_gene_pairs <- get_gene_pairs_from_rxn_pair_list(new_r1_pairs)
+
+  # load data
+  data$r0_rxn_set_list <- og_set_list
+  data$r1_rxn_set_list <- r1_set_list
+
+  data$r0_gene_set_list <- r0_gene_set_list
+  data$r1_gene_set_list <- r1_gene_set_list
+
+  data$all_rxn_pairs <-
+  data$r0_rxn_pairs <- r0_pairs
+  data$r1_rxn_pairs <- r1_pairs
+  data$new_r1_rxn_pairs <- new_r1_pairs
+
+  data$all_gene_pairs <- all_gene_pairs
   data$r0_gene_pairs <- r0_gene_pairs
   data$r1_gene_pairs <- r1_gene_pairs
   data$new_r1_gene_pairs <- new_r1_gene_pairs
