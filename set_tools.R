@@ -313,6 +313,20 @@ check_for_pairs <- function(pair, pair_list){
   return(FALSE)
 }
 
+recurring_pairs <- function(target_pairs, comparison_pairs){
+  elem_1 <- c()
+  elem_2 <- c()
+  
+  for (i in 1:length(target_pairs[,1])){
+    if (check_for_pairs(target_pairs[i,], comparison_pairs)){
+      elem_1 <- c(elem_1, target_pairs[i,1])
+      elem_2 <- c(elem_2, target_pairs[i,2])
+    }
+  }
+  
+  return(cbind(elem_1, elem_2))
+}
+
 isolate_new_pairs_from_pair_lists <- function(og_pairs, pair_lists){
   new_rxn1 <- c()
   new_rxn2 <- c()
@@ -514,4 +528,45 @@ isolate_pairs <- function(targets, pairs){
   }
 
   return(cbind(item1, item2))
+}
+
+get_size_distribution <- function(set_list){
+  
+  size_list <- matrix(data = c(0), nrow = length(set_list), ncol = 1)
+  
+  for (i in 1:length(set_list)){
+    size_list[i] <- length(set_list[[i]])
+  }
+  
+  size_hist <- matrix(data = c(0), nrow = max(size_list), ncol = 1)
+  
+  for (i in 1:length(size_list)){
+    idx <- size_list[i]
+    size_hist[idx] <- size_hist[idx] + 1
+  }
+  
+  return(size_hist)
+}
+
+
+sample_sets_to_distribution <- function(elements, distribution, replacement = TRUE){
+  
+  sample <- sample(elements, size = length(elements), replace = replacement)
+  
+  set_list <- c()
+  set_idx <- 1
+  for (i in 1:length(distribution)){
+    if (distribution[i] == 0){next}
+    for (j in 1:distribution[i]){
+      # print(paste(i, j, set_idx))
+      # print(sample[1:i])
+      # print(length(sample))
+      set_list[set_idx] <- list(sample[1:i])
+      sample <- sample[-c(1:i)]
+      set_idx <- set_idx + 1
+    
+    }
+  }
+  
+  return(set_list)
 }

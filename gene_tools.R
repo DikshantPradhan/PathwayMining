@@ -223,6 +223,27 @@ build_gi_matrix <- function(gi_ExE, gi_NxN, gi_ExN_NxE){
   return(gi_matrix)
 }
 
+build_gi_matrix_from_pairs <- function(gene_pairs){
+  #gene_pairs <- remove_duplicate_pairs(gene_pairs)
+  pairs <- gene_pairs[,1:2]
+  e <- gene_pairs[,3]
+  
+  genes <- unique(unlist(pairs))
+  
+  gi_mtx <- matrix(data = c(0), nrow = length(genes), ncol = length(genes))
+  rownames(gi_mtx) <- genes
+  colnames(gi_mtx) <- genes
+  
+  for (i in 1:length(pairs[,1])){
+    pair <- pairs[i,]
+    
+    gi_mtx[pair[1], pair[2]] <- e[i]
+    gi_mtx[pair[2], pair[1]] <- e[i]
+  }
+  
+  return(gi_mtx)
+}
+
 generate_gene_data <- function(og_set_list, set_lists){
   data <- c()
 
