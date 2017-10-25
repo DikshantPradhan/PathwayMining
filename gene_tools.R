@@ -1,16 +1,17 @@
 
 
-# for (i in 1:nrow(Y4_GPR)){
-#   genes <- strsplit(Y4_GPR$GPR[i], split = c("\\(|\\)|and|or"))
-#   genes <- genes[[1]][which(nchar(genes[[1]]) > 1)]
-#   # print(genes)
-#   Y4_GPR$GENE[i] <- list(genes)
-# }
+#for (i in 1:length(Y_OPEN_GPR$react)){
+#  genes <- strsplit(Y_OPEN_GPR$GPR[i], split = c("\\(|\\)|and|or| "))
+#  genes <- genes[[1]][which(nchar(genes[[1]]) > 1)]
+#  print(genes)
+#  Y_OPEN_GPR$GENE[i] <- list(genes)
+#}
 
-GPR <- Y4_GPR
+GPR <- Y_OPEN_GPR #Y4_GPR
 
 get_genes_from_react_id <- function(rxn_id){
-  idx <- which(GPR$Abbreviation == rxn_id)
+  idx <- which(GPR$react == rxn_id) # react was previously Abbreviation
+  #print(paste(idx, GPR$GENE[idx]))
   return(GPR$GENE[idx][[1]])
 }
 
@@ -66,7 +67,7 @@ check_for_enrichment <- function(gene_pairs, gi_e_matrix, threshold = 0.05){
   e <- c()
 
   for (i in 1:nrow(gene_pairs)){
-    print(i)
+    #print(i)
 
     gene_1 <- gene_pairs[i,1]
     gene_2 <- gene_pairs[i,2]
@@ -115,12 +116,16 @@ gene_set_from_rxn_set <- function(rxn_set_list){
   gene_set_list <- c()
 
   for (i in 1:length(rxn_set_list)){
+    print(i)
     gene_set <- c()
     for (rxn in rxn_set_list[[i]]){
       gene_set <- union(gene_set, get_genes_from_react_id(rxn))
     }
     if (length(gene_set) > 0){
       gene_set_list[i] <- list(gene_set)
+    }
+    else{
+      print('empty gene set')
     }
   }
 
@@ -303,8 +308,41 @@ multiple_enrichment_analysis <- function(all, r0, r1, new_r1, gi_e_matrix, e){
 
   data <- cbind(percent, mean)
 
-  colnames(data) <- c('percent', 'mean')
+  colnames(data) <- c(paste(e, 'percent'), paste(e, 'mean'))
   rownames(data) <- c('all', 'r0', 'r1', 'new_r1')
 
   return(data)
 }
+
+enrichment_test_seq <- function(gene_data, gi_e_matrix, e_vals){
+  all <- gene_data$all_pairs
+  r0 <- gene_data$r0_pairs
+  r1 <- gene_data$r1_pairs
+  new_r1 <- gene_data$new_r1_pairs
+
+  enrichment_data <- c()
+
+  for (i in 1:length(e_vals)){
+    e <- e_vals[i]
+    data <- multiple_enrichment_analysis(all, r0, r1, new_r1, gi_e_matrix, e)
+    enrichment_data[[i]] <- data
+  }
+
+  return(enrichment_data)
+}
+
+##all_pairs <- return_pairs_from_set(unique(unlist(yeast_og_set_list)))
+#r0_pairs <- return_pairs_from_set_list(yeast_og_set_list)
+#r0_gene_set_list <- gene_set_from_rxn_set(yeast_og_set_list)
+
+#all_gene_pairs <- return_pairs_from_set(unique(unlist(r0_gene_set_list)))
+#r0_gene_pairs <- return_pairs_from_set_list(r0_gene_set_list)
+
+#new_r1_pairs <- new_pairs_from_composition(yeast_og_set_list, yeast_composition_set_full$composition)
+#r1_pairs <- append_pair_lists(r0_pairs, new_r1_pairs)
+
+#r1_set_list <- get_list_of_sets(r1_pairs)
+#r1_gene_set_list <- gene_set_from_rxn_set(r1_set_list)
+
+#r1_gene_pairs <- return_pairs_from_set_list(r1_gene_set_list)
+#new_r1_gene_pairs <- isolate_new_pairs(r0_gene_pairs, r1_gene_pairs)

@@ -352,6 +352,7 @@ isolate_new_pairs_from_sets <- function(og_set_list, full_set_lists){
 
   for (i in 1:length(full_set_lists)){
     print(i)
+    if (length(full_set_lists[[i]]) == 0){next}
     pairs <- return_pairs_from_set_list(full_set_lists[[i]])
 
     for (j in 1:length(pairs[,1])){
@@ -359,6 +360,44 @@ isolate_new_pairs_from_sets <- function(og_set_list, full_set_lists){
         new_rxn1 <- c(new_rxn1, pairs[j,1])
         new_rxn2 <- c(new_rxn2, pairs[j,2])
       }
+    }
+  }
+
+  return(cbind(new_rxn1, new_rxn2))
+}
+
+new_pairs_from_composition <- function(og_set_list, composition){
+  new_rxn1 <- c()
+  new_rxn2 <- c()
+
+  for (i in 1:length(composition)){ # each deletion
+    if (length(composition[[i]]) == 0){next}
+
+    for (j in 1:length(composition[[i]])){ # each group of combined sets
+      combined_sets <- composition[[i]][[j]]
+
+      # isolate each pair in each composition
+      for (k in 1:(length(combined_sets)-1)){
+        set1_idx <- combined_sets[k]
+        set1 <- og_set_list[[set1_idx]]
+        for (l in (k+1):length(combined_sets)){
+          set2_idx <- combined_sets[l]
+          set2 <- og_set_list[[set2_idx]]
+
+          # each reaction in each set
+          for (m in set1){
+            for (n in set2){
+              if (!check_for_pairs(c(m,n), cbind(new_rxn1, new_rxn2))){
+                new_rxn1 <- c(new_rxn1, m)
+                new_rxn2 <- c(new_rxn2, n)
+              }
+
+            }
+          }
+
+        }
+      }
+
     }
   }
 
