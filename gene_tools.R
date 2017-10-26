@@ -138,17 +138,23 @@ find_recurring_genes_in_set_list <- function(gene_set_list){
     recurring[i] <- 0
   }
 
-  for (i in 1:(length(gene_set_list)-1)){
-    for (j in (i+1):length(gene_set_list)){
-      repeating_genes <- intersect(gene_set_list[[i]], gene_set_list[[j]])
+  #for (i in 1:(length(gene_set_list)-1)){
+  #  for (j in (i+1):length(gene_set_list)){
+  #    repeating_genes <- intersect(gene_set_list[[i]], gene_set_list[[j]])
 
-      if (length(repeating_genes) > 0){
+  #    if (length(repeating_genes) > 0){
         # print(repeating_genes)
-        for (k in repeating_genes){
-          recurring[k] <- recurring[k] + 1
-        }
-      }
+  #      for (k in repeating_genes){
+  #        recurring[k] <- recurring[k] + 1
+  #      }
+  #    }
 
+  #  }
+  #}
+
+  for (i in 1:length(gene_set_list)){
+    for (j in unique(gene_set_list[[i]])){
+      recurring[j] <- recurring[j] + 1
     }
   }
 
