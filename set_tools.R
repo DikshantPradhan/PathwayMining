@@ -200,9 +200,22 @@ return_composition_sets <- function(og_set_list, set_lists, model){
 find_composing_sets <- function(rxns, sets){
   composition <- c()
   for (i in 1:length(sets)){
+    if (length(sets[[i]]) == 0){next}
     if (all(sets[[i]] %in% rxns)){
       composition <- c(composition, i)
     }
+  }
+
+  return(composition)
+}
+
+find_set_list_composition <- function(new_set_list, og_set_list){
+  composition <- c()
+
+  for (i in 1:length(new_set_list)){
+    composing <- list(find_composing_sets(new_set_list[[i]], og_set_list))
+    #print(composing)
+    composition[i] <- composing
   }
 
   return(composition)
@@ -316,14 +329,18 @@ check_for_pairs <- function(pair, pair_list){
 recurring_pairs <- function(target_pairs, comparison_pairs){
   elem_1 <- c()
   elem_2 <- c()
-  
+
+  if (length(target_pairs[,1]) < 1){
+    return(cbind(elem_1, elem_2))
+  }
+
   for (i in 1:length(target_pairs[,1])){
     if (check_for_pairs(target_pairs[i,], comparison_pairs)){
       elem_1 <- c(elem_1, target_pairs[i,1])
       elem_2 <- c(elem_2, target_pairs[i,2])
     }
   }
-  
+
   return(cbind(elem_1, elem_2))
 }
 
@@ -530,29 +547,57 @@ isolate_pairs <- function(targets, pairs){
   return(cbind(item1, item2))
 }
 
-get_size_distribution <- function(set_list){
-  
+get_size_list <- function(set_list){
   size_list <- matrix(data = c(0), nrow = length(set_list), ncol = 1)
-  
+
   for (i in 1:length(set_list)){
     size_list[i] <- length(set_list[[i]])
   }
-  
+
+  return(size_list)
+}
+
+get_size_distribution <- function(set_list){
+
+  size_list <- get_size_list(set_list)
+
   size_hist <- matrix(data = c(0), nrow = max(size_list), ncol = 1)
-  
+
   for (i in 1:length(size_list)){
     idx <- size_list[i]
     size_hist[idx] <- size_hist[idx] + 1
   }
-  
+
   return(size_hist)
 }
 
+get_composition_size_distribution <- function(set_list, composition_set){
+  composition_size <- c()
 
-sample_sets_to_distribution <- function(elements, distribution, replacement = TRUE){
-  
+  for (i in 1:length(composition_set)){
+    #print(i)
+    if (length(composition_set[[i]]) == 0){next}
+
+    comp_temp <- c()
+    for (j in composition_set[[i]]){
+      comp_temp <- c(comp_temp, length(set_list[[j]]))
+      #idx <- composition_set[[i]][[j]]
+      #for (k in idx){
+      #  comp_temp <- c(comp_temp, length(set_list[[k]]))
+      #}
+      #print(idx)
+    }
+    #print(comp_temp)
+    composition_size[i] <- list(comp_temp)
+  }
+
+  return(composition_size)
+}
+
+sample_sets_to_distribution <- function(elements, distribution, replacement = FALSE){
+
   sample <- sample(elements, size = length(elements), replace = replacement)
-  
+
   set_list <- c()
   set_idx <- 1
   for (i in 1:length(distribution)){
@@ -564,9 +609,75 @@ sample_sets_to_distribution <- function(elements, distribution, replacement = TR
       set_list[set_idx] <- list(sample[1:i])
       sample <- sample[-c(1:i)]
       set_idx <- set_idx + 1
-    
+
     }
   }
-  
+
   return(set_list)
+}
+
+classify_sets_by_size <- function(set_list){
+  size_dist <- get_size_distribution(set_list)
+  size_list <- get_size_list(set_list)
+
+  dist <- c()
+
+  for (i in 1:length(size_dist)){
+    dist[i] <- list(which(size_list == i)) #c(dist[[l]], list(i))
+  }
+
+  return(dist)
+}
+
+sample_sets_to_composition <- function(size_class, size_composition){
+
+  #sampled_size_class <- c()
+
+  # randomize order of sets classified by size
+  for (i in 1:length(size_class)){
+    size_class[[i]] <- sample(size_class[[i]], size = length(size_class[[i]]), replace = FALSE)
+  }
+
+  sampled_set_list <- c()
+
+  for (i in 1:length(size_composition)){
+    comp <- size_composition[[i]]
+    #print(comp)
+
+    sampled_set <- c()
+    for (j in comp){
+      #print(j)
+      # take 1st from size_class and delete
+      sampled_set <- c(sampled_set, size_class[[j]][1])
+      size_class[[j]] <- size_class[[j]][-c(1)]
+      #print(length(size_class[[j]]))
+    }
+
+    sampled_set_list[i] <- list(sampled_set)
+  }
+
+  for (i in size_class){if (length(i) > 0){print('len error')}}
+  #print(size_class)
+
+  return(sampled_set_list)
+}
+
+sample_multiple_sets_to_distribution <- function(n_samples, elements, distribution, replacement = FALSE){
+  set_lists <- c()
+
+  for (i in 1:n_samples){
+    set_lists[[i]] <- sample_sets_to_distribution(elements, distribution, replacement)
+  }
+
+  return(set_lists)
+}
+
+sample_multiple_sets_to_composition <- function(n_samples, size_class, size_composition){
+  set_lists <- c()
+
+  for (i in 1:n_samples){
+    set_lists[[i]] <- sample_sets_to_composition(size_class, size_composition)
+  }
+
+  return(set_lists)
 }

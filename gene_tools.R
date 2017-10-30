@@ -132,6 +132,27 @@ gene_set_from_rxn_set <- function(rxn_set_list){
   return(gene_set_list)
 }
 
+gene_set_from_composition <- function(og_gene_set_list, composition){
+
+  gene_set_list <- c()
+
+  for (i in 1:length(composition)){
+    gene_set <- c()
+
+    for (j in composition[[i]]){
+      if (j > length(og_gene_set_list)){next}
+      gene_set <- c(gene_set, og_gene_set_list[[j]])
+    }
+
+    if (length(gene_set) > 0){
+      gene_set_list[i] <- list(unique(gene_set))
+    }
+  }
+
+  return(gene_set_list)
+
+}
+
 find_recurring_genes_in_set_list <- function(gene_set_list){
   recurring <- c()
   for (i in unique(unlist(gene_set_list))){
@@ -356,6 +377,24 @@ enrichment_test_seq <- function(gene_data, gi_e_matrix, e_vals){
   }
 
   return(enrichment_data)
+}
+
+get_num_interactions <- function(set_list, e_matrix){
+
+  Mp <- e_matrix
+  total_int <- 0
+
+  for (r in set_list) {
+    if (length(r) < 2){next}
+    #print(r)
+    sub_Mp <- Mp[r,r]
+    #print(sub_Mp)
+    total_int <- total_int + (sum(colSums(sub_Mp)) / 2)
+    Mp[r,r] <- 0
+  }
+
+  return(total_int)
+
 }
 
 ##all_pairs <- return_pairs_from_set(unique(unlist(yeast_og_set_list)))
