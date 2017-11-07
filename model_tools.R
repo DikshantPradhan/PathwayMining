@@ -226,6 +226,23 @@ get_upst_paths <- function(rxn_idx){
   return(paths)
 }
 
+check_for_duplicate_reactions <- function(model){
+  S <- model@S
+  n_rxn <- dim(S)[2]
+  
+  for (i in 1:(n_rxn-1)){
+    test <- S[,i]
+    for (j in (i+1):n_rxn){
+      test_2 <- S[,j]
+      if (identical(test_2, test) | identical(test_2, -1*test)){
+        print(paste('error', i, j))
+        # print(test_2)
+        # print(test)
+      }
+    }
+  }
+}
+
 ## get list of reactions leading to production of species
 get_paths <- function(rxn_idx, downstream = TRUE){
   #list of reactions to return

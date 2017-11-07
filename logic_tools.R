@@ -159,7 +159,7 @@ root_node <- Node$new('root_node')
 #     # print(new_node)
 #   }
 # }
-i <- 443
+i <- 493 #1002
 a <- capture.output(call_tree(parse(text = yeast_model_mod@gprRules[i])))
 print(yeast_model_mod@gprRules[i])
 # for (i in 1:length(a)){
@@ -246,6 +246,9 @@ tree_building <- function(list, index){
       len <- len - 1
       id1 <- chars[len]
     }
+    if (chars[len-1] != " "){
+      id1 <- paste(chars[len-1], chars[len], sep = '')
+    }
 
     # print(paste('1 x', id1, id2))
     # new_node$AddChild(id1)
@@ -268,6 +271,9 @@ tree_building <- function(list, index){
     while (id2 == " "){
       len <- len - 1
       id2 <- chars[len]
+    }
+    if (chars[len-1] != " "){
+      id2 <- paste(chars[len-1], chars[len], sep = '')
     }
 
     # print(paste('2 x', id1, id2))
@@ -299,5 +305,46 @@ tree_building <- function(list, index){
   return(new_node)
 }
 
+get_paths_from_gpr <- function(node){
+  paths <- c()
+  name <- node$name
+  # print(name)
+  name <- strsplit(name, '')[[1]][1]
+  # if (length(name) == 0){
+  #   return(c())
+  # }
+  
+  if (name != '&' & name != '|'){
+    paths <- c(node$name)
+    return(paths)
+  }
+  
+  left_paths <- get_paths_from_gpr(node$children[[1]])
+  right_paths <- get_paths_from_gpr(node$children[[2]])
+  
+  if (name == '&'){
+    idx <- 0
+    for (i in 1:length(left_paths)){
+      for (j in 1:length(right_paths)){
+        idx <- idx + 1
+        paths[idx] <- list(c(left_paths[i], right_paths[j]))
+      }
+    }
+  }
+  
+  if (name == '|'){
+    for (i in 1:length(left_paths)){
+      paths[i] <- list(unlist(left_paths[i]))
+    }
+    
+    for (i in 1:length(right_paths)){
+      paths[length(left_paths) + i] <- list(unlist(right_paths[i]))
+    }
+  }
+  
+  return(paths)
+}
+
 a_ <- tree_building(a, 4)
 print(a_)
+print(get_paths_from_gpr(a_))
