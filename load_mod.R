@@ -114,24 +114,9 @@ get_yeast_no_compart_model <- function(){
 get_yeast_compart_model <- function(){
   
   setwd("~/GitHub/PathwayMining/data/yeast_model")
-  # yeast_model <- readTSVmod(reactList = "Y7_test_react.tsv", metList = "Y7_met.tsv")
-  # library(readr)
-  # Y7_react_names <- read_delim("~/GitHub/PathwayMining/data/yeast_model/Y7_react_names.csv", ";", escape_double = FALSE, trim_ws = TRUE)
-  # yeast_model@react_name <- Y7_react_names$Description
-  # yeast_model <- rmReact(model = yeast_model, react = 1606)
-  # yeast_model <- rmReact(model = yeast_model, react = 1590)
-  #
-  # yeast_exch_rxns <- grep("exchange", yeast_model@react_name)
-  # for (i in yeast_exch_rxns){
-  #   yeast_model <- changeBounds(yeast_model, i, lb = -1000, ub = 1000)
-  # }
-  
+
   yeast_model <- readTSVmod(reactList = "Y4_05_open_react.tsv", metList = "Y4_05_met.tsv")
   yeast_4_05_compound <- read_delim("~/Documents/yeast_model/yeast_4/yeast_4_05_compound.csv", "\t") # , escape_double = FALSE, trim_ws = TRUE
-  
-  # yeast_4_05_noCompartments_compound <- read_delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t", escape_double = FALSE, trim_ws = TRUE)
-  
-  # yeast_4_05_noCompartments_compound <- read.delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t")
   
   for (i in 1:length(yeast_model@met_name)){
     # print(c(i, yeast_model@met_id[i], yeast_4_05_compound$Name[which(yeast_4_05_compound$ID == yeast_model@met_id[i])]))
@@ -146,37 +131,10 @@ get_yeast_compart_model <- function(){
   }
   
   remove <- which(yeast_model@react_name %in% c("growth", "biomass production", "lipid production"))
-    
-  # exch <- findExchReact(yeast_model)
-  # for (i in rev(exch@react_pos)){
-    # yeast_model@lowbnd[i] <- -1000
-    # yeast_model@uppbnd[i] <- 1000
-  # }
-  
-  # blocked <- get_blocked(yeast_model)
-  # 
-  # yeast_model@lowbnd[blocked] <- -1000
-  # yeast_model@uppbnd[blocked] <- 1000
-  # 
-  # yeast_model@lowbnd[223] <- 0
   
   yeast_model <- rmReact(model = yeast_model, react = remove[3])
   yeast_model <- rmReact(model = yeast_model, react = remove[2])
   yeast_model <- rmReact(model = yeast_model, react = remove[1])
-  
-  # library(readr)
-  #yeast_model <- rmReact(model = yeast_model, react = 1606)
-  #yeast_model <- rmReact(model = yeast_model, react = 1590)
-  
-  # Y4_react_names <- read_delim("~/GitHub/PathwayMining/data/yeast_model/Y4_react_names.tsv", ";", escape_double = FALSE, trim_ws = TRUE)
-  # for (i in 1:length(yeast_model@react_id)){
-  #   num <- as.numeric(strsplit(yeast_model@react_id[i], split = "_")[[1]][2])
-  #   # print(num)
-  #   yeast_model@react_name[i] <- Y4_react_names$Description[num]
-  # }
-  #
-  # yeast_model <- rmReact(model = yeast_model, react = get_rxn_idx(yeast_model@react_name, "r_1812"))
-  # yeast_model <- rmReact(model = yeast_model, react = get_rxn_idx(yeast_model@react_name, "r_1815")) # not sure if this one warrants removal
   
   setwd("~/GitHub/PathwayMining/")
   return(yeast_model)
@@ -185,23 +143,6 @@ get_yeast_compart_model <- function(){
 get_yeast_open_model <- function(){
   
   yeast_model <- readTSVmod(reactList = "Y4open_reactions.csv", metList = "Y4open_metabolites.csv")
-  # yeast_4_compound <- read_delim("Y4open_metabolites.csv", "\t") # , escape_double = FALSE, trim_ws = TRUE
-  
-  # yeast_4_05_noCompartments_compound <- read_delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t", escape_double = FALSE, trim_ws = TRUE)
-  
-  # yeast_4_05_noCompartments_compound <- read.delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t")
-  
-  # for (i in 1:length(yeast_model@met_name)){
-  #   # print(c(i, yeast_model@met_id[i], yeast_4_05_compound$Name[which(yeast_4_05_compound$ID == yeast_model@met_id[i])]))
-  #   yeast_model@met_name[i] <- yeast_4_compound$name[which(yeast_4_compound$abbreviation == yeast_model@met_id[i])]
-  #   # print(yeast_4_05_compound$Name[which(yeast_4_05_compound$ID == yeast_model@met_id[i])])
-  #   # print(which(yeast_4_05_compound$Name == yeast_model@met_id[i]))
-  # }
-  
-  # for (i in 1:length(yeast_model@react_id)){
-  #   yeast_model@lowbnd[i] <- -1000
-  #   yeast_model@uppbnd[i] <- 1000
-  # }
   
   remove <- which(yeast_model@react_name %in% c("growth", "biomass production", "lipid production"))
   
@@ -209,19 +150,38 @@ get_yeast_open_model <- function(){
   yeast_model <- rmReact(model = yeast_model, react = remove[2])
   yeast_model <- rmReact(model = yeast_model, react = remove[1])
   
-  # setwd("~/GitHub/PathwayMining/")
   return(yeast_model)
 }
 
-##
+## MUTANS MODEL
 
-# for (i in 1:nrow(yeast_4_05_noCompartments_reaction)){
-#   match <- which(Y4$ID == yeast_4_05_noCompartments_reaction$X.ID[i])
-#   yeast_4_05_noCompartments_reaction$GPR[i] <- Y4$GPR[match]
-#   yeast_4_05_noCompartments_reaction$LOWER.BOUND[i] <- Y4$LOWER.BOUND[match]
-#   yeast_4_05_noCompartments_reaction$UPPER.BOUND[i] <- Y4$UPPER.BOUND[match]
-#   yeast_4_05_noCompartments_reaction$OBJECTIVE[i] <- Y4$OBJECTIVE[match]
-# }
+get_mutans_model <- function(){
+  mutans_model <- readTSVmod(reactList = "mutans_model.csv", metList = "mutans_model_met.csv")
+  
+  mutans_model@met_name[401] <- "DAP-type peptidoglycan"
+  mutans_model@met_name[422] <- "Lys-type peptidoglycan"
+  
+  exch_idxs <- which(mutans_model@S[,477] != 0) # biomass
+  exch <- findExchReact(mutans_model)
+  for (i in exch_idxs){
+    if ((mutans_model@met_id[i] %in% exch@met_id) | (paste(mutans_model@met_id[i], '[e]', sep = "") %in% exch@met_id)){
+      #print(mutans_model@react_id[i] %in% exch@met_id)
+      next
+    }
+    
+    else {
+      print(generate_exch_rxn(mutans_model, i))
+    }
+  }
+  
+  mutans_model <- rmReact(model = mutans_model, react = 477)
+  
+  mutans_model <- rmReact(model = mutans_model, react = 616)
+  mutans_model <- rmReact(model = mutans_model, react = 366)
+  mutans_model <- rmReact(model = mutans_model, react = 364)
+  
+  return(mutans_model)
+}
 
 get_blocked <- function(model){
   lb <- which(model@lowbnd > -1000)
@@ -236,6 +196,12 @@ get_blocked <- function(model){
   }
   
   return(blocked)
+}
+
+generate_exch_rxn <- function(model, rxn_idx){
+  rxn_id <- model@met_id[rxn_idx]
+  rxn_name <- model@met_name[rxn_idx]
+  paste("exc00000	", rxn_name," exchange	", " <=> ", rxn_id, "					1	0	0	0		Unknown		", sep = "")
 }
 
 # model <- yeast_model
