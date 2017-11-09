@@ -82,7 +82,7 @@ r1_gi_05 <- get_num_interactions(r1_gene_set_list, e_matrix_05)
 #  'r1-', length(r1_gene_pairs_05[,1])/length(gene_pairs_05[,1])))
 
 
-## SAMPLING FOR COMPARISON
+## SAMPLING FOR COMPARISON (FULLY RANDOM BASED ON SIZE)
 
 r0_gene_elements <- unlist(r0_gene_set_list)
 r1_gene_elements <- unlist(r1_gene_set_list)
@@ -137,7 +137,7 @@ print(paste(sd(r0_sampled_pair_ct[,1]), ', ', sd(r0_sampled_pair_ct[,2]), ', ', 
 print('R1')
 print(paste(sd(r1_sampled_pair_ct[,1]), ', ', sd(r1_sampled_pair_ct[,2]), ', ', sd(r1_sampled_pair_ct[,3]), ', ', sd(r1_sampled_pair_ct[,4]), ', ', sd(r1_sampled_pair_ct[,5])))
 
-## ALTERNATE SAMPLING FOR COMPARISON
+## ALTERNATE SAMPLING FOR COMPARISON (RANDOM BASED ON COMPOSITION AND SIZES OF SETS BEING COMPOSED)
 
 r1_composition <- find_set_list_composition(r1_set_list, r0_set_list)
 r1_size_composition <- get_composition_size_distribution(r0_set_list, r1_composition)

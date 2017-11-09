@@ -125,6 +125,7 @@ total_union <- function(sets){
   return(u)
 }
 
+# return T/F based on whether or not two set-lists are equivalent
 compare_sets <- function(set_1, set_2){
   if (length(set_1) != length(set_2)){
     return(FALSE)
@@ -158,6 +159,7 @@ compare_r1_sets <- function(og_set_list, set_lists){ # see which og_sets don't a
   }
 }
 
+# find the sets combined in each set list formed from a rxn deletion
 return_composition_sets <- function(og_set_list, set_lists, model){
   composition <- c()
 
@@ -197,6 +199,7 @@ return_composition_sets <- function(og_set_list, set_lists, model){
   return(composition_sets)
 }
 
+# find the sets contained by 'rxns'
 find_composing_sets <- function(rxns, sets){
   composition <- c()
   for (i in 1:length(sets)){
@@ -209,6 +212,7 @@ find_composing_sets <- function(rxns, sets){
   return(composition)
 }
 
+# find the r0 sets combined to form the r1 sets
 find_set_list_composition <- function(new_set_list, og_set_list){
   composition <- c()
 
@@ -309,6 +313,7 @@ optimize_suppression_idxs <- function(model, og_set_list){
   return(idxs)
 }
 
+# return a T/F based on whether or not a pair exists in a pair-list
 check_for_pairs <- function(pair, pair_list){
   #print(pair[1])
   #print(length(pair_list[,1]))
@@ -361,6 +366,7 @@ isolate_new_pairs_from_pair_lists <- function(og_pairs, pair_lists){
   return(cbind(new_rxn1, new_rxn2))
 }
 
+# extract the pairs in 'pairs' that are not in 'og pairs'
 isolate_new_pairs <- function(og_pairs, pairs){
   new_rxn1 <- c()
   new_rxn2 <- c()
@@ -375,6 +381,7 @@ isolate_new_pairs <- function(og_pairs, pairs){
   return(cbind(new_rxn1, new_rxn2))
 }
 
+# extract the new pairs from the set lists not in the original set list
 isolate_new_pairs_from_sets <- function(og_set_list, full_set_lists){
   new_rxn1 <- c()
   new_rxn2 <- c()
@@ -397,6 +404,7 @@ isolate_new_pairs_from_sets <- function(og_set_list, full_set_lists){
   return(cbind(new_rxn1, new_rxn2))
 }
 
+# extract only the new pairs formed from combining sets as specified in the composition
 new_pairs_from_composition <- function(og_set_list, composition){
   new_rxn1 <- c()
   new_rxn2 <- c()
@@ -491,6 +499,7 @@ return_pairs_from_set_list <- function(set_list){
   return(cbind(rxn1, rxn2))
 }
 
+# get pairs from multiple set lists
 return_pair_lists_from_set_lists <- function(set_lists){
   pair_lists <- c()
 
@@ -501,6 +510,7 @@ return_pair_lists_from_set_lists <- function(set_lists){
   return(pair_lists)
 }
 
+# combine two pair lists
 append_pair_lists <- function(pairs1, pairs2){
   p1 <- c(pairs1[,1], pairs2[,1])
   p2 <- c(pairs1[,2], pairs2[,2])
@@ -508,6 +518,7 @@ append_pair_lists <- function(pairs1, pairs2){
   return(cbind(p1,p2))
 }
 
+# extract pairs based on a list of which sets have been combined
 get_rxn_pairs_from_set_pairs <- function(og_sets, set_pairs){
   rxn1 <- c()
   rxn2 <- c()
@@ -531,6 +542,7 @@ get_rxn_pairs_from_set_pairs <- function(og_sets, set_pairs){
   return(pairs)
 }
 
+# find out which of the target pairs is included in the pairs
 isolate_pairs <- function(targets, pairs){
   item1 <- c()
   item2 <- c()
@@ -547,6 +559,7 @@ isolate_pairs <- function(targets, pairs){
   return(cbind(item1, item2))
 }
 
+# list of length(set_list) where each entry is length of set at that idx
 get_size_list <- function(set_list){
   size_list <- matrix(data = c(0), nrow = length(set_list), ncol = 1)
 
@@ -557,12 +570,14 @@ get_size_list <- function(set_list){
   return(size_list)
 }
 
+# number of sets of each length
 get_size_distribution <- function(set_list){
 
   size_list <- get_size_list(set_list)
 
   size_hist <- matrix(data = c(0), nrow = max(size_list), ncol = 1)
 
+  # entry at index i is number of sets of length = i
   for (i in 1:length(size_list)){
     idx <- size_list[i]
     size_hist[idx] <- size_hist[idx] + 1
@@ -622,6 +637,7 @@ classify_sets_by_size <- function(set_list){
 
   dist <- c()
 
+  # index of list is size of all sets contained at that index
   for (i in 1:length(size_dist)){
     dist[i] <- list(which(size_list == i)) #c(dist[[l]], list(i))
   }
@@ -631,13 +647,17 @@ classify_sets_by_size <- function(set_list){
 
 sample_sets_to_composition <- function(size_class, size_composition){
 
-  #sampled_size_class <- c()
-
   # randomize order of sets classified by size
   for (i in 1:length(size_class)){
-    size_class[[i]] <- sample(size_class[[i]], size = length(size_class[[i]]), replace = FALSE)
+    if (length(size_class[[i]]) == 1){ # passing in a single entry to sample returns i from 1:x instead of i == x
+      size_class[[i]] <- size_class[[i]]
+    }
+    else {
+      size_class[[i]] <- sample(size_class[[i]], size = length(size_class[[i]]), replace = FALSE)
+    }
   }
 
+  # new sampled set lit
   sampled_set_list <- c()
 
   for (i in 1:length(size_composition)){
@@ -650,14 +670,13 @@ sample_sets_to_composition <- function(size_class, size_composition){
       # take 1st from size_class and delete
       sampled_set <- c(sampled_set, size_class[[j]][1])
       size_class[[j]] <- size_class[[j]][-c(1)]
-      #print(length(size_class[[j]]))
     }
 
     sampled_set_list[i] <- list(sampled_set)
   }
 
+  # size_class should be empty
   for (i in size_class){if (length(i) > 0){print('len error')}}
-  #print(size_class)
 
   return(sampled_set_list)
 }

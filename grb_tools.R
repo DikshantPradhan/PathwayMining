@@ -44,6 +44,28 @@ GRB_yeast_model <- function(){
   return(yeast)
 }
 
+GRB_mutans_model <- function(){
+
+  #setwd("~/GitHub/PathwayMining/data/mutans_model")
+
+  #setwd("~/GitHub/PathwayMining/")
+
+  #load('mutans_model.RData')
+  load('data/mutans_model/mutans_model.RData')
+
+  for (i in 1:length(mutans@react_id)){
+    mutans@lowbnd[i] <- -1000
+    mutans@uppbnd[i] <- 1000
+  }
+
+  setwd("~/GitHub/PathwayMining/")
+
+  mutans <- as_GRBmodel(mutans)
+  mutans$show_output(FALSE)
+
+  return(mutans)
+}
+
 GRB_get_rxn_idx <- function(model, rxn){
   vars <- model$get_names()$VarName
   return(return(which(vars == rxn)))

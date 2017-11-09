@@ -7,20 +7,29 @@
 #  Y_OPEN_GPR$GENE[i] <- list(genes)
 #}
 
-GPR <- Y_OPEN_GPR #Y4_GPR
+GPR <- mutans_gpr # Y_OPEN_GPR #Y4_GPR
 
-get_genes_from_react_id <- function(rxn_id){
+generate_gpr <- function(model){
+  GPR <- c()
+  GPR$react <- model@react_id
+  GPR$GENE <- model@gene
+  GPR$GPR <- model@gpr
+
+  return(GPR)
+}
+
+get_genes_from_react_id <- function(GPR, rxn_id){
   idx <- which(GPR$react == rxn_id) # react was previously Abbreviation
   #print(paste(idx, GPR$GENE[idx]))
   return(GPR$GENE[idx][[1]])
 }
 
-get_gene_pairs_from_rxn_pair <- function(rxn1, rxn2){
+get_gene_pairs_from_rxn_pair <- function(rxn1, rxn2, GPR){
   g1 <- c()
   g2 <- c()
 
-  gene1 <- get_genes_from_react_id(rxn1)
-  gene2 <- get_genes_from_react_id(rxn2)
+  gene1 <- get_genes_from_react_id(GPR,rxn1)
+  gene2 <- get_genes_from_react_id(GPR,rxn2)
 
   if ((length(gene1) > 0) & (length(gene2) > 0)){
     for (i in gene1){
@@ -36,13 +45,13 @@ get_gene_pairs_from_rxn_pair <- function(rxn1, rxn2){
   return(cbind(g1, g2))
 }
 
-get_gene_pairs_from_rxn_pair_list <- function(pairs){
+get_gene_pairs_from_rxn_pair_list <- function(pairs, GPR){
   g1 <- c()
   g2 <- c()
 
   for (i in 1:nrow(pairs)){
     print(i)
-    new_pairs <- get_gene_pairs_from_rxn_pair(pairs[i,1], pairs[i,2])
+    new_pairs <- get_gene_pairs_from_rxn_pair(pairs[i,1], pairs[i,2], GPR)
     if (length(new_pairs) > 0){
       for (j in 1:nrow(new_pairs)){
         #g1 <- c(g1, new_pairs[j,1])
@@ -112,14 +121,14 @@ check_for_enrichment <- function(gene_pairs, gi_e_matrix, threshold = 0.05){
 
 }
 
-gene_set_from_rxn_set <- function(rxn_set_list){
+gene_set_from_rxn_set <- function(GPR, rxn_set_list){
   gene_set_list <- c()
 
   for (i in 1:length(rxn_set_list)){
     print(i)
     gene_set <- c()
     for (rxn in rxn_set_list[[i]]){
-      gene_set <- union(gene_set, get_genes_from_react_id(rxn))
+      gene_set <- union(gene_set, get_genes_from_react_id(GPR,rxn))
     }
     if (length(gene_set) > 0){
       gene_set_list[i] <- list(gene_set)
@@ -159,20 +168,6 @@ find_recurring_genes_in_set_list <- function(gene_set_list){
     recurring[i] <- 0
   }
 
-  #for (i in 1:(length(gene_set_list)-1)){
-  #  for (j in (i+1):length(gene_set_list)){
-  #    repeating_genes <- intersect(gene_set_list[[i]], gene_set_list[[j]])
-
-  #    if (length(repeating_genes) > 0){
-        # print(repeating_genes)
-  #      for (k in repeating_genes){
-  #        recurring[k] <- recurring[k] + 1
-  #      }
-  #    }
-
-  #  }
-  #}
-
   for (i in 1:length(gene_set_list)){
     for (j in unique(gene_set_list[[i]])){
       recurring[j] <- recurring[j] + 1
@@ -188,6 +183,7 @@ isolate_pairs_from_recurring_genes <- function(gene_pairs, gene_set_list, tol = 
   return(pairs)
 }
 
+# used one time to load data into usable form for R from file
 build_gi_matrix <- function(gi_ExE, gi_NxN, gi_ExN_NxE){
   e_query_genes <- unique(gi_ExE$"Query Strain ID")
   n_query_genes <- unique(gi_NxN$"Query Strain ID")
@@ -250,6 +246,7 @@ build_gi_matrix <- function(gi_ExE, gi_NxN, gi_ExN_NxE){
   return(gi_matrix)
 }
 
+# build matrix of relevant genes for quicker computation
 build_gi_matrix_from_pairs <- function(genes, gene_pairs){
   #gene_pairs <- remove_duplicate_pairs(gene_pairs)
   pairs <- gene_pairs[,1:2]
@@ -271,6 +268,15 @@ build_gi_matrix_from_pairs <- function(genes, gene_pairs){
   return(gi_mtx)
 }
 
+# matrix of binary values (1, 0) based on whether or not gi pair is above or below threshold
+binary_e_matrix <- function(full_matrix, threshold){
+  e_matrix <- matrix(as.numeric(abs(full_matrix) >= 0.1), nrow = nrow(full_matrix), ncol = ncol(full_matrix))
+  rownames(e_matrix) <- rownames(full_matrix)
+  colnames(e_matrix) <- colnames(full_matrix)
+  return(e_matrix)
+}
+
+# generate and load relevant data into sigle structure
 generate_gene_data <- function(og_set_list, set_lists){
   data <- c()
 
@@ -313,6 +319,7 @@ generate_gene_data <- function(og_set_list, set_lists){
   return(data)
 }
 
+# find percent and mean enrichment values
 multiple_enrichment_analysis <- function(all, r0, r1, new_r1, gi_e_matrix, e){
   all_enriched <- check_for_enrichment(all, gi_e_matrix, e)
   r0_enriched <- check_for_enrichment(r0, gi_e_matrix, e)
@@ -379,6 +386,8 @@ enrichment_test_seq <- function(gene_data, gi_e_matrix, e_vals){
   return(enrichment_data)
 }
 
+# quicker running function for finding number of gene interactions
+# e matrix is mtx of binary values, needs to differ for each threshold
 get_num_interactions <- function(set_list, e_matrix){
 
   Mp <- e_matrix
@@ -396,19 +405,3 @@ get_num_interactions <- function(set_list, e_matrix){
   return(total_int)
 
 }
-
-##all_pairs <- return_pairs_from_set(unique(unlist(yeast_og_set_list)))
-#r0_pairs <- return_pairs_from_set_list(yeast_og_set_list)
-#r0_gene_set_list <- gene_set_from_rxn_set(yeast_og_set_list)
-
-#all_gene_pairs <- return_pairs_from_set(unique(unlist(r0_gene_set_list)))
-#r0_gene_pairs <- return_pairs_from_set_list(r0_gene_set_list)
-
-#new_r1_pairs <- new_pairs_from_composition(yeast_og_set_list, yeast_composition_set_full$composition)
-#r1_pairs <- append_pair_lists(r0_pairs, new_r1_pairs)
-
-#r1_set_list <- get_list_of_sets(r1_pairs)
-#r1_gene_set_list <- gene_set_from_rxn_set(r1_set_list)
-
-#r1_gene_pairs <- return_pairs_from_set_list(r1_gene_set_list)
-#new_r1_gene_pairs <- isolate_new_pairs(r0_gene_pairs, r1_gene_pairs)
