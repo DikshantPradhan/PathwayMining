@@ -1,5 +1,6 @@
 library(data.tree)
 library(rstack)
+library(pryr)
 
 str_to_char <- function(string){
   chars <- strsplit(string, "")[[1]]
@@ -18,165 +19,104 @@ char_to_str <- function(chars){
 extract_logical_from_base <- function(chars){
   and <- which(chars == "&")
   or <- which(chars == "|")
-  
+
   if ((length(and) > 0) & (length(or) > 0)){
     print('not base')
     return()
   }
-  
+
   if ((length(and) > 0)){
     return('&')
   }
-  
+
   if ((length(or) > 0)){
     return('|')
   }
 }
-
-extract_elems_from_base <- function(chars){
-  str <- char_to_str(chars) #paste(str,sep = '', collapse = '')
-  elem <- strsplit(str, split = '\\||&')[[1]]
-  remove <- which(elem == "")
-  if (length(remove) > 0){
-    elem <- elem[-remove]
-  }
-  return(elem)
-}
-
-create_base_node <- function(chars){
-  # and <- which(chars == "&")
-  # or <- which(chars == "|")
-  # 
-  # if ((length(and) > 0) & (length(or) > 0)){
-  #   print('not base')
-  #   return()
-  # }
-  # 
-  logic_node <- Node$new('_')
-  
-  logical <- extract_logical_from_base(chars)
-
-  logic_node$name <- logical
-  elems <- extract_elems_from_base(chars) #strsplit(char_to_str(chars), logical)[[1]]
-  for (i in elems){
-    logic_node$AddChild(i)
-  }
-  
-    
-  # if ((length(and) > 0)){
-  #   logic_node$name <- "&"
-  #   elems <- strsplit(char_to_str(chars), '&')[[1]]
-  #   for (i in elems){
-  #     logic_node$AddChild(i)
-  #   }
-  # }
-  # if ((length(or) > 0)){
-  #   logic_node$name <- "|"
-  #   elems <- strsplit(char_to_str(chars), '|')[[1]]
-  #   for (i in elems){
-  #     logic_node$AddChild(i)
-  #   }
-  # }
-  
-  return(logic_node)
-}
-
-create_node <- function(string){
-  chars <- strsplit(string, "")[[1]]
-}
-
-string <- "(k &((d & i & j) | a) & g & ((b & (e | h)) | c) & f)" # "((a&b)|(c&d))" # yeast_model_mod@gprRules[913]
-chars <- strsplit(string, "")[[1]]
-# print(paste(chars,sep = '', collapse = ''))
-chars <- chars[-which(chars == " ")]
-# print(paste(chars,sep = '', collapse = ''))
-len <- length(chars)
-open <- which(chars == "(")
-close <- which(chars == ")")
-
-# for (i in 1:max(max(open), max(close))){
-#   print(i)
-# }
-#print(which(chars == "("))
-#print(which(chars == ")"))
-
-root_node <- Node$new('root_node')
-# parent <- root_node$AddChild('1')
-# parent2 <- Node$new('2')
-# parent$AddChildNode(parent2)
-# parent2 <- Node$new('3')
-# parent$AddChildNode(parent2)
-# print(root_node)
-
-# s <- stack$new()
 # 
-# n <- FALSE
-# for (i in chars){
-#   s$push(i)
-#   if (i == ")"){
-#     j <- s$pop()
-#     j <- s$pop()
-#     char <- c()
-#     while (j != "("){
-#       char <- c(j, char)
-#       j <- s$pop()
-#     }
-#     #str <- c(str, j)
-#     num_logical <- length(which(char == '&' | char == '|'))
-#     # str <- char_to_str(char) #paste(str,sep = '', collapse = '')
-#     # elem <- strsplit(str, split = '\\||&')[[1]]
-#     elem <- extract_elems_from_base(char) #elem[-which(elem == "")]
-#     num_elem <- length(elem)
-#     print(paste(num_elem, num_logical))
-#     print(char)
-# 
-#     # new_node <- Node$new("_")
-#     if (num_logical >= num_elem){
-#       temp_new <- Node$new(extract_logical_from_base(char))
-#       for (i in elem){
-#         temp_new$AddChild(i)
-#       }
-#       temp_new$AddChildNode(new_node)
-#       new_node <- temp_new
-#       print(temp_new)
-#       print(new_node)
-#       n <- TRUE
-#     }
-#     else {
-#       # print(char)
-#       new_node <- create_base_node(char)
-#       if (n){
-#         temp_new$AddChildNode(new_node)
-#         print(temp_new)
-#       }
-#       else{
-#         print(new_node)
-#       }
-#       #n <- TRUE
-#       # print('smth')
-#     }
-#      # Node$new(str)
-#     # print(new_node)
+# extract_elems_from_base <- function(chars){
+#   str <- char_to_str(chars) #paste(str,sep = '', collapse = '')
+#   elem <- strsplit(str, split = '\\||&')[[1]]
+#   remove <- which(elem == "")
+#   if (length(remove) > 0){
+#     elem <- elem[-remove]
 #   }
+#   return(elem)
 # }
-i <- 493 #1002
-a <- capture.output(call_tree(parse(text = yeast_model_mod@gprRules[i])))
-print(yeast_model_mod@gprRules[i])
-# for (i in 1:length(a)){
-#   print(paste(i, ":", (which(strsplit(a[i], "")[[1]] == "\\")-1)/2, a[i]))
+# 
+# create_base_node <- function(chars){
+#   # and <- which(chars == "&")
+#   # or <- which(chars == "|")
+#   # 
+#   # if ((length(and) > 0) & (length(or) > 0)){
+#   #   print('not base')
+#   #   return()
+#   # }
+#   # 
+#   logic_node <- Node$new('_')
+#   
+#   logical <- extract_logical_from_base(chars)
+# 
+#   logic_node$name <- logical
+#   elems <- extract_elems_from_base(chars) #strsplit(char_to_str(chars), logical)[[1]]
+#   for (i in elems){
+#     logic_node$AddChild(i)
+#   }
+#   
+#     
+#   # if ((length(and) > 0)){
+#   #   logic_node$name <- "&"
+#   #   elems <- strsplit(char_to_str(chars), '&')[[1]]
+#   #   for (i in elems){
+#   #     logic_node$AddChild(i)
+#   #   }
+#   # }
+#   # if ((length(or) > 0)){
+#   #   logic_node$name <- "|"
+#   #   elems <- strsplit(char_to_str(chars), '|')[[1]]
+#   #   for (i in elems){
+#   #     logic_node$AddChild(i)
+#   #   }
+#   # }
+#   
+#   return(logic_node)
+# }
+# 
+# create_node <- function(string){
+#   chars <- strsplit(string, "")[[1]]
 # }
 
-# root_node <- Node$new('root node')
-# new_node <- Node$new('_')
-# for (i in 1:length(a)){
-#   chars <- strsplit(a[i], "")[[1]]
-#   depth <- (which(strsplit(a[i], "")[[1]] == "\\")-1)/2
-#   id <- chars[length(chars)] 
-#   if (id == '|' | id == '&'){
-#     new_node <- Node$new(id)
-#   }
-#   print(j)
-# }
+# string <- "(k &((d & i & j) | a) & g & ((b & (e | h)) | c) & f)" # "((a&b)|(c&d))" # yeast_model_mod@gprRules[913]
+# chars <- strsplit(string, "")[[1]]
+# # print(paste(chars,sep = '', collapse = ''))
+# chars <- chars[-which(chars == " ")]
+# # print(paste(chars,sep = '', collapse = ''))
+# len <- length(chars)
+# open <- which(chars == "(")
+# close <- which(chars == ")")
+# 
+# i <- 997 #1002
+# a <- capture.output(call_tree(parse(text = yeast_open_mod@gprRules[i])))
+# print(yeast_open_mod@gprRules[i])
+
+
+find_gpr_paths <- function(gprRule){
+  
+  gpr_char <- str_to_char(gprRule)
+  len_logical <- which(gpr_char %in% c('&', '|'))
+  # print(len_logical)
+  # print(extract_logical_from_base(gpr_char))
+  
+  if (length(len_logical) == 0){
+    return(gsub("[()]", "", gprRule))
+  }
+  
+  ast <- capture.output(call_tree(parse(text = gprRule)))
+  gpr_tree <- tree_building(ast, 4)
+  paths <- get_paths_from_gpr(gpr_tree)
+  
+  return(paths)
+}
 
 tree_building <- function(list, index){
   
@@ -315,7 +255,7 @@ get_paths_from_gpr <- function(node){
   # }
   
   if (name != '&' & name != '|'){
-    paths <- c(node$name)
+    paths <- c(paste('x', '[', node$name, ']', sep = ''))
     return(paths)
   }
   
@@ -327,7 +267,7 @@ get_paths_from_gpr <- function(node){
     for (i in 1:length(left_paths)){
       for (j in 1:length(right_paths)){
         idx <- idx + 1
-        paths[idx] <- list(c(left_paths[i], right_paths[j]))
+        paths[idx] <- list(c(unlist(left_paths[i]), unlist(right_paths[j])))
       }
     }
   }
@@ -345,6 +285,37 @@ get_paths_from_gpr <- function(node){
   return(paths)
 }
 
-a_ <- tree_building(a, 4)
-print(a_)
-print(get_paths_from_gpr(a_))
+# print(find_gpr_paths(yeast_open_mod@gprRules[996]))
+# print(find_gpr_paths(''))
+
+get_all_gpr_paths <- function(gprRules){
+  paths <- c()
+  
+  for (i in gprRules){
+    paths <- c(paths, list(find_gpr_paths(i)))
+  }
+  
+  return(paths)
+}
+
+ecoli_gpr_paths <- get_all_gpr_paths(model@gprRules)
+
+additional_reaction_count <- function(gpr, gpr_paths){
+  binary <- matrix(0, nrow = length(gpr), ncol = 1)
+  for (i in 1:length(gpr)){
+    if (nchar(gpr[i]) > 0){
+      binary[i] <- 1
+    }
+  }
+  
+  paths <- matrix(0, nrow = length(gpr), ncol = 1)
+  for (i in 1:length(paths)){
+    if (nchar(gpr_paths[i][1]) > 0){
+      paths[i] <- length(gpr_paths[[i]])
+    }
+  }
+  
+  return(paths - binary)
+}
+
+ecoli_split <- additional_reaction_count(model@gpr, ecoli_gpr_paths)
