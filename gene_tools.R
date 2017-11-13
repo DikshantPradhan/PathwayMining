@@ -7,12 +7,12 @@
 #  Y_OPEN_GPR$GENE[i] <- list(genes)
 #}
 
-GPR <- mutans_gpr # Y_OPEN_GPR #Y4_GPR
+# GPR <- mutans_gpr # Y_OPEN_GPR #Y4_GPR
 
 generate_gpr <- function(model){
   GPR <- c()
   GPR$react <- model@react_id
-  GPR$GENE <- model@gene
+  GPR$GENE <- model@genes
   GPR$GPR <- model@gpr
 
   return(GPR)

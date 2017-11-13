@@ -148,6 +148,11 @@ generate_falcon_model <- function(model, gene_sets, rxn_sets){
     }
     else {
       model <- or_add(model, gpr_paths, og_react_id[i])
+      genes <- c()
+      for (path in gpr_paths){
+        genes <- c(genes, genes_from_path(path, i))
+      }
+      genes <- unlist(genes)
       # for (path in gpr_paths){
       #   genes <- genes_from_path(path, i)
       #   # print(genes)
@@ -194,27 +199,43 @@ generate_falcon_model <- function(model, gene_sets, rxn_sets){
   
   print('SET EXCLUSIVITY')
   
+  print(paste('loyal sets:', length(loyal_set_idxs)))
+  print(paste('set exclusive genes:', length(set_exclusive_genes)))
+  
   for (i in loyal_set_idxs){
     # print(paste('new set:', length(rxn_sets[[i]])))
     # print(gene_sets[[i]])
     for (j in rxn_sets[[i]]){
       rxn_idx <- which(og_react_id == j)
       
+      # print('set excl')
+      gpr_rule <- model@gprRules[rxn_idx]
+      gpr_paths <- find_gpr_paths(gpr_rule)
+      # print(gpr_paths)
+      genes <- c()
+      for (path in gpr_paths){
+        genes <- c(genes, genes_from_path(path, rxn_idx))
+      }
+      genes <- unlist(genes)
+      # genes <- genes_from_path(gpr_paths[[1]], rxn_idx)
       if (which(og_react_id == j) %in% which(marked_rxns)){
         # print(paste('loyal rxn;', model@gpr[rxn_idx]))
         next
       }
-      print('set excl')
-      gpr_rule <- model@gprRules[rxn_idx]
-      gpr_paths <- find_gpr_paths(gpr_rule)
-      # genes <- genes_from_path(gpr_paths[[1]], rxn_idx)
-      
+      if (nchar(gpr_paths[1]) == 0){
+        # print(gpr_paths)
+        next
+      }
+
+      # print(genes)
       # print(model@gpr[rxn_idx])
       model <- or_add(model, gpr_paths, og_react_id[i])
+      marked_rxns[rxn_idx] <- TRUE
+      marked_genes[which(model@allGenes %in% genes)] <- TRUE
     }
     
-    marked_genes[gene_sets[[i]]] <- TRUE
-    marked_rxns[rxn_sets[[i]]] <- TRUE
+    # marked_genes[which(model@allGenes %in% gene_sets[[i]])] <- TRUE
+    # marked_rxns[which(og_react_id %in% rxn_sets[[i]])] <- TRUE
   }
   
   print(paste('remaining reactions:', length(which(marked_rxns == FALSE))))
@@ -240,16 +261,21 @@ generate_falcon_model <- function(model, gene_sets, rxn_sets){
     rxn_id <- og_react_id[rxn_idx]
     gpr_rule <- model@gprRules[rxn_idx]
     gpr_paths <- find_gpr_paths(gpr_rule)
+    if (nchar(gpr_paths[1]) == 0){next}
     for (path in gpr_paths){
       genes <- genes_from_path(path, rxn_idx)
       # print(genes)
       model <- normal_add(model, new_met_list = paste('a_', genes, sep = ''), rxn_id)
+      marked_genes[which(model@allGenes %in% genes)] <- TRUE
     }
     marked_rxns[rxn_idx] <- TRUE
   }
   
+  print('FINAL COUNT')
   print(paste('remaining reactions:', length(which(marked_rxns == FALSE))))
   print(paste('remaining genes:', length(which(marked_genes == FALSE))))
+  
+  # print(marked_genes)
   
   return(model)
 }
