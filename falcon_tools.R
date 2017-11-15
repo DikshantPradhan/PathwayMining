@@ -115,33 +115,33 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
     return(model)
   }
 
-  or_add <- function(model, path_list, rxn_id, simple = TRUE){
-    # print(paste('or add:', rxn_id))
+  or_add <- function(model, path_list, rxn_id, simple = TRUE, split = FALSE){
     rxn_idx <- which(og_react_id == rxn_id)
     rxn_activity <- paste('a', rxn_id, sep = "_")
-    # if (rxn_activity == 'a_'){print(paste('blank a test:', rxn_id))}
-    # print(path_list)
+    
     # add conversion for path to react_activity
     identifier <- 1
     for (mets in path_list){
-      # print(mets)
       genes <- genes_from_path(mets, rxn_idx)
-      # print(genes)
       new_mets <- paste('a_', genes, sep = '')
-      # print(new_mets)
-      # if ('a_' %in% new_mets){print(rxn_id)}
       met_list <- c(unlist(new_mets), rxn_activity)
       met_list <- met_list[!is.na(met_list)]
       coeff_list <- c(unlist(rep(-1, length(new_mets))), 1)
-      model <- addReact(model, paste(rxn_activity, 'conversion', identifier, sep = ' '), met = met_list,
-                        Scoef = coeff_list, lb = -1000, ub = 1000, reversible = TRUE)
+      if (split){
+        model <- addReact(model, paste(rxn_activity, 'fwd conversion', identifier, sep = ' '), met = met_list,
+                          Scoef = c(unlist(rep(-1, length(new_mets))), -1), lb = 0, ub = 1000, reversible = FALSE)
+        model <- addReact(model, paste(rxn_activity, 'rev conversion', identifier, sep = ' '), met = met_list,
+                          Scoef = c(unlist(rep(-1, length(new_mets))), 1), lb = 0, ub = 1000, reversible = FALSE)
+      }
+      else {
+        model <- addReact(model, paste(rxn_activity, 'conversion', identifier, sep = ' '), met = met_list,
+                          Scoef = coeff_list, lb = -1000, ub = 1000, reversible = TRUE)
+      }
       identifier <- identifier + 1
     }
 
     # add activity specific to react
     model <- normal_add(model, new_met_list = c(rxn_activity), rxn_id, simple = simple, addExch = FALSE)
-
-    ## NEED TO ADD FLUX CONSTRAINT TO THIS?
 
     return(model)
   }
@@ -173,13 +173,10 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
   # all reactions which are comprised of non-promiscuous genes
   for (i in loyal_rxn_idxs){
     rxn_id <- og_react_id[i]
-    # print(model@react_id[i])
     gpr_rule <- model@gprRules[i]
-    # print(gpr_rule)
     gpr_paths <- find_gpr_paths(gpr_rule)
     if (length(gpr_paths) == 1){
       genes <- genes_from_path(gpr_paths[[1]], i)
-      # print(genes)
       model <- simple_add(model, new_met_list = paste('a_', genes, sep = ''), rxn_id)
       marked_genes[which(model@allGenes %in% genes)] <- TRUE
       marked_rxns[i] <- TRUE
@@ -191,15 +188,9 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
       }
       genes <- unlist(genes)
       if (genes[1] == ''){next}
-      # print(genes)
       model <- or_add(model, gpr_paths, og_react_id[i])
-      # for (path in gpr_paths){
-      #   genes <- genes_from_path(path, i)
-      #   # print(genes)
-      #   model <- simple_add(model, new_met_list = paste('a_', genes, sep = ''), rxn_id)
       marked_genes[which(model@allGenes %in% genes)] <- TRUE
       marked_rxns[i] <- TRUE
-      # }
     }
   }
 
@@ -243,57 +234,31 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
   print(paste('set exclusive genes:', length(set_exclusive_genes)))
 
   for (i in loyal_set_idxs){
-    # print(paste('new set:', length(rxn_sets[[i]])))
-    # print(gene_sets[[i]])
     for (j in rxn_sets[[i]]){
-      # print(j)
       rxn_idx <- which(model@react_id == j)
-      # print('set excl')
       gpr_rule <- model@gprRules[rxn_idx]
       gpr_paths <- find_gpr_paths(gpr_rule)
-      # print(gpr_paths)
       genes <- c()
       for (path in gpr_paths){
         genes <- c(genes, genes_from_path(path, rxn_idx))
       }
       genes <- unlist(genes)
-      # genes <- genes_from_path(gpr_paths[[1]], rxn_idx)
       if (which(og_react_id == j) %in% which(marked_rxns)){
-        # print(paste('loyal rxn;', model@gpr[rxn_idx]))
         next
       }
       if (nchar(gpr_paths[1]) == 0){
-        # print(gpr_paths)
         next
       }
-      # print(genes)
-      # print(model@gpr[rxn_idx])
       model <- or_add(model, gpr_paths, j)
       marked_rxns[rxn_idx] <- TRUE
       marked_genes[which(model@allGenes %in% genes)] <- TRUE
     }
-
-    # marked_genes[which(model@allGenes %in% gene_sets[[i]])] <- TRUE
-    # marked_rxns[which(og_react_id %in% rxn_sets[[i]])] <- TRUE
   }
 
   print(paste('remaining reactions:', length(which(marked_rxns == FALSE))))
   print(paste('remaining genes:', length(which(marked_genes == FALSE))))
 
   }
-  # # genes exclusive to a single set, but not a single gene
-  # for (i in which(gene_set_promiscuity == 1)){
-  #   if (marked_genes[i]){next}
-  #   gene <- names(gene_set_promiscuity)[i]
-  #   k <- gene_set_recurrence[[i]]
-  #   set <- rxn_sets[[k]]
-  #   # identify if rxn is loyal to genes exclusive to this set: if yes then simple_add and mark gene
-  #   # if gene is already marked, remove from paths (watch for newly empty paths)
-  #   for (j in set){
-  #     if (marked_rxns[which(og_react_id == j)]){next}
-  #     # print(model@genes[which(og_react_id == j)])
-  #   }
-  # }
 
   # NORMAL ADD FOR ALL REMAINING REACTIONS
 
@@ -304,16 +269,19 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
     gpr_rule <- model@gprRules[rxn_idx]
     gpr_paths <- find_gpr_paths(gpr_rule)
     if (nchar(gpr_paths[1]) == 0){next}
-    id <- 1
-    for (path in gpr_paths){
-      genes <- genes_from_path(path, rxn_idx)
-      # print(genes)
-      # print(rxn_id)
-      model <- normal_add(model, new_met_list = paste('a_', genes, sep = ''), rxn_id, identifier = id)
-      rxn_removal_ids <- c(rxn_removal_ids, rxn_id)
-      marked_genes[which(model@allGenes %in% genes)] <- TRUE
-      id <- id + 1
-    }
+    
+    model <- or_add(model, gpr_paths, rxn_id, split = TRUE)
+    
+    # id <- 1
+    # for (path in gpr_paths){
+    #   genes <- genes_from_path(path, rxn_idx)
+    #   # print(genes)
+    #   # print(rxn_id)
+    #   model <- normal_add(model, new_met_list = paste('a_', genes, sep = ''), rxn_id, identifier = id)
+    #   rxn_removal_ids <- c(rxn_removal_ids, rxn_id)
+    #   marked_genes[which(model@allGenes %in% genes)] <- TRUE
+    #   id <- id + 1
+    # }
     marked_rxns[rxn_idx] <- TRUE
   }
 
@@ -323,14 +291,14 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
 
   # print(marked_genes)
 
-  print('RXN REMOVAL')
-  # print(rxn_removal_ids)
-  print(paste('met num:', length(model@met_id)))
-  for (rxn_id in unique(rxn_removal_ids)){
-    # print(rxn_id)
-    model <- rmReact(model, react = rxn_id, rm_met = FALSE)
-  }
-  print(paste('met num:', length(model@met_id)))
+  # print('RXN REMOVAL')
+  # # print(rxn_removal_ids)
+  # print(paste('met num:', length(model@met_id)))
+  # for (rxn_id in unique(rxn_removal_ids)){
+  #   # print(rxn_id)
+  #   model <- rmReact(model, react = rxn_id, rm_met = FALSE)
+  # }
+  # print(paste('met num:', length(model@met_id)))
 
   return(model)
 }
@@ -344,110 +312,113 @@ gprRule_to_idx <- function(list){
 }
 
 # print(gprRule_to_idx(c('x[2]', 'x[5]', 'x[7]')))
-#model <- get_ecoli_model()
-#gene_sets <- ecoli_r0_gene_set
-#rxn_sets <- ecoli_og_set_list
-#test_model <- generate_falcon_model(model, ecoli_r0_gene_set, ecoli_og_set_list)
-#test_model2 <- generate_falcon_model(model)
-#a <- apply(test_model@S, 1, function(x) sum(abs(x)))
-#print(test_model@met_id[which(a == 0)])
+model <- get_ecoli_model()
+gene_sets <- ecoli_r0_gene_set
+rxn_sets <- ecoli_og_set_list
+test_model <- generate_falcon_model(model, ecoli_r0_gene_set, ecoli_og_set_list)
+# test_model2 <- generate_falcon_model(model)
+a <- apply(test_model@S, 1, function(x) sum(abs(x)))
+print(test_model@met_id[which(a == 0)])
 
-# test_falcon <- function(model, idx1, idx2 = 0){
-#   if (idx2 == 0){idx2 <- idx1 + 1}
-#
-#   rxn1_all <- which(test_model@S[,idx1] != 0)
-#   rxn2_all <- which(test_model@S[,idx2] != 0)
-#
-#   rxn1_pdt <- which(test_model@S[,idx1] > 0)
-#   rxn2_pdt <- which(test_model@S[,idx2] > 0)
-#
-#   rxn1_rct <- which(test_model@S[,idx1] < 0)
-#   rxn2_rct <- which(test_model@S[,idx2] < 0)
-#
-#   rct_diff <- unique(union(setdiff(rxn1_rct, rxn2_rct), setdiff(rxn2_rct, rxn1_rct)))
-#   pdt_diff <- unique(union(setdiff(rxn2_pdt, rxn1_pdt), setdiff(rxn1_pdt, rxn2_pdt)))
-#
-#   if (!identical(rxn1_all, rxn2_all)){return(FALSE)}
-#
-#   if (!identical(rct_diff, pdt_diff)){return(FALSE)}
-#
-#   return(TRUE)
-# }
-#
-# test_seq <- seq(267, 321, 2)
-# for (idx in test_seq){
-#   print(test_falcon(test_model, idx))
-# }
-#
-# print('TESTING CONVERSION REACTIONS')
-#
-# conv_rxns <- c("ACKr","ATPS4r","CYTBD","D_LACt2","FBA","FBP","FUM","GLNS","LDH_D","MALS","PFK","PFL","PGM","PIt2r","PTAr",
-#                "PYK","RPE","RPI","TALA","ACONTa","ACONTb","TKT1","TKT2")
-#
-# # REACTANTS AND PRODUCTS SHOULD SHARE SAME DIFFERING METABOLITE
-# for (rxn in conv_rxns){
-#   print(paste('new rxn:', rxn))
-#   og_idx <- which(model@react_id == rxn)
-#   print(model@gpr[og_idx])
-#   gpr_rule <- model@gprRules[og_idx]
-#   gpr_paths <- find_gpr_paths(gpr_rule)
-#
-#   new_rxns <- grep(paste(rxn, 'conversion'), test_model@react_id)
-#   if (length(new_rxns) != length(gpr_paths)){print(paste('error', rxn))}
-#
-#   for (new_rxn in new_rxns){
-#     met_idxs <- which(test_model@S[,new_rxn] != 0)
-#     print(paste(test_model@met_id[met_idxs], test_model@S[met_idxs, new_rxn]))
-#   }
-#
-#   new_idx <- which(test_model@react_id == rxn)
-#   met_idxs <- which(test_model@S[,new_idx] != 0)
-#   print(paste(test_model@met_id[met_idxs], test_model@S[met_idxs, new_idx]))
-# }
-#
-# print('TEST ALL SIMPLE RXNS')
-# # PRINT ALL METABOLTES AND COEFFICIENTS
-# for (rxn in model@react_id){
-#   print(paste('new rxn:', rxn))
-#   old_idx <- which(model@react_id == rxn)
-#   print(model@gpr[old_idx])
-#
-#   new_idx <- which(test_model@react_id == rxn)
-#   if (length(new_idx) > 0){
-#     met_idxs <- which(test_model@S[,new_idx] != 0)
-#     print(paste(test_model@met_id[met_idxs], test_model@S[met_idxs, new_idx]))
-#   }
-#   else {
-#     print(paste('deleted rxn:', (length(grep(rxn, test_model@react_id[267:324])) > 1)))
-#   }
-# }
-#
-# print('METABOLITE TEST')
-# # ORIGINAL REACTIONS SHOULD SHARE SAME METABOLITE AND COEFFICIENTS
-# for (rxn in model@react_id){
-#   print(paste('new rxn:', rxn))
-#   old_idx <- which(model@react_id == rxn)
-#   old_met_idxs <- which(model@S[,old_idx] != 0)
-#   old_met_coeffs <- model@S[old_met_idxs, old_idx]
-#
-#   new_idxs <- grep(rxn, test_model@react_id)
-#
-#   for (new_idx in new_idxs){
-#     new_rxn_id <- test_model@react_id[new_idx]
-#     # print(new_rxn_id)
-#     new_met_idxs <- which(test_model@S[,new_idx] != 0)
-#     new_met_coeffs <- test_model@S[old_met_idxs, new_idx]
-#     if (!all(old_met_idxs %in% new_met_idxs)){
-#       print(paste(new_rxn_id, 'error'))
-#       print(old_met_idxs)
-#       print(new_met_idxs)
-#     }
-#     if (!identical(old_met_coeffs, new_met_coeffs)){
-#       print(paste(new_rxn_id, 'error2'))
-#       print(old_met_coeffs)
-#       print(new_met_coeffs)
-#     }
-#   }
-# }
+test_falcon <- function(test_model){
+
+test_falcon_ <- function(model, idx1, idx2 = 0){
+  if (idx2 == 0){idx2 <- idx1 + 1}
+
+  rxn1_all <- which(test_model@S[,idx1] != 0)
+  rxn2_all <- which(test_model@S[,idx2] != 0)
+
+  rxn1_pdt <- which(test_model@S[,idx1] > 0)
+  rxn2_pdt <- which(test_model@S[,idx2] > 0)
+
+  rxn1_rct <- which(test_model@S[,idx1] < 0)
+  rxn2_rct <- which(test_model@S[,idx2] < 0)
+
+  rct_diff <- unique(union(setdiff(rxn1_rct, rxn2_rct), setdiff(rxn2_rct, rxn1_rct)))
+  pdt_diff <- unique(union(setdiff(rxn2_pdt, rxn1_pdt), setdiff(rxn1_pdt, rxn2_pdt)))
+
+  if (!identical(rxn1_all, rxn2_all)){return(FALSE)}
+
+  if (!identical(rct_diff, pdt_diff)){return(FALSE)}
+
+  return(TRUE)
+}
+
+test_seq <- seq(287, 341, 2)
+for (idx in test_seq){
+  print(test_falcon_(test_model, idx))
+}
+
+print('TESTING CONVERSION REACTIONS')
+
+conv_rxns <- c("ACKr","ATPS4r","CYTBD","D_LACt2","FBA","FBP","FUM","GLNS","LDH_D","MALS","PFK","PFL","PGM","PIt2r","PTAr",
+               "PYK","RPE","RPI","TALA","ACONTa","ACONTb","TKT1","TKT2")
+
+# REACTANTS AND PRODUCTS SHOULD SHARE SAME DIFFERING METABOLITE
+for (rxn in conv_rxns){
+  print(paste('new rxn:', rxn))
+  og_idx <- which(model@react_id == rxn)
+  print(model@gpr[og_idx])
+  gpr_rule <- model@gprRules[og_idx]
+  gpr_paths <- find_gpr_paths(gpr_rule)
+
+  new_rxns <- grep(paste(rxn, 'conversion'), test_model@react_id)
+  if (length(new_rxns) != length(gpr_paths)){print(paste('error', rxn))}
+
+  for (new_rxn in new_rxns){
+    met_idxs <- which(test_model@S[,new_rxn] != 0)
+    print(paste(test_model@met_id[met_idxs], test_model@S[met_idxs, new_rxn]))
+  }
+
+  new_idx <- which(test_model@react_id == rxn)
+  met_idxs <- which(test_model@S[,new_idx] != 0)
+  print(paste(test_model@met_id[met_idxs], test_model@S[met_idxs, new_idx]))
+}
+
+print('TEST ALL SIMPLE RXNS')
+# PRINT ALL METABOLTES AND COEFFICIENTS
+for (rxn in model@react_id){
+  print(paste('new rxn:', rxn))
+  old_idx <- which(model@react_id == rxn)
+  print(model@gpr[old_idx])
+
+  new_idx <- which(test_model@react_id == rxn)
+  if (length(new_idx) > 0){
+    met_idxs <- which(test_model@S[,new_idx] != 0)
+    print(paste(test_model@met_id[met_idxs], test_model@S[met_idxs, new_idx]))
+  }
+  else {
+    print(paste('deleted rxn:', (length(grep(rxn, test_model@react_id[267:324])) > 1)))
+  }
+}
+
+print('METABOLITE TEST')
+# ORIGINAL REACTIONS SHOULD SHARE SAME METABOLITE AND COEFFICIENTS
+for (rxn in model@react_id){
+  print(paste('new rxn:', rxn))
+  old_idx <- which(model@react_id == rxn)
+  old_met_idxs <- which(model@S[,old_idx] != 0)
+  old_met_coeffs <- model@S[old_met_idxs, old_idx]
+
+  new_idxs <- grep(rxn, test_model@react_id)
+
+  for (new_idx in new_idxs){
+    new_rxn_id <- test_model@react_id[new_idx]
+    # print(new_rxn_id)
+    new_met_idxs <- which(test_model@S[,new_idx] != 0)
+    new_met_coeffs <- test_model@S[old_met_idxs, new_idx]
+    if (!all(old_met_idxs %in% new_met_idxs)){
+      print(paste(new_rxn_id, 'error'))
+      print(old_met_idxs)
+      print(new_met_idxs)
+    }
+    if (!identical(old_met_coeffs, new_met_coeffs)){
+      print(paste(new_rxn_id, 'error2'))
+      print(old_met_coeffs)
+      print(new_met_coeffs)
+    }
+  }
+}
 
 # model_2 <- generate_falcon_model(model, ecoli_r0_gene_set, ecoli_og_set_list)
+}

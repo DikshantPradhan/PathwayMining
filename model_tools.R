@@ -226,6 +226,12 @@ get_upst_paths <- function(rxn_idx){
   return(paths)
 }
 
+print_mets_and_coeffs <- function(model, rxn_idx){
+  print(model@react_id[rxn_idx])
+  met_idxs <- which(model@S[,rxn_idx] != 0)
+  print(paste(test_model@met_id[met_idxs], test_model@S[met_idxs, rxn_idx]))
+}
+
 check_for_duplicate_reactions <- function(model){
   S <- model@S
   n_rxn <- dim(S)[2]
