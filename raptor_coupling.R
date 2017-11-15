@@ -27,8 +27,16 @@ optimize_rxn <- function(model, rxn, max){
 
 # MAIN FUNCTION
 
-flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01, bnd_tol = 0.1, stored_obs = 4000, cor_iter = 3) {
+flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01,
+      bnd_tol = 0.1, stored_obs = 4000, cor_iter = 3, reaction_indexes = c()) {
+
   n <- model$get_sizes()$NumVars
+
+  # if empty set, then assume all reactions are to be inspected
+  if (length(reaction_indexes) == 0){
+    reaction_indexes <- c(1:n)
+  }
+
   vars <- model$get_names()$VarName
   prev_obj <- model$getattr("Obj")
   model$setattr("Obj", setNames(numeric(n), vars)) # clear the objective
@@ -69,7 +77,9 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     return(flux_)
   }
 
-  for (i in 1:(n-1)) { # iterate over passed in idxs instead (idx in 1:length(reaction_indexes)); i <-  reaction_indexes[idx]
+  for (idx in 1:(length(reaction_indexes)-1)) { # (i in 1:(n-1)) # iterate over passed in idxs instead (idx in 1:length(reaction_indexes)); i <-  reaction_indexes[idx]
+    i <-  reaction_indexes[idx]
+
     if (!active[i] | blocked[i]) next
     sub_max <- rep(-Inf, n)
     sub_min <- rep(Inf, n)
@@ -92,7 +102,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         global_min <- pmin(global_min, sol$X)
 
         flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
-        
+
         if (!near(global_max[i], 0) | !near(global_min[i], 0)){
           fixed_val <- rxn_fix(global_max[i], global_min[i])
         }
@@ -111,7 +121,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         global_min <- pmin(global_min, sol$X)
 
         flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
-        
+
         if (!near(global_min[i], 0) | !near(global_min[i], 0)){
           fixed_val <- rxn_fix(global_max[i], global_min[i])
         }
@@ -135,7 +145,9 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       active[i] <- FALSE
     }
 
-    for (j in (i+1):n) { # also keep this in passed in idxs (idx2 in (idx+1):length(reaction_indexes)); j <-  reaction_indexes[idx2]
+    for (idx2 in (idx+1):length(reaction_indexes)) { # (j in (i+1):n) # also keep this in passed in idxs (idx2 in (idx+1):length(reaction_indexes)); j <-  reaction_indexes[idx2]
+      j <-  reaction_indexes[idx2]
+
       # check for fixed or blocked
       if (!active[j] | blocked[j]) next
       # check for uncoupled
@@ -157,9 +169,9 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         model$optimize()
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
-        
+
         flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
-        
+
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
         sub_max <- pmax(sub_max, sol$X)
@@ -175,9 +187,9 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         model$optimize()
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
-        
+
         flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
-        
+
         global_max <- pmax(global_max, sol$X)
         global_min <- pmin(global_min, sol$X)
         sub_max <- pmax(sub_max, sol$X)
