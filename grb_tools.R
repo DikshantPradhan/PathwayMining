@@ -1,3 +1,5 @@
+source('falcon_tools.R')
+
 GRB_ecoli_model <- function(){
   data(Ec_core);
   model=Ec_core;
@@ -64,6 +66,21 @@ GRB_mutans_model <- function(){
   mutans$show_output(FALSE)
 
   return(mutans)
+}
+
+
+GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set_list = c()){
+  sybil_falcon_model <- generate_falcon_model(sybil_model, r0_gene_set, r0_rxn_set_list)
+  
+  grb_falcon_model <- as_GRBmodel(sybil_falcon_model)
+  grb_falcon_model$show_output(FALSE)
+  
+  ## ADD NECESSARY CONSTRAINTS TO MODEL
+  # for each reaction w fwd and rev components:
+  #   add constraint so that only one can run at a time
+  #   binary vars I_fwd, I_rev <- {0, 1} and I_fwd + I_rev = 1
+  
+  return(grb_falcon_model)
 }
 
 GRB_get_rxn_idx <- function(model, rxn){
