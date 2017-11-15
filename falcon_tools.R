@@ -118,7 +118,7 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
   or_add <- function(model, path_list, rxn_id, simple = TRUE, split = FALSE){
     rxn_idx <- which(og_react_id == rxn_id)
     rxn_activity <- paste('a', rxn_id, sep = "_")
-    
+
     # add conversion for path to react_activity
     identifier <- 1
     for (mets in path_list){
@@ -269,9 +269,9 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
     gpr_rule <- model@gprRules[rxn_idx]
     gpr_paths <- find_gpr_paths(gpr_rule)
     if (nchar(gpr_paths[1]) == 0){next}
-    
+
     model <- or_add(model, gpr_paths, rxn_id, split = TRUE)
-    
+
     # id <- 1
     # for (path in gpr_paths){
     #   genes <- genes_from_path(path, rxn_idx)
@@ -312,13 +312,13 @@ gprRule_to_idx <- function(list){
 }
 
 # print(gprRule_to_idx(c('x[2]', 'x[5]', 'x[7]')))
-model <- get_ecoli_model()
-gene_sets <- ecoli_r0_gene_set
-rxn_sets <- ecoli_og_set_list
-test_model <- generate_falcon_model(model, ecoli_r0_gene_set, ecoli_og_set_list)
+#model <- get_ecoli_model()
+#gene_sets <- ecoli_r0_gene_set
+#rxn_sets <- ecoli_og_set_list
+#test_model <- generate_falcon_model(model, ecoli_r0_gene_set, ecoli_og_set_list)
 # test_model2 <- generate_falcon_model(model)
-a <- apply(test_model@S, 1, function(x) sum(abs(x)))
-print(test_model@met_id[which(a == 0)])
+#a <- apply(test_model@S, 1, function(x) sum(abs(x)))
+#print(test_model@met_id[which(a == 0)])
 
 test_falcon <- function(test_model){
 

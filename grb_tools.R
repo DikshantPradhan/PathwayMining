@@ -76,6 +76,25 @@ GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set
   grb_falcon_model$show_output(FALSE)
 
   ## ADD NECESSARY CONSTRAINTS TO MODEL
+  vars <- grb_falcon_model$get_names()$VarName
+
+  split_rxns <- vars[grep('fwd', vars)]
+  #print(split_rxns)
+  conv_num <- sapply(split_rxns, function(x) strsplit(x, ' |_')[[1]][5])
+  dir <- sapply(split_rxns, function(x) strsplit(x, ' |_')[[1]][3])
+  split_rxns <- sapply(split_rxns, function(x) strsplit(x, ' |_')[[1]][2])
+  #split_rxns <- unique(split_rxns)
+
+  print(split_rxns)
+  print(conv_num)
+  print(dir)
+
+  #print(grb_falcon_model)
+
+  for (rxn in split_rxns){
+    #model$add
+  }
+
   # for each reaction w fwd and rev components:
   #   add constraint so that only one can run at a time
   #   binary vars I_fwd, I_rev <- {0, 1} and I_fwd + I_rev = 1
