@@ -1,38 +1,41 @@
+test1 <- function(model) {
+  #env <- GRBenv$new()
+  #model <- GRBmodel$new(env, name="testModel")
+  .Call("GRB_addvar", model$exptr, 0L, integer(0), numeric(0), 1.0, 0.0, 1.0, 'B', "var1")
+  .Call("GRB_addvar", model$exptr, 0L, integer(0), numeric(0), 1.0, 0.0, 1.0, 'B', "var2")
+  .Call("GRB_updatemodel", model$exptr)
+  .Call("GRB_getstrattrarray", model$exptr, "VarName", 0L, 2L)
+  .Call("GRB_addconstr", model$exptr, 2L, as.integer(0:1), c(3.2, -1.4), ">", 0.0, "constr1")
+  .Call("GRB_addvar", model$exptr, 0L, integer(0), numeric(0), 1.0, 0.0, 1.0, 'B', "var3")
+  .Call("GRB_addgenconstrMax", model$exptr, "maxcon1", 2L, 2L, as.integer(0:1), 0.0)
+  .Call("GRB_getattrinfo", model$exptr, "ModelName")
+  .Call("GRB_write", model$exptr, "/Users/jensen/Desktop/model.lp")
 
-r0_size_class_2 <- c()
-
-# randomize order of sets classified by size
-for (i in 1:length(r0_size_class)){
-  #print(i)
-  #r0_size_class_2[[i]] <- sample(r0_size_class[[i]], size = length(r0_size_class[[i]]), replace = FALSE)
-  #if (i == 13 | i == 21){
-  #  print(r0_size_class[[i]])
-  #  print(r0_size_class_2[[i]])
-  #}
-  #if (length(unique(r0_size_class_2[[i]])) != length(unique(r0_size_class[[i]]))){print('incorrect length')}
-  if (length(r0_size_class[[i]]) == 1){
-    r0_size_class_2[[i]] <- r0_size_class[[i]]
-  }
-  else {
-    r0_size_class_2[[i]] <- sample(r0_size_class[[i]], size = length(r0_size_class[[i]]), replace = FALSE)
-  }
+  return(model)
 }
 
-total <- 0
-for (i in 1:length(r0_size_class_2)){
-  for (j in r0_size_class_2[[i]]){
-    total <- total + length(r0_set_list[[j]])
-  }
-}
+pwl_test <- function(model) {
+  #dyn.load("src/grb.so")
 
-print(total)
+  #env <- GRBenv$new()
+  #model <- GRBmodel$new(env, name="piecewise")
+  model$addvars(c("x", "y", "z"), lb=0.0, ub=1.0, vtype='C', vval = 0, obj = 0)
 
-for (i in 1:length(r0_size_class_2)){
-  for (j in r0_size_class_2[[i]]){
-    if (length(r0_set_list[[j]]) != i){
-      print('wrong size')
-      print(paste(i, ' ', j))
-      print(r0_set_list[[j]])
-    }
-  }
+  model$setattr("Obj", c(y=-1.0))
+  npts = 101
+  ptu = (0:(npts-1)) / (npts-1)
+  ptf = exp(-ptu)
+  ptg = 2*ptu^2 - 4*ptu
+  model$setpwlobj("x", ptu, ptf)
+  model$setpwlobj("z", ptu, ptg)
+
+  model$addconstr(values=c(x=1.0, y=2.0, z=3.0), sense="<", rhs=4.0, name="c0")
+  model$addconstr(values=c(x=1.0, y=1.0), sense=">", rhs=1.0, name="c1")
+
+  model$optimize()
+
+  print(model$getattr("IsMIP"))
+  print(model$getattr("X"))
+  print(model$getattr("ObjVal"))
+  print(model)
 }

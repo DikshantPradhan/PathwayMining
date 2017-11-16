@@ -103,19 +103,19 @@ GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set
     rev <- split_rev_rxns[i]
 
     # get bounds (care about fwd_ub & rev_lb)
-    fwd_ub <- model$getattr("UB")[fwd]
-    fwd_lb <- model$getattr("LB")[fwd]
-    rev_ub <- model$getattr("UB")[rev]
-    rev_lb <- model$getattr("LB")[rev]
+    fwd_ub <- grb_falcon_model$getattr("UB")[fwd]
+    fwd_lb <- grb_falcon_model$getattr("LB")[fwd]
+    rev_ub <- grb_falcon_model$getattr("UB")[rev]
+    rev_lb <- grb_falcon_model$getattr("LB")[rev]
 
     a_rxn <- strsplit(fwd, ' ')[[1]][1]
     I <- paste('I', a_rxn, sep = '_')
 
     #grb_falcon_model$addconstr( , name = I) #??? not sure how to add binary constraint
     #grb_falcon_model$addconstr(paste(fwd, '*', I, sep = ''),
-        sense="<=", rhs= fwd_ub, name = paste(a_rxn, 'fwd', sep = '_')) # bound on fwd conversion
+        #sense="<=", rhs= fwd_ub, name = paste(a_rxn, 'fwd', sep = '_')) # bound on fwd conversion
     #grb_falcon_model$addconstr(paste(rev, '*(1 - ', I, ')',  sep = ''),
-        sense=">=", rhs= rev_lb, name = paste(a_rxn, 'rev', sep = '_')) # bound on rev conversion
+        #sense=">=", rhs= rev_lb, name = paste(a_rxn, 'rev', sep = '_')) # bound on rev conversion
   }
 
   # for each reaction w fwd and rev components:
@@ -168,7 +168,7 @@ GRB_generate_pair_lists <- function(model_og, suppression_idxs){
   return(pair_lists)
 }
 
-GRB_generate_set_lists <- function(model_og, og_set_list, suppression_idxs){
+GRB_generate_set_lists <- function(model_og, og_set_list, suppression_idxs, reaction_indexes = c()){
   set_lists <- c()
   unblocked_rxns <- unlist(og_set_list)
 
@@ -191,7 +191,8 @@ GRB_generate_set_lists <- function(model_og, og_set_list, suppression_idxs){
     model$setattr("UB", setNames(0, vars[i]))
     model$setattr("LB", setNames(0, vars[i]))
 
-    set_lists[i] <- list(get_list_of_sets(return_couples(flux_coupling_raptor(model)$coupled)))
+    set_lists[i] <- list(get_list_of_sets(return_couples(flux_coupling_raptor(model,
+                            reaction_indexes = reaction_indexes)$coupled)))
 
     # unfix i
     #model$setattr("UB", prev_ub)

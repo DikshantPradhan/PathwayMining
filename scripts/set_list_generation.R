@@ -16,10 +16,12 @@ ecoli <- GRB_ecoli_model()
 n <- ecoli$get_sizes()$NumVars
 vars <- ecoli$get_names()$VarName
 
-ecoli_og_set_list <- GRB_generate_set_list(ecoli, reaction_indexes = c(1:90))
+reaction_indexes <- c(1:90)
+
+ecoli_og_set_list <- GRB_generate_set_list(ecoli, reaction_indexes = reaction_indexes)
 
 ecoli <- GRB_ecoli_model()
-ecoli_set_lists <- GRB_generate_set_lists(ecoli, ecoli_og_set_list, 1:n)
+ecoli_set_lists <- GRB_generate_set_lists(ecoli, ecoli_og_set_list, 1:n, reaction_indexes)
 
 ecoli_composition_set_full <- return_composition_sets(ecoli_og_set_list, ecoli_set_lists, ecoli)
 
