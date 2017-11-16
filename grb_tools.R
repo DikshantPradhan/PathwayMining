@@ -78,21 +78,44 @@ GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set
   ## ADD NECESSARY CONSTRAINTS TO MODEL
   vars <- grb_falcon_model$get_names()$VarName
 
-  split_rxns <- vars[grep('fwd', vars)]
+  split_fwd_rxns <- vars[grep('fwd', vars)]
+  split_rev_rxns <- vars[grep('rev', vars)]
   #print(split_rxns)
-  conv_num <- sapply(split_rxns, function(x) strsplit(x, ' |_')[[1]][5])
-  dir <- sapply(split_rxns, function(x) strsplit(x, ' |_')[[1]][3])
-  split_rxns <- sapply(split_rxns, function(x) strsplit(x, ' |_')[[1]][2])
+  #conv_num <- sapply(split_rxns, function(x) strsplit(x, ' |_')[[1]][5])
+  #dir <- sapply(split_rxns, function(x) strsplit(x, ' |_')[[1]][3])
+  #split_rxns <- sapply(split_rxns, function(x) strsplit(x, ' |_')[[1]][2])
   #split_rxns <- unique(split_rxns)
 
-  print(split_rxns)
-  print(conv_num)
-  print(dir)
+  print(split_fwd_rxns)
+  print(split_rev_rxns)
+  #print(conv_num)
+  #print(dir)
 
   #print(grb_falcon_model)
+  if (length(split_fwd_rxns) != length(split_rev_rxns)){
+    print('fed rev matchup error')
+    return()
+  }
 
-  for (rxn in split_rxns){
-    #model$add
+  # add bounds on split conversion reactions (gene -> activity_[rxn])
+  for (i in 1:length(split_fed_rxns)){
+    fwd <- split_fwd_rxns[i]
+    rev <- split_rev_rxns[i]
+
+    # get bounds (care about fwd_ub & rev_lb)
+    fwd_ub <- model$getattr("UB")[fwd]
+    fwd_lb <- model$getattr("LB")[fwd]
+    rev_ub <- model$getattr("UB")[rev]
+    rev_lb <- model$getattr("LB")[rev]
+
+    a_rxn <- strsplit(fwd, ' ')[[1]][1]
+    I <- paste('I', a_rxn, sep = '_')
+
+    #grb_falcon_model$addconstr( , name = I) #??? not sure how to add binary constraint
+    #grb_falcon_model$addconstr(paste(fwd, '*', I, sep = ''),
+        sense="<=", rhs= fwd_ub, name = paste(a_rxn, 'fwd', sep = '_')) # bound on fwd conversion
+    #grb_falcon_model$addconstr(paste(rev, '*(1 - ', I, ')',  sep = ''),
+        sense=">=", rhs= rev_lb, name = paste(a_rxn, 'rev', sep = '_')) # bound on rev conversion
   }
 
   # for each reaction w fwd and rev components:
