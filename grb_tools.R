@@ -111,7 +111,7 @@ GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set
     a_rxn <- strsplit(fwd, ' ')[[1]][1]
     I <- paste('I', a_rxn, sep = '_')
 
-    #grb_falcon_model$addconstr( , name = I) #??? not sure how to add binary constraint
+    #grb_falcon_model$addvar(name = I, vtype = 'B') #??? not sure how to add binary constraint
     #grb_falcon_model$addconstr(paste(fwd, '*', I, sep = ''),
         #sense="<=", rhs= fwd_ub, name = paste(a_rxn, 'fwd', sep = '_')) # bound on fwd conversion
     #grb_falcon_model$addconstr(paste(rev, '*(1 - ', I, ')',  sep = ''),
