@@ -52,6 +52,15 @@ GRB_yeast_model <- function(){
   return(yeast)
 }
 
+GRB_yeast_falcon_model <- function(){
+  setwd("~/GitHub/PathwayMining/data/yeast_model")
+  load('yeast_open_mod.RData')
+  setwd("~/GitHub/PathwayMining/")
+  sybil_yeast <- yeast_open_mod
+  yeast_falcon_model <- GRB_generate_falcon_model(sybil_yeast)
+  return(yeast_falcon_model)
+}
+
 GRB_mutans_model <- function(){
 
   #setwd("~/GitHub/PathwayMining/data/mutans_model")
@@ -74,6 +83,12 @@ GRB_mutans_model <- function(){
   return(mutans)
 }
 
+GRB_mutans_falcon_model <- function(){
+  load('data/mutans_model/mutans_model.RData')
+  sybil_mutans <- mutans
+  mutans_falcon_model <- GRB_generate_falcon_model(sybil_mutans)
+  return(mutans_falcon_model)
+}
 
 GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set_list = c()){
   sybil_falcon_model <- generate_falcon_model(sybil_model, r0_gene_set, r0_rxn_set_list)
