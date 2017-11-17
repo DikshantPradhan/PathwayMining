@@ -5,22 +5,23 @@ source('~/GitHub/PathwayMining/model_tools.R')
 source('~/GitHub/PathwayMining/set_tools.R')
 source('~/GitHub/PathwayMining/raptor_coupling.R')
 source('~/GitHub/PathwayMining/grb_tools.R')
-# source('~/GitHub/PathwayMining/load_mod.R')
-
+source('~/GitHub/PathwayMining/load_mod.R')
+source('~/GitHub/PathwayMining/falcon_tools.R')
 
 ptm <- proc.time()
 
 # # test composition of set_lists (make sure that blocking any reaction in an og_set results in the same r1 set)
 
-ecoli <- GRB_ecoli_model()
+ecoli <- GRB_ecoli_falcon_model()
 n <- ecoli$get_sizes()$NumVars
 vars <- ecoli$get_names()$VarName
 
-reaction_indexes <- c(1:90)
+reaction_indexes <- c()
+reaction_indexes <- grep('Ex_a', vars)
 
-ecoli_og_set_list <- GRB_generate_set_list(ecoli, reaction_indexes = reaction_indexes)
+ecoli_falcon_og_set_list <- GRB_generate_set_list(ecoli, reaction_indexes = reaction_indexes)
 
-ecoli <- GRB_ecoli_model()
+ecoli <- GRB_ecoli_falcon_model()
 ecoli_set_lists <- GRB_generate_set_lists(ecoli, ecoli_og_set_list, 1:n, reaction_indexes)
 
 ecoli_composition_set_full <- return_composition_sets(ecoli_og_set_list, ecoli_set_lists, ecoli)

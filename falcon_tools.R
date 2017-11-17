@@ -131,7 +131,7 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
         model <- addReact(model, paste(rxn_activity, 'fwd conversion', identifier, sep = ' '), met = met_list,
                           Scoef = c(unlist(rep(-1, length(new_mets))), -1), lb = 0, ub = 1000, reversible = FALSE)
         model <- addReact(model, paste(rxn_activity, 'rev conversion', identifier, sep = ' '), met = met_list,
-                          Scoef = c(unlist(rep(-1, length(new_mets))), 1), lb = 0, ub = 1000, reversible = FALSE)
+                          Scoef = c(unlist(rep(-1, length(new_mets))), 1), lb = -1000, ub = 0, reversible = FALSE)
       }
       else {
         model <- addReact(model, paste(rxn_activity, 'conversion', identifier, sep = ' '), met = met_list,

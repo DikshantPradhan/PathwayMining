@@ -18,6 +18,12 @@ GRB_ecoli_model <- function(){
   return(ecoli)
 }
 
+GRB_ecoli_falcon_model <- function(){
+  sybil_ecoli <- get_ecoli_model()
+  ecoli_falcon_model <- GRB_generate_falcon_model(sybil_ecoli)
+  return(ecoli_falcon_model)
+}
+
 GRB_yeast_model <- function(){
 
   setwd("~/GitHub/PathwayMining/data/yeast_model")
@@ -80,48 +86,87 @@ GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set
 
   split_fwd_rxns <- vars[grep('fwd', vars)]
   split_rev_rxns <- vars[grep('rev', vars)]
-  #print(split_rxns)
+  #print(split_fwd_rxns)
   #conv_num <- sapply(split_rxns, function(x) strsplit(x, ' |_')[[1]][5])
   #dir <- sapply(split_rxns, function(x) strsplit(x, ' |_')[[1]][3])
-  #split_rxns <- sapply(split_rxns, function(x) strsplit(x, ' |_')[[1]][2])
-  #split_rxns <- unique(split_rxns)
 
-  print(split_fwd_rxns)
-  print(split_rev_rxns)
-  #print(conv_num)
-  #print(dir)
+  split_rxns <- sapply(split_fwd_rxns, function(x) strsplit(x, ' ')[[1]][1])
+  split_rxns <- unique(split_rxns)
 
-  #print(grb_falcon_model)
+  #print(split_rxns)
+
   if (length(split_fwd_rxns) != length(split_rev_rxns)){
     print('fed rev matchup error')
     return()
   }
 
+  for (rxn in split_rxns){
+    #a_rxn <- paste('a', rxn, sep = '_')
+    I <- paste('I', rxn, sep = '_')
+    .Call("GRB_addvar", grb_falcon_model$exptr, 0L, integer(0), numeric(0), 1.0, 0.0, 1.0, 'B', I)
+  }
+
+  .Call("GRB_updatemodel", grb_falcon_model$exptr)
+  vars <- grb_falcon_model$get_names()$VarName
+  n <- grb_falcon_model$get_sizes()$NumVars
+
   # add bounds on split conversion reactions (gene -> activity_[rxn])
-  for (i in 1:length(split_fed_rxns)){
+  for (i in 1:length(split_fwd_rxns)){
     fwd <- split_fwd_rxns[i]
     rev <- split_rev_rxns[i]
 
     # get bounds (care about fwd_ub & rev_lb)
-    fwd_ub <- grb_falcon_model$getattr("UB")[fwd]
-    fwd_lb <- grb_falcon_model$getattr("LB")[fwd]
-    rev_ub <- grb_falcon_model$getattr("UB")[rev]
-    rev_lb <- grb_falcon_model$getattr("LB")[rev]
+    fwd_ub <- grb_falcon_model$getattr("UB")[[fwd]]
+    fwd_lb <- grb_falcon_model$getattr("LB")[[fwd]]
+    rev_ub <- grb_falcon_model$getattr("UB")[[rev]]
+    rev_lb <- grb_falcon_model$getattr("LB")[[rev]]
 
     a_rxn <- strsplit(fwd, ' ')[[1]][1]
     I <- paste('I', a_rxn, sep = '_')
+    i_idx <- which(vars == I)
+    fwd_idx <- which(vars == fwd)
+    rev_idx <- which(vars == rev)
 
-    #grb_falcon_model$addvar(name = I, vtype = 'B') #??? not sure how to add binary constraint
+    #print(paste(fwd, ':'))
+    #print(i_idx)
+    #print(fwd_idx)
+    #print(rev_idx)
+
+    #print(paste(fwd, fwd_ub, fwd_lb, rev, rev_ub, rev_lb, I))
+    fwd_vec <- c(fwd_ub, -1) #c(3.2, 1)
+    rev_vec <- c(-1*rev_lb, -1) #c(3.2, 1)
+    fwd_idxs <- c(i_idx, which(vars == fwd))
+    rev_idxs <- c(i_idx, which(vars == rev))
+
+    fwd_name <- paste(fwd, 'I', sep = ' ')
+    rev_name <- paste(rev, 'I', sep = ' ')
+
+    #print(fwd_vec)
+    #print(rev_vec)
+    #print(fwd_idxs)
+    #print(rev_idxs)
+
+    .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(fwd_idxs), fwd_vec, ">=", 0.0,
+      fwd_name)
+    .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(rev_idxs), rev_vec, "<=", (-1*rev_lb),
+      rev_name)
+    .Call("GRB_updatemodel", grb_falcon_model$exptr)
     #grb_falcon_model$addconstr(paste(fwd, '*', I, sep = ''),
-        #sense="<=", rhs= fwd_ub, name = paste(a_rxn, 'fwd', sep = '_')) # bound on fwd conversion
+    #    sense="<=", rhs= fwd_ub, name = paste(a_rxn, 'fwd', sep = '_')) # bound on fwd conversion
     #grb_falcon_model$addconstr(paste(rev, '*(1 - ', I, ')',  sep = ''),
-        #sense=">=", rhs= rev_lb, name = paste(a_rxn, 'rev', sep = '_')) # bound on rev conversion
+    #    sense=">=", rhs= rev_lb, name = paste(a_rxn, 'rev', sep = '_')) # bound on rev conversion
   }
+
+  #vec <- c(3.2,1)
+  #idxs <- c(1,90)
+  #.Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(idxs), vec, ">=", 0.0, "constr1")
+
 
   # for each reaction w fwd and rev components:
   #   add constraint so that only one can run at a time
   #   binary vars I_fwd, I_rev <- {0, 1} and I_fwd + I_rev = 1
 
+  .Call("GRB_updatemodel", grb_falcon_model$exptr)
   return(grb_falcon_model)
 }
 

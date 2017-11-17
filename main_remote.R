@@ -39,3 +39,7 @@ pwl_test <- function(model) {
   print(model$getattr("ObjVal"))
   print(model)
 }
+
+source('grb_tools.R')
+ecoli_falcon_model <- GRB_generate_falcon_model(sybil_ecoli)
+print(ecoli_falcon_model)
