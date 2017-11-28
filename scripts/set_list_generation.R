@@ -12,95 +12,194 @@ ptm <- proc.time()
 
 # # test composition of set_lists (make sure that blocking any reaction in an og_set results in the same r1 set)
 
-ecoli <- GRB_ecoli_falcon_model()
-n <- ecoli$get_sizes()$NumVars
-vars <- ecoli$get_names()$VarName
+## MUTANS MODEL ~ 7 HOURS
+
+mutans_falcon <- GRB_mutans_falcon_model()
+n <- mutans_falcon$get_sizes()$NumVars
+vars <- mutans_falcon$get_names()$VarName
 
 reaction_indexes <- c()
 reaction_indexes <- grep('Ex_a', vars)
 
-ecoli_falcon_og_set_list <- GRB_generate_set_list(ecoli, reaction_indexes = reaction_indexes)
+print(paste('num genes:', length(reaction_indexes)))
 
-ecoli <- GRB_ecoli_falcon_model()
-ecoli_set_lists <- GRB_generate_set_lists(ecoli, ecoli_og_set_list, 1:n, reaction_indexes)
+mutans_falcon_og_set_list <- GRB_generate_set_list(mutans_falcon, reaction_indexes = reaction_indexes)
 
-ecoli_composition_set_full <- return_composition_sets(ecoli_og_set_list, ecoli_set_lists, ecoli)
+mutans_falcon <- GRB_mutans_falcon_model()
+mutans_falcon_set_lists <- GRB_generate_set_lists(mutans_falcon, mutans_falcon_og_set_list, 1:n, reaction_indexes)
 
-ecoli_composition_set <- ecoli_composition_set_full$composition
+mutans_falcon_composition_set_full <- return_composition_sets(mutans_falcon_og_set_list, mutans_falcon_set_lists, mutans_falcon)
+
+mutans_falcon_composition_set <- mutans_falcon_composition_set_full$composition
 
 print('composition error check')
 
 # check for errors in compositions of r1 sets (intermediate) (each blockage within the same set should have the same effects)
-for (i in 1:length(ecoli_og_set_list)){ # print sets joined by each deletion
-  #print(ecoli_og_set_list[[i]])
-  if (length(ecoli_og_set_list[[i]]) > 1){
-    for (j in 1:(length(ecoli_og_set_list[[i]])-1)){
-      rxn1 <- get_rxn_idx(vars, ecoli_og_set_list[[i]][[j]])
-      rxn2 <- get_rxn_idx(vars, ecoli_og_set_list[[i]][[j+1]])
+for (i in 1:length(mutans_falcon_og_set_list)){ # print sets joined by each deletion
+  #print(mutans_falcon_og_set_list[[i]])
+  if (length(mutans_falcon_og_set_list[[i]]) > 1){
+    for (j in 1:(length(mutans_falcon_og_set_list[[i]])-1)){
+      rxn1 <- get_rxn_idx(vars, mutans_falcon_og_set_list[[i]][[j]])
+      rxn2 <- get_rxn_idx(vars, mutans_falcon_og_set_list[[i]][[j+1]])
       #print(c(rxn1, rxn2))
-      #print(paste(ecoli_composition_set[[rxn1]], ecoli_composition_set[[rxn2]]))
-      if (rxn1 > length(ecoli_composition_set) | rxn2 > length(ecoli_composition_set)){next}
+      #print(paste(mutans_falcon_composition_set[[rxn1]], mutans_falcon_composition_set[[rxn2]]))
+      if (rxn1 > length(mutans_falcon_composition_set) | rxn2 > length(mutans_falcon_composition_set)){next}
 
-      if (length(ecoli_composition_set[[rxn1]]) != length(ecoli_composition_set[[rxn2]])){
+      if (length(mutans_falcon_composition_set[[rxn1]]) != length(mutans_falcon_composition_set[[rxn2]])){
         print("composition error")
-        print(c(ecoli_og_set_list[[i]][[j]], ";", ecoli_og_set_list[[i]][[j+1]]))
-        print(c(ecoli_composition_set[[rxn1]], ";", ecoli_composition_set[[rxn2]]))
+        print(c(mutans_falcon_og_set_list[[i]][[j]], ";", mutans_falcon_og_set_list[[i]][[j+1]]))
+        print(c(mutans_falcon_composition_set[[rxn1]], ";", mutans_falcon_composition_set[[rxn2]]))
       }
       #print(j)
-      #print(ecoli_composition_set[[GRB_get_rxn_idx(ecoli, j)]])
+      #print(mutans_falcon_composition_set[[GRB_get_rxn_idx(mutans_falcon, j)]])
     }
   }
 }
 
-print(ecoli_composition_set_full$error)
+print(mutans_falcon_composition_set_full$error)
 
 print('deletion error check')
 
-ecoli_deletion_list <- check_set_list_for_deletion(vars, ecoli_set_lists)
+mutans_falcon_deletion_list <- check_set_list_for_deletion(vars, mutans_falcon_set_lists)
 
 # check for inconsistencies in deletions of sets (each blockage within the same set should have the same effects)
-for (i in 1:length(ecoli_og_set_list)){ # print sets joined by each deletion
-  #print(ecoli_og_set_list[[i]])
-  if (length(ecoli_og_set_list[[i]]) > 1){
-    for (j in 1:(length(ecoli_og_set_list[[i]])-1)){
-      rxn1 <- get_rxn_idx(vars, ecoli_og_set_list[[i]][[j]])
-      rxn2 <- get_rxn_idx(vars, ecoli_og_set_list[[i]][[j+1]])
+for (i in 1:length(mutans_falcon_og_set_list)){ # print sets joined by each deletion
+  #print(mutans_falcon_og_set_list[[i]])
+  if (length(mutans_falcon_og_set_list[[i]]) > 1){
+    for (j in 1:(length(mutans_falcon_og_set_list[[i]])-1)){
+      rxn1 <- get_rxn_idx(vars, mutans_falcon_og_set_list[[i]][[j]])
+      rxn2 <- get_rxn_idx(vars, mutans_falcon_og_set_list[[i]][[j+1]])
       #print(c(rxn1, rxn2))
-      if (length(ecoli_deletion_list[[rxn1]]) != length(ecoli_deletion_list[[rxn2]])){
+      if (length(mutans_falcon_deletion_list[[rxn1]]) != length(mutans_falcon_deletion_list[[rxn2]])){
         print("deletion error")
-        print(c(ecoli_og_set_list[[i]][[j]], ";", ecoli_og_set_list[[i]][[j+1]]))
-        print(c(ecoli_deletion_list[[rxn1]], ";", ecoli_deletion_list[[rxn2]]))
+        print(c(mutans_falcon_og_set_list[[i]][[j]], ";", mutans_falcon_og_set_list[[i]][[j+1]]))
+        print(c(mutans_falcon_deletion_list[[rxn1]], ";", mutans_falcon_deletion_list[[rxn2]]))
       }
       #print(j)
-      #print(ecoli_composition_set[[GRB_get_rxn_idx(ecoli, j)]])
+      #print(mutans_falcon_composition_set[[GRB_get_rxn_idx(mutans_falcon, j)]])
     }
   }
 }
 
-save(ecoli_og_set_list, ecoli_set_lists, ecoli_composition_set_full, ecoli_deletion_list, file = "ecoli_run_data.RData")
+save(mutans_falcon_og_set_list, mutans_falcon_set_lists, mutans_falcon_composition_set_full, mutans_falcon_deletion_list, file = "mutans_falcon_run_data.RData")
 
 proc.time() - ptm
 
 print('specific error')
 
-ct <- 0
-blocked <- c()
-for (i in 1:length(ecoli_composition_set_full$error)){
-  if (nchar(ecoli_composition_set_full$error[i]) > 8){
-    ct <- ct + 1
-    #blocked <- c(blocked, ecoli_vars[i])
-    print(ecoli_composition_set_full$error[i])
-    #print(ecoli_composition_set_full$error[i])
-  }
-}
+#ct <- 0
+#blocked <- c()
+#for (i in 1:length(mutans_composition_set_full$error)){
+#  if (nchar(mutans_composition_set_full$error[i]) > 8){
+#    ct <- ct + 1
+#    #blocked <- c(blocked, mutans_vars[i])
+#    print(mutans_composition_set_full$error[i])
+#    #print(mutans_composition_set_full$error[i])
+#  }
+#}
 
 print(ct)
 
-ecoli_r0_pairs <- return_pairs_from_set_list(ecoli_og_set_list)
-ecoli_new_r1_pairs <- new_pairs_from_composition(ecoli_og_set_list, ecoli_composition_set)
-ecoli_r1_pairs <- append_pair_lists(ecoli_r0_pairs, ecoli_new_r1_pairs)
+mutans_falcon_r0_pairs <- return_pairs_from_set_list(mutans_falcon_og_set_list)
+mutans_falcon_new_r1_pairs <- new_pairs_from_composition(mutans_falcon_og_set_list, mutans_falcon_composition_set)
+mutans_falcon_r1_pairs <- append_pair_lists(mutans_falcon_r0_pairs, mutans_falcon_new_r1_pairs)
 
-ecoli_r0_set_list <- ecoli_og_set_list
-ecoli_r1_set_list <- get_list_of_sets(ecoli_r1_pairs)
+mutans_falcon_r0_set_list <- mutans_falcon_og_set_list
+mutans_falcon_r1_set_list <- get_list_of_sets(mutans_falcon_r1_pairs)
+
+## YEAST MODEL ~ 7 DAYS
+
+yeast_falcon <- GRB_yeast_falcon_model()
+n <- yeast_falcon$get_sizes()$NumVars
+vars <- yeast_falcon$get_names()$VarName
+
+reaction_indexes <- c()
+reaction_indexes <- grep('Ex_a', vars)
+
+print(paste('num genes:', length(reaction_indexes)))
+
+yeast_falcon_og_set_list <- GRB_generate_set_list(yeast_falcon, reaction_indexes = reaction_indexes)
+
+yeast_falcon <- GRB_yeast_falcon_model()
+yeast_falcon_set_lists <- GRB_generate_set_lists(yeast_falcon, yeast_falcon_og_set_list, 1:n, reaction_indexes)
+
+yeast_falcon_composition_set_full <- return_composition_sets(yeast_falcon_og_set_list, yeast_falcon_set_lists, yeast_falcon)
+
+yeast_falcon_composition_set <- yeast_falcon_composition_set_full$composition
+
+print('composition error check')
+
+# check for errors in compositions of r1 sets (intermediate) (each blockage within the same set should have the same effects)
+for (i in 1:length(yeast_falcon_og_set_list)){ # print sets joined by each deletion
+  #print(yeast_falcon_og_set_list[[i]])
+  if (length(yeast_falcon_og_set_list[[i]]) > 1){
+    for (j in 1:(length(yeast_falcon_og_set_list[[i]])-1)){
+      rxn1 <- get_rxn_idx(vars, yeast_falcon_og_set_list[[i]][[j]])
+      rxn2 <- get_rxn_idx(vars, yeast_falcon_og_set_list[[i]][[j+1]])
+      #print(c(rxn1, rxn2))
+      #print(paste(yeast_falcon_composition_set[[rxn1]], yeast_falcon_composition_set[[rxn2]]))
+      if (rxn1 > length(yeast_falcon_composition_set) | rxn2 > length(yeast_falcon_composition_set)){next}
+
+      if (length(yeast_falcon_composition_set[[rxn1]]) != length(yeast_falcon_composition_set[[rxn2]])){
+        print("composition error")
+        print(c(yeast_falcon_og_set_list[[i]][[j]], ";", yeast_falcon_og_set_list[[i]][[j+1]]))
+        print(c(yeast_falcon_composition_set[[rxn1]], ";", yeast_falcon_composition_set[[rxn2]]))
+      }
+      #print(j)
+      #print(yeast_falcon_composition_set[[GRB_get_rxn_idx(yeast_falcon, j)]])
+    }
+  }
+}
+
+print(yeast_falcon_composition_set_full$error)
+
+print('deletion error check')
+
+yeast_falcon_deletion_list <- check_set_list_for_deletion(vars, yeast_falcon_set_lists)
+
+# check for inconsistencies in deletions of sets (each blockage within the same set should have the same effects)
+for (i in 1:length(yeast_falcon_og_set_list)){ # print sets joined by each deletion
+  #print(yeast_falcon_og_set_list[[i]])
+  if (length(yeast_falcon_og_set_list[[i]]) > 1){
+    for (j in 1:(length(yeast_falcon_og_set_list[[i]])-1)){
+      rxn1 <- get_rxn_idx(vars, yeast_falcon_og_set_list[[i]][[j]])
+      rxn2 <- get_rxn_idx(vars, yeast_falcon_og_set_list[[i]][[j+1]])
+      #print(c(rxn1, rxn2))
+      if (length(yeast_falcon_deletion_list[[rxn1]]) != length(yeast_falcon_deletion_list[[rxn2]])){
+        print("deletion error")
+        print(c(yeast_falcon_og_set_list[[i]][[j]], ";", yeast_falcon_og_set_list[[i]][[j+1]]))
+        print(c(yeast_falcon_deletion_list[[rxn1]], ";", yeast_falcon_deletion_list[[rxn2]]))
+      }
+      #print(j)
+      #print(yeast_falcon_composition_set[[GRB_get_rxn_idx(yeast_falcon, j)]])
+    }
+  }
+}
+
+save(yeast_falcon_og_set_list, yeast_falcon_set_lists, yeast_falcon_composition_set_full, yeast_falcon_deletion_list, file = "yeast_falcon_run_data.RData")
+
+proc.time() - ptm
+
+print('specific error')
+
+#ct <- 0
+#blocked <- c()
+#for (i in 1:length(yeast_composition_set_full$error)){
+#  if (nchar(yeast_composition_set_full$error[i]) > 8){
+#    ct <- ct + 1
+#    #blocked <- c(blocked, yeast_vars[i])
+#    print(yeast_composition_set_full$error[i])
+#    #print(yeast_composition_set_full$error[i])
+#  }
+#}
+
+print(ct)
+
+yeast_falcon_r0_pairs <- return_pairs_from_set_list(yeast_falcon_og_set_list)
+yeast_falcon_new_r1_pairs <- new_pairs_from_composition(yeast_falcon_og_set_list, yeast_falcon_composition_set)
+yeast_falcon_r1_pairs <- append_pair_lists(yeast_falcon_r0_pairs, yeast_falcon_new_r1_pairs)
+
+yeast_falcon_r0_set_list <- yeast_falcon_og_set_list
+yeast_falcon_r1_set_list <- get_list_of_sets(yeast_falcon_r1_pairs)
 
 print('FIN')
