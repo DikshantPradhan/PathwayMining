@@ -12,7 +12,7 @@ ptm <- proc.time()
 
 # # test composition of set_lists (make sure that blocking any reaction in an og_set results in the same r1 set)
 
-## MUTANS MODEL ~ 7 HOURS
+## MUTANS MODEL ~ 7 DAYS
 
 mutans_falcon <- GRB_mutans_falcon_model()
 n <- mutans_falcon$get_sizes()$NumVars
