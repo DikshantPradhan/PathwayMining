@@ -6,12 +6,20 @@ source('~/GitHub/PathwayMining/set_tools.R')
 # source('~/GitHub/PathwayMining/raptor_coupling.R')
 source('~/GitHub/PathwayMining/grb_tools.R')
 source('~/GitHub/PathwayMining/gene_tools.R')
+source('~/GitHub/PathwayMining/falcon_tools.R')
 # source('~/GitHub/PathwayMining/load_mod.R')
 
-## MAIN ENRICHMENT
+## MAIN ENRICHMENT (making edits for gene set lislt from falcon model)
 
-r0_rxn_dist <- get_size_distribution(r0_set_list)
-r1_rxn_dist <- get_size_distribution(r1_set_list)
+r0_gene_set_list <- clean_rxn_names_in_set(yeast_falcon_r0_set_list)
+r1_gene_set_list <- clean_rxn_names_in_set(yeast_falcon_r1_set_list)
+
+all_gene_pairs <- return_pairs_from_set(unlist(r0_gene_set_list))
+
+#load gi matrix
+
+# r0_rxn_dist <- get_size_distribution(r0_set_list)
+# r1_rxn_dist <- get_size_distribution(r1_set_list)
 r0_gene_dist <- get_size_distribution(r0_gene_set_list)
 r1_gene_dist <- get_size_distribution(r1_gene_set_list)
 
@@ -139,9 +147,9 @@ print(paste(sd(r1_sampled_pair_ct[,1]), ', ', sd(r1_sampled_pair_ct[,2]), ', ', 
 
 ## ALTERNATE SAMPLING FOR COMPARISON (RANDOM BASED ON COMPOSITION AND SIZES OF SETS BEING COMPOSED)
 
-r1_composition <- find_set_list_composition(r1_set_list, r0_set_list)
-r1_size_composition <- get_composition_size_distribution(r0_set_list, r1_composition)
-r0_size_class <- classify_sets_by_size(r0_set_list)
+r1_composition <- find_set_list_composition(r1_gene_set_list, r0_gene_set_list) # _set_list -> _gene_set_list
+r1_size_composition <- get_composition_size_distribution(r0_gene_set_list, r1_composition) # _set_list -> _gene_set_list
+r0_size_class <- classify_sets_by_size(r0_gene_set_list)
 
 r1_rxn_samples <- sample_multiple_sets_to_composition(1000, r0_size_class, r1_size_composition)
 
