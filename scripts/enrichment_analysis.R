@@ -51,6 +51,10 @@ e_matrix_05 <- matrix(as.numeric(abs(y_open_gi_matrix) >= 0.5), nrow = nrow(y_op
 rownames(e_matrix_05) <- rownames(y_open_gi_matrix)
 colnames(e_matrix_05) <- colnames(y_open_gi_matrix)
 
+e_matrix_07 <- matrix(as.numeric(abs(y_open_gi_matrix) >= 0.7), nrow = nrow(y_open_gi_matrix), ncol = ncol(y_open_gi_matrix))
+rownames(e_matrix_07) <- rownames(y_open_gi_matrix)
+colnames(e_matrix_07) <- colnames(y_open_gi_matrix)
+
 save(e_matrix_01, e_matrix_02, e_matrix_03, e_matrix_04, e_matrix_05, file = 'remote_2.RData')
 
 r0_gi_01 <- get_num_interactions(r0_gene_set_list, e_matrix_01)

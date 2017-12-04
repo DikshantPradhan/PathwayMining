@@ -1,45 +1,19 @@
-test1 <- function(model) {
-  #env <- GRBenv$new()
-  #model <- GRBmodel$new(env, name="testModel")
-  .Call("GRB_addvar", model$exptr, 0L, integer(0), numeric(0), 1.0, 0.0, 1.0, 'B', "var1")
-  .Call("GRB_addvar", model$exptr, 0L, integer(0), numeric(0), 1.0, 0.0, 1.0, 'B', "var2")
-  .Call("GRB_updatemodel", model$exptr)
-  .Call("GRB_getstrattrarray", model$exptr, "VarName", 0L, 2L)
-  .Call("GRB_addconstr", model$exptr, 2L, as.integer(0:1), c(3.2, -1.4), ">", 0.0, "constr1")
-  .Call("GRB_addvar", model$exptr, 0L, integer(0), numeric(0), 1.0, 0.0, 1.0, 'B', "var3")
-  .Call("GRB_addgenconstrMax", model$exptr, "maxcon1", 2L, 2L, as.integer(0:1), 0.0)
-  .Call("GRB_getattrinfo", model$exptr, "ModelName")
-  .Call("GRB_write", model$exptr, "/Users/jensen/Desktop/model.lp")
-
-  return(model)
+for (rxn_idx in 1:length(yeast_open_mod@react_id)){
+  if (!(yeast_open_mod@react_id[rxn_idx] %in% unlist(yeast_falcon_test))){next}
+  for (gene in yeast_open_mod@genes[[rxn_idx]]){
+    if (gene == ''){next}
+    if (!(gene %in% unlist(yeast_falcon_test))){
+      print(paste('error', rxn_idx, gene))
+    }
+  }
 }
 
-pwl_test <- function(model) {
-  #dyn.load("src/grb.so")
-
-  #env <- GRBenv$new()
-  #model <- GRBmodel$new(env, name="piecewise")
-  model$addvars(c("x", "y", "z"), lb=0.0, ub=1.0, vtype='C', vval = 0, obj = 0)
-
-  model$setattr("Obj", c(y=-1.0))
-  npts = 101
-  ptu = (0:(npts-1)) / (npts-1)
-  ptf = exp(-ptu)
-  ptg = 2*ptu^2 - 4*ptu
-  model$setpwlobj("x", ptu, ptf)
-  model$setpwlobj("z", ptu, ptg)
-
-  model$addconstr(values=c(x=1.0, y=2.0, z=3.0), sense="<", rhs=4.0, name="c0")
-  model$addconstr(values=c(x=1.0, y=1.0), sense=">", rhs=1.0, name="c1")
-
-  model$optimize()
-
-  print(model$getattr("IsMIP"))
-  print(model$getattr("X"))
-  print(model$getattr("ObjVal"))
-  print(model)
+for (rxn_idx in 1:length(mutans@react_id)){
+  if (!(mutans@react_id[rxn_idx] %in% unlist(mutans_falcon_test))){next}
+  for (gene in mutans@genes[[rxn_idx]]){
+    if (gene == ''){next}
+    if (!(gene %in% unlist(mutans_falcon_test))){
+      print(paste('error', rxn_idx, mutans@react_id[rxn_idx], gene))
+    }
+  }
 }
-
-source('grb_tools.R')
-ecoli_falcon_model <- GRB_generate_falcon_model(sybil_ecoli)
-print(ecoli_falcon_model)

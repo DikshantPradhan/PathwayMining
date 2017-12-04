@@ -156,7 +156,7 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
 
   # loyal genes and reactions
 
-  print('RXN EXCLUSIVITY')
+  #print('RXN EXCLUSIVITY')
 
   rxn_exclusive_genes <- which(gene_rxn_promiscuity == 1)
   loyal_rxns <- c()
@@ -167,8 +167,8 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
   }
   loyal_rxn_idxs <- unique(loyal_rxns)
 
-  print(paste('loyal rxns:', length(loyal_rxn_idxs)))
-  print(paste('rxn exclusive genes:', length(rxn_exclusive_genes)))
+  #print(paste('loyal rxns:', length(loyal_rxn_idxs)))
+  #print(paste('rxn exclusive genes:', length(rxn_exclusive_genes)))
 
   # all reactions which are comprised of non-promiscuous genes
   for (i in loyal_rxn_idxs){
@@ -197,8 +197,8 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
   remaining_genes <- model@allGenes[-c(which(marked_genes == TRUE))]
   remaining_rxns <- og_react_id[-c(which(marked_rxns == TRUE))]
 
-  print(paste('remaining reactions:', length(which(marked_rxns == FALSE))))
-  print(paste('remaining genes:', length(which(marked_genes == FALSE))))
+  #print(paste('remaining reactions:', length(which(marked_rxns == FALSE))))
+  #print(paste('remaining genes:', length(which(marked_genes == FALSE))))
 
   # IF NO GENE SET INFORMATION, THEN SKIP THIS
   if (gene_set_bool){
@@ -228,10 +228,10 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
 
   # genes exclusive to a single set, but not a single gene
 
-  print('SET EXCLUSIVITY')
+  #print('SET EXCLUSIVITY')
 
-  print(paste('loyal sets:', length(loyal_set_idxs)))
-  print(paste('set exclusive genes:', length(set_exclusive_genes)))
+  #print(paste('loyal sets:', length(loyal_set_idxs)))
+  #print(paste('set exclusive genes:', length(set_exclusive_genes)))
 
   for (i in loyal_set_idxs){
     for (j in rxn_sets[[i]]){
@@ -255,8 +255,8 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
     }
   }
 
-  print(paste('remaining reactions:', length(which(marked_rxns == FALSE))))
-  print(paste('remaining genes:', length(which(marked_genes == FALSE))))
+  #print(paste('remaining reactions:', length(which(marked_rxns == FALSE))))
+  #print(paste('remaining genes:', length(which(marked_genes == FALSE))))
 
   }
 
@@ -285,9 +285,9 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
     marked_rxns[rxn_idx] <- TRUE
   }
 
-  print('FINAL COUNT')
-  print(paste('remaining reactions:', length(which(marked_rxns == FALSE))))
-  print(paste('remaining genes:', length(which(marked_genes == FALSE))))
+  #print('FINAL COUNT')
+  #print(paste('remaining reactions:', length(which(marked_rxns == FALSE))))
+  #print(paste('remaining genes:', length(which(marked_genes == FALSE))))
 
   # print(marked_genes)
 
@@ -433,7 +433,10 @@ clean_rxn_names_in_set <- function(set_list){
 
   for (i in 1:length(set_list)){
     for (j in 1:length(set_list[[i]])){
-      set_list[[i]][j] <- clean_ex_a(set_list[[i]][j])
+      new_name <- clean_ex_a(set_list[[i]][j])
+      if (!is.na(new_name)){
+        set_list[[i]][j] <- clean_ex_a(set_list[[i]][j])
+      }
     }
   }
 
