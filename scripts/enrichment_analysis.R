@@ -9,7 +9,7 @@ source('~/GitHub/PathwayMining/gene_tools.R')
 source('~/GitHub/PathwayMining/falcon_tools.R')
 # source('~/GitHub/PathwayMining/load_mod.R')
 
-## MAIN ENRICHMENT (making edits for gene set lislt from falcon model)
+## MAIN ENRICHMENT (making edits for gene set list from falcon model)
 
 r0_gene_set_list <- clean_rxn_names_in_set(yeast_falcon_r0_set_list)
 r1_gene_set_list <- clean_rxn_names_in_set(yeast_falcon_r1_set_list)
@@ -17,20 +17,23 @@ r1_gene_set_list <- clean_rxn_names_in_set(yeast_falcon_r1_set_list)
 all_gene_pairs <- return_pairs_from_set(unlist(r0_gene_set_list))
 
 #load gi matrix
+load('gi_matrix.RData')
 
 # r0_rxn_dist <- get_size_distribution(r0_set_list)
 # r1_rxn_dist <- get_size_distribution(r1_set_list)
 r0_gene_dist <- get_size_distribution(r0_gene_set_list)
 r1_gene_dist <- get_size_distribution(r1_gene_set_list)
 
-r0_recurring_genes <- find_recurring_genes_in_set_list(r0_gene_set_list)
-r1_recurring_genes <- find_recurring_genes_in_set_list(r1_gene_set_list)
+# r0_recurring_genes <- find_recurring_genes_in_set_list(r0_gene_set_list)
+# r1_recurring_genes <- find_recurring_genes_in_set_list(r1_gene_set_list)
 
 e_thresholds <- c(0.1, 0.2, 0.3, 0.4, 0.5)
 
 gene_pairs_00 <- check_for_enrichment(all_gene_pairs, gi_matrix$e, 0.0)
 
-y_open_gi_matrix <- build_gi_matrix_from_pairs(gene_pairs_00)
+y_open_gi_matrix <- build_gi_matrix_from_pairs(unlist(r0_gene_set_list), gene_pairs_00)
+
+save(gene_pairs_00, y_open_gi_matrix, file = 'remote_1.RData')
 
 e_matrix_01 <- matrix(as.numeric(abs(y_open_gi_matrix) >= 0.1), nrow = nrow(y_open_gi_matrix), ncol = ncol(y_open_gi_matrix))
 rownames(e_matrix_01) <- rownames(y_open_gi_matrix)
@@ -47,6 +50,8 @@ colnames(e_matrix_04) <- colnames(y_open_gi_matrix)
 e_matrix_05 <- matrix(as.numeric(abs(y_open_gi_matrix) >= 0.5), nrow = nrow(y_open_gi_matrix), ncol = ncol(y_open_gi_matrix))
 rownames(e_matrix_05) <- rownames(y_open_gi_matrix)
 colnames(e_matrix_05) <- colnames(y_open_gi_matrix)
+
+save(e_matrix_01, e_matrix_02, e_matrix_03, e_matrix_04, e_matrix_05, file = 'remote_2.RData')
 
 r0_gi_01 <- get_num_interactions(r0_gene_set_list, e_matrix_01)
 r0_gi_02 <- get_num_interactions(r0_gene_set_list, e_matrix_02)
@@ -173,5 +178,9 @@ print(paste(mean(r1_sampled_pair_ct[,1]), ', ', mean(r1_sampled_pair_ct[,2]), ',
 print('R1')
 print(paste(sd(r1_sampled_pair_ct[,1]), ', ', sd(r1_sampled_pair_ct[,2]), ', ', sd(r1_sampled_pair_ct[,3]), ', ', sd(r1_sampled_pair_ct[,4]), ', ', sd(r1_sampled_pair_ct[,5])))
 
+a <- paste(mean(r1_sampled_pair_ct[,1]), ', ', mean(r1_sampled_pair_ct[,2]), ', ', mean(r1_sampled_pair_ct[,3]), ', ', mean(r1_sampled_pair_ct[,4]), ', ', mean(r1_sampled_pair_ct[,5]))
+b <- paste(sd(r1_sampled_pair_ct[,1]), ', ', sd(r1_sampled_pair_ct[,2]), ', ', sd(r1_sampled_pair_ct[,3]), ', ', sd(r1_sampled_pair_ct[,4]), ', ', sd(r1_sampled_pair_ct[,5]))
+
+save(a, b, file = 'remote_3.RData')
 
 print('FIN')
