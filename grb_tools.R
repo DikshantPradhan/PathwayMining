@@ -55,6 +55,10 @@ GRB_yeast_model <- function(){
 GRB_yeast_falcon_model <- function(){
   setwd("~/GitHub/PathwayMining/data/yeast_model")
   load('yeast_open_mod.RData')
+  for (i in 1:length(yeast_open_mod@react_id)){
+    yeast_open_mod@lowbnd[i] <- -1000
+    yeast_open_mod@uppbnd[i] <- 1000
+  }
   setwd("~/GitHub/PathwayMining/")
   sybil_yeast <- yeast_open_mod
   yeast_falcon_model <- GRB_generate_falcon_model(sybil_yeast)
@@ -85,12 +89,17 @@ GRB_mutans_model <- function(){
 
 GRB_mutans_falcon_model <- function(){
   load('data/mutans_model/mutans_model.RData')
+  for (i in 1:length(mutans@react_id)){
+    mutans@lowbnd[i] <- -1000
+    mutans@uppbnd[i] <- 1000
+  }
   sybil_mutans <- mutans
   mutans_falcon_model <- GRB_generate_falcon_model(sybil_mutans)
   return(mutans_falcon_model)
 }
 
 GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set_list = c()){
+
   sybil_falcon_model <- generate_falcon_model(sybil_model, r0_gene_set, r0_rxn_set_list)
 
   grb_falcon_model <- as_GRBmodel(sybil_falcon_model)
@@ -161,9 +170,20 @@ GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set
     #print(fwd_idxs)
     #print(rev_idxs)
 
-    .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(fwd_idxs), fwd_vec, ">=", 0.0,
+    #print(i)
+    #print(vars[fwd_idxs])
+    #print(paste(vars[fwd_idxs], fwd_vec))
+    #print(fwd_name)
+    #print(vars[rev_idxs])
+    #print(paste(vars[rev_idxs], rev_vec))#print(rev_vec)
+    #print(rev_name)
+    #print(fwd)
+    #print(rev)
+
+    .Call("GRB_updatemodel", grb_falcon_model$exptr)
+    .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(fwd_idxs-1), fwd_vec, ">=", 0.0,
       fwd_name)
-    .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(rev_idxs), rev_vec, "<=", (-1*rev_lb),
+    .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(rev_idxs-1), rev_vec, "<=", (-1*rev_lb),
       rev_name)
     .Call("GRB_updatemodel", grb_falcon_model$exptr)
     #grb_falcon_model$addconstr(paste(fwd, '*', I, sep = ''),

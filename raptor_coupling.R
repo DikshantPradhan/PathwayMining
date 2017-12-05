@@ -129,6 +129,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         model$setattr("Obj", setNames(0.0, vars[i]))
       }
       if (near(global_max[i], 0) & near(global_min[i], 0)){ #(abs(global_max[i]) < tol) & (abs(global_min[i]) < tol)
+        print(paste('blocked:', i))
         blocked[i] <- TRUE
 	      active[i] <- FALSE
         next
@@ -147,7 +148,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
 
     for (idx2 in (idx+1):length(reaction_indexes)) { # (j in (i+1):n) # also keep this in passed in idxs (idx2 in (idx+1):length(reaction_indexes)); j <-  reaction_indexes[idx2]
       j <-  reaction_indexes[idx2]
-
+      #if (j == 137){print('137')}
       # check for fixed or blocked
       if (!active[j] | blocked[j]) next
       # check for uncoupled
