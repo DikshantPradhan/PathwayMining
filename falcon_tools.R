@@ -57,10 +57,12 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
     exch <- findExchReact(model)
 
     # metabolites of existing reaction
-    old_met_idxs <- which(model@S[, rxn_idx] != 0)
-    old_met_idxs <- old_met_idxs[which(old_met_idxs <= og_dim[1])]
+    old_met_idxs <- which(model@S[(1:og_dim[1]), rxn_idx] != 0)
+    # old_met_idxs <- old_met_idxs[which(old_met_idxs <= og_dim[1])]
     old_met_list <- og_met_id[old_met_idxs]
     old_met_coeff <- model@S[old_met_idxs, rxn_idx]
+    
+    print(old_met_idxs)
 
     # add exchange reactions, if needed
     if (addExch){
@@ -269,7 +271,9 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
     gpr_rule <- model@gprRules[rxn_idx]
     gpr_paths <- find_gpr_paths(gpr_rule)
     if (nchar(gpr_paths[1]) == 0){next}
-
+    
+    print('testing mets')
+    print(which(model@S[(1:og_dim[1]),rxn_idx] != 0))
     model <- or_add(model, gpr_paths, rxn_id, split = TRUE)
 
     # id <- 1
