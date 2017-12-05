@@ -104,6 +104,7 @@ find_gpr_paths <- function(gprRule){
 
   gpr_char <- str_to_char(gprRule)
   len_logical <- which(gpr_char %in% c('&', '|'))
+  # print(gpr_char)
   # print(len_logical)
   # print(extract_logical_from_base(gpr_char))
 
@@ -112,14 +113,30 @@ find_gpr_paths <- function(gprRule){
   }
 
   ast <- capture.output(call_tree(parse(text = gprRule)))
-  gpr_tree <- tree_building(ast, 4)
+  
+  logic_flag <- FALSE
+  i <- 0 #starting idx
+  while (!logic_flag){
+    i <- i + 1
+    if (('&' %in% str_to_char(ast[i])) | ('|' %in% str_to_char(ast[i]))){
+      logic_flag <- TRUE
+    }
+  }
+  
+  # print(i)
+  # 
+  # print(matrix(ast, nrow = length(ast), ncol = 1))
+  gpr_tree <- tree_building(ast, i)
+  # print(gpr_tree)
   paths <- get_paths_from_gpr(gpr_tree)
 
   return(paths)
 }
 
 tree_building <- function(list, index){
-
+  # print('new')
+  # print(index)
+  # print(list)
   chars <- strsplit(list[index], "")[[1]]
   og_depth <- (which(strsplit(list[index], "")[[1]] == "\\")-1)/2
   og_id <- chars[length(chars)]
