@@ -24,6 +24,16 @@ check_sets_for_containing <- function(rxns, set_list){
   return(FALSE)
 }
 
+check_all_sets_for_containing <- function(comparison_sets, target_sets){
+  for (set in comparison_sets){
+    if (!check_sets_for_containing(set, target_sets)){
+      print(set)
+      return(FALSE)
+    }
+  }
+  return(TRUE)
+}
+
 check_set_list_for_containing <- function(rxns, set_lists){
   lists <- c()
 
