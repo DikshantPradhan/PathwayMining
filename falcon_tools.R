@@ -123,7 +123,7 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
 
     # add conversion for path to react_activity
     identifier <- 1
-    for (mets in path_list){
+    for (mets in path_list){ # CHECK THIS FUNCTION IF EVERYTHING BREAKS
       genes <- genes_from_path(mets, rxn_idx)
       new_mets <- paste('a_', genes, sep = '')
       met_list <- c(unlist(new_mets), rxn_activity)
@@ -131,9 +131,9 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
       coeff_list <- c(unlist(rep(-1, length(new_mets))), 1)
       if (split){
         model <- addReact(model, paste(rxn_activity, 'fwd conversion', identifier, sep = ' '), met = met_list,
-                          Scoef = c(unlist(rep(-1, length(new_mets))), -1), lb = 0, ub = 1000, reversible = FALSE)
+                          Scoef = c(unlist(rep(-1, length(new_mets))), 1), lb = 0, ub = 1000, reversible = FALSE)
         model <- addReact(model, paste(rxn_activity, 'rev conversion', identifier, sep = ' '), met = met_list,
-                          Scoef = c(unlist(rep(-1, length(new_mets))), 1), lb = -1000, ub = 0, reversible = FALSE)
+                          Scoef = c(unlist(rep(-1, length(new_mets))), -1), lb = 0, ub = 1000, reversible = FALSE)
       }
       else {
         model <- addReact(model, paste(rxn_activity, 'conversion', identifier, sep = ' '), met = met_list,
