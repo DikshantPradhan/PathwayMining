@@ -83,13 +83,13 @@ GRB_mutans_model <- function(){
 
   #load('mutans_model.RData')
   load('data/mutans_model/mutans_model.RData')
-  for (i in findExchReact(mutans)@react_pos){
-    mutans <- changeBounds(mutans, i, lb = -1000, ub = 1000)
-  }
-  # for (i in 1:length(mutans@react_id)){
-  #   mutans@lowbnd[i] <- -1000
-  #   mutans@uppbnd[i] <- 1000
+  # for (i in findExchReact(mutans)@react_pos){
+  #   mutans <- changeBounds(mutans, i, lb = -1000, ub = 1000)
   # }
+  for (i in 1:length(mutans@react_id)){
+    mutans@lowbnd[i] <- -1000
+    mutans@uppbnd[i] <- 1000
+  }
 
   # setwd("~/GitHub/PathwayMining/")
 
@@ -101,13 +101,13 @@ GRB_mutans_model <- function(){
 
 GRB_mutans_falcon_model <- function(){
   load('data/mutans_model/mutans_model.RData')
-  for (i in findExchReact(mutans)@react_pos){
-    mutans <- changeBounds(mutans, i, lb = -1000, ub = 1000)
-  }
-  # for (i in 1:length(mutans@react_id)){
-  #   mutans@lowbnd[i] <- -1000
-  #   mutans@uppbnd[i] <- 1000
+  # for (i in findExchReact(mutans)@react_pos){
+  #   mutans <- changeBounds(mutans, i, lb = -1000, ub = 1000)
   # }
+  for (i in 1:length(mutans@react_id)){
+    mutans@lowbnd[i] <- -1000
+    mutans@uppbnd[i] <- 1000
+  }
   sybil_mutans <- mutans
   mutans_falcon_model <- GRB_generate_falcon_model(sybil_mutans)
   return(mutans_falcon_model)
