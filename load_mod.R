@@ -160,7 +160,13 @@ get_mutans_model <- function(){
   
   # make sure biomass splpit is implemented
   exch_idxs <- which(mutans_model@S[,477] != 0) # biomass
-  print(paste(mutans_model@met_id[exch_idxs], mutans_model@met_name[exch_idxs]))
+  biom_consumed <- which(mutans_model@S[,477] < 0)
+  biom_produced <- which(mutans_model@S[,477] > 0)
+  # print(paste(mutans_model@met_id[exch_idxs], mutans_model@met_name[exch_idxs]))
+  print('consumed:')
+  print(paste(mutans_model@met_id[biom_consumed], mutans_model@met_name[biom_consumed]))
+  print('produced:')
+  print(paste(mutans_model@met_id[biom_produced], mutans_model@met_name[biom_produced]))
   exch <- findExchReact(mutans_model)
   for (i in exch_idxs){
     if ((mutans_model@met_id[i] %in% exch@met_id) | (paste(mutans_model@met_id[i], '[e]', sep = "") %in% exch@met_id)){
@@ -172,10 +178,21 @@ get_mutans_model <- function(){
       print(generate_exch_rxn(mutans_model, i))
     }
   }
-  
-  for (i in findExchReact(mutans_model)[100:144]@react_pos){
-    mutans_model@uppbnd[i] <- 0
+
+  ex <- findExchReact(mutans_model)
+  for (idx in 100:144){
+    if(ex[idx]@met_id %in% c('C00013', 'C00009', 'C00080', 'C00008', 'C00035')){
+      print('prod')
+      mutans_model@lowbnd[ex[idx]@react_pos] <- 0
+    }
+    #mutans_model@uppbnd[rxn@react_pos] <- 0
+    else{mutans_model@uppbnd[ex[idx]@react_pos] <- 0}
   }
+    
+  # for (i in findExchReact(mutans_model)[100:144]@react_pos){
+  #   else{mutans_model@uppbnd[i] <- 0}
+  # }
+  which(ex@met_id %in% c('C00013', 'C00009', 'C00080', 'C00008', 'C00035'))
   
   print('removing:')
   print(mutans_model@react_name[477])
