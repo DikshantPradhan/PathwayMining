@@ -176,17 +176,27 @@ get_mutans_model <- function(){
   for (i in exch_idxs){
     if ((mutans_model@met_id[i] %in% exch@met_id) | (paste(mutans_model@met_id[i], '[e]', sep = "") %in% exch@met_id)){
       #print(mutans_model@react_id[i] %in% exch@met_id)
+      print(paste('existing exch:', mutans_model@met_id[i]))
       next
     }
     
     else {
       # print(generate_exch_rxn(mutans_model, i))
-      # add_exch <- c(add_exch, i)
-      mutans_model <- addReact(mutans_model, paste('new_exch', i, sep = "_"), 
-                               met = mutans_model@met_id[i], Scoef = c(mutans_model@S[i, 477]), reversible = FALSE,
-                               lb = 0, ub = 1000)
+      add_exch <- c(add_exch, i)
+      # mutans_model <- addReact(mutans_model, paste('new_exch', i, sep = "_"), 
+      #                          met = mutans_model@met_id[i], Scoef = c(mutans_model@S[i, 477]), reversible = FALSE,
+      #                          lb = 0, ub = 1000)
+      # mutans_model <- addExchReact(mutans_model, mutans_model@met_id[i], )
     }
   }
+  
+  biom_consumed <- intersect(add_exch, which(mutans_model@S[,477] < 0))
+  biom_produced <- intersect(add_exch, which(mutans_model@S[,477] > 0))
+  
+  mutans_model <- addExchReact(mutans_model, met <- mutans_model@met_id[biom_consumed], 
+                               lb <- rep(0, length(biom_consumed)), ub <- rep(1000, length(biom_consumed)))
+  mutans_model <- addExchReact(mutans_model, met <- mutans_model@met_id[biom_produced], 
+                               lb <- rep(-1000, length(biom_produced)), ub <- rep(0, length(biom_produced)))
 
   # for (i in add_exch){
   #   mutans_model <- addReact(mutans_model, paste('new_exch', i, sep = "_"), 
