@@ -183,7 +183,7 @@ get_mutans_model <- function(){
       # print(generate_exch_rxn(mutans_model, i))
       # add_exch <- c(add_exch, i)
       mutans_model <- addReact(mutans_model, paste('new_exch', i, sep = "_"), 
-                               met = mutans_model@met_id[i], Scoef = c(-1*mutans_model@S[i, 477]), reversible = FALSE,
+                               met = mutans_model@met_id[i], Scoef = c(mutans_model@S[i, 477]), reversible = FALSE,
                                lb = 0, ub = 1000)
     }
   }
