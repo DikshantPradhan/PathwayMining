@@ -66,10 +66,7 @@ get_yeast_no_compart_model <- function(){
   # yeast_4_05_noCompartments_compound <- read.delim("~/GitHub/PathwayMining/data/yeast_model/yeast_4_05_noCompartments_compound.csv", "\t")
 
   for (i in 1:length(yeast_model@met_name)){
-    # print(c(i, yeast_model@met_id[i], yeast_4_05_noCompartments_compound$NAME[which(yeast_4_05_noCompartments_compound$ID == yeast_model@met_id[i])]))
     yeast_model@met_name[i] <- yeast_4_05_noCompartments_compound$NAME[which(yeast_4_05_noCompartments_compound$ID == yeast_model@met_id[i])]
-    # print(yeast_4_05_compound$Name[which(yeast_4_05_compound$ID == yeast_model@met_id[i])])
-    # print(which(yeast_4_05_compound$Name == yeast_model@met_id[i]))
   }
   
   exch <- findExchReact(yeast_model)
@@ -161,7 +158,9 @@ get_mutans_model <- function(){
   mutans_model@met_name[401] <- "DAP-type peptidoglycan"
   mutans_model@met_name[422] <- "Lys-type peptidoglycan"
   
+  # make sure biomass splpit is implemented
   exch_idxs <- which(mutans_model@S[,477] != 0) # biomass
+  print(paste(mutans_model@met_id[exch_idxs], mutans_model@met_name[exch_idxs]))
   exch <- findExchReact(mutans_model)
   for (i in exch_idxs){
     if ((mutans_model@met_id[i] %in% exch@met_id) | (paste(mutans_model@met_id[i], '[e]', sep = "") %in% exch@met_id)){
@@ -174,10 +173,18 @@ get_mutans_model <- function(){
     }
   }
   
-  mutans_model <- rmReact(model = mutans_model, react = 477)
+  for (i in findExchReact(mutans_model)[100:144]@react_pos){
+    mutans_model@uppbnd[i] <- 0
+  }
   
+  print('removing:')
+  print(mutans_model@react_name[477])
+  mutans_model <- rmReact(model = mutans_model, react = 477)
+  print(mutans_model@react_name[616])
   mutans_model <- rmReact(model = mutans_model, react = 616)
+  print(mutans_model@react_name[366])
   mutans_model <- rmReact(model = mutans_model, react = 366)
+  print(mutans_model@react_name[364])
   mutans_model <- rmReact(model = mutans_model, react = 364)
   
   return(mutans_model)
