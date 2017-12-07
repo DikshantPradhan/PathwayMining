@@ -194,9 +194,9 @@ get_mutans_model <- function(){
   biom_produced <- intersect(add_exch, which(mutans_model@S[,477] > 0))
   
   mutans_model <- addExchReact(mutans_model, met <- mutans_model@met_id[biom_consumed], 
-                               lb <- rep(0, length(biom_consumed)), ub <- rep(1000, length(biom_consumed)))
+                               lb <- rep(-1000, length(biom_consumed)), ub <- rep(0, length(biom_consumed)))
   mutans_model <- addExchReact(mutans_model, met <- mutans_model@met_id[biom_produced], 
-                               lb <- rep(-1000, length(biom_produced)), ub <- rep(0, length(biom_produced)))
+                               lb <- rep(0, length(biom_produced)), ub <- rep(1000, length(biom_produced)))
 
   # for (i in add_exch){
   #   mutans_model <- addReact(mutans_model, paste('new_exch', i, sep = "_"), 
