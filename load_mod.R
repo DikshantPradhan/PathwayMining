@@ -153,21 +153,26 @@ get_yeast_open_model <- function(){
 ## MUTANS MODEL
 
 get_mutans_model <- function(){
-  mutans_model <- readTSVmod(reactList = "mutans_model.csv", metList = "mutans_model_met.csv")
+  mutans_model <- readTSVmod(reactList = "mutans_model_test.csv", metList = "mutans_model_met.csv")
+  
+  # print('biomass')
+  # print(mutans_model@S[which(mutans_model@S[,477] != 0), 477])
   
   mutans_model@met_name[401] <- "DAP-type peptidoglycan"
   mutans_model@met_name[422] <- "Lys-type peptidoglycan"
   
-  # make sure biomass splpit is implemented
+  # make sure biomass split is implemented
   exch_idxs <- which(mutans_model@S[,477] != 0) # biomass
-  biom_consumed <- which(mutans_model@S[,477] < 0)
-  biom_produced <- which(mutans_model@S[,477] > 0)
-  # print(paste(mutans_model@met_id[exch_idxs], mutans_model@met_name[exch_idxs]))
-  print('consumed:')
-  print(paste(mutans_model@met_id[biom_consumed], mutans_model@met_name[biom_consumed]))
-  print('produced:')
-  print(paste(mutans_model@met_id[biom_produced], mutans_model@met_name[biom_produced]))
+  # biom_consumed <- which(mutans_model@S[,477] < 0)
+  # biom_produced <- which(mutans_model@S[,477] > 0)
+  # # print(paste(mutans_model@met_id[exch_idxs], mutans_model@met_name[exch_idxs]))
+  # print('consumed:')
+  # print(paste(mutans_model@met_id[biom_consumed], mutans_model@met_name[biom_consumed], mutans_model@S[biom_consumed, 477]))
+  # print('produced:')
+  # print(paste(mutans_model@met_id[biom_produced], mutans_model@met_name[biom_produced], mutans_model@S[biom_produced, 477]))
+  
   exch <- findExchReact(mutans_model)
+  add_exch <- c()
   for (i in exch_idxs){
     if ((mutans_model@met_id[i] %in% exch@met_id) | (paste(mutans_model@met_id[i], '[e]', sep = "") %in% exch@met_id)){
       #print(mutans_model@react_id[i] %in% exch@met_id)
@@ -175,27 +180,36 @@ get_mutans_model <- function(){
     }
     
     else {
-      print(generate_exch_rxn(mutans_model, i))
+      # print(generate_exch_rxn(mutans_model, i))
+      # add_exch <- c(add_exch, i)
+      mutans_model <- addReact(mutans_model, paste('new_exch', i, sep = "_"), 
+                               met = mutans_model@met_id[i], Scoef = c(-1*mutans_model@S[i, 477]), reversible = FALSE,
+                               lb = 0, ub = 1000)
     }
   }
 
-  ex <- findExchReact(mutans_model)
-  for (idx in 100:144){
-    if(ex[idx]@met_id %in% c('C00013', 'C00009', 'C00080', 'C00008', 'C00035')){
-      print('prod')
-      mutans_model@lowbnd[ex[idx]@react_pos] <- 0
-    }
-    #mutans_model@uppbnd[rxn@react_pos] <- 0
-    else{mutans_model@uppbnd[ex[idx]@react_pos] <- 0}
-    
-    mutans_model@react_rev <- FALSE
-  }
-    
-  # for (i in findExchReact(mutans_model)[100:144]@react_pos){
-  #   else{mutans_model@uppbnd[i] <- 0}
+  # for (i in add_exch){
+  #   mutans_model <- addReact(mutans_model, paste('new_exch', i, sep = "_"), 
+  #                            met = mutans_model@met_id[i], Scoef = c(-1*mutans_model@S[i, 477]), reversible = FALSE,
+  #                            lb = 0, ub = 1000)
   # }
-  which(ex@met_id %in% c('C00013', 'C00009', 'C00080', 'C00008', 'C00035'))
   
+  # ex <- findExchReact(mutans_model)
+  # for (idx in 100:144){
+  #   if(ex[idx]@met_id %in% c('C00013', 'C00009', 'C00080', 'C00008', 'C00035')){
+  #     mutans_model@lowbnd[ex[idx]@react_pos] <- 0
+  #     mutans_model@uppbnd[ex[idx]@react_pos] <- 1000
+  #   }
+  #   #mutans_model@uppbnd[rxn@react_pos] <- 0
+  #   else{
+  #     mutans_model@uppbnd[ex[idx]@react_pos] <- 0
+  #     mutans_model@lowbnd[ex[idx]@react_pos] <- -1000
+  #   }
+  #   
+  #   mutans_model@react_rev <- FALSE
+  #   mutans_model@S[which(mutans_model@met_id == ex[idx]@met_id),idx] <- abs(mutans_model@S[which(mutans_model@met_id == ex[idx]@met_id), 477])
+  # }
+    
   print('removing:')
   print(mutans_model@react_name[477])
   mutans_model <- rmReact(model = mutans_model, react = 477)
