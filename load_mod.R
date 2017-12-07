@@ -187,6 +187,8 @@ get_mutans_model <- function(){
     }
     #mutans_model@uppbnd[rxn@react_pos] <- 0
     else{mutans_model@uppbnd[ex[idx]@react_pos] <- 0}
+    
+    mutans_model@react_rev <- FALSE
   }
     
   # for (i in findExchReact(mutans_model)[100:144]@react_pos){
