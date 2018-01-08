@@ -21,7 +21,8 @@ get_rxn_id_from_idx <- function(vars, rxn_idx){
   return(vars[rxn_idx])
 }
 
-get_dwnst_rxns <- function(rxn_idx, sample = NULL, S, model){
+get_dwnst_rxns <- function(rxn_idx, model, sample = NULL){
+  S <- model@S
   # fwd_dwnst_mets <- which(S[,rxn_idx] > 0)
 
   # if (length(model@react_rev[rxn_idx]) == 0){
@@ -200,7 +201,9 @@ get_dwnst_rxns_2 <- function(rxn_idx, sample = NULL){
   return(unique(dwnst_rxns))
 }
 
-get_upst_rxns <- function(rxn_idx){
+get_upst_rxns <- function(rxn_idx, model){
+  S <- model@S
+  
   upst_mets <- which(S[,rxn_idx] < 0)
 
   if (model@react_rev[rxn_idx]){

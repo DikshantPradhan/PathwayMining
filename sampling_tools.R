@@ -3,6 +3,8 @@
 library(sybilcycleFreeFlux)
 library(plotrix)
 
+warmup = 1500
+
 lm_fitting <- function(model, rxn_idx){
   sample_df = sampler(model)# ACHR(model,W,nPoints=nPnts,stepsPerPoint=10)
   sample_df2 = sampler(suppressed_model(model, rxn_idx))

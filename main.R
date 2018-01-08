@@ -3,80 +3,10 @@ source('~/GitHub/PathwayMining/sampling_tools.R')
 source('~/GitHub/PathwayMining/fit_comparison_run.R')
 source('~/GitHub/PathwayMining/model_tools.R')
 source('~/GitHub/PathwayMining/set_tools.R')
+source('~/GitHub/PathwayMining/falcon_tools.R')
+source('~/GitHub/PathwayMining/load_mod.R')
 
-# for (i in 1:length(og_set_list)){ # print sets joined by each deletion
-#   print(og_set_list[[i]])
-#   for (j in og_set_list[[i]]){
-#     print(j)
-#     print(test_composition_set[[get_rxn_idx(j)]])
-#   }
-# }
-#
-# check_composing_sets <- function(idx){
-#   print(composition_set[[idx]])
-#   for (set in unlist(composition_set[[idx]])){
-#     print(paste(set, ":"))
-#     print(og_set_list[[set]])
-#   }
-#   print(set_lists[[idx]])
-# }
-
-# for (i in 1:length(og_set_list)){
-#   print(og_set_list[[i]])
-#   for (j in og_set_list[[i]]){
-#     print(paste(j, "~~"))
-#     for (k in og_set_list[[i]]){
-#       # print(paste(k, ":"))
-#       print(check_sets_for_containing(k, set_lists[[get_rxn_idx(j)]]))
-#     }
-#   }
-# }
-
-# for (i in unlist(set_lists[[17]])){
-#   print(check_sets_for_containing(i, test_set_eno))
-# }
-
-# set_lists_2 <- c()
-# for (i in 1:94){
-#   set_lists_2[[i]] <- generate_set_lists(i)
-# }
-#
-# set_list_temp <- set_lists_2
-#
-# for (i in 1:94){
-#   set_lists_2[[i]] <- set_list_temp[[i]][[i]]
-# }
-
-# for (i in 1:94){
-#   if (length(unlist(ecoli_set_lists[[i]])) > 92){
-#     print(c(i, length(unlist(ecoli_set_lists[[i]]))))
-#   }
-# }
-
-# check for rxns in sets that aren't in og_set_list
-#for (i in 1:94){
-#  for (j in model@react_id){
-#    if (!check_sets_for_containing(j, ecoli_og_set_list)){
-#      if (check_sets_for_containing(j, ecoli_set_lists[[i]])){
-#        print(c(i, get_rxn_id_from_idx(i), j, length(unlist(ecoli_set_lists[[i]]))))
-#      }
-#    }
-#  }
-#}
-
-# for (i in 1:length(ecoli_og_set_list)){ # print sets joined by each deletion
-#   print(c(ecoli_og_set_list[[i]], "::"))
-#   for (j in ecoli_og_set_list[[i]]){
-#     print(c("~",j))
-#     print(ecoli_deletion_list[[get_rxn_idx(j)]])
-#   }
-# }
-
-ecoli_r0_pairs <- return_pairs_from_set_list(ecoli_og_set_list)
-ecoli_all_pairs <- return_pairs_from_set(unlist(ecoli_og_set_list))
-
-for (i in 1:nrow(ecoli_r0_pairs)){
-  if (!check_for_pairs(ecoli_r0_pairs[i,], ecoli_all_pairs)){
-    print(ecoli_r0_pairs[i,])
-  }
+for (i in 1:length(mutans_model@react_id)){
+  if (mutans_model@lowbnd[i] != mutans_falcon@lowbnd[i]){print(c(i, "wrong lowbnd"))}
+  if (mutans_model@uppbnd[i] != mutans_falcon@uppbnd[i]){print(c(i, "wrong uppbnd"))}
 }

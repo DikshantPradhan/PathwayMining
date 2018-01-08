@@ -5,7 +5,7 @@ source('~/GitHub/PathwayMining/logic_tools.R')
 generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
   # gprRules <- model@gprRules
   # genes <- model@genes
-  og_dim <- dim(model@S) # not necessary
+  og_dim <- dim(model@S)
   og_react_id <- model@react_id # model$get_names()$VarName
   og_met_id <- model@met_id
   og_genes <- model@genes # may need to pass this in
@@ -72,17 +72,6 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
       }
     }
 
-    # check to see if rxn already exists
-    # new_react <- matrix(0, nrow = dim(model@S)[1], ncol = 1)
-    # rownames(new_react) <- model@met_id
-    # new_react <- model@S[, rxn_idx]
-    # new_react[new_met_list] <- -1 # indexing error here
-
-    # for (i in 1:dim(model@S)[2]){
-    #   if (identical(new_react, model@S[, i])){
-    #     return(model)
-    #   }
-    # }
     met_list <- c(unlist(old_met_list), unlist(new_met_list))
     met_list <- met_list[!is.na(met_list)]
     # print(met_list)
@@ -102,9 +91,11 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
       # }
       ## NEED CONSTRAINTS TO PREVENT MODEL FROM PUSHING FLUX THROUGH BOTH DIRECTIONS AT ONCE
     }
-    else {
+    else { # changed from [-1000 to 1000] to [lowbnd to uppbnd]
+      lowbnd <- model@lowbnd[rxn_idx]
+      uppbnd <- model@uppbnd[rxn_idx]
       model <- addReact(model, rxn_id, met = met_list,
-                        Scoef = c(old_met_coeff, rep(-1, length(new_met_list))), lb = -1000, ub = 1000, reversible = TRUE)
+                        Scoef = c(old_met_coeff, rep(-1, length(new_met_list))), lb = lowbnd, ub = uppbnd, reversible = TRUE)
     }
 
     # rxn_removal_ids <- c(rxn_removal_ids, rxn_id)

@@ -122,10 +122,10 @@ get_yeast_compart_model <- function(){
     # print(which(yeast_4_05_compound$Name == yeast_model@met_id[i]))
   }
 
-  for (i in 1:length(yeast_model@react_id)){
-    yeast_model@lowbnd[i] <- -1000
-    yeast_model@uppbnd[i] <- 1000
-  }
+  # for (i in 1:length(yeast_model@react_id)){
+  #   yeast_model@lowbnd[i] <- -1000
+  #   yeast_model@uppbnd[i] <- 1000
+  # }
   
   remove <- which(yeast_model@react_name %in% c("growth", "biomass production", "lipid production"))
   
@@ -163,20 +163,23 @@ get_mutans_model <- function(){
   
   # make sure biomass split is implemented
   exch_idxs <- which(mutans_model@S[,477] != 0) # biomass
-  # biom_consumed <- which(mutans_model@S[,477] < 0)
-  # biom_produced <- which(mutans_model@S[,477] > 0)
-  # # print(paste(mutans_model@met_id[exch_idxs], mutans_model@met_name[exch_idxs]))
-  # print('consumed:')
-  # print(paste(mutans_model@met_id[biom_consumed], mutans_model@met_name[biom_consumed], mutans_model@S[biom_consumed, 477]))
-  # print('produced:')
-  # print(paste(mutans_model@met_id[biom_produced], mutans_model@met_name[biom_produced], mutans_model@S[biom_produced, 477]))
+  biom_consumed <- which(mutans_model@S[,477] < 0)
+  biom_produced <- which(mutans_model@S[,477] > 0)
+  # print(paste(mutans_model@met_id[exch_idxs], mutans_model@met_name[exch_idxs]))
+  print('consumed:')
+  print(paste(mutans_model@met_id[biom_consumed], mutans_model@met_name[biom_consumed], mutans_model@S[biom_consumed, 477]))
+  print('produced:')
+  print(paste(mutans_model@met_id[biom_produced], mutans_model@met_name[biom_produced], mutans_model@S[biom_produced, 477]))
   
   exch <- findExchReact(mutans_model)
   add_exch <- c()
   for (i in exch_idxs){
-    if ((mutans_model@met_id[i] %in% exch@met_id) | (paste(mutans_model@met_id[i], '[e]', sep = "") %in% exch@met_id)){
-      #print(mutans_model@react_id[i] %in% exch@met_id)
-      print(paste('existing exch:', mutans_model@met_id[i]))
+    # if ((mutans_model@met_id[i] %in% exch@met_id) | (paste(mutans_model@met_id[i], '[e]', sep = "") %in% exch@met_id)){
+    #   #print(mutans_model@react_id[i] %in% exch@met_id)
+    #   print(paste('existing exch:', mutans_model@met_id[i]))
+    #   next
+    # }
+    if (mutans_model@met_id[i] %in% c('C00002', 'C00044')){
       next
     }
     
@@ -193,10 +196,17 @@ get_mutans_model <- function(){
   biom_consumed <- intersect(add_exch, which(mutans_model@S[,477] < 0))
   biom_produced <- intersect(add_exch, which(mutans_model@S[,477] > 0))
   
+  # add outlets for reactants in biomass rxn
   mutans_model <- addExchReact(mutans_model, met <- mutans_model@met_id[biom_consumed], 
                                lb <- rep(0, length(biom_consumed)), ub <- rep(1000, length(biom_consumed)))
-  mutans_model <- addExchReact(mutans_model, met <- mutans_model@met_id[biom_produced], 
-                               lb <- rep(-1000, length(biom_produced)), ub <- rep(0, length(biom_produced)))
+  # mutans_model <- addExchReact(mutans_model, met <- mutans_model@met_id[biom_produced], 
+  #                              lb <- rep(-1000, length(biom_produced)), ub <- rep(0, length(biom_produced)))
+  
+  # add new inlets for products with energy cost
+  mutans_model <- addReact(mutans_model, 'ATP_decomp_new', met = c('C00002', 'C00008', 'C00009', 'C00080'),
+                           Scoef = c(-1, 1, 1, 1), reversible = FALSE, lb = 0, ub = 1000)
+  mutans_model <- addReact(mutans_model, 'GTP_decomp_new', met = c('C00044', 'C00035', 'C00013'),
+                           Scoef = c(-1, 1, 1), reversible = FALSE, lb = 0, ub = 1000)
 
   # for (i in add_exch){
   #   mutans_model <- addReact(mutans_model, paste('new_exch', i, sep = "_"), 
@@ -223,6 +233,8 @@ get_mutans_model <- function(){
   print('removing:')
   print(mutans_model@react_name[477])
   mutans_model <- rmReact(model = mutans_model, react = 477)
+  
+  # remove duplicate reactions
   print(mutans_model@react_name[616])
   mutans_model <- rmReact(model = mutans_model, react = 616)
   print(mutans_model@react_name[366])
