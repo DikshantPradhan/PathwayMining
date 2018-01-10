@@ -137,6 +137,7 @@ get_yeast_compart_model <- function(){
   return(yeast_model)
 }
 
+# USE THIS FUNCTION FOR YEAST MODEL
 get_yeast_open_model <- function(){
   
   yeast_model <- readTSVmod(reactList = "Y4open_reactions.csv", metList = "Y4open_metabolites.csv")

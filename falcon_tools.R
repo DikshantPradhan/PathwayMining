@@ -41,7 +41,7 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
     model <- addExchReact(model, met = new_met, lb = -1000, ub = 1000) # may need to alter this for grb
   }
 
-  rxn_removal_ids <- c()
+  # rxn_removal_ids <- c()
 
   genes_from_path <- function(path, rxn_idx){
     gene_idxs <- gprRule_to_idx(path)
@@ -49,46 +49,37 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
     return(genes[[1]][gene_idxs])
   }
 
+  # helper function for simple_add and or_add
   normal_add <- function(model, new_met_list, rxn_id, simple = FALSE, addExch = FALSE, identifier = NULL){
-    #print(rxn_id)
-    # print(new_met_list)
+  
     rxn_idx <- which(model@react_id == rxn_id)
-    # print(rxn_idx)
     exch <- findExchReact(model)
 
     # metabolites of existing reaction
     old_met_idxs <- which(model@S[(1:og_dim[1]), rxn_idx] != 0)
-    # old_met_idxs <- old_met_idxs[which(old_met_idxs <= og_dim[1])]
     old_met_list <- og_met_id[old_met_idxs]
     old_met_coeff <- model@S[old_met_idxs, rxn_idx]
 
-    #print(old_met_idxs)
-
     # add exchange reactions, if needed
-    if (addExch){
-      for (met in new_met_list){
-        if (met %in% exch@met_id){next}
-        model <- addExchReact(model, met, -1000, 1000)
-      }
-    }
+    # SHOULDN'T HAVE TO ADD ANY NEW EXCH REACTIONS
+    # if (addExch){
+    #   for (met in new_met_list){
+    #     if (met %in% exch@met_id){next}
+    #     model <- addExchReact(model, met, -1000, 1000)
+    #   }
+    # }
 
     met_list <- c(unlist(old_met_list), unlist(new_met_list))
     met_list <- met_list[!is.na(met_list)]
-    # print(met_list)
-    # print(new_met_list)
-    # print(old_met_coeff)
 
     if (!simple){ # add reverse reaction if needed
-      # print(rxn_id)
-      # print(c(old_met_list, new_met_list))
+      
       model <- addReact(model, paste(rxn_id, identifier, 'fwd', sep = '_'), met = met_list,
                         Scoef = c(old_met_coeff, rep(-1, length(new_met_list))), lb = 0, ub = 1000, reversible = FALSE)
       model <- addReact(model, paste(rxn_id, identifier, 'rev', sep = '_'), met = met_list,
                         Scoef = c(old_met_coeff, rep(1, length(new_met_list))), lb = -1000, ub = 0, reversible = FALSE)
-      rxn_removal_ids <- c(rxn_removal_ids, rxn_id)
-      # if (rxn_id %in% model@react_id){
-      #   model <- rmReact(model = model, rxn_id, rm_met = FALSE)
-      # }
+      # rxn_removal_ids <- c(rxn_removal_ids, rxn_id)
+      
       ## NEED CONSTRAINTS TO PREVENT MODEL FROM PUSHING FLUX THROUGH BOTH DIRECTIONS AT ONCE
     }
     else { # changed from [-1000 to 1000] to [lowbnd to uppbnd]
@@ -102,25 +93,27 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
     return(model)
   }
 
+  # used for direct addition of gene/enzyme to reaction; not used when reaction_activity is needed (or case)
   simple_add <- function(model, new_met_list, rxn_id, simple = FALSE){
     # print(c(rxn_id, ":", new_met_list))
     model <- normal_add(model, new_met_list, rxn_id, simple = TRUE)
     return(model)
   }
 
+  # used for multiple gene combinations; reaction_activity needed
   or_add <- function(model, path_list, rxn_id, simple = TRUE, split = FALSE){
     rxn_idx <- which(og_react_id == rxn_id)
     rxn_activity <- paste('a', rxn_id, sep = "_")
 
     # add conversion for path to react_activity
-    identifier <- 1
+    identifier <- 1 # need to differentiate breakdown of rxn in name
     for (mets in path_list){ # CHECK THIS FUNCTION IF EVERYTHING BREAKS
       genes <- genes_from_path(mets, rxn_idx)
       new_mets <- paste('a_', genes, sep = '')
-      met_list <- c(unlist(new_mets), rxn_activity)
-      met_list <- met_list[!is.na(met_list)]
+      met_list <- c(unlist(new_mets), rxn_activity) # genes first, then reaction_activity
+      met_list <- met_list[!is.na(met_list)] # need to get rid of this
       coeff_list <- c(unlist(rep(-1, length(new_mets))), 1)
-      if (split){
+      if (split){ # genes are always consumed, reaction_activity is consumed or produced; reactions proceed forwards
         model <- addReact(model, paste(rxn_activity, 'fwd conversion', identifier, sep = ' '), met = met_list,
                           Scoef = c(unlist(rep(-1, length(new_mets))), 1), lb = 0, ub = 1000, reversible = FALSE)
         model <- addReact(model, paste(rxn_activity, 'rev conversion', identifier, sep = ' '), met = met_list,
@@ -279,6 +272,8 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
     # }
     marked_rxns[rxn_idx] <- TRUE
   }
+  
+  # if gene_activity is only consumed, then exchange reaction should only flow inwards??
 
   #print('FINAL COUNT')
   #print(paste('remaining reactions:', length(which(marked_rxns == FALSE))))
