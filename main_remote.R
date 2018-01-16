@@ -1,16 +1,20 @@
 # source('~/GitHub/PathwayMining/network_tools.R')
+library('raptor')
 source('~/GitHub/PathwayMining/sampling_tools.R')
 source('~/GitHub/PathwayMining/fit_comparison_run.R')
 source('~/GitHub/PathwayMining/model_tools.R')
 source('~/GitHub/PathwayMining/set_tools.R')
 source('~/GitHub/PathwayMining/falcon_tools.R')
 source('~/GitHub/PathwayMining/load_mod.R')
+source('~/GitHub/PathwayMining/grb_tools.R')
+source('~/GitHub/PathwayMining/raptor_coupling.R')
 
 yeast_model <- GRB_yeast_model()
 yeast_falcon_model <- GRB_yeast_falcon_model()
 
 yeast_set_list <- GRB_generate_set_list(yeast_model)
-yeast_falcon_set_list <- GRB_generate_set_list(yeast_falcon_model)
+# yeast_falcon_set_list <- GRB_generate_set_list(yeast_falcon_model)
+yeast_falcon_set_list <- get_list_of_sets(return_couples(flux_coupling_raptor(yeast_falcon_model, fix_tol_frac=0.05)$coupled))
 
 # for (rxn_idx in 1:length(yeast_open_mod@react_id)){
 #   if (!(yeast_open_mod@react_id[rxn_idx] %in% unlist(yeast_falcon_test))){next}
