@@ -10,7 +10,7 @@ yeast_model <- GRB_yeast_model()
 yeast_falcon_model <- GRB_yeast_falcon_model()
 
 yeast_set_list <- GRB_generate_set_list(yeast_model)
-yeast_falcon_set_list <- GRB_generate_set_list(yeast_falcon_model)
+yeast_falcon_set_list <- GRB_generate_set_list(yeast_falcon_model, fix_tol_frac = 0.05)
 
 # for (rxn_idx in 1:length(yeast_open_mod@react_id)){
 #   if (!(yeast_open_mod@react_id[rxn_idx] %in% unlist(yeast_falcon_test))){next}
