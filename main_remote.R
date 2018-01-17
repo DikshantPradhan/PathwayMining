@@ -14,7 +14,22 @@ yeast_falcon_model <- GRB_yeast_falcon_model()
 
 yeast_set_list <- GRB_generate_set_list(yeast_model)
 # yeast_falcon_set_list <- GRB_generate_set_list(yeast_falcon_model)
-yeast_falcon_set_list <- get_list_of_sets(return_couples(flux_coupling_raptor(yeast_falcon_model, fix_tol_frac=0.05)$coupled))
+
+# Start the clock!
+ptm <- proc.time()
+
+yeast_falcon_set_list <- get_list_of_sets(return_couples(flux_coupling_raptor(yeast_falcon_model, cor_check = FALSE)$coupled))
+
+print('Checking Sets')
+check_all_sets_for_containing(yeast_set_list, yeast_falcon_set_list)
+sink(file = 'output2.txt')
+print(yeast_falcon_set_list)
+sink()
+
+# Stop the clock
+proc.time() - ptm
+
+print('FIN')
 
 # for (rxn_idx in 1:length(yeast_open_mod@react_id)){
 #   if (!(yeast_open_mod@react_id[rxn_idx] %in% unlist(yeast_falcon_test))){next}
@@ -25,7 +40,7 @@ yeast_falcon_set_list <- get_list_of_sets(return_couples(flux_coupling_raptor(ye
 #     }
 #   }
 # }
-# 
+#
 # for (rxn_idx in 1:length(mutans@react_id)){
 #   if (!(mutans@react_id[rxn_idx] %in% unlist(mutans_falcon_test))){next}
 #   for (gene in mutans@genes[[rxn_idx]]){
@@ -81,4 +96,3 @@ yeast_falcon_set_list <- get_list_of_sets(return_couples(flux_coupling_raptor(ye
 # [1] "blocked: 1089"
 # [1] "blocked: 1090"
 # [1] 5394
-

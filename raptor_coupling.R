@@ -28,7 +28,8 @@ optimize_rxn <- function(model, rxn, max){
 # MAIN FUNCTION
 
 flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01,
-      bnd_tol = 0.1, stored_obs = 4000, cor_iter = 3, reaction_indexes = c()) {
+      bnd_tol = 0.1, stored_obs = 4000, cor_iter = 3, cor_check = TRUE,
+      reaction_indexes = c()) {
 
   # min_fva_cor is minimum correlation between fluxes
   # bnd_tol is allowed error in comparing max & min flux
@@ -36,7 +37,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
   # fix_tol_frac is error allowed in determining whether flux is fixed
   # stored_obs is # not flux values to be stored
   # cor_iter is number of iterations after which correlation is considered in checking coupling
-  
+
   n <- model$get_sizes()$NumVars
 
   # if empty set, then assume all reactions are to be inspected
@@ -84,7 +85,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     return(flux_)
   }
 
-  for (idx in 1:(length(reaction_indexes)-1)) { # (i in 1:(n-1)) 
+  for (idx in 1:(length(reaction_indexes)-1)) { # (i in 1:(n-1))
     # iterate over passed in idxs instead (idx in 1:length(reaction_indexes)); i <-  reaction_indexes[idx]
     i <-  reaction_indexes[idx]
 
@@ -154,14 +155,14 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       active[i] <- FALSE
     }
 
-    for (idx2 in (idx+1):length(reaction_indexes)) { # (j in (i+1):n) 
+    for (idx2 in (idx+1):length(reaction_indexes)) { # (j in (i+1):n)
       # also keep this in passed in idxs (idx2 in (idx+1):length(reaction_indexes)); j <-  reaction_indexes[idx2]
       j <-  reaction_indexes[idx2]
       #if (j == 137){print('137')}
       # check for fixed or blocked
       if (!active[j] | blocked[j]) next
       # check for uncoupled
-      if ((stored_obs > 0) & (i > cor_iter)){
+      if (cor_check & (stored_obs > 0) & (i > cor_iter)){
         C <- cor(flux[,i], flux[,j])
         if (is.na(C) | (abs(C) < min_fva_cor)){next}
       }
@@ -226,6 +227,12 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     # unfix i
     model$setattr("UB", prev_ub)
     model$setattr("LB", prev_lb)
+  }
+
+  i <- reaction_indexes[length(reaction_indexes)]
+  if (!blocked[i]){
+    coupled[i,i] <- TRUE
+    active[i] <- FALSE
   }
 
   model$setattr("Obj", prev_obj)
