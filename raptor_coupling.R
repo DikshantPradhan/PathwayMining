@@ -41,7 +41,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
   if (!cor_check){
     stored_obs = 0
   }
-  
+
   n <- model$get_sizes()$NumVars
 
   # if empty set, then assume all reactions are to be inspected
@@ -78,12 +78,13 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
 
     return(avg)
   }
-  
+
   correlation_check <- function(flux, i, j){
     n_entries <- length(which(flux[,i] != 0 | flux[,j] != 0))
     if (n_entries > cor_iter){
       C <- cor(flux[,i], flux[,j])
-      if (abs(C) > min_fva_cor){
+      
+      if (!is.na(C) & (abs(C) > min_fva_cor)){
         return(TRUE)
       }
     }

@@ -215,6 +215,7 @@ reaction_indexes <- grep('Ex_a', vars)
 print(paste('num genes:', length(reaction_indexes)))
 
 yeast_falcon_og_set_list <- GRB_generate_set_list(yeast_falcon, reaction_indexes = reaction_indexes)
+yeast_falcon_test_set_list <- get_list_of_sets(return_couples(flux_coupling_raptor(yeast_falcon)$coupled))
 
 yeast_falcon <- GRB_yeast_falcon_model()
 yeast_falcon_set_lists <- GRB_generate_set_lists(yeast_falcon, yeast_falcon_og_set_list, 1:n, reaction_indexes)
