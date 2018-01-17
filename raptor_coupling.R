@@ -28,7 +28,7 @@ optimize_rxn <- function(model, rxn, max){
 # MAIN FUNCTION
 
 flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01,
-      bnd_tol = 0.1, stored_obs = 4000, cor_iter = 3, cor_check = TRUE,
+      bnd_tol = 0.1, stored_obs = 4000, cor_iter = 5, cor_check = TRUE,
       reaction_indexes = c()) {
 
   # min_fva_cor is minimum correlation between fluxes
@@ -38,6 +38,10 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
   # stored_obs is # not flux values to be stored
   # cor_iter is number of iterations after which correlation is considered in checking coupling
 
+  if (!cor_check){
+    stored_obs = 0
+  }
+  
   n <- model$get_sizes()$NumVars
 
   # if empty set, then assume all reactions are to be inspected
@@ -73,6 +77,17 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     }
 
     return(avg)
+  }
+  
+  correlation_check <- function(flux, i, j){
+    n_entries <- length(which(flux[,i] != 0 | flux[,j] != 0))
+    if (n_entries > cor_iter){
+      C <- cor(flux[,i], flux[,j])
+      if (abs(C) > min_fva_cor){
+        return(TRUE)
+      }
+    }
+    return(FALSE)
   }
 
   flux <- matrix(c(0), nrow = stored_obs, ncol = n)
@@ -162,9 +177,10 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       # check for fixed or blocked
       if (!active[j] | blocked[j]) next
       # check for uncoupled
-      if (cor_check & (stored_obs > 0) & (i > cor_iter)){
-        C <- cor(flux[,i], flux[,j])
-        if (is.na(C) | (abs(C) < min_fva_cor)){next}
+      if (stored_obs > 0){
+        if (!correlation_check(flux, i, j)){next}
+        # C <- cor(flux[,i], flux[,j])
+        # if (is.na(C) | (abs(C) < min_fva_cor)){next}
       }
 
       if (not_fixed(sub_max[j], sub_min[j])) next
