@@ -27,7 +27,7 @@ check_sets_for_containing <- function(rxns, set_list){
 check_all_sets_for_containing <- function(comparison_sets, target_sets){
   set_error <- c()
   for (set_idx in 1:length(comparison_sets)){
-    if (!check_sets_for_containing(comparison_sets[set_idx], target_sets)){
+    if (!check_sets_for_containing(comparison_sets[[set_idx]], target_sets)){
       # print(set)
       set_error <- c(set_error, set_idx)
       # return(FALSE)
