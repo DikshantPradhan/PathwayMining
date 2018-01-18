@@ -79,11 +79,12 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     return(avg)
   }
 
-  correlation_check <- function(flux, i, j){
+  correlation_check <- function(flux, i, j){ # return true if correlation is high, or no correlation --> continue comparing flux
+    # if false, skip in depth comparison
+    
     n_entries <- length(which(flux[,i] != 0 | flux[,j] != 0))
     if (n_entries > cor_iter){
       C <- cor(flux[,i], flux[,j])
-      
       if ((!is.na(C)) & (abs(C) < min_fva_cor)){
         return(FALSE)
       }
@@ -179,9 +180,9 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       if (!active[j] | blocked[j]) next
       # check for uncoupled
       if (stored_obs > 0){
-        if (!correlation_check(flux, i, j)){next}
-        # C <- cor(flux[,i], flux[,j])
-        # if (is.na(C) | (abs(C) < min_fva_cor)){next}
+        # if (!correlation_check(flux, i, j)){next}
+        C <- cor(flux[,i], flux[,j])
+        if (!is.na(C) & (abs(C) < min_fva_cor)){next}
       }
 
       if (not_fixed(sub_max[j], sub_min[j])) next
