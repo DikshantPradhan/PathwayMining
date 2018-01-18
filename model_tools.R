@@ -519,3 +519,11 @@ pair_data <- function(og_sets, set_lists){
 
   return(pair_data)
 }
+
+get_react_coeffs <- function(model, idx){
+  met_idx <- which(model@S[,idx] != 0)
+  met_coeff <- model@S[met_idx, idx]
+  met_id <- model@met_id[met_idx]
+  print(paste(met_coeff, met_id))
+  print(paste(model@lowbnd[idx], model@uppbnd[idx]))
+}
