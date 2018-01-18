@@ -85,12 +85,8 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     n_entries <- length(which(flux[,i] != 0 | flux[,j] != 0))
     if (n_entries > cor_iter){
       C <- cor(flux[,i], flux[,j])
-      if (is.na(C)){
-        print('na correlation')
-        print(flux[,i])
-        print(flux[,j])
-      }
-      if ((!is.na(C)) & (abs(C) < min_fva_cor)){
+      
+      if ((is.na(C)) | (abs(C) < min_fva_cor)){
         return(FALSE)
       }
     }
