@@ -1,5 +1,7 @@
 source('falcon_tools.R')
 
+## MODELS
+
 GRB_ecoli_model <- function(){
   data(Ec_core);
   model=Ec_core;
@@ -36,7 +38,7 @@ GRB_yeast_model <- function(){
   #yeast_model <- get_yeast_model()
 
   load('~/GitHub/PathwayMining/data/yeast_model/yeast_open_mod.RData')
-  
+
   for (i in findExchReact(yeast_open_mod)@react_pos){
     yeast_open_mod <- changeBounds(yeast_open_mod, i, lb = -1000, ub = 1000)
     # if (model@lowbnd[i] == 0){
@@ -125,14 +127,9 @@ GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set
 
   split_fwd_rxns <- vars[grep('fwd', vars)]
   split_rev_rxns <- vars[grep('rev', vars)]
-  #print(split_fwd_rxns)
-  #conv_num <- sapply(split_rxns, function(x) strsplit(x, ' |_')[[1]][5])
-  #dir <- sapply(split_rxns, function(x) strsplit(x, ' |_')[[1]][3])
 
   split_rxns <- sapply(split_fwd_rxns, function(x) strsplit(x, ' ')[[1]][1])
   split_rxns <- unique(split_rxns)
-
-  #print(split_rxns)
 
   if (length(split_fwd_rxns) != length(split_rev_rxns)){
     print('fed rev matchup error')
@@ -166,11 +163,6 @@ GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set
     fwd_idx <- which(vars == fwd)
     rev_idx <- which(vars == rev)
 
-    #print(paste(fwd, ':'))
-    #print(i_idx)
-    #print(fwd_idx)
-    #print(rev_idx)
-
     #print(paste(fwd, fwd_ub, fwd_lb, rev, rev_ub, rev_lb, I))
     fwd_vec <- c(fwd_ub, -1) #c(3.2, 1)
     rev_vec <- c(-1*rev_lb, -1) #c(3.2, 1)
@@ -179,21 +171,6 @@ GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set
 
     fwd_name <- paste(fwd, 'I', sep = ' ')
     rev_name <- paste(rev, 'I', sep = ' ')
-
-    #print(fwd_vec)
-    #print(rev_vec)
-    #print(fwd_idxs)
-    #print(rev_idxs)
-
-    #print(i)
-    #print(vars[fwd_idxs])
-    #print(paste(vars[fwd_idxs], fwd_vec))
-    #print(fwd_name)
-    #print(vars[rev_idxs])
-    #print(paste(vars[rev_idxs], rev_vec))#print(rev_vec)
-    #print(rev_name)
-    #print(fwd)
-    #print(rev)
 
     .Call("GRB_updatemodel", grb_falcon_model$exptr)
     .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(fwd_idxs-1), fwd_vec, ">=", 0.0,
@@ -207,11 +184,6 @@ GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set
     #    sense=">=", rhs= rev_lb, name = paste(a_rxn, 'rev', sep = '_')) # bound on rev conversion
   }
 
-  #vec <- c(3.2,1)
-  #idxs <- c(1,90)
-  #.Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(idxs), vec, ">=", 0.0, "constr1")
-
-
   # for each reaction w fwd and rev components:
   #   add constraint so that only one can run at a time
   #   binary vars I_fwd, I_rev <- {0, 1} and I_fwd + I_rev = 1
@@ -219,6 +191,8 @@ GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set
   .Call("GRB_updatemodel", grb_falcon_model$exptr)
   return(grb_falcon_model)
 }
+
+## FUNCTIONS
 
 GRB_get_rxn_idx <- function(model, rxn){
   vars <- model$get_names()$VarName

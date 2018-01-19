@@ -18,7 +18,8 @@ yeast_set_list <- GRB_generate_set_list(yeast_model)
 # Start the clock!
 ptm <- proc.time()
 
-yeast_falcon_set_list <- get_list_of_sets(return_couples(flux_coupling_raptor(yeast_falcon_model, cor_check = FALSE)$coupled))
+#yeast_falcon_set_list <- get_list_of_sets(return_couples(flux_coupling_raptor(yeast_falcon_model, cor_check = FALSE)$coupled))
+yeast_falcon_set_list <- get_list_of_sets(return_couples(flux_coupling_raptor(yeast_falcon)$coupled))
 
 print('Checking Sets')
 check_all_sets_for_containing(yeast_set_list, yeast_falcon_set_list)
