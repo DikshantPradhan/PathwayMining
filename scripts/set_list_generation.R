@@ -194,7 +194,7 @@ print('specific error')
 #  }
 #}
 
-print(ct)
+#print(ct)
 
 mutans_falcon_r0_pairs <- return_pairs_from_set_list(mutans_falcon_og_set_list)
 mutans_falcon_new_r1_pairs <- new_pairs_from_composition(mutans_falcon_og_set_list, mutans_falcon_composition_set)
@@ -202,6 +202,8 @@ mutans_falcon_r1_pairs <- append_pair_lists(mutans_falcon_r0_pairs, mutans_falco
 
 mutans_falcon_r0_set_list <- mutans_falcon_og_set_list
 mutans_falcon_r1_set_list <- get_list_of_sets(mutans_falcon_r1_pairs)
+
+save(mutans_falcon_r0_pairs, mutans_falcon_new_r1_pairs, mutans_falcon_r1_pairs, mutans_falcon_r0_set_list, mutans_falcon_r1_set_list, file = 'mutans_falcon_pairs_sets.RData')
 
 ## YEAST MODEL ~ 5 DAYS
 
@@ -298,5 +300,7 @@ yeast_falcon_r1_pairs <- append_pair_lists(yeast_falcon_r0_pairs, yeast_falcon_n
 
 yeast_falcon_r0_set_list <- yeast_falcon_og_set_list
 yeast_falcon_r1_set_list <- get_list_of_sets(yeast_falcon_r1_pairs)
+
+save(yeast_falcon_r0_pairs, yeast_falcon_new_r1_pairs, yeast_falcon_r1_pairs, yeast_falcon_r0_set_list, yeast_falcon_r1_set_list, file = 'yeast_falcon_pairs_sets.RData')
 
 print('FIN')

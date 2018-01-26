@@ -246,6 +246,23 @@ build_gi_matrix <- function(gi_ExE, gi_NxN, gi_ExN_NxE){
   return(gi_matrix)
 }
 
+# synthetic lethal pairs
+build_essential_gi_matrix <- function(genes, lethal_pairs){
+  genes <- c(genes, lethal_pairs[,1], lethal_pairs[,2])
+  genes <- unique(genes)
+  lethal_mtx <- matrix(data = 0, nrow = length(genes), ncol = length(genes))
+  rownames(lethal_mtx) <- genes
+  colnames(lethal_mtx) <- genes
+
+  for (i in 1:(dim(lethal_pairs)[1])){
+    #print(i)
+    lethal_mtx[lethal_pairs[i,1], lethal_pairs[i,2]] <- 1
+    lethal_mtx[lethal_pairs[i,2], lethal_pairs[i,1]] <- 1
+  }
+
+  return(lethal_mtx)
+}
+
 # build matrix of relevant genes for quicker computation
 build_gi_matrix_from_pairs <- function(genes, gene_pairs){
   #gene_pairs <- remove_duplicate_pairs(gene_pairs)
