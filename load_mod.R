@@ -137,7 +137,20 @@ get_yeast_compart_model <- function(){
   return(yeast_model)
 }
 
-# USE THIS FUNCTION FOR YEAST MODEL
+# USE THIS FUNCTION FOR YEAST MODEL (MAIN)
+get_yeast_maranas_model <- function(){
+  
+  yeast_model <- readTSVmod(reactList = "S7 Model iSce926_num_mod.tsv", metList = "S7 Model iSce926_met.tsv")
+  
+  remove <- which(grepl("pseudoreaction", yeast_model@react_name))
+
+  yeast_model <- rmReact(model = yeast_model, react = remove[3])
+  yeast_model <- rmReact(model = yeast_model, react = remove[2])
+  yeast_model <- rmReact(model = yeast_model, react = remove[1])
+  
+  return(yeast_model)
+}
+
 get_yeast_open_model <- function(){
   
   yeast_model <- readTSVmod(reactList = "Y4open_reactions.csv", metList = "Y4open_metabolites.csv")
@@ -152,7 +165,6 @@ get_yeast_open_model <- function(){
 }
 
 ## MUTANS MODEL
-
 get_mutans_model <- function(){
   mutans_model <- readTSVmod(reactList = "mutans_model_test.csv", metList = "mutans_model_met.csv")
   
@@ -267,6 +279,29 @@ generate_exch_rxn <- function(model, rxn_idx){
   paste("exc00000	", rxn_name," exchange	", " <=> ", rxn_id, "					1	0	0	0		Unknown		", sep = "")
 }
 
+clean_equation_numbers <- function(model, eqns){ # input list of strings
+  new_eqns <- c()
+  na_mets <- which(is.na(model@met_name))
+  bad_mets <- model@met_id[na_mets]
+  target_mets <- gsub("s_", " s_", bad_mets)
+  replacement_mets <- gsub("s_", ") s_", paste('(', bad_mets, sep = ''))
+  for (i in 1:length(eqns)){
+    str <- eqns[i]
+    for (j in 1:length(target_mets)){
+      if(grepl(target_mets[j], str)){
+        str <- gsub(target_mets[j], replacement_mets[j], str)
+      }
+    }
+    # which(grepl(target_mets, str))
+    # nums <- unlist(regmatches(str,gregexpr("[[:digit:]]+\\.*[[:digit:]]*",str)))
+    # for (num in nums){
+    #   str <- gsub(num, paste('(', num, ')', sep = ''), str)
+    # }
+    # print(str)
+    new_eqns[i] <- str
+  }
+  return(new_eqns)
+}
 # model <- yeast_model
 
 ## ALL
