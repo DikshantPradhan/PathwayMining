@@ -47,18 +47,16 @@ yeast_falcon_compar_met <- function(met_id){
   print(yeast_falcon@react_id[f_r_idxs])
 }
 
-get_react_coeffs <- function(model, idx){
-  met_idx <- which(model@S[,idx] != 0)
-  met_coeff <- model@S[met_idx, idx]
-  met_id <- model@met_id[met_idx]
-  print(paste(met_coeff, met_id))
-  print(paste(model@lowbnd[idx], model@uppbnd[idx]))
-}
-
 # yeast_falcon_compar_met("s_0097")
 # yeast_falcon_compar_met("s_0102")
-yeast_falcon_compar_react("r_0036")
-yeast_falcon_compar_react("r_0084")
-yeast_falcon_compar_react("r_0360")
-yeast_falcon_compar_react("r_1414")
+# yeast_falcon_compar_react("r_0036")
+# yeast_falcon_compar_react("r_0084")
+# yeast_falcon_compar_react("r_0360")
+# yeast_falcon_compar_react("r_1414")
 #yeast_falcon_compar_react("EX_s_0199")
+
+model@react_id[3484]
+biomass_mets <- which(model@S[,3484] != 0)
+for (met in biomass_mets){
+  print(paste(model@met_id[met], length(which(model@S[met,] != 0))))
+}
