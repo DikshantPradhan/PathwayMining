@@ -28,34 +28,11 @@ GRB_ecoli_falcon_model <- function(){
 
 GRB_yeast_model <- function(){
 
-  # setwd("~/GitHub/PathwayMining/data/yeast_model")
-  #yeast_model <- readTSVmod(reactList = "Y7_test_react.tsv", metList = "Y7_met.tsv")
-  #yeast_model <- rmReact(model = yeast_model, react = 1606)
-  #yeast_model <- rmReact(model = yeast_model, react = 1590)
-
-  #setwd("~/GitHub/PathwayMining/")
-
-  #yeast_model <- get_yeast_model()
-
-  load('~/GitHub/PathwayMining/data/yeast_model/yeast_open_mod.RData')
-
-  for (i in findExchReact(yeast_open_mod)@react_pos){
-    yeast_open_mod <- changeBounds(yeast_open_mod, i, lb = -1000, ub = 1000)
-    # if (model@lowbnd[i] == 0){
-    #   model <- changeBounds(model, i, lb = -1000)
-    # }
-  }
-
-  # for (i in 1:length(yeast_open_mod@react_id)){
-  #   yeast_open_mod@lowbnd[i] <- -1000
-  #   yeast_open_mod@uppbnd[i] <- 1000
-  # }
-
-  #yeast_model@lowbnd[223] <- 0
+  load('~/GitHub/PathwayMining/data/yeast_model/Maranas_model/maranas_model_lipid.RData')
 
   # setwd("~/GitHub/PathwayMining/")
 
-  yeast <- as_GRBmodel(yeast_open_mod)
+  yeast <- as_GRBmodel(yeast_model)
   yeast$show_output(FALSE)
 
   return(yeast)
