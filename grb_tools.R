@@ -28,7 +28,7 @@ GRB_ecoli_falcon_model <- function(){
 
 GRB_yeast_model <- function(){
 
-  load('~/GitHub/PathwayMining/data/yeast_model/Maranas_model/maranas_model_lipid.RData')
+  load('~/GitHub/PathwayMining/data/yeast_model/Maranas_model/maranas_model_lipid_exch.RData')
 
   # setwd("~/GitHub/PathwayMining/")
 

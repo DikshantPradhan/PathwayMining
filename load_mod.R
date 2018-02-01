@@ -110,14 +110,18 @@ get_yeast_maranas_model <- function(){
   # yeast_model <- rmReact(model = yeast_model, react = remove[4])
   yeast_model <- rmReact(model = yeast_model, react = remove[3])
   yeast_model <- rmReact(model = yeast_model, react = remove[2])
-  yeast_model <- rmReact(model = yeast_model, react = remove[1])
+  # yeast_model <- rmReact(model = yeast_model, react = remove[1]) # lipid
   
-  remove_growth <- which(yeast_model@react_name == 'growth')
+  growth_idx <- which(yeast_model@react_name == 'growth')
+  biomass_idx <- which(yeast_model@react_name == "yeast 8 biomass pseudoreaction")
+  lipid_idx <- which(yeast_model@react_name == "lipid pseudoreaction")
   
-  yeast_model <- add_exch_rxns_to_model(yeast_model, 3484)
+  yeast_model <- add_exch_rxns_to_model(yeast_model, biomass_idx)
+  yeast_model <- add_exch_rxns_to_model(yeast_model, lipid_idx)
   
-  yeast_model <- rmReact(model = yeast_model, react = 3484, rm_met = TRUE) # last biomass reaction
-  yeast_model <- rmReact(model = yeast_model, react = 1573, rm_met = TRUE) # growth reaction (objective function; biomass exchange)
+  yeast_model <- rmReact(model = yeast_model, react = biomass_idx, rm_met = TRUE) # last biomass reaction
+  yeast_model <- rmReact(model = yeast_model, react = growth_idx, rm_met = TRUE) # growth reaction (objective function; biomass exchange)
+  yeast_model <- rmReact(model = yeast_model, react = lipid_idx, rm_met = TRUE) # growth reaction (objective function; biomass exchange)
   
   return(yeast_model)
 }
