@@ -1,0 +1,3499 @@
+ID;Description
+r_0001;(R)-lactate:ferricytochrome-c 2-oxidoreductase
+r_0002;(R)-lactate:ferricytochrome-c 2-oxidoreductase
+r_0003;(R,R)-butanediol dehydrogenase
+r_0004;(S)-lactate:ferricytochrome-c 2-oxidoreductase
+r_0005;1,3-beta-glucan synthase
+r_0006;1,6-beta-glucan synthase
+r_0007;1-(5-phosphoribosyl)-5-[(5-phosphoribosylamino)methylideneamino)imidazole-4-carboxamide isomerase
+r_0012;1-pyrroline-5-carboxylate dehydrogenase
+r_0013;2,3-diketo-5-methylthio-1-phosphopentane degradation reaction
+r_0014;2,5-diamino-6-ribitylamino-4(3H)-pyrimidinone 5'-phosphate deaminase
+r_0015;2,5-diamino-6-ribosylamino-4(3H)-pyrimidinone 5'-phosphate reductase (NADPH)
+r_0016;2-aceto-2-hydroxybutanoate synthase
+r_0017;2-amino-4-hydroxy-6-hydroxymethyldihydropteridine diphosphokinase
+r_0018;2-aminoadipate transaminase
+r_0019;2-dehydropantoate 2-reductase
+r_0020;2-deoxy-D-arabino-heptulosonate 7-phosphate synthetase
+r_0021;2-hexaprenyl-6-methoxy-1,4-benzoquinone methyltransferase
+r_0022;2-hexaprenyl-6-methoxyphenol monooxygenase
+r_0023;2-isopropylmalate hydratase
+r_0024;2-isopropylmalate synthase
+r_0025;2-isopropylmalate synthase
+r_0026;2-keto-4-methylthiobutyrate transamination
+r_0027;2-methylcitrate dehydratase
+r_0028;2-methylcitrate synthase
+r_0029;2-oxo-4-methyl-3-carboxypentanoate decarboxylation
+r_0030;2-oxo-4-methyl-3-carboxypentanoate decarboxylation
+r_0032;3',5'-bisphosphate nucleotidase
+r_0033;3',5'-cyclic-nucleotide phosphodiesterase
+r_0034;3',5'-cyclic-nucleotide phosphodiesterase
+r_0035;3',5'-cyclic-nucleotide phosphodiesterase
+r_0036;3',5'-cyclic-nucleotide phosphodiesterase
+r_0037;3',5'-cyclic-nucleotide phosphodiesterase
+r_0038;3,4-dihydroxy-2-butanone-4-phosphate synthase
+r_0039;3-dehydroquinate dehydratase
+r_0040;3-dehydroquinate synthase
+r_0041;3-dehydrosphinganine reductase
+r_0042;3-deoxy-D-arabino-heptulosonate 7-phosphate synthetase
+r_0043;3-hexaprenyl-4,5-dihydroxybenzoate hydroxylase
+r_0044;3-hexaprenyl-4-hydroxy-5-methoxybenzoate decarboxylase
+r_0045;3-hydroxy-L-kynurenine hydrolase
+r_0057;3-hydroxyacyl-CoA dehydrogenase (3-oxotetradecanoyl-CoA)
+r_0058;3-hydroxyanthranilate 3,4-dioxygenase
+r_0059;3-isopropylmalate 3-methyltransferase
+r_0060;3-isopropylmalate dehydratase
+r_0061;3-isopropylmalate dehydrogenase
+r_0062;3-methyl-2-oxobutanoate decarboxylase
+r_0063;3-methyl-2-oxobutanoate hydroxymethyltransferase
+r_0064;3-methyl-2-oxopentanoate decarboxylase
+r_0065;3-phosphoshikimate 1-carboxyvinyltransferase
+r_0066;4-amino-4-deoxychorismate synthase
+r_0067;4-aminobenzoate synthase
+r_0068;4-aminobutyrate transaminase
+r_0069;4-hydroxy-L-threonine synthase
+r_0070;4-hydroxybenzoate formation
+r_0072;4-methyl-2-oxopentanoate decarboxylase
+r_0073;4PP-IP5 depyrophosphorylation to IP6
+r_0074;4PP-IP5 pyrophosphorylation to 4,5-PP2-IP4
+r_0075;5'-methylthioadenosine phosphorylase
+r_0076;5'-nucleotidase (CMP)
+r_0077;5'-nucleotidase (IMP)
+r_0078;5'-nucleotidase (UMP)
+r_0079;5'-phosphoribosylformyl glycinamidine synthetase
+r_0080;5,10-methylenetetrahydrofolate reductase (NADPH)
+r_0081;5-aminolevulinate synthase
+r_0082;5-diphosphoinositol-1,2,3,4,6-pentakisphosphate diphosphohydrolase
+r_0083;5-diphosphoinositol-1,2,3,4,6-pentakisphosphate synthase
+r_0084;5-formethyltetrahydrofolate cyclo-ligase
+r_0085;5-methyltetrahydropteroyltriglutamate-homocysteine S-methyltransferase
+r_0086;5-methylthio-5-deoxy-D-ribulose 1-phosphate dehydratase
+r_0087;5-methylthioribose-1-phosphate isomerase
+r_0088;5PP-IP5 pyrophosphorylation to 4,5-PP2-IP4
+r_0089;5PP-IP5 pyrophosphorylation to 5,6-PP2-IP4
+r_0090;6-phosphofructo-2-kinase
+r_0091;6-phosphogluconolactonase
+r_0092;6PP-IP5 depyrophosphorylation to IP6
+r_0093;6PP-IP5 pyrophosphorylation to 5,6-PP2-IP4
+r_0094;8-amino-7-oxononanoate synthase
+r_0095;acetaldehyde condensation
+r_0096;acetohydroxy acid isomeroreductase
+r_0097;acetolactate synthase
+r_0099;acetyl-CoA ACP transacylase
+r_0100;acetyl-CoA C-acyltransferase (palmitoyl-CoA)
+r_0101;acetyl-CoA C-acyltransferase (tetracosanoyl-CoA)
+r_0102;acetyl-CoA C-acyltransferase (myristoyl-CoA)
+r_0103;acetyl-CoA C-acetyltransferase
+r_0104;acetyl-CoA C-acetyltransferase
+r_0105;acetyl-CoA C-acyltransferase (lauroyl-CoA)
+r_0106;acetyl-CoA C-acyltransferase (octanoyl-CoA)
+r_0107;acetyl-CoA C-acyltransferase (decanoyl-CoA)
+r_0108;acetyl-Coa carboxylase
+r_0109;acetyl-CoA carboxylase, reaction
+r_0111;acetyl-CoA hydrolase
+r_0112;acetyl-CoA synthetase
+r_0113;acetyl-CoA synthetase
+r_0114;acetyl-CoA synthetase nuclear
+r_0115;acetylglutamate kinase
+r_0116;acid phosphatase (secreted)
+r_0117;aconitase
+r_0118;acteylornithine transaminase
+r_0119;acyl carrier protein synthase
+r_0120;acyl-CoA oxidase (decanoyl-CoA)
+r_0121;acyl-CoA oxidase (dodecanoyl-CoA)
+r_0122;acyl-CoA oxidase (hexacosanoyl-CoA)
+r_0123;acyl-CoA oxidase (hexadecanoyl-CoA)
+r_0124;acyl-CoA oxidase (octadecanoyl-CoA)
+r_0125;acyl-CoA oxidase (tetradecanoyl-CoA)
+r_0126;acyl-CoA:sterol acyltransferase (oleoyl-CoA:episterol), ER membrane
+r_0127;acyl-CoA:sterol acyltransferase (oleoyl-CoA:ergosterol), ER membrane
+r_0128;acyl-CoA:sterol acyltransferase (oleoyl-CoA:fecosterol), ER membrane
+r_0129;acyl-CoA:sterol acyltransferase (oleoyl-CoA:lanosterol), ER membrane
+r_0130;acyl-CoA:sterol acyltransferase (oleoyl-CoA:zymosterol), ER membrane
+r_0131;acyl-CoA:sterol acyltransferase (palmitoleoyl-CoA:episterol), ER membrane
+r_0132;acyl-CoA:sterol acyltransferase (palmitoleoyl-CoA:ergosterol), ER membrane
+r_0133;acyl-CoA:sterol acyltransferase (palmitoleoyl-CoA:fecosterol), ER membrane
+r_0134;acyl-CoA:sterol acyltransferase (palmitoleoyl-CoA:lanosterol), ER membrane
+r_0135;acyl-CoA:sterol acyltransferase (palmitoleoyl-CoA:zymosterol), ER membrane
+r_0137;acylation of GPI inositol at 2 position, GPI-anchor assembly, step 3
+r_0138;adenine deaminase
+r_0139;adenine phosphoribosyltransferase
+r_0140;adenosine deaminase
+r_0141;adenosine hydrolase
+r_0142;adenosine kinase
+r_0143;adenosine monophosphate deaminase
+r_0144;adenosylhomocysteinase
+r_0145;adenosylmethionine decarboxylase
+r_0146;adenosylmethionine-8-amino-7-oxononanoate transaminase
+r_0147;adenylate cyclase
+r_0148;adenylate kinase
+r_0149;adenylate kinase
+r_0150;adenylate kinase (GTP)
+r_0151;adenylosuccinate lyase (AICAR)
+r_0152;adenylosuccinate lyase
+r_0153;adenylosuccinate synthase
+r_0154;adenylyl-sulfate kinase
+r_0155;ADP-ribose 2,3-cyclic phosphodiesterase
+r_0156;alanine glyoxylate aminotransferase
+r_0157;alanyl-tRNA synthetase
+r_0158;alcohol acetyltransferase (2-methylbutanol)
+r_0159;alcohol acetyltransferase (ethanol)
+r_0160;alcohol acetyltransferase (isoamyl alcohol)
+r_0161;alcohol acetyltransferase (isobutyl alcohol)
+r_0162;alcohol acetyltransferase (phenylethanol alcohol)
+r_0163;alcohol dehydrogenase (ethanol to acetaldehyde)
+r_0164;alcohol dehydrogenase (glycerol, NADP)
+r_0165;mitochondrial alcohol dehydrogenase
+r_0166;aldehyde dehydrogenase (2-methylbutanol, NAD)
+r_0167;aldehyde dehydrogenase (2-methylbutanol, NAD)
+r_0168;aldehyde dehydrogenase (2-methylbutanol, NADP)
+r_0169;aldehyde dehydrogenase (2-phenylethanol, NAD)
+r_0170;aldehyde dehydrogenase (2-phenylethanol, NAD)
+r_0171;aldehyde dehydrogenase (2-phenylethanol, NADP)
+r_0172;aldehyde dehydrogenase (3-aminopropanal, NAD)
+r_0173;aldehyde dehydrogenase (acetaldehyde, NADP)
+r_0174;aldehyde dehydrogenase (acetylaldehyde, NAD)
+r_0175;aldehyde dehydrogenase (acetylaldehyde, NADP)
+r_0176;aldehyde dehydrogenase (indole-3-acetaldehyde, NAD)
+r_0177;aldehyde dehydrogenase (indole-3-acetaldehyde, NADP)
+r_0178;aldehyde dehydrogenase (indole-3-acetaldehyde, NADP)
+r_0179;aldehyde dehydrogenase (isoamyl alcohol, NAD)
+r_0180;aldehyde dehydrogenase (isoamyl alcohol, NAD)
+r_0181;aldehyde dehydrogenase (isoamyl alcohol, NADP)
+r_0182;aldehyde dehydrogenase (isobutyl alcohol, NAD)
+r_0183;aldehyde dehydrogenase (isobutyl alcohol, NAD)
+r_0184;aldehyde dehydrogenase (isobutyl alcohol, NADP)
+r_0185;aldehyde dehydrogenase (phenylacetaldehyde, NAD)
+r_0186;aldehyde dehydrogenase (tryptophol, NAD)
+r_0187;aldehyde dehydrogenase (tryptophol, NAD)
+r_0188;alkaline phosphatase (dihydroneopterin)
+r_0189;allantoate amidinohydrolase
+r_0190;allantoinase, reaction
+r_0191;allophanate hydrolase
+r_0192;alpha 1,2-mannosyltransferase
+r_0193;alpha,alpha-trehalase
+r_0194;alpha,alpha-trehalase
+r_0195;alpha,alpha-trehalose-phosphate synthase (UDP-forming)
+r_0198;alpha-glucosidase
+r_0199;amidase
+r_0200;Aminoacetone:oxygen oxidoreductase(deaminating)(flavin-containing)
+r_0201;Aminobutyraldehyde dehydrogenase
+r_0202;anthranilate phosphoribosyltransferase
+r_0203;anthranilate synthase
+r_0204;Ap4A hydrolase
+r_0205;arabinose reductase
+r_0206;arginase
+r_0207;argininosuccinate lyase
+r_0208;argininosuccinate synthase
+r_0209;arginyl-tRNA synthetase
+r_0210;arginyl-tRNA synthetase
+r_0211;asparagine synthase (glutamine-hydrolysing)
+r_0212;Asparaginyl-tRNA synthetase
+r_0213;asparaginyl-tRNA synthetase, miotchondrial
+r_0214;aspartate carbamoyltransferase
+r_0215;aspartate kinase
+r_0216;aspartate transaminase
+r_0217;aspartate transaminase
+r_0218;aspartate transaminase
+r_0219;aspartate-semialdehyde dehydrogenase
+r_0220;Aspartyl-tRNA synthetase
+r_0221;Aspartyl-tRNA synthetase
+r_0222;ATP adenylyltransferase
+r_0223;ATP adenylyltransferase
+r_0224;ATP adenylyltransferase
+r_0225;ATP phosphoribosyltransferase
+r_0226;ATP synthase
+r_0227;ATPase, cytosolic
+r_0228;beta-1,4 mannosyltransferase
+r_0229;biotin synthase
+r_0230;biotin-[acetyl-CoA-carboxylase] ligase
+r_0231;C-14 sterol reductase
+r_0233;C-22 sterol desaturase (NADP)
+r_0234;C-3 sterol dehydrogenase
+r_0235;C-3 sterol dehydrogenase (4-methylzymosterol)
+r_0236;C-3 sterol keto reductase (4-methylzymosterol)
+r_0237;C-3 sterol keto reductase (zymosterol)
+r_0238;C-4 methyl sterol oxidase
+r_0239;C-4 methyl sterol oxidase
+r_0240;C-4 methyl sterol oxidase
+r_0241;C-4 sterol methyl oxidase (4,4-dimethylzymosterol)
+r_0242;C-5 sterol desaturase
+r_0243;C-8 sterol isomerase
+r_0244;C-s24 sterol reductase
+r_0249;CAAX farnesyltransferase
+r_0250;carbamoyl-phosphate synthase (glutamine-hydrolysing)
+r_0252;carnitine O-acetyltransferase
+r_0253;carnitine O-acetyltransferase
+r_0254;carnitine O-acetyltransferase
+r_0255;catalase
+r_0256;catalase
+r_0259;ceramide-1 hydroxylase (24C)
+r_0260;ceramide-1 hydroxylase (24C)
+r_0261;ceramide-1 hydroxylase (26C)
+r_0262;ceramide-1 hydroxylase (26C)
+r_0263;ceramide-1 synthase (24C)
+r_0264;ceramide-1 synthase (26C)
+r_0265;ceramide-2 synthase (24C)
+r_0266;ceramide-2 synthase (26C)
+r_0267;ceramide-3 synthase (24C)
+r_0268;ceramide-3 synthase (26C)
+r_0269;ceramide-4 synthase (24C)
+r_0270;ceramide-4 synthase (26C)
+r_0271;chitin deacetylase
+r_0272;chitin synthase
+r_0273;choline kinase
+r_0274;choline phosphate cytididyltransferase
+r_0278;chorismate mutase
+r_0279;chorismate synthase
+r_0280;cis-aconitate(3-) to isocitrate
+r_0281;cis-prenyltransferase step 01
+r_0282;cis-prenyltransferase step 02
+r_0283;cis-prenyltransferase step 03
+r_0284;cis-prenyltransferase step 04
+r_0285;cis-prenyltransferase step 05
+r_0286;cis-prenyltransferase step 06
+r_0287;cis-prenyltransferase step 07
+r_0288;cis-prenyltransferase step 08
+r_0289;cis-prenyltransferase step 09
+r_0290;cis-prenyltransferase step 10
+r_0291;cis-prenyltransferase step 11
+r_0292;cis-prenyltransferase step 12
+r_0293;cis-prenyltransferase step 13
+r_0294;cis-prenyltransferase step 14
+r_0295;cis-prenyltransferase step 15
+r_0296;cis-prenyltransferase step 16
+r_0297;cis-prenyltransferase step 17
+r_0298;cis-prenyltransferase step 18
+r_0299;cis-prenyltransferase step 19
+r_0300;citrate synthase
+r_0301;citrate synthase, peroxisomal
+r_0302;citrate to cis-aconitate(3-)
+r_0303;citrate to cis-aconitate(3-), cytoplasmic
+r_0304;coproporphyrinogen oxidase (O2 required)
+r_0306;CTP synthase (glutamine)
+r_0307;CTP synthase (NH3)
+r_0308;cystathionine b-lyase
+r_0309;cystathionine beta-synthase
+r_0310;cystathionine g-lyase
+r_0311;cystathionine gamma-synthase
+r_0312;cysteine synthase
+r_0313;cysteinyl-tRNA synthetase
+r_0314;cytidine deaminase
+r_0315;cytidine kinase (GTP)
+r_0317;cytochrome P450 lanosterol 14-alpha-demethylase (NADP)
+r_0318;cytosine deaminase
+r_0319;D-arabinono-1,4-lactone oxidase
+r_0320;D-arabinose 1-dehydrogenase (NAD)
+r_0321;D-arabinose 1-dehydrogenase (NADP)
+r_0322;D-fructose 1-phosphate D-glyceraldehyde-3-phosphate-lyase
+r_0323;D-sorbitol dehydrogenase (D-fructose producing)
+r_0326;dCMP deaminase
+r_0327;dCTP deaminase
+r_0328;deoxyadenosine deaminase
+r_0329;deoxycytidine deaminase
+r_0330;deoxyguanylate kinase (dGMP:ATP)
+r_0331;deoxyhypusine synthase, cytosolic/mitochondrial
+r_0332;deoxyribokinase
+r_0333;deoxyuridine phosphorylase
+r_0334;dephospho-CoA kinase
+r_0335;dethiobiotin synthase
+r_0338;dihydoorotic acid (ubiquinone-6)
+r_0339;dihydoorotic acid dehydrogenase
+r_0340;dihydroceramidase
+r_0341;dihydroceramidase
+r_0342;dihydroceramidase
+r_0343;dihydroceramidase
+r_0344;dihydrofolate reductase
+r_0345;dihydrofolate reductase
+r_0346;dihydrofolate synthase
+r_0347;dihydroneopterin aldolase
+r_0348;dihydroneopterin monophosphate dephosphorylase
+r_0349;dihydroorotase
+r_0350;dihydropteroate synthase
+r_0351;dihydropteroate synthase
+r_0352;dihydroxy-acid dehydratase (2,3-dihydroxy-3-methylbutanoate)
+r_0353;dihydroxy-acid dehydratase (2,3-dihydroxy-3-methylpentanoate)
+r_0354;dihydroxyacetone kinase
+r_0355;dimethylallyltranstransferase
+r_0356;diphosphoglyceromutase
+r_0357;diphosphoinositol-1,3,4,6-tetrakisphosphate diphosphohydrolase
+r_0358;diphosphoinositol-1,3,4,6-tetrakisphosphate synthase
+r_0359;diphthine synthase
+r_0360;dolichol kinase
+r_0361;dolichyl-phosphate D-mannosyltransferase
+r_0362;dolichyl-phosphate-mannose--protein mannosyltransferase
+r_0363;dTMP kinase
+r_0364;dUTP diphosphatase
+r_0365;endopolygalacturonase
+r_0366;enolase
+r_0368;ethanolamine kinase
+r_0369;ethyl acetate-hydrolyzing esterase
+r_0370;exo-1,3-beta-glucan glucohydrase
+r_0373;farnesyltranstransferase
+r_0399;fatty-acid--CoA ligase (decanoate)
+r_0400;fatty-acid--CoA ligase (dodecanoate)
+r_0402;fatty-acid--CoA ligase (hexadecanoate)
+r_0410;fatty-acid--CoA ligase (octanoate)
+r_0412;fatty-acid--CoA ligase (tetradecanoate)
+r_0436;ferrochelatase
+r_0437;ferrocytochrome-c:hydrogen-peroxide oxidoreductase
+r_0438;ferrocytochrome-c:oxygen oxidoreductase
+r_0439;ferrocytochrome-c:oxygen oxidoreductase
+r_0440;FMN adenylyltransferase
+r_0441;FMN reductase
+r_0442;FMN reductase
+r_0443;formaldehyde dehydrogenase
+r_0445;formate dehydrogenase
+r_0446;formate-tetrahydrofolate ligase
+r_0447;formate-tetrahydrofolate ligase
+r_0448;fructose-2,6-bisphosphate 2-phosphatase
+r_0449;fructose-bisphosphatase
+r_0450;fructose-bisphosphate aldolase
+r_0451;fumarase
+r_0452;fumarase, cytoplasmic
+r_0453;Fumarate dependent DHORD
+r_0454;fumarate reductase
+r_0455;soluble fumarate reductase
+r_0457;g-glutamyltransferase
+r_0458;galactokinase
+r_0459;galactose-1-phosphate uridylyltransferase
+r_0460;gamma-glutamylcysteine synthetase
+r_0461;geranylgeranyltranstransferase
+r_0462;geranyltranstransferase
+r_0463;glucan 1,4-alpha-glucosidase
+r_0464;glucan 1,4-alpha-glucosidase, vacuole
+r_0465;glucosamine-6-phosphate deaminase
+r_0466;glucose 6-phosphate dehydrogenase
+r_0467;glucose-6-phosphate isomerase
+r_0468;glutamate 5-kinase
+r_0469;glutamate decarboxylase
+r_0470;glutamate dehydrogenase (NAD)
+r_0471;glutamate dehydrogenase (NADP)
+r_0472;glutamate synthase (NADH2)
+r_0473;glutamate-5-semialdehyde dehydrogenase
+r_0475;glutaminase
+r_0476;glutamine synthetase
+r_0477;glutamine-fructose-6-phosphate transaminase
+r_0478;glutaminyl-tRNA synthetase
+r_0479;glutamyl-tRNA synthetase
+r_0480;glutamyl-tRNA synthetase
+r_0481;glutathione oxidoreductase
+r_0482;glutathione oxidoreductase
+r_0483;glutathione peridoxase
+r_0484;glutathione peroxidase, mitochondria
+r_0485;glutathione synthetase
+r_0486;glyceraldehyde-3-phosphate dehydrogenase
+r_0487;glycerol dehydrogenase (NADP-dependent)
+r_0488;glycerol kinase
+r_0489;glycerol-3-phosphatase
+r_0490;glycerol-3-phosphate dehydrogenase (fad)
+r_0491;glycerol-3-phosphate dehydrogenase (NAD)
+r_0492;glycerol-3-phosphate dehydrogenase (NAD)
+r_0497;glycerophosphodiester phosphodiesterase (glycerophosphocholine)
+r_0499;glycinamide ribotide transformylase
+r_0500;glycine C-acetyltransferase
+r_0501;glycine cleavage system
+r_0502;glycine hydroxymethyltransferase
+r_0503;glycine hydroxymethyltransferase
+r_0504;glycine-cleavage complex (lipoamide)
+r_0505;glycine-cleavage complex (lipoamide)
+r_0506;glycine-cleavage complex (lipoylprotein)
+r_0507;glycine-cleavage complex (lipoylprotein)
+r_0508;glycine-cleavage complex (lipoylprotein)
+r_0509;glycine-cleavage system (lipoamide)
+r_0510;glycogen (starch) synthase
+r_0511;glycogen phosphorylase
+r_0512;glycyl-tRNA synthetase
+r_0514;GMP synthase
+r_0515;gnnuc
+r_0518;GPI-anchor assembly, step 2
+r_0519;GPI-anchor assembly, step 5
+r_0520;GPI-anchor assembly, step 6
+r_0521;GPI-anchor assembly, step 7
+r_0522;GPI-anchor assembly, step 8
+r_0523;GPI-anchor assembly, step 9
+r_0524;GTP cyclohydrolase I
+r_0525;GTP cyclohydrolase II
+r_0526;guanine deaminase
+r_0527;guanine phosphoribosyltransferase
+r_0528;guanylate kinase
+r_0529;guanylate kinase (GMP:dATP)
+r_0530;Heme O monooxygenase
+r_0531;Heme O synthase
+r_0532;hexaprenyldihydroxybenzoate methyltransferase
+r_0533;hexokinase (D-fructose:ATP)
+r_0534;hexokinase (D-glucose:ATP)
+r_0535;hexokinase (D-mannose:ATP)
+r_0536;histidinol dehydrogenase
+r_0537;histidinol-phosphatase
+r_0538;histidinol-phosphate transaminase
+r_0539;histidyl-tRNA synthetase
+r_0540;histidyl-tRNA synthetase
+r_0541;hnRNP arginine N-methyltransferase
+r_0542;homoacontinate hydratase
+r_0543;homocitrate synthase
+r_0544;homocysteine S-methyltransferase
+r_0545;homoisocitrate dehydrogenase
+r_0547;homoserine dehydrogenase (NADP)
+r_0548;homoserine kinase
+r_0549;homoserine O-trans-acetylase
+r_0550;hydrogen peroxide reductase (thioredoxin)
+r_0551;hydrogen peroxide reductase (thioredoxin)
+r_0552;hydrogen peroxide reductase (thioredoxin)
+r_0553;hydroxyacylglutathione hydrolase
+r_0554;hydroxyacylglutathione hydrolase
+r_0555;hydroxybenzoate octaprenyltransferase
+r_0556;hydroxyethylthiazole kinase
+r_0557;hydroxymethylbilane synthase
+r_0558;hydroxymethylglutaryl CoA reductase
+r_0559;hydroxymethylglutaryl CoA synthase
+r_0560;hydroxymethylglutaryl CoA synthase
+r_0561;hydroxymethylpyrimidine kinase (ATP)
+r_0562;hypoxanthine phosphoribosyltransferase (Hypoxanthine)
+r_0563;Imidazole-glycerol-3-phosphate synthase
+r_0564;imidazoleglycerol-phosphate dehydratase
+r_0565;IMP dehydrogenase
+r_0566;indole-3-glycerol-phosphate synthase
+r_0567;indole-3-pyruvate decarboxylase
+r_0568;inorganic diphosphatase
+r_0569;inorganic diphosphatase
+r_0570;inosine monophosphate cyclohydrolase
+r_0571;inositol-1,3,4,5,6-pentakisphosphate 2-kinase
+r_0572;inositol-1,3,4,5-triphosphate 6-kinase, nucleus
+r_0573;inositol-1,4,5,6- tetrakisphosphate 3-kinase, nucleus
+r_0574;inositol-1,4,5-triphosphate 6-kinase, nucleus
+r_0575;inositol-1,4,5-trisphosphate 3-kinase, nucleus
+r_0596;IPS phospholipase C
+r_0597;IPS phospholipase C
+r_0598;IPS phospholipase C
+r_0599;IPS phospholipase C
+r_0600;IPS phospholipase C
+r_0601;IPS phospholipase C
+r_0602;IPS phospholipase C
+r_0603;IPS phospholipase C
+r_0604;IPS phospholipase C
+r_0605;IPS phospholipase C
+r_0606;IPS phospholipase C
+r_0607;IPS phospholipase C
+r_0608;IPS phospholipase C
+r_0609;IPS phospholipase C
+r_0610;IPS phospholipase C
+r_0611;IPS phospholipase C
+r_0612;IPS phospholipase C
+r_0613;IPS phospholipase C
+r_0614;IPS phospholipase C
+r_0615;IPS phospholipase C
+r_0616;IPS phospholipase C
+r_0617;IPS phospholipase C
+r_0618;IPS phospholipase C
+r_0619;IPS phospholipase C
+r_0620;IPS phospholipase C
+r_0621;IPS phospholipase C
+r_0622;IPS phospholipase C
+r_0623;IPS phospholipase C
+r_0624;IPS phospholipase C
+r_0625;IPS phospholipase C
+r_0626;IPS phospholipase C
+r_0627;IPS phospholipase C
+r_0628;IPS phospholipase C
+r_0629;IPS phospholipase C
+r_0630;IPS phospholipase C
+r_0631;IPS phospholipase C
+r_0632;IPS phospholipase C
+r_0633;IPS phospholipase C
+r_0634;IPS phospholipase C
+r_0635;IPS phospholipase C
+r_0636;IPS phospholipase C
+r_0637;IPS phospholipase C
+r_0638;IPS phospholipase C
+r_0639;IPS phospholipase C
+r_0640;IPS phospholipase C
+r_0641;IPS phospholipase C
+r_0642;IPS phospholipase C
+r_0643;IPS phospholipase C
+r_0644;IPS phospholipase C
+r_0645;IPS phospholipase C
+r_0646;IPS phospholipase C
+r_0647;IPS phospholipase C
+r_0648;IPS phospholipase C
+r_0649;IPS phospholipase C
+r_0650;IPS phospholipase C
+r_0651;IPS phospholipase C
+r_0652;IPS phospholipase C
+r_0653;IPS phospholipase C
+r_0654;IPS phospholipase C
+r_0655;IPS phospholipase C
+r_0656;isoamyl acetate-hydrolyzing esterase
+r_0657;isobutyl acetate-hydrolyzing esterase
+r_0658;isocitrate dehydrogenase (NAD+)
+r_0659;isocitrate dehydrogenase (NADP)
+r_0661;isocitrate dehydrogenase (NADP+), peroxisomal
+r_0662;isocitrate lyase
+r_0663;isoleucine transaminase
+r_0664;isoleucine transaminase
+r_0665;isoleucyl-tRNA synthetase
+r_0666;isoleucyl-tRNA synthetase
+r_0667;isopentenyl-diphosphate D-isomerase
+r_0668;itaconate-CoA ligase (ADP-forming)
+r_0669;ketol-acid reductoisomerase (2-aceto-2-hydroxybutanoate)
+r_0670;kynureninase
+r_0671;kynurenine 3-monooxygenase
+r_0672;L-1-pyrroline-3-hydroxy-5-carboxylate dehydrogenase
+r_0673;L-4-hydroxyglutamate semialdehyde dehydrogenase
+r_0674;L-alanine transaminase
+r_0675;L-allo-threonine aldolase
+r_0676;L-allo-threonine dehydrogenase
+r_0678;L-aminoadipate-semialdehyde dehydrogenase (NADPH)
+r_0679;L-asparaginase
+r_0680;L-asparaginase
+r_0681;L-erythro-4-hydroxyglutamate:2-oxoglutarate aminotransferase
+r_0682;L-erythro-4-hydroxyglutamate:2-oxoglutarate aminotransferase
+r_0683;L-erythro-4-hydroxyglutamate:2-oxoglutarate aminotransferase
+r_0687;L-hydroxyproline reductase (NADP)
+r_0688;L-lactaldehyde:NADP+ 1-oxidoreductase
+r_0689;L-serine deaminase
+r_0690;L-serine dehydrogenase
+r_0691;L-sorbitol dehydrogenase (L-sorbose-producing)
+r_0692;L-threonine deaminase
+r_0693;L-threonine deaminase
+r_0694;L-tryptophan:oxygen 2,3-oxidoreductase (decyclizing)
+r_0695;L-tyrosine N-formyltransferase
+r_0696;lactaldehyde dehydrogenase
+r_0697;lactoylglutathione lyase
+r_0698;lanosterol synthase
+r_0699;leucine transaminase
+r_0700;leucine transaminase
+r_0701;leucyl-tRNA synthetase
+r_0702;leucyl-tRNA synthetase
+r_0703;leukotriene A4 hydrolase
+r_0704;leukotriene A4 hydrolase
+r_0705;leukotriene A4 hydrolase
+r_0706;leukotriene A4 hydrolase
+r_0707;leukotriene A4 hydrolase
+r_0708;leukotriene A4 hydrolase
+r_0711;lysyl-tRNA synthetase
+r_0712;lysyl-tRNA synthetase
+r_0713;malate dehydrogenase
+r_0714;malate dehydrogenase, cytoplasmic
+r_0715;malate dehydrogenase, peroxisomal
+r_0716;malate synthase
+r_0717;malate synthase
+r_0718;malic enzyme (NAD)
+r_0721;malonyl-CoA-ACP transacylase
+r_0722;mannose-1-phosphate guanylyltransferase
+r_0723;mannose-6-phosphate isomerase
+r_0724;methenyltetrahydrifikate cyclohydrolase
+r_0725;methenyltetrahydrofolate cyclohydrolase
+r_0726;methionine adenosyltransferase
+r_0727;methionine synthase
+r_0728;methionyl-tRNA formyltransferase
+r_0729;methionyl-tRNA synthetase
+r_0730;methionyl-tRNA synthetase
+r_0731;methylenetetrahydrofolate dehydrogenase (NAD)
+r_0732;methylenetetrahydrofolate dehydrogenase (NADP)
+r_0733;methylenetetrahydrofolate dehydrogenase (NADP)
+r_0734;methylisocitrate lyase
+r_0735;mevalonate kinase (atp)
+r_0736;mevalonate kinase (ctp)
+r_0737;mevalonate kinase (gtp)
+r_0738;mevalonate kinase (UTP)
+r_0739;mevalonate pyrophoshate decarboxylase
+r_0747;MIPC synthase
+r_0748;MIPC synthase
+r_0749;MIPC synthase
+r_0750;MIPC synthase
+r_0751;MIPC synthase
+r_0752;MIPC synthase
+r_0753;MIPC synthase
+r_0754;MIPC synthase
+r_0755;MIPC synthase
+r_0756;MIPC synthase
+r_0757;myo-inositol 1-phosphatase
+r_0758;myo-inositol-1-phosphate synthase
+r_0759;N-acetyl-g-glutamyl-phosphate reductase
+r_0760;N-acetylglucosamine-6-phosphate synthase
+r_0761;N-acteylglutamate synthase
+r_0762;N-formyl-L-kynurenine amidohydrolase
+r_0763;N-formyltyrosine oxidase
+r_0764;NAD diphosphatase
+r_0765;NAD kinase
+r_0766;NAD kinase
+r_0767;NAD nucleosidase nuclear
+r_0768;NAD synthase
+r_0769;NAD synthase
+r_0770;NADH dehydrogenase, cytosolic/mitochondrial
+r_0771;NADH kinase
+r_0772;NADH kinase mitochondrial
+r_0773;NADH:ubiquinone oxidoreductase
+r_0774;NAPRtase
+r_0775;NAPRtase
+r_0781;nicotinamidase
+r_0782;nicotinamide N-methyltransferase
+r_0783;nicotinamide-nucleotide adenylyltransferase
+r_0784;nicotinamide-nucleotide adenylyltransferase
+r_0785;nicotinate-nucleotide adenylyltransferase
+r_0786;nicotinate-nucleotide diphosphorylase (carboxylating)
+r_0787;nicotinate-nucleotide diphosphorylase (carboxylating)
+r_0788;nucleoside diphosphatase
+r_0789;nucleoside diphosphatase
+r_0790;nucleoside diphosphatase
+r_0791;nucleoside diphosphatase
+r_0792;nucleoside diphosphatase
+r_0793;nucleoside diphosphatase
+r_0795;nucleoside diphosphate kinase
+r_0796;nucleoside diphosphate kinase
+r_0797;nucleoside diphosphate kinase
+r_0798;nucleoside diphosphate kinase
+r_0799;nucleoside diphosphate kinase
+r_0800;nucleoside diphosphate kinase
+r_0801;nucleoside diphosphate kinase
+r_0802;nucleoside diphosphate kinase
+r_0803;nucleoside diphosphate kinase
+r_0804;nucleoside triphosphatase
+r_0805;nucleoside triphosphatase
+r_0806;nucleoside triphosphatase
+r_0807;nucleoside triphosphatase
+r_0810;nucleoside-diphosphatase (GDP), Golgi
+r_0811;nucleoside-diphosphate kinase (ATP:UDP)
+r_0812;O-acetylhomoserine (thiol)-lyase
+r_0813;O-acetylhomoserine (thiol)-lyase
+r_0815;O-succinylhomoserine lyase (L-cysteine)
+r_0816;ornithine carbamoyltransferase
+r_0817;ornithine decarboxylase
+r_0818;ornithine transacetylase
+r_0819;ornithine transaminase
+r_0820;orotate phosphoribosyltransferase
+r_0821;orotidine-5'-phosphate decarboxylase
+r_0831;oxoglutarate dehydrogenase (dihydrolipoamide S-succinyltransferase)
+r_0832;oxoglutarate dehydrogenase (lipoamide)
+r_0841;pantetheine-phosphate adenylyltransferase
+r_0842;pantothenate kinase
+r_0843;pantothenate synthase
+r_0844;peroxisomal acyl-CoA thioesterase
+r_0845;peroxisomal acyl-CoA thioesterase
+r_0847;peroxisomal acyl-CoA thioesterase
+r_0848;peroxisomal acyl-CoA thioesterase
+r_0849;peroxisomal acyl-CoA thioesterase
+r_0850;peroxisomal acyl-CoA thioesterase
+r_0851;phenylalanine transaminase
+r_0852;phenylalanyl-tRNA synthetase
+r_0853;phenylalanyl-tRNA synthetase
+r_0854;phenylpyruvate decarboxylase
+r_0855;phopshoribosylaminoimidazole synthetase
+r_0882;phosphoacetylglucosamine mutase
+r_0883;phosphoadenylyl-sulfate reductase (thioredoxin)
+r_0884;phosphoenolpyruvate carboxykinase
+r_0885;phosphoethanolamine cytidyltransferase
+r_0886;phosphofructokinase
+r_0887;phosphofructokinase (s7p)
+r_0888;phosphoglucomutase
+r_0889;phosphogluconate dehydrogenase
+r_0890;phosphoglucosamine mutase
+r_0891;phosphoglycerate dehydrogenase
+r_0892;phosphoglycerate kinase
+r_0893;phosphoglycerate mutase
+r_0902;phosphomannomutase
+r_0903;phosphomethylpyrimidine kinase
+r_0904;phosphomevalonate kinase
+r_0905;phosphopantothenate-cysteine ligase
+r_0906;phosphopantothenoylcysteine decarboxylase
+r_0907;phosphopentomutase
+r_0908;phosphoribosyl amino imidazolesuccinocarbozamide synthetase
+r_0909;phosphoribosyl-AMP cyclohydrolase
+r_0910;phosphoribosyl-ATP pyrophosphatase
+r_0911;phosphoribosylaminoimidazole-carboxylase
+r_0912;phosphoribosylaminoimidazolecarboxamide formyltransferase
+r_0913;phosphoribosylanthranilate isomerase
+r_0914;phosphoribosylglycinamidine synthetase
+r_0915;phosphoribosylpyrophosphate amidotransferase
+r_0916;phosphoribosylpyrophosphate synthetase
+r_0917;phosphoserine phosphatase (L-serine)
+r_0918;phosphoserine transaminase
+r_0919;phytoceramidase
+r_0920;phytoceramidase
+r_0921;Phytosphingosine phosphate lyase
+r_0922;phytosphingosine synthesis
+r_0929;polyamine oxidase
+r_0935;porphobilinogen synthase
+r_0936;poylamine oxidase
+r_0937;poylamine oxidase
+r_0938;prephenate dehydratase
+r_0939;prephenate dehydrogenase (NADP)
+r_0940;proline oxidase (NAD)
+r_0941;prolyl-tRNA synthetase
+r_0942;protoporphyrinogen oxidase
+r_0943;purine-nucleoside phosphorylase
+r_0944;purine-nucleoside phosphorylase (adenosine)
+r_0945;purine-nucleoside phosphorylase (adenosine)
+r_0946;purine-nucleoside phosphorylase (deoxyadenosine)
+r_0947;purine-nucleoside phosphorylase (deoxyguanosine)
+r_0948;purine-nucleoside phosphorylase (deoxyinosine)
+r_0949;purine-nucleoside phosphorylase (Guanosine)
+r_0950;purine-nucleoside phosphorylase (Guanosine)
+r_0951;purine-nucleoside phosphorylase (inosine)
+r_0952;purine-nucleoside phosphorylase (Xanthosine)
+r_0953;pyridoxal oxidase
+r_0954;pyridoxamine 5'-phosphate oxidase
+r_0955;pyridoxine 5'-phosphate oxidase
+r_0956;pyridoxine oxidase
+r_0957;pyrroline-5-carboxylate reductase
+r_0958;pyruvate carboxylase
+r_0959;pyruvate decarboxylase
+r_0960;pyruvate decarboxylase (acetoin-forming)
+r_0961;pyruvate dehydrogenase
+r_0962;pyruvate kinase
+r_0963;quinone oxidoreductase
+r_0964;reduced glutathione via ABC system
+r_0965;riboflavin kinase
+r_0966;riboflavin kinase
+r_0967;riboflavin synthase
+r_0968;riboflavin synthase
+r_0969;ribokinase
+r_0970;ribonucleoside-triphosphate reductase (ATP)
+r_0971;ribonucleoside-triphosphate reductase (CTP)
+r_0972;ribonucleoside-triphosphate reductase (GTP)
+r_0973;ribonucleoside-triphosphate reductase (UTP)
+r_0974;ribonucleotide reductase
+r_0975;ribonucleotide reductase
+r_0976;ribonucleotide reductase
+r_0977;ribonucleotide reductase
+r_0978;ribonucleotide reductase
+r_0979;ribonucleotide reductase
+r_0982;ribose-5-phosphate isomerase
+r_0983;ribosylnicotinamide kinase
+r_0984;ribulose 5-phosphate 3-epimerase
+r_0985;S-adenosyl-L-methionine:3-hexaprenyl-4,5-dihydroxylate O-methyltransferase
+r_0986;S-adenosyl-methionine delta-24-sterol-c-methyltransferase
+r_0987;S-formylglutathione hydralase
+r_0988;saccharopine dehydrogenase (NAD, L-lysine forming)
+r_0989;saccharopine dehydrogenase (NADP, L-glutamate forming)
+r_0990;sedoheptulose 1,7-bisphosphate D-glyceraldehyde-3-phosphate-lyase
+r_0992;serine O-acetyltransferase
+r_0993;serine palmitotransferase
+r_0995;seryl-tRNA synthetase
+r_0996;shikimate dehydrogenase
+r_0997;shikimate kinase
+r_0998;sirohydrochlorin dehydrogenase
+r_0999;sirohydrochlorin ferrochetalase
+r_1001;spermidine synthase
+r_1002;spermine synthase
+r_1003;sphinganine phosphate lyase
+r_1004;sphingoid base-phosphate phosphatase (phytosphingosine 1-phosphate)
+r_1005;sphingoid base-phosphate phosphatase (sphinganine 1-phosphatase)
+r_1006;sphingolipid long chain base kinase (phytosphingosine)
+r_1007;sphingolipid long chain base kinase (sphinganine)
+r_1008;spontaneous cis-aconitate(3-) to trans-aconitate
+r_1009;spontaneous cis-aconitate(3-) to trans-aconitate
+r_1010;squalene epoxidase (NAD)
+r_1011;squalene epoxidase (NADP)
+r_1012;squalene synthase
+r_1021;succinate dehydrogenase (ubiquinone-6)
+r_1022;succinate-CoA ligase (ADP-forming)
+r_1023;succinate-semialdehyde dehydrogenase (NADP)
+r_1024;sucrose hydrolyzing enxyme
+r_1025;sulfate adenylyltransferase
+r_1026;sulfate adenylyltransferase (ADP)
+r_1027;sulfite reductase (NADPH2)
+r_1028;taurcholate via ABC system
+r_1029;taurine dioxygenase
+r_1030;tetrahydrofolate aminomethyltransferase
+r_1031;tetrahydrofolate:L-glutamate gamma-ligase (ADP-forming)
+r_1032;thiamin diphosphatase
+r_1033;thiamin phosphatase
+r_1034;thiamine diphosphokinase
+r_1035;thiamine-diphosphate kinase
+r_1036;thiamine-phosphate diphosphorylase
+r_1037;thioredoxin
+r_1038;thioredoxin reductase (NADPH)
+r_1039;thioredoxin reductase (NADPH)
+r_1040;threonine aldolase
+r_1041;threonine synthase
+r_1042;threonyl-tRNA synthetase
+r_1043;threonyl-tRNA synthetase
+r_1044;thymidine phosphorylase
+r_1045;thymidylate synthase
+r_1046;trans-aconitate 3-methyltransferase
+r_1047;trans-pentaprenyltranstransferase
+r_1048;transaldolase
+r_1049;transketolase 1
+r_1050;transketolase 2
+r_1051;trehalose-phosphatase
+r_1054;triose-phosphate isomerase
+r_1055;tryptophan synthase (indoleglycerol phosphate)
+r_1056;tryptophan transaminase
+r_1057;tryptophanyl-tRNA synthetase
+r_1058;tryptophanyl-tRNA synthetase
+r_1063;tyrosine transaminase
+r_1065;tyrosine transaminase
+r_1066;tyrosyl-tRNA synthetase
+r_1067;tyrosyl-tRNA synthetase
+r_1068;UDP-glucose:ergosterol glucosyltransferase
+r_1069;UDP-N-acetylglucosamine diphosphorylase
+r_1070;UDPglucose 4-epimerase
+r_1071;UDPglucose--hexose-1-phosphate uridylyltransferase
+r_1072;UMP kinase
+r_1073;UMP kinase
+r_1074;uracil phosphoribosyltransferase
+r_1075;urea carboxylase
+r_1076;ureidoglycolate hydrolase
+r_1077;uridine kinase (ATP:uridine)
+r_1078;uridine kinase (GTP:uridine)
+r_1079;uridylate kinase (dUMP)
+r_1080;uridylate kinase (dUMP)
+r_1081;uroporphyrinogen decarboxylase (uroporphyrinogen III)
+r_1082;uroporphyrinogen methyltransferase
+r_1083;uroporphyrinogen-III synthase
+r_1084;UTP-glucose-1-phosphate uridylyltransferase
+r_1085;V-ATPase, Golgi
+r_1086;V-ATPase, vacuole
+r_1087;valine transaminase
+r_1088;valine transaminase, mitochondiral
+r_1089;valyl-tRNA synthetase
+r_1090;valyl-tRNA synthetase
+r_1091;xanthine phosphoribosyltransferase
+r_1092;xylitol dehydrogenase (D-xyulose-forming)
+r_1093;xylose reductase
+r_1094;xylulokinase
+r_1095;yUMP synthetase
+r_1096;(R)-mevalonate transport
+r_1097;(R,R)-butanediol transport
+r_1098;2-methylbutyl transport
+r_1099;2-oxoadipate and 2-oxoglutarate transport
+r_1100;3-hexaprenyl-4,5-dihydroxybenzoate transport
+r_1101;4-aminobutyrate transport
+r_1102;5-aminolevulinate transport
+r_1103;5-formyltetrahydrofolic acid transport
+r_1104;8-Amino-7-oxononanoate transport
+r_1106;acetate transport
+r_1107;acetic ester transport
+r_1108;adenine transport
+r_1109;adenosine transport
+r_1110;ADP/ATP transporter
+r_1111;ADP/ATP transporter
+r_1112;AKG transporter, mitochonrial
+r_1113;allantoate uniport
+r_1114;allantoin uniport
+r_1115;ammonia transport
+r_1116;AMP/ATP transporter
+r_1117;aspartate transport
+r_1118;aspartate-glutamate transporter
+r_1119;biotin uptake
+r_1120;carnithine-acetylcarnithine carrier
+r_1121;ceramide-2' (sphinganine:n-C24:0OH) transport
+r_1122;ceramide-2' (sphinganine:n-C26:0OH) transport
+r_1123;ceramide-3 (Phytosphingosine:n-C24:0OH) transport
+r_1124;ceramide-3 (Phytosphingosine:n-C26:0OH) transport
+r_1125;choline transport
+r_1126;citrate transport
+r_1127;citrate transport
+r_1128;citrate transport
+r_1129;coenzyme A transport
+r_1130;CTP transport
+r_1131;CTP/CMP antiport
+r_1132;cytidine transport
+r_1133;cytosine transport
+r_1134;D-fructose transport
+r_1135;D-galactose transport
+r_1136;D-lactate transport
+r_1137;D-lactate transport
+r_1138;D-lactate/pyruvate antiport
+r_1139;D-mannose transport
+r_1146;episterol transport
+r_1147;ergosterol transport
+r_1148;ergosterol transport
+r_1149;ethanolamine transport
+r_1151;fadH2 transport
+r_1161;fecosterol transport
+r_1162;fecosterol transport
+r_1164;folic acid transport
+r_1165;GDP-mannose antiport
+r_1166;glucose transport
+r_1167;glutathione transport
+r_1168;glutathione transport
+r_1169;glycero-3-phospho-1-inositol transport
+r_1170;glycero-3-phosphocholine transport
+r_1171;glycerol transport
+r_1172;glycerol transport via channel
+r_1173;glycine transport
+r_1174;glycogen vacuolar 'transport' via autophagy
+r_1175;GTP/GDP translocase
+r_1176;guanine transport
+r_1177;inositol transport
+r_1178;iron (II) transport
+r_1179;iron (II) transport
+r_1180;isoamyl acetate transport
+r_1181;isobutyl acetate transport
+r_1182;isopentenyl diphosphate transport
+r_1183;L-alanine transport
+r_1184;L-arganine transport
+r_1185;L-arganine transport
+r_1186;L-asparagine transport
+r_1187;L-asparagine transport
+r_1188;L-aspartate transport
+r_1189;L-aspartate transport
+r_1190;L-aspartate transport
+r_1191;L-carnitine transport
+r_1192;L-cystine transport
+r_1193;L-cystine transport
+r_1194;L-glutamate transport
+r_1195;L-glutamate transport
+r_1196;L-glutamate transport
+r_1197;L-glutamine transport
+r_1198;L-glutamine transport
+r_1199;L-glutamine transport
+r_1200;L-histidine transport, vacuolar
+r_1201;L-histidine transport
+r_1202;L-isoleucine transport
+r_1203;L-isoleucine transport
+r_1204;L-isoleucine transport
+r_1205;L-isoleucine transport
+r_1206;L-lactate transport
+r_1207;L-lactate transport
+r_1208;L-leucine transport, vacuoluar
+r_1209;L-leucine transport, vacuoluar
+r_1210;L-leucine transport, vacuoluar
+r_1211;L-leucine transport
+r_1212;L-lysine transport
+r_1213;L-lysine transport
+r_1214;L-methionine transport
+r_1215;L-phenylalanine transport
+r_1216;L-proline transport
+r_1217;L-serine transport
+r_1218;L-threonine transport
+r_1219;L-tryptophan transport
+r_1220;L-tyrosine transport
+r_1221;L-tyrosine transport
+r_1222;L-tyrosine transport
+r_1223;L-tyrosine transport
+r_1224;L-valine transport
+r_1225;lanosterol transport
+r_1226;malate transport
+r_1227;maltose transport
+r_1228;N,N'-diformyldityrosine transport
+r_1229;NAD transport
+r_1230;NAD transport
+r_1231;NAD transport
+r_1232;NAD transport
+r_1235;nicotinate transport
+r_1236;octadecanoate (n-C18:0) transport
+r_1237;ornithine transport
+r_1238;orntithine transport
+r_1239;oxaloacetate transport
+r_1241;pantothenate transport
+r_1242;pentaprenyl diphosphate transport
+r_1243;phenethyl acetate transport
+r_1244;phosphate transport
+r_1245;phosphate transport
+r_1249;potassium transport
+r_1250;putrescine excretion
+r_1251;putrescine transport
+r_1252;putrescine transport
+r_1253;pyridoxine symport
+r_1254;pyruvate transport
+r_1255;S-adenosyl-L-methionine transport
+r_1256;S-adenosyl-L-methionine transport
+r_1257;S-methylmethionine permease
+r_1258;sodium proton antiporter
+r_1259;spermidine excretion
+r_1260;spermidine transport
+r_1261;spermidine transport
+r_1262;spermine transport
+r_1263;spermine transport
+r_1264;succinate transport
+r_1265;succinate-fumarate transport
+r_1266;sulfate uniport
+r_1267;sulfite transport
+r_1268;taurine transport
+r_1269;thiamine diphosphate transport
+r_1270;thiamine transport
+r_1271;UDPgalactose transport
+r_1272;uracil transport
+r_1273;urea transport
+r_1274;uridine transport
+r_1275;UTP transport
+r_1276;UTP/UMP antiport
+r_1277;water diffusion
+r_1278;zymosterol transport
+r_1357;isa complex sphingolipid
+r_1358;isa complex sphingolipid
+r_1359;isa complex sphingolipid
+r_1360;isa complex sphingolipid
+r_1361;isa complex sphingolipid
+r_1362;isa complex sphingolipid
+r_1363;isa dolichol
+r_1364;isa dolichol
+r_1365;isa dolichol
+r_1366;isa dolichol
+r_1367;isa dolichol
+r_1368;isa dolichol
+r_1369;isa dolichol
+r_1370;isa dolichol
+r_1371;isa dolichol
+r_1449;isa IPC
+r_1450;isa IPC
+r_1451;isa IPC
+r_1452;isa IPC
+r_1453;isa IPC
+r_1454;isa IPC
+r_1455;isa IPC
+r_1456;isa IPC
+r_1457;isa IPC
+r_1458;isa IPC
+r_1459;isa IPC
+r_1460;isa IPC
+r_1461;isa IPC
+r_1462;isa IPC
+r_1463;isa IPC
+r_1464;isa IPC
+r_1465;isa IPC
+r_1466;isa IPC
+r_1467;isa IPC
+r_1468;isa IPC
+r_1469;isa IPC
+r_1470;isa IPC
+r_1471;isa IPC
+r_1472;isa IPC
+r_1473;isa IPC
+r_1474;isa IPC
+r_1475;isa IPC
+r_1476;isa IPC
+r_1477;isa IPC
+r_1478;isa IPC
+r_1479;isa M(IP)2C
+r_1480;isa M(IP)2C
+r_1481;isa M(IP)2C
+r_1482;isa M(IP)2C
+r_1483;isa M(IP)2C
+r_1484;isa M(IP)2C
+r_1485;isa M(IP)2C
+r_1486;isa M(IP)2C
+r_1487;isa M(IP)2C
+r_1488;isa M(IP)2C
+r_1489;isa M(IP)2C
+r_1490;isa M(IP)2C
+r_1491;isa M(IP)2C
+r_1492;isa M(IP)2C
+r_1493;isa M(IP)2C
+r_1494;isa M(IP)2C
+r_1495;isa M(IP)2C
+r_1496;isa M(IP)2C
+r_1497;isa M(IP)2C
+r_1498;isa M(IP)2C
+r_1499;isa M(IP)2C
+r_1500;isa M(IP)2C
+r_1501;isa M(IP)2C
+r_1502;isa M(IP)2C
+r_1503;isa M(IP)2C
+r_1504;isa M(IP)2C
+r_1505;isa M(IP)2C
+r_1506;isa M(IP)2C
+r_1507;isa M(IP)2C
+r_1508;isa M(IP)2C
+r_1509;isa MIPC
+r_1510;isa MIPC
+r_1511;isa MIPC
+r_1512;isa MIPC
+r_1513;isa MIPC
+r_1514;isa MIPC
+r_1515;isa MIPC
+r_1516;isa MIPC
+r_1517;isa MIPC
+r_1518;isa MIPC
+r_1519;isa MIPC
+r_1520;isa MIPC
+r_1521;isa MIPC
+r_1522;isa MIPC
+r_1523;isa MIPC
+r_1524;isa MIPC
+r_1525;isa MIPC
+r_1526;isa MIPC
+r_1527;isa MIPC
+r_1528;isa MIPC
+r_1529;isa MIPC
+r_1530;isa MIPC
+r_1531;isa MIPC
+r_1532;isa MIPC
+r_1533;isa MIPC
+r_1534;isa MIPC
+r_1535;isa MIPC
+r_1536;isa MIPC
+r_1537;isa MIPC
+r_1538;isa MIPC
+r_1542;(1->3)-beta-D-glucan exchange
+r_1543;(1->3)-beta-D-glucan transport
+r_1545;(R)-carnitine exchange
+r_1546;(R)-lactate exchange
+r_1547;(R)-mevalonate exchange
+r_1548;(R)-pantothenate exchange
+r_1549;(R,R)-2,3-butanediol exchange
+r_1550;(S)-3-methyl-2-oxopentanoate exchange
+r_1551;(S)-lactate exchange
+r_1552;(S)-malate exchange
+r_1553;1-(sn-glycero-3-phospho)-1D-myo-inositol exchange
+r_1554;1-acylglycerophosphocholine exchange
+r_1560;1D-myo-inositol 1,3,4,5,6-pentakisphosphate diffusion
+r_1562;1D-myo-inositol 1-phosphate transport
+r_1563;2'-deoxyadenosine exchange
+r_1564;2'-deoxyguanosine exchange
+r_1565;2'-deoxyinosine exchange
+r_1566;2'-deoxyuridine exchange
+r_1567;2-dehydro-3-deoxy-D-arabino-heptonate7-phohsphate transport
+r_1568;2-dehydropantoate transport
+r_1572;2-isopropylmalate exchange
+r_1573;2-isopropylmalate transport
+r_1574;2-isopropylmalate transport
+r_1575;2-methyl-1-butanol transport
+r_1576;2-methyl-1-butanol transport
+r_1577;2-methylbutanal exchange
+r_1578;2-methylbutanal transport
+r_1579;2-methylbutanal transport
+r_1580;2-methylbutanol exchange
+r_1581;2-methylbutyl acetate exchange
+r_1582;2-methylpropanal transport
+r_1583;2-methylpropanal transport
+r_1585;2-oxobutanoate transporter
+r_1586;2-oxoglutarate exchange
+r_1587;2-oxoglutarate transport
+r_1588;2-oxoglutarate transport
+r_1589;2-phenylethanol exchange
+r_1590;2-phenylethanol transport
+r_1591;2-phenylethanol transport
+r_1595;3-carboxy-4-methyl-2-oxopentanoate transport
+r_1596;3-methyl-2-oxopentanoate transport
+r_1597;3-methyl-oxopentanoate trasport
+r_1598;3-methylbutanal exchange
+r_1599;3-methylbutanal transport
+r_1600;3-methylbutanal transport
+r_1601;3-octaprenyl-4-hydroxybenzoate transport
+r_1603;4-amino-5-hydroxymethyl-2-methylpyrimidine synthetase
+r_1604;4-aminobenzoate exchange
+r_1605;4-aminobenzoate transport
+r_1606;4-aminobenzoate transport
+r_1607;4-aminobutanal transport
+r_1608;4-aminobutyrate transport
+r_1609;4-hydroxy-2-oxoglutarate transport
+r_1610;4-hydroxy-2-oxoglutarate transport
+r_1611;4-hydroxybenzoate transport
+r_1613;5'-nucleotidase (AMP)
+r_1614;5'-nucleotidase (dAMP)
+r_1615;5'-nucleotidase (dCMP)
+r_1616;5'-nucleotidase (dGMP)
+r_1617;5'-nucleotidase (dTMP)
+r_1618;5'-nucleotidase (dUMP)
+r_1619;5'-nucleotidase (GMP)
+r_1620;5'-nucleotidase (XMP)
+r_1621;5-aminolevulinate exchange
+r_1622;5-aminolevulinate transport
+r_1623;5-formethyltetrahydrofolate cyclo-ligase
+r_1624;5-formyltetrahydrofolate:10-formyltetrahydrofolate isomerase
+r_1625;5-formyltetrahydrofolic acid exchange
+r_1627;7,8-diaminononanoate exchange
+r_1628;7,8-diaminononanoate transport
+r_1629;8-amino-7-oxononanoate exchange
+r_1630;9H-xanthine exchange
+r_1631;acetaldehyde exchange
+r_1632;acetaldehyde transport
+r_1633;acetaldehyde transport
+r_1634;acetate exchange
+r_1635;acetate transport
+r_1637;acetyl-CoA transport
+r_1638;acetylcarnitine transport
+r_1639;adenine exchange
+r_1640;adenine transport
+r_1641;adenosine 3',5'-bismonophosphate exchange
+r_1642;adenosine 3',5'-bisphosphate transport
+r_1643;adenosine exchange
+r_1644;ADP transport
+r_1645;ADP transport
+r_1647;AKG transporter, peroxisome
+r_1648;allantoate exchange
+r_1649;allantoin exchange
+r_1650;alpha,alpha-trehalose exchange
+r_1651;alpha-D-glucosamine 6-phosphate exchange
+r_1652;alpha-ketoglutarate/malate transporter
+r_1654;ammonium exchange
+r_1656;AMP transport
+r_1657;arginine transport
+r_1658;asparagine transport
+r_1659;aspartate-glutamate transporter
+r_1660;ATP diffusion
+r_1661;ATP transport
+r_1663;bicarbonate exchange
+r_1664;bicarbonate formation
+r_1665;bicarbonate formation
+r_1667;bicarbonate formation
+r_1668;bicarbonate formation
+r_1669;bicarbonate transport
+r_1671;biotin exchange
+r_1672;carbon dioxide exchange
+r_1673;carnitine transport
+r_1674;carnitine-acetylcarnitine carrier
+r_1675;CDP transport
+r_1676;ceramide transport
+r_1677;ceramide transport
+r_1678;ceramide transport
+r_1679;ceramide transport
+r_1680;ceramide transport
+r_1681;ceramide transport
+r_1682;cholestenol delta-isomerase, lumped reaction
+r_1683;choline exchange
+r_1684;choline transport
+r_1685;chorismate pyruvate lyase
+r_1686;citrate transport
+r_1687;citrate(3-) exchange
+r_1688;citrate/isocitrate antiport
+r_1689;citrate/malate antiport
+r_1690;CMP nucleosidase
+r_1691;CO2 transport
+r_1694;CO2 transport
+r_1695;CO2 transport
+r_1696;CO2 transport
+r_1697;CO2 transport
+r_1698;coenzyme A transport
+r_1699;coenzyme A transport
+r_1700;coenzyme A transport
+r_1701;complex sphingolipid transport
+r_1702;cytidine exchange
+r_1703;cytidylate kinase (CMP)
+r_1704;cytidylate kinase (dCMP)
+r_1705;cytosine exchange
+r_1706;D-arabinose exchange
+r_1707;D-arabinose transport
+r_1708;D-erythrose 4-phosphate transport
+r_1709;D-fructose exchange
+r_1710;D-galactose exchange
+r_1711;D-galacturonate exchange
+r_1712;D-glucitol exchange
+r_1713;D-glucosamine 6-phosphate uniport
+r_1714;D-glucose exchange
+r_1715;D-mannose exchange
+r_1716;D-ribose exchange
+r_1717;D-sorbitol transport
+r_1718;D-xylose exchange
+r_1719;D-xylose transport
+r_1720;dADP transport
+r_1721;dCDP transport
+r_1722;ATP deamination
+r_1723;dATP deamination
+r_1724;ADP deamination
+r_1725;dADP deamination
+r_1726;deamino-NAD+ diffusion
+r_1727;decanoate exchange
+r_1728;deoxyadenosine transport
+r_1729;deoxyadenylate kinase
+r_1730;deoxycytidine exchange
+r_1731;deoxycytidine transport
+r_1732;deoxyguanosine transport
+r_1733;deoxyinosine transport
+r_1734;deoxyuridine kinase (ATP:deoxyuridine)
+r_1735;deoxyuridine transport
+r_1736;dephospho-CoA kinase
+r_1737;dGDP transport
+r_1738;dhnpt transport
+r_1739;diamine transaminase
+r_1743;dihydrofolate transport
+r_1744;dihydroneopterin triphosphate pyrophosphatase
+r_1745;dihydropteroate transport
+r_1746;dihydroxyacetone phosphate transport
+r_1747;diphosphate transport
+r_1748;dolichol phosphate transport
+r_1749;dTTP exchange
+r_1750;dTTP uniport
+r_1751;dUDP diffusion
+r_1752;dUMP transport
+r_1753;episterol exchange
+r_1754;ergosta-5,6,22,24,(28)-tetraen-3beta-ol transport
+r_1757;ergosterol exchange
+r_1758;ergosterol transport
+r_1759;ergosterol transport
+r_1760;ergosterol transport
+r_1761;ethanol exchange
+r_1762;ethanol transport
+r_1763;ethanol transport, mitochondrial
+r_1764;ethanolamine exchange
+r_1765;ethyl acetate exchange
+r_1766;farnesyl diphosphate transport
+r_1770;fatty acid transport
+r_1771;fatty acid transport
+r_1772;fatty acid transport
+r_1774;fatty acid transport
+r_1775;fatty acid transport
+r_1776;fatty acid transport
+r_1777;myristate (n-C14:0) transport
+r_1788;fecosterol exchange
+r_1790;FMN adenylyltransferase
+r_1791;FMN exchange
+r_1792;folic acid exchange
+r_1793;formate exchange
+r_1794;formate transport
+r_1795;formate transport
+r_1796;formate transport
+r_1797;fructose-1-phosphate kinase
+r_1798;fumarate(2-) exchange
+r_1800;gamma-aminobutyrate exchange
+r_1801;GDP transport
+r_1802;GDP transport
+r_1803;GDP-alpha-D-mannose transport
+r_1805;glucose transport, vacuolar
+r_1806;glutathione disulfide exchange
+r_1807;glutathione exchange
+r_1808;glycerol exchange
+r_1809;glycerol-3-phosphate shuttle
+r_1810;glycine exchange
+r_1811;glycine transport
+r_1812;glycoaldehyde transport
+r_1813;glycoaldehyde transport
+r_1814;glycolaldehyde exchange
+r_1815;glyoxylate exchange
+r_1816;glyoxylate transport
+r_1817;glyoxylate transport
+r_1818;guanine exchange
+r_1819;guanine transport
+r_1820;guanosine exchange
+r_1821;guanosine kinase
+r_1822;guanosine transport
+r_1823;guanosine transport
+r_1824;H+ diffusion
+r_1825;H+ diffusion
+r_1826;H+ diffusion
+r_1827;H+ diffusion
+r_1829;H+ diffusion
+r_1830;H+ diffusion
+r_1831;H+ diffusion
+r_1832;H+ exchange
+r_1833;hexacosanoyl-CoA transport
+r_1834;hexadecanal exchange
+r_1835;hexadecanoate (n-C16:0) transport
+r_1836;hexadecenoate (n-C16:1) transport
+r_1837;L-histidine transport, mitochondrial
+r_1838;homocitrate synthase
+r_1839;hydrogen peroxide transport
+r_1840;hydroxymethylglutaryl-CoA transport
+r_1841;hypoxanthine exchange
+r_1842;hypoxanthine transport
+r_1843;indol-3-ylacetaldehyde exchange
+r_1844;indole-3-acetaldehyde transport
+r_1845;indole-3-acetaldehyde transport
+r_1846;indole-3-acetate transport
+r_1847;inosine exchange
+r_1848;inosine transport
+r_1849;inositol hexakisphosphate transport
+r_1850;insosine kinase
+r_1851;IPC transport
+r_1852;IPC transport
+r_1853;IPC transport
+r_1854;IPC transport
+r_1855;IPC transport
+r_1856;IPC transport
+r_1857;IPC transport
+r_1858;IPC transport
+r_1859;IPC transport
+r_1860;IPC transport
+r_1861;iron(2+) exchange
+r_1862;isoamyl acetate exchange
+r_1863;isoamyl alcohol transport
+r_1864;isoamyl alcohol transport
+r_1865;isoamylol exchange
+r_1866;isobutanol exchange
+r_1867;isobutyl acetate exchange
+r_1868;isobutyl alcohol transport
+r_1869;isobutyl alcohol transport
+r_1870;isobutyraldehyde exchange
+r_1871;L-1-pyrroline-3-hydroxy-5-carboxylate spontaneous conversion to L-4-hydroxyglutamate semialdehyde
+r_1872;L-2-amino-3-oxobutanoate decarboxylation (spontaneous)
+r_1873;L-alanine exchange
+r_1874;L-alanine transport
+r_1875;L-arabinitol exchange
+r_1876;L-arabinitol transport
+r_1877;L-arabinoase transport
+r_1878;L-arabinose exchange
+r_1879;L-arginine exchange
+r_1880;L-asparagine exchange
+r_1881;L-aspartate exchange
+r_1882;L-carnitine transport
+r_1883;L-cysteine exchange
+r_1884;L-erythro-4-hydroxyglutamate transport
+r_1885;L-erythro-4-hydroxyglutamate transport
+r_1886;L-glucitol exchange
+r_1887;L-glutamate 5-semialdehyde dehydratase
+r_1889;L-glutamate exchange
+r_1890;L-glutamate transport
+r_1891;L-glutamine exchange
+r_1892;L-glutamine transport
+r_1893;L-histidine exchange
+r_1895;L-homoserine transport
+r_1896;L-homoserine transport
+r_1897;L-isoleucine exchange
+r_1898;L-isoleucine transport
+r_1899;L-leucine exchange
+r_1900;L-lysine exchange
+r_1901;L-malate transport
+r_1902;L-methionine exchange
+r_1903;L-phenylalanine exchange
+r_1904;L-proline exchange
+r_1905;L-proline transport
+r_1906;L-serine exchange
+r_1907;L-serine transport
+r_1908;L-sorbitol transport
+r_1909;L-sorbose exchange
+r_1910;L-sorbose transport
+r_1911;L-threonine exchange
+r_1912;L-tryptophan exchange
+r_1913;L-tyrosine exchange
+r_1914;L-valine exchange
+r_1915;lanosterol exchange
+r_1916;laurate exchange
+r_1919;lysine transport
+r_1920;M(IP)2C transport
+r_1921;M(IP)2C transport
+r_1922;M(IP)2C transport
+r_1923;M(IP)2C transport
+r_1924;M(IP)2C transport
+r_1925;M(IP)2C transport
+r_1926;M(IP)2C transport
+r_1927;M(IP)2C transport
+r_1928;M(IP)2C transport
+r_1929;M(IP)2C transport
+r_1930;malate/oxaloacetate shuttle
+r_1931;maltose exchange
+r_1932;mannan transport
+r_1935;methionine transport
+r_1936;methylglyoxal synthase
+r_1937;MIPC transport
+r_1938;MIPC transport
+r_1939;MIPC transport
+r_1940;MIPC transport
+r_1941;MIPC transport
+r_1942;MIPC transport
+r_1943;MIPC transport
+r_1944;MIPC transport
+r_1945;MIPC transport
+r_1946;MIPC transport
+r_1947;myo-inositol exchange
+r_1952;N,N'-diformyldityrosine exchange
+r_1963;NADP(+) transport
+r_1964;NADPH transport
+r_1965;NH3 transport
+r_1966;nicotinamide diffusion
+r_1967;nicotinate exchange
+r_1968;NMN exchange
+r_1970;NMN transport
+r_1971;NMN transport
+r_1972;NMN transport
+r_1974;nucleoside-diphosphatase (dGDP)
+r_1975;nucleoside-triphosphatase (dGTP)
+r_1976;O-acetylcarnintine transport into mitochondria
+r_1977;O2 transport
+r_1978;O2 transport
+r_1979;O2 transport
+r_1980;O2 transport
+r_1981;octadecanoate (n-C18:0) transport
+r_1984;octanoate exchange
+r_1987;ornithine exchange
+r_1988;oxaloacetate transport
+r_1989;oxaloacetate(2-) exchange
+r_1990;oxidized glutathione uniport
+r_1991;oxidized thioredoxin transport
+r_1992;oxygen exchange
+r_1993;palmitate exchange
+r_1994;palmitoleate exchange
+r_1995;palmitoyl-CoA transport
+r_1996;panthetheine 4'-phosphate transport
+r_1997;panthetheine-phosphate adenylyltransferase
+r_1998;PAP uniport
+r_1999;pectin exchange
+r_2000;phenethyl acetate exchange
+r_2001;phenylacetaldehyde exchange
+r_2002;phenylacetaldehyde transport
+r_2003;phenylacetaldehyde transport
+r_2004;phenylalanine transport
+r_2005;phosphate exchange
+r_2008;phosphate transport
+r_2020;potassium exchange
+r_2022;protoporphyrinogen IX transport
+r_2023;PRPP transport
+r_2024;putrescine exchange
+r_2025;pyridoxal kinase
+r_2026;pyridoxamine kinase
+r_2027;pyridoxamine phosphatase
+r_2028;pyridoxine exchange
+r_2029;pyridoxine kinase
+r_2030;pyrimidine phosphatase
+r_2031;pyrimidine-nucleoside phosphorylase (uracil)
+r_2032;pyrophosphate transport
+r_2033;pyruvate exchange
+r_2034;pyruvate transport
+r_2036;quinolinate transport
+r_2037;reduced thioredoxin transport
+r_2038;riboflavin exchange
+r_2039;riboflavin transport
+r_2040;riboflavin transport
+r_2041;ribose transporter
+r_2042;S-adenosyl-L-homocysteine transport
+r_2043;S-adenosyl-L-methionine exchange
+r_2044;S-methyl-L-methionine exchange
+r_2045;serine transport
+r_2046;sn-glycero-3-phosphocholine exchange
+r_2049;sodium exchange
+r_2050;spermidine acetyltransferase
+r_2051;spermidine exchange
+r_2052;spermine exchange
+r_2053;squalene transport
+r_2054;squalene-2,3-epoxide transport
+r_2055;stearate exchange
+r_2056;succinate exchange
+r_2057;succinate transport
+r_2058;sucrose exchange
+r_2060;sulphate exchange
+r_2061;sulphite exchange
+r_2062;taurine exchange
+r_2063;tetracosanoyl-CoA transport
+r_2064;thiamin phosphatase
+r_2065;thiaminase
+r_2066;thiamine(1+) diphosphate(1-) exchange
+r_2067;thiamine(1+) exchange
+r_2068;thiamine(1+) monophosphate exchange
+r_2069;thiamine-phosphate kinase
+r_2070;thiazole phosphate synthesis (ribose 5-phosphate)
+r_2071;thiazole phosphate synthesis (xylulose 5-phosphate)
+r_2072;threonine transport
+r_2073;thymidine exchange
+r_2074;thymidine kinase (ATP:thymidine)
+r_2075;thymidine transport
+r_2079;trehalose transporter
+r_2080;trehalose vacuolar transport
+r_2082;tryptophan transport
+r_2083;tryptophol exchange
+r_2084;tryptophol transport
+r_2085;tryptophol transport
+r_2086;tyrosine transport
+r_2087;tyrosine transport
+r_2089;UMP transport
+r_2090;uracil exchange
+r_2091;urea exchange
+r_2092;uridine exchange
+r_2093;valine transport
+r_2094;water diffusion
+r_2095;water diffusion
+r_2096;water diffusion
+r_2097;water diffusion
+r_2098;water diffusion
+r_2099;water diffusion
+r_2100;water exchange
+r_2101;xanthine transport
+r_2102;xanthosine exchange
+r_2103;xanthosine transport
+r_2104;xylitol exchange
+r_2105;xylitol transport
+r_2106;zymosterol exchange
+r_2107;zymosterol transport
+r_2108;lipid pseudoreaction
+r_2110;yeast 5 biomass pseudoreaction
+r_2111;growth
+r_2112;kynurenine aminotransferase
+r_2113;spontaneous kynurenic acid to quinaldic acid
+r_2114;spontaneous 2-amino-3-carboxymuconate-6-semialdehyde to quinolinate
+r_2115;alcohol dehydrogenase, (acetaldehyde to ethanol)
+r_2116;acetaldehyde dehydrogenase
+r_2117;phenylalanine transaminase
+r_2118;tryptophan transaminase
+r_2119;tyrosine transaminase
+r_2125;coenzyme A: cytoplasm to LP
+r_2126;sedoheptulose bisphosphatase
+r_2127;dihydroorotate dehydrogenase
+r_2129;H+ diffusion
+r_2131;isocitrate dehydrogenase
+r_2132;oxoglutarate/malate exchange
+r_2133;yeast 6 biomass pseudoreaction
+r_2134;14-demethyllanosterol exchange
+r_2136;14-demethyllanosterol transport
+r_2137;ergosta-5,7,22,24(28)-tetraen-3beta-ol exchange
+r_2139;ergosta-5,7,22,24(28)-tetraen-3beta-ol transport
+r_2140;fatty-acyl-CoA synthase (n-C16:0CoA)
+r_2141;fatty-acyl-CoA synthase (n-C18:0CoA)
+r_2142;B-ketoacyl-ACP synthase (acetoacetyl-ACP)
+r_2143;B-ketoacyl-ACP synthase (3-oxo-hexanoyl-ACP)
+r_2144;B-ketoacyl-ACP synthase (3-oxo-octanoyl-ACP)
+r_2145;3-oxoacyl-ACP reductase (3-hydroxybutanoyl-ACP)
+r_2146;3-oxoacyl-ACP reductase (3-hydroxyhexanoyl-ACP)
+r_2147;3-oxoacyl-ACP reductase (3-hydroxyoctanoyl-ACP)
+r_2148;3-hydroxyacyl-thioester dehydratase (trans-but-2-enoyl-ACP)
+r_2149;3-hydroxyacyl-thioester dehydratase (trans-hex-2-enoyl-ACP)
+r_2150;3-hydroxyacyl-thioester dehydratase (trans-oct-2-enoyl-ACP)
+r_2151;enoyl-ACP reductase (butanoyl-ACP)
+r_2152;enoyl-ACP reductase (hexanoyl-ACP)
+r_2153;enoyl-ACP reductase (octanoyl-ACP)
+r_2154;elongase I (3-oxotetradecanoyl-CoA)
+r_2155;elongase I (3-oxopalmitoyl-CoA)
+r_2156;elongase II (3-oxooctadecanoyl-CoA)
+r_2157;elongase II or III (3-oxoicosanoyl-CoA)
+r_2158;elongase II or III (3-oxodocosanoyl-CoA)
+r_2159;elongase II or III (3-oxotetracosanoyl-CoA)
+r_2160;elongase III (3-oxohexacosanoyl-CoA)
+r_2161;B-ketoacyl-CoA reductase ((S)-3-hydroxytetradecanoyl-CoA)
+r_2162;B-ketoacyl-CoA reductase ((S)-3-hydroxypalmitoyl-CoA)
+r_2163;B-ketoacyl-CoA reductase (3-hydroxyoctadecanoyl-CoA)
+r_2164;B-ketoacyl-CoA reductase (3-hydroxyicosanoyl-CoA)
+r_2165;B-ketoacyl-CoA reductase (3-hydroxydocosanoyl-CoA)
+r_2166;B-ketoacyl-CoA reductase (3-hydroxytetracosanoyl-CoA)
+r_2167;B-ketoacyl-CoA reductase ((S)-3-hydroxyhexacosanoyl-CoA)
+r_2168;B-hydroxyacyl-CoA dehydratase (trans-tetradec-2-enoyl-CoA)
+r_2169;B-hydroxyacyl-CoA dehydratase (trans-hexadec-2-enoyl-CoA)
+r_2170;B-hydroxyacyl-CoA dehydratase (trans-octadec-2-enoyl-CoA)
+r_2171;B-hydroxyacyl-CoA dehydratase (trans-icos-2-enoyl-CoA)
+r_2172;B-hydroxyacyl-CoA dehydratase (trans-docos-2-enoyl-CoA)
+r_2173;B-hydroxyacyl-CoA dehydratase (trans-tetracos-2-enoyl-CoA)
+r_2174;B-hydroxyacyl-CoA dehydratase (trans-hexacos-2-enoyl-CoA)
+r_2175;trans-2-enoyl-CoA reductase (n-C14:0CoA)
+r_2176;trans-2-enoyl-CoA reductase (n-C16:0CoA)
+r_2177;trans-2-enoyl-CoA reductase (n-C18:0CoA)
+r_2178;trans-2-enoyl-CoA reductase (n-C20:0CoA)
+r_2179;trans-2-enoyl-CoA reductase (n-C22:0CoA)
+r_2180;trans-2-enoyl-CoA reductase (n-C24:0CoA)
+r_2181;trans-2-enoyl-CoA reductase (n-C26:0CoA)
+r_2182;palmitoyl-CoA desaturase (n-C16:0CoA -> n-C16:1CoA), ER membrane
+r_2183;stearoyl-CoA desaturase (n-C18:0CoA -> n-C18:1CoA), ER membrane
+r_2184;octanoate (n-C8:0) transport
+r_2185;decanoate (n-C10:0) transport
+r_2186;laurate (n-C12:0) transport
+r_2187;butyrate exchange
+r_2188;hexanoate exchange
+r_2189;oleate exchange
+r_2190;butyrate (n-C4:0) transport
+r_2191;hexanoate (n-C6:0) transport
+r_2192;octadecenoate (n-C18:1) transport
+r_2193;myristate exchange
+r_2194;fatty-acid--CoA ligase (dodecanoate), ER membrane
+r_2195;fatty-acid--CoA ligase (tetradecanoate), ER membrane
+r_2196;fatty-acid--CoA ligase (hexadecanoate), ER membrane
+r_2197;fatty-acid--CoA ligase (hexadecenoate), ER membrane
+r_2198;fatty-acid--CoA ligase (octadecanoate), ER membrane
+r_2199;fatty-acid--CoA ligase (octadecenoate), ER membrane
+r_2200;fatty-acid--CoA ligase (dodecanoate), lipid particle
+r_2201;fatty-acid--CoA ligase (tetradecanoate), lipid particle
+r_2202;fatty-acid--CoA ligase (hexadecanoate), lipid particle
+r_2203;fatty-acid--CoA ligase (hexadecenoate), lipid particle
+r_2204;fatty-acid--CoA ligase (octadecanoate), lipid particle
+r_2205;fatty-acid--CoA ligase (octadecenoate), lipid particle
+r_2206;fatty-acid--CoA ligase (hexadecenoate), peroxisome
+r_2207;fatty-acid--CoA ligase (octadecanoate), peroxisome
+r_2208;fatty-acid--CoA ligase (octadecenoate), peroxisome
+r_2209;fatty-acid--CoA ligase (arachidate), cell envelope
+r_2210;fatty-acid--CoA ligase (behenate), cell envelope
+r_2211;fatty-acid--CoA ligase (lignoceric acid), cell envelope
+r_2212;fatty-acid--CoA ligase (cerotic acid), cell envelope
+r_2213;fatty-acid--CoA ligase (behenate), ER membrane
+r_2214;fatty-acid--CoA ligase (lignoceric acid), ER membrane
+r_2215;fatty-acid--CoA ligase (cerotic acid), ER membrane
+r_2216;fatty-acid--CoA ligase (behenate), lipid particle
+r_2217;fatty-acid--CoA ligase (lignoceric acid), lipid particle
+r_2218;fatty-acid--CoA ligase (cerotic acid), lipid particle
+r_2219;fatty acyl-CoA transport via ABC system (C12:0)
+r_2220;fatty acyl-CoA transport via ABC system (C14:0)
+r_2221;fatty acyl-CoA transport via ABC system (C16:0)
+r_2222;fatty acyl-CoA transport via ABC system (C16:1)
+r_2223;fatty acyl-CoA transport via ABC system (C18:0)
+r_2224;fatty acyl-CoA transport via ABC system (C18:1)
+r_2225;fatty acyl-CoA transport via ABC system (C20:0)
+r_2226;fatty acyl-CoA transport via ABC system (C22:0)
+r_2227;fatty acyl-CoA transport via ABC system (C24:0)
+r_2228;fatty acyl-CoA transport via ABC system (C26:0)
+r_2229;butyrate (n-C4:0) transport, cytoplasm-peroxisome
+r_2230;hexanoate (n-C6:0) transport, cytoplasm-peroxisome
+r_2231;octadecenoate (n-C18:1) transport, cytoplasm-peroxisome
+r_2232;peroxisomal acyl-CoA thioesterase (4:0)
+r_2233;peroxisomal acyl-CoA thioesterase (6:0)
+r_2234;peroxisomal acyl-CoA thioesterase (16:1)
+r_2235;peroxisomal acyl-CoA thioesterase (18:1)
+r_2236;acyl-CoA oxidase (butanoyl-CoA)
+r_2237;acyl-CoA oxidase (hexanoyl-CoA)
+r_2238;acyl-CoA oxidase (octanoyl-CoA)
+r_2239;acyl-CoA oxidase (icosanoyl-CoA)
+r_2240;acyl-CoA oxidase (docosanoyl-CoA)
+r_2241;acyl-CoA oxidase (tetracosanoyl-CoA)
+r_2242;acyl-CoA oxidase (palmitoleoyl-CoA)
+r_2243;acyl-CoA oxidase (cis-tetradec-7-enoyl-CoA)
+r_2244;acyl-CoA oxidase (cis-dodec-5-enoyl-CoA)
+r_2245;acyl-CoA oxidase (oleoyl-CoA)
+r_2246;acyl-CoA oxidase (cis-hexadec-7-enoyl-CoA)
+r_2247;acyl-CoA oxidase (cis-tetradec-5-enoyl-CoA)
+r_2248;2-enoyl-CoA hydratase (3-hydroxydecanoyl-CoA)
+r_2249;2-enoyl-CoA hydratase (3-hydroxydodecanoyl-CoA)
+r_2250;2-enoyl-CoA hydratase (3-hydroxytetradecanoyl-CoA)
+r_2251;2-enoyl-CoA hydratase (3-hydroxyhexadecanoyl-CoA)
+r_2252;2-enoyl-CoA hydratase (3-hydroxyoctadecanoyl-CoA)
+r_2253;2-enoyl-CoA hydratase (3-hydroxyhexacosanoyl-CoA)
+r_2254;2-enoyl-CoA hydratase (3-hydroxybutanoyl-CoA)
+r_2255;2-enoyl-CoA hydratase (3-hydroxyhexanoyl-CoA)
+r_2256;2-enoyl-CoA hydratase (3-hydroxyoctanoyl-CoA)
+r_2257;2-enoyl-CoA hydratase (3-hydroxyicosanoyl-CoA)
+r_2258;2-enoyl-CoA hydratase (3-hydroxydocosanoyl-CoA)
+r_2259;2-enoyl-CoA hydratase (3-hydroxytetracosanoyl-CoA)
+r_2260;2-enoyl-CoA hydratase (3-hydroxy-cis-hexadec-9-enoyl-CoA)
+r_2261;2-enoyl-CoA hydratase (3-hydroxy-cis-tetradec-7-enoyl-CoA)
+r_2262;2-enoyl-CoA hydratase (3-hydroxy-cis-dodec-5-enoyl-CoA)
+r_2263;2-enoyl-CoA hydratase (3-hydroxy-cis-octadec-9-enoyl-CoA)
+r_2264;2-enoyl-CoA hydratase (3-hydroxy-cis-hexadec-7-enoyl-CoA)
+r_2265;2-enoyl-CoA hydratase (3-hydroxy-cis-tetradec-5-enoyl-CoA)
+r_2266;3-hydroxyacyl-CoA dehydrogenase (3-oxodecanoyl-CoA)
+r_2267;3-hydroxyacyl-CoA dehydrogenase (3-oxododecanoyl-CoA)
+r_2268;3-hydroxyacyl-CoA dehydrogenase (3-oxohexadecanoyl-CoA)
+r_2269;3-hydroxyacyl-CoA dehydrogenase (3-oxooctadecanoyl-CoA)
+r_2270;3-hydroxyacyl-CoA dehydrogenase (3-oxohexacosanoyl-CoA)
+r_2271;3-hydroxyacyl-CoA dehydrogenase (3-oxobutanoyl-CoA)
+r_2272;3-hydroxyacyl-CoA dehydrogenase (3-oxohexanoyl-CoA)
+r_2273;3-hydroxyacyl-CoA dehydrogenase (3-oxooctanoyl-CoA)
+r_2274;3-hydroxyacyl-CoA dehydrogenase (3-oxoicosanoyl-CoA)
+r_2275;3-hydroxyacyl-CoA dehydrogenase (3-oxodocosanoyl-CoA)
+r_2276;3-hydroxyacyl-CoA dehydrogenase (3-oxotetracosanoyl-CoA)
+r_2277;3-hydroxyacyl-CoA dehydrogenase (3-oxo-cis-hexadec-9-enoyl-CoA)
+r_2278;3-hydroxyacyl-CoA dehydrogenase (3-oxo-cis-tetradec-7-enoyl-CoA)
+r_2279;3-hydroxyacyl-CoA dehydrogenase (3-oxo-cis-dodec-5-enoyl-CoA)
+r_2280;3-hydroxyacyl-CoA dehydrogenase (3-oxo-cis-octadec-9-enoyl-CoA)
+r_2281;3-hydroxyacyl-CoA dehydrogenase (3-oxo-cis-hexadec-7-enoyl-CoA)
+r_2282;3-hydroxyacyl-CoA dehydrogenase (3-oxo-cis-tetradec-5-enoyl-CoA)
+r_2283;acetyl-CoA C-acyltransferase (acetyl-CoA)
+r_2284;acetyl-CoA C-acyltransferase (butanoyl-CoA)
+r_2285;acetyl-CoA C-acyltransferase (hexanoyl-CoA)
+r_2286;acetyl-CoA C-acyltransferase (stearoyl-CoA)
+r_2287;acetyl-CoA C-acyltransferase (icosanoyl-CoA)
+r_2288;acetyl-CoA C-acyltransferase (docosanoyl-CoA)
+r_2289;acetyl-CoA C-acyltransferase (cis-tetradec-7-enoyl-CoA)
+r_2290;acetyl-CoA C-acyltransferase (cis-dodec-5-enoyl-CoA)
+r_2291;acetyl-CoA C-acyltransferase (cis-dec-3-enoyl-CoA)
+r_2292;acetyl-CoA C-acyltransferase (cis-hexadec-7-enoyl-CoA)
+r_2293;acetyl-CoA C-acyltransferase (cis-tetradec-5-enoyl-CoA)
+r_2294;acetyl-CoA C-acyltransferase (cis-dodec-3-enoyl-CoA)
+r_2295;delta3,delta2-enoyl-CoA isomerase (cis-dec-3-enoyl-CoA)
+r_2296;delta3,delta2-enoyl-CoA isomerase (trans-2,cis-5-dodecadienoyl-CoA)
+r_2297;delta3,delta2-enoyl-CoA isomerase (trans-dodec-3-enoyl-CoA)
+r_2298;delta3,delta2-enoyl-CoA isomerase (cis-dodec-3-enoyl-CoA)
+r_2299;delta3,delta2-enoyl-CoA isomerase (trans-2,cis-5-tetradecadienoyl-CoA)
+r_2300;delta3,delta2-enoyl-CoA isomerase (trans-tetradec-3-enoyl-CoA)
+r_2301;delta(3,5)-delta(2,4)-dienoyl-CoA isomerase (trans-3,cis-5-dodecadienoyl-CoA)
+r_2302;delta(3,5)-delta(2,4)-dienoyl-CoA isomerase (trans-3,cis-5-tetradecadienoyl-CoA)
+r_2303;2,4-dienoyl-CoA reductase (trans-2,trans-4-dodecadienoyl-CoA)
+r_2304;2,4-dienoyl-CoA reductase (trans-2,trans-4-tetradecadienoyl-CoA)
+r_2305;cis-aconitate(3-) to isocitrate
+r_2308;glycerol-3-phosphate acyltransferase (16:0), ER membrane
+r_2309;glycerol-3-phosphate acyltransferase (16:1), ER membrane
+r_2310;glycerol-3-phosphate acyltransferase (18:0), ER membrane
+r_2311;glycerol-3-phosphate acyltransferase (18:1), ER membrane
+r_2312;dihydroxyacetone phosphate acyltransferase (16:0), ER membrane
+r_2313;dihydroxyacetone phosphate acyltransferase (16:1), ER membrane
+r_2314;dihydroxyacetone phosphate acyltransferase (18:0), ER membrane
+r_2315;dihydroxyacetone phosphate acyltransferase (18:1), ER membrane
+r_2316;glycerol-3-phosphate acyltransferase (16:0), lipid particle
+r_2317;glycerol-3-phosphate acyltransferase (16:1), lipid particle
+r_2318;glycerol-3-phosphate acyltransferase (18:0), lipid particle
+r_2319;glycerol-3-phosphate acyltransferase (18:1), lipid particle
+r_2320;dihydroxyacetone phosphate acyltransferase (16:0), lipid particle
+r_2321;dihydroxyacetone phosphate acyltransferase (16:1), lipid particle
+r_2322;dihydroxyacetone phosphate acyltransferase (18:0), lipid particle
+r_2323;dihydroxyacetone phosphate acyltransferase (18:1), lipid particle
+r_2324;acyl dhap reductase (16:0), ER membrane
+r_2325;acyl dhap reductase (16:1), ER membrane
+r_2326;acyl dhap reductase (18:0), ER membrane
+r_2327;acyl dhap reductase (18:1), ER membrane
+r_2328;acyl dhap reductase (16:0), lipid particle
+r_2329;acyl dhap reductase (16:1), lipid particle
+r_2330;acyl dhap reductase (18:0), lipid particle
+r_2331;acyl dhap reductase (18:1), lipid particle
+r_2332;1-acyl-sn-glycerol-3-phosphate acyltransferase (1-16:0, 2-16:1), ER membrane
+r_2333;1-acyl-sn-glycerol-3-phosphate acyltransferase (1-16:0, 2-18:1), ER membrane
+r_2334;1-acyl-sn-glycerol-3-phosphate acyltransferase (1-16:1, 2-16:1), ER membrane
+r_2335;1-acyl-sn-glycerol-3-phosphate acyltransferase (1-16:1, 2-18:1), ER membrane
+r_2336;1-acyl-sn-glycerol-3-phosphate acyltransferase (1-18:0, 2-16:1), ER membrane
+r_2337;1-acyl-sn-glycerol-3-phosphate acyltransferase (1-18:0, 2-18:1), ER membrane
+r_2338;1-acyl-sn-glycerol-3-phosphate acyltransferase (1-18:1, 2-16:1), ER membrane
+r_2339;1-acyl-sn-glycerol-3-phosphate acyltransferase (1-18:1, 2-18:1), ER membrane
+r_2340;1-acyl-sn-glycerol-3-phosphate acyltransferase (1-16:0, 2-18:1), lipid particle
+r_2341;1-acyl-sn-glycerol-3-phosphate acyltransferase (1-16:1, 2-18:1), lipid particle
+r_2342;1-acyl-sn-glycerol-3-phosphate acyltransferase (1-18:0, 2-18:1), lipid particle
+r_2343;1-acyl-sn-glycerol-3-phosphate acyltransferase (1-18:1, 2-18:1), lipid particle
+r_2344;PA phosphatase (1-16:0, 2-16:1), ER membrane
+r_2345;PA phosphatase (1-16:0, 2-18:1), ER membrane
+r_2346;PA phosphatase (1-16:1, 2-16:1), ER membrane
+r_2347;PA phosphatase (1-16:1, 2-18:1), ER membrane
+r_2348;PA phosphatase (1-18:0, 2-16:1), ER membrane
+r_2349;PA phosphatase (1-18:0, 2-18:1), ER membrane
+r_2350;PA phosphatase (1-18:1, 2-16:1), ER membrane
+r_2351;PA phosphatase (1-18:1, 2-18:1), ER membrane
+r_2352;PA phosphatase (1-16:0, 2-16:1), vacuolar membrane
+r_2353;PA phosphatase (1-16:0, 2-18:1), vacuolar membrane
+r_2354;PA phosphatase (1-16:1, 2-16:1), vacuolar membrane
+r_2355;PA phosphatase (1-16:1, 2-18:1), vacuolar membrane
+r_2356;PA phosphatase (1-18:0, 2-16:1), vacuolar membrane
+r_2357;PA phosphatase (1-18:0, 2-18:1), vacuolar membrane
+r_2358;PA phosphatase (1-18:1, 2-16:1), vacuolar membrane
+r_2359;PA phosphatase (1-18:1, 2-18:1), vacuolar membrane
+r_2360;PA phosphatase (1-16:0, 2-16:1), Golgi membrane
+r_2361;PA phosphatase (1-16:0, 2-18:1), Golgi membrane
+r_2362;PA phosphatase (1-16:1, 2-16:1), Golgi membrane
+r_2363;PA phosphatase (1-16:1, 2-18:1), Golgi membrane
+r_2364;PA phosphatase (1-18:0, 2-16:1), Golgi membrane
+r_2365;PA phosphatase (1-18:0, 2-18:1), Golgi membrane
+r_2366;PA phosphatase (1-18:1, 2-16:1), Golgi membrane
+r_2367;PA phosphatase (1-18:1, 2-18:1), Golgi membrane
+r_2368;diacylglycerol acyltransferase (1-16:0, 2-16:1, 3-16:0), ER membrane
+r_2369;diacylglycerol acyltransferase (1-16:0, 2-18:1, 3-16:0), ER membrane
+r_2370;diacylglycerol acyltransferase (1-16:1, 2-16:1, 3-16:0), ER membrane
+r_2371;diacylglycerol acyltransferase (1-16:1, 2-18:1, 3-16:0), ER membrane
+r_2372;diacylglycerol acyltransferase (1-18:0, 2-16:1, 3-16:0), ER membrane
+r_2373;diacylglycerol acyltransferase (1-18:0, 2-18:1, 3-16:0), ER membrane
+r_2374;diacylglycerol acyltransferase (1-18:1, 2-16:1, 3-16:0), ER membrane
+r_2375;diacylglycerol acyltransferase (1-18:1, 2-18:1, 3-16:0), ER membrane
+r_2376;diacylglycerol acyltransferase (1-16:0, 2-16:1, 3-16:1), ER membrane
+r_2377;diacylglycerol acyltransferase (1-16:0, 2-18:1, 3-16:1), ER membrane
+r_2378;diacylglycerol acyltransferase (1-16:1, 2-16:1, 3-16:1), ER membrane
+r_2379;diacylglycerol acyltransferase (1-16:1, 2-18:1, 3-16:1), ER membrane
+r_2380;diacylglycerol acyltransferase (1-18:0, 2-16:1, 3-16:1), ER membrane
+r_2381;diacylglycerol acyltransferase (1-18:0, 2-18:1, 3-16:1), ER membrane
+r_2382;diacylglycerol acyltransferase (1-18:1, 2-16:1, 3-16:1), ER membrane
+r_2383;diacylglycerol acyltransferase (1-18:1, 2-18:1, 3-16:1), ER membrane
+r_2384;diacylglycerol acyltransferase (1-16:0, 2-16:1, 3-18:0), ER membrane
+r_2385;diacylglycerol acyltransferase (1-16:0, 2-18:1, 3-18:0), ER membrane
+r_2386;diacylglycerol acyltransferase (1-16:1, 2-16:1, 3-18:0), ER membrane
+r_2387;diacylglycerol acyltransferase (1-16:1, 2-18:1, 3-18:0), ER membrane
+r_2388;diacylglycerol acyltransferase (1-18:0, 2-16:1, 3-18:0), ER membrane
+r_2389;diacylglycerol acyltransferase (1-18:0, 2-18:1, 3-18:0), ER membrane
+r_2390;diacylglycerol acyltransferase (1-18:1, 2-16:1, 3-18:0), ER membrane
+r_2391;diacylglycerol acyltransferase (1-18:1, 2-18:1, 3-18:0), ER membrane
+r_2392;diacylglycerol acyltransferase (1-16:0, 2-16:1, 3-18:1), ER membrane
+r_2393;diacylglycerol acyltransferase (1-16:0, 2-18:1, 3-18:1), ER membrane
+r_2394;diacylglycerol acyltransferase (1-16:1, 2-16:1, 3-18:1), ER membrane
+r_2395;diacylglycerol acyltransferase (1-16:1, 2-18:1, 3-18:1), ER membrane
+r_2396;diacylglycerol acyltransferase (1-18:0, 2-16:1, 3-18:1), ER membrane
+r_2397;diacylglycerol acyltransferase (1-18:0, 2-18:1, 3-18:1), ER membrane
+r_2398;diacylglycerol acyltransferase (1-18:1, 2-16:1, 3-18:1), ER membrane
+r_2399;diacylglycerol acyltransferase (1-18:1, 2-18:1, 3-18:1), ER membrane
+r_2400;diacylglycerol acyltransferase (1-16:0, 2-16:1, 3-16:0), lipid particle
+r_2401;diacylglycerol acyltransferase (1-16:0, 2-18:1, 3-16:0), lipid particle
+r_2402;diacylglycerol acyltransferase (1-16:1, 2-16:1, 3-16:0), lipid particle
+r_2403;diacylglycerol acyltransferase (1-16:1, 2-18:1, 3-16:0), lipid particle
+r_2404;diacylglycerol acyltransferase (1-18:0, 2-16:1, 3-16:0), lipid particle
+r_2405;diacylglycerol acyltransferase (1-18:0, 2-18:1, 3-16:0), lipid particle
+r_2406;diacylglycerol acyltransferase (1-18:1, 2-16:1, 3-16:0), lipid particle
+r_2407;diacylglycerol acyltransferase (1-18:1, 2-18:1, 3-16:0), lipid particle
+r_2408;diacylglycerol acyltransferase (1-16:0, 2-16:1, 3-16:1), lipid particle
+r_2409;diacylglycerol acyltransferase (1-16:0, 2-18:1, 3-16:1), lipid particle
+r_2410;diacylglycerol acyltransferase (1-16:1, 2-16:1, 3-16:1), lipid particle
+r_2411;diacylglycerol acyltransferase (1-16:1, 2-18:1, 3-16:1), lipid particle
+r_2412;diacylglycerol acyltransferase (1-18:0, 2-16:1, 3-16:1), lipid particle
+r_2413;diacylglycerol acyltransferase (1-18:0, 2-18:1, 3-16:1), lipid particle
+r_2414;diacylglycerol acyltransferase (1-18:1, 2-16:1, 3-16:1), lipid particle
+r_2415;diacylglycerol acyltransferase (1-18:1, 2-18:1, 3-16:1), lipid particle
+r_2416;diacylglycerol acyltransferase (1-16:0, 2-16:1, 3-18:0), lipid particle
+r_2417;diacylglycerol acyltransferase (1-16:0, 2-18:1, 3-18:0), lipid particle
+r_2418;diacylglycerol acyltransferase (1-16:1, 2-16:1, 3-18:0), lipid particle
+r_2419;diacylglycerol acyltransferase (1-16:1, 2-18:1, 3-18:0), lipid particle
+r_2420;diacylglycerol acyltransferase (1-18:0, 2-16:1, 3-18:0), lipid particle
+r_2421;diacylglycerol acyltransferase (1-18:0, 2-18:1, 3-18:0), lipid particle
+r_2422;diacylglycerol acyltransferase (1-18:1, 2-16:1, 3-18:0), lipid particle
+r_2423;diacylglycerol acyltransferase (1-18:1, 2-18:1, 3-18:0), lipid particle
+r_2424;diacylglycerol acyltransferase (1-16:0, 2-16:1, 3-18:1), lipid particle
+r_2425;diacylglycerol acyltransferase (1-16:0, 2-18:1, 3-18:1), lipid particle
+r_2426;diacylglycerol acyltransferase (1-16:1, 2-16:1, 3-18:1), lipid particle
+r_2427;diacylglycerol acyltransferase (1-16:1, 2-18:1, 3-18:1), lipid particle
+r_2428;diacylglycerol acyltransferase (1-18:0, 2-16:1, 3-18:1), lipid particle
+r_2429;diacylglycerol acyltransferase (1-18:0, 2-18:1, 3-18:1), lipid particle
+r_2430;diacylglycerol acyltransferase (1-18:1, 2-16:1, 3-18:1), lipid particle
+r_2431;diacylglycerol acyltransferase (1-18:1, 2-18:1, 3-18:1), lipid particle
+r_2432;CDP-diacylglycerol synthase (1-16:0, 2-16:1), ER membrane
+r_2433;CDP-diacylglycerol synthase (1-16:1, 2-16:1), ER membrane
+r_2434;CDP-diacylglycerol synthase (1-18:0, 2-16:1), ER membrane
+r_2435;CDP-diacylglycerol synthase (1-18:1, 2-16:1), ER membrane
+r_2436;CDP-diacylglycerol synthase (1-16:0, 2-18:1), ER membrane
+r_2437;CDP-diacylglycerol synthase (1-16:1, 2-18:1), ER membrane
+r_2438;CDP-diacylglycerol synthase (1-18:0, 2-18:1), ER membrane
+r_2439;CDP-diacylglycerol synthase (1-18:1, 2-18:1), ER membrane
+r_2440;CDP-diacylglycerol synthase (1-16:0, 2-16:1), mitochondrial membrane
+r_2441;CDP-diacylglycerol synthase (1-16:1, 2-16:1), mitochondrial membrane
+r_2442;CDP-diacylglycerol synthase (1-18:0, 2-16:1), mitochondrial membrane
+r_2443;CDP-diacylglycerol synthase (1-18:1, 2-16:1), mitochondrial membrane
+r_2444;CDP-diacylglycerol synthase (1-16:0, 2-18:1), mitochondrial membrane
+r_2445;CDP-diacylglycerol synthase (1-16:1, 2-18:1), mitochondrial membrane
+r_2446;PS synthase (1-16:0, 2-16:1), ER membrane
+r_2447;PS synthase (1-16:1, 2-16:1), ER membrane
+r_2448;PS synthase (1-18:0, 2-16:1), ER membrane
+r_2449;PS synthase (1-18:1, 2-16:1), ER membrane
+r_2450;PS synthase (1-16:0, 2-18:1), ER membrane
+r_2451;PS synthase (1-16:1, 2-18:1), ER membrane
+r_2452;PS synthase (1-18:0, 2-18:1), ER membrane
+r_2453;PS synthase (1-18:1, 2-18:1), ER membrane
+r_2454;PI synthase (1-16:0, 2-16:1), ER membrane
+r_2455;PI synthase (1-16:1, 2-16:1), ER membrane
+r_2456;PI synthase (1-18:0, 2-16:1), ER membrane
+r_2457;PI synthase (1-18:1, 2-16:1), ER membrane
+r_2458;PI synthase (1-16:0, 2-18:1), ER membrane
+r_2459;PI synthase (1-16:1, 2-18:1), ER membrane
+r_2460;PI synthase (1-18:0, 2-18:1), ER membrane
+r_2461;PI synthase (1-18:1, 2-18:1), ER membrane
+r_2462;lysoPI acyltransferase (1-18:0, 2-16:1), ER membrane
+r_2463;lysoPI acyltransferase (1-18:0, 2-18:1), ER membrane
+r_2464;PS decarboxylase (1-16:0, 2-16:1), mitochondrial membrane
+r_2465;PS decarboxylase (1-16:1, 2-16:1), mitochondrial membrane
+r_2466;PS decarboxylase (1-18:0, 2-16:1), mitochondrial membrane
+r_2467;PS decarboxylase (1-18:1, 2-16:1), mitochondrial membrane
+r_2468;PS decarboxylase (1-16:0, 2-18:1), mitochondrial membrane
+r_2469;PS decarboxylase (1-16:1, 2-18:1), mitochondrial membrane
+r_2470;PS decarboxylase (1-18:0, 2-18:1), mitochondrial membrane
+r_2471;PS decarboxylase (1-18:1, 2-18:1), mitochondrial membrane
+r_2472;PS decarboxylase (1-16:0, 2-16:1), Golgi membrane
+r_2473;PS decarboxylase (1-16:1, 2-16:1), Golgi membrane
+r_2474;PS decarboxylase (1-18:0, 2-16:1), Golgi membrane
+r_2475;PS decarboxylase (1-18:1, 2-16:1), Golgi membrane
+r_2476;PS decarboxylase (1-16:0, 2-18:1), Golgi membrane
+r_2477;PS decarboxylase (1-16:1, 2-18:1), Golgi membrane
+r_2478;PS decarboxylase (1-18:0, 2-18:1), Golgi membrane
+r_2479;PS decarboxylase (1-18:1, 2-18:1), Golgi membrane
+r_2480;PS decarboxylase (1-16:0, 2-16:1), vacuolar membrane
+r_2481;PS decarboxylase (1-16:1, 2-16:1), vacuolar membrane
+r_2482;PS decarboxylase (1-18:0, 2-16:1), vacuolar membrane
+r_2483;PS decarboxylase (1-18:1, 2-16:1), vacuolar membrane
+r_2484;PS decarboxylase (1-16:0, 2-18:1), vacuolar membrane
+r_2485;PS decarboxylase (1-16:1, 2-18:1), vacuolar membrane
+r_2486;PS decarboxylase (1-18:0, 2-18:1), vacuolar membrane
+r_2487;PS decarboxylase (1-18:1, 2-18:1), vacuolar membrane
+r_2488;PE methyltransferase (1-16:0, 2-16:1), ER membrane
+r_2489;PE methyltransferase (1-16:1, 2-16:1), ER membrane
+r_2490;PE methyltransferase (1-18:0, 2-16:1), ER membrane
+r_2491;PE methyltransferase (1-18:1, 2-16:1), ER membrane
+r_2492;PE methyltransferase (1-16:0, 2-18:1), ER membrane
+r_2493;PE methyltransferase (1-16:1, 2-18:1), ER membrane
+r_2494;PE methyltransferase (1-18:0, 2-18:1), ER membrane
+r_2495;PE methyltransferase (1-18:1, 2-18:1), ER membrane
+r_2496;phosphatidyl-N-methylethanolamine methyltransferase (1-16:0, 2-16:1), ER membrane
+r_2497;phosphatidyl-N-methylethanolamine methyltransferase (1-16:1, 2-16:1), ER membrane
+r_2498;phosphatidyl-N-methylethanolamine methyltransferase (1-18:0, 2-16:1), ER membrane
+r_2499;phosphatidyl-N-methylethanolamine methyltransferase (1-18:1, 2-16:1), ER membrane
+r_2500;phosphatidyl-N-methylethanolamine methyltransferase (1-16:0, 2-18:1), ER membrane
+r_2501;phosphatidyl-N-methylethanolamine methyltransferase (1-16:1, 2-18:1), ER membrane
+r_2502;phosphatidyl-N-methylethanolamine methyltransferase (1-18:0, 2-18:1), ER membrane
+r_2503;phosphatidyl-N-methylethanolamine methyltransferase (1-18:1, 2-18:1), ER membrane
+r_2504;phosphatidyl-N,N-dimethylethanolamine methyltransferase (1-16:0, 2-16:1), ER membrane
+r_2505;phosphatidyl-N,N-dimethylethanolamine methyltransferase (1-16:1, 2-16:1), ER membrane
+r_2506;phosphatidyl-N,N-dimethylethanolamine methyltransferase (1-18:0, 2-16:1), ER membrane
+r_2507;phosphatidyl-N,N-dimethylethanolamine methyltransferase (1-18:1, 2-16:1), ER membrane
+r_2508;phosphatidyl-N,N-dimethylethanolamine methyltransferase (1-16:0, 2-18:1), ER membrane
+r_2509;phosphatidyl-N,N-dimethylethanolamine methyltransferase (1-16:1, 2-18:1), ER membrane
+r_2510;phosphatidyl-N,N-dimethylethanolamine methyltransferase (1-18:0, 2-18:1), ER membrane
+r_2511;phosphatidyl-N,N-dimethylethanolamine methyltransferase (1-18:1, 2-18:1), ER membrane
+r_2512;DAG kinase (1-16:0, 2-16:1), ER membrane
+r_2513;DAG kinase (1-16:1, 2-16:1), ER membrane
+r_2514;DAG kinase (1-18:0, 2-16:1), ER membrane
+r_2515;DAG kinase (1-18:1, 2-16:1), ER membrane
+r_2516;DAG kinase (1-16:0, 2-18:1), ER membrane
+r_2517;DAG kinase (1-16:1, 2-18:1), ER membrane
+r_2518;DAG kinase (1-18:0, 2-18:1), ER membrane
+r_2519;DAG kinase (1-18:1, 2-18:1), ER membrane
+r_2520;ethanolaminephosphotransferase (1-16:0, 2-16:1), ER membrane
+r_2521;ethanolaminephosphotransferase (1-16:1, 2-16:1), ER membrane
+r_2522;ethanolaminephosphotransferase (1-18:0, 2-16:1), ER membrane
+r_2523;ethanolaminephosphotransferase (1-18:1, 2-16:1), ER membrane
+r_2524;ethanolaminephosphotransferase (1-16:0, 2-18:1), ER membrane
+r_2525;ethanolaminephosphotransferase (1-16:1, 2-18:1), ER membrane
+r_2526;ethanolaminephosphotransferase (1-18:0, 2-18:1), ER membrane
+r_2527;ethanolaminephosphotransferase (1-18:1, 2-18:1), ER membrane
+r_2528;cholinephosphotransferase (1-16:0, 2-16:1), ER membrane
+r_2529;cholinephosphotransferase (1-16:1, 2-16:1), ER membrane
+r_2530;cholinephosphotransferase (1-18:0, 2-16:1), ER membrane
+r_2531;cholinephosphotransferase (1-18:1, 2-16:1), ER membrane
+r_2532;cholinephosphotransferase (1-16:0, 2-18:1), ER membrane
+r_2533;cholinephosphotransferase (1-16:1, 2-18:1), ER membrane
+r_2534;cholinephosphotransferase (1-18:0, 2-18:1), ER membrane
+r_2535;cholinephosphotransferase (1-18:1, 2-18:1), ER membrane
+r_2536;phosphatidylglycerolphosphate synthase (1-16:0, 2-16:1), mitochondrial membrane
+r_2537;phosphatidylglycerolphosphate synthase (1-16:1, 2-16:1), mitochondrial membrane
+r_2538;phosphatidylglycerolphosphate synthase (1-18:0, 2-16:1), mitochondrial membrane
+r_2539;phosphatidylglycerolphosphate synthase (1-18:1, 2-16:1), mitochondrial membrane
+r_2540;phosphatidylglycerolphosphate synthase (1-16:0, 2-18:1), mitochondrial membrane
+r_2541;phosphatidylglycerolphosphate synthase (1-16:1, 2-18:1), mitochondrial membrane
+r_2542;PGP phosphatase (1-16:0, 2-16:1), mitochondrial membrane
+r_2543;PGP phosphatase (1-16:1, 2-16:1), mitochondrial membrane
+r_2544;PGP phosphatase (1-18:0, 2-16:1), mitochondrial membrane
+r_2545;PGP phosphatase (1-18:1, 2-16:1), mitochondrial membrane
+r_2546;PGP phosphatase (1-16:0, 2-18:1), mitochondrial membrane
+r_2547;PGP phosphatase (1-16:1, 2-18:1), mitochondrial membrane
+r_2548;CL synthase (1-16:0, 2-16:1, 3-16:0, 4-16:1), mitochondrial membrane
+r_2549;CL synthase (1-16:0, 2-16:1, 3-16:1, 4-16:1), mitochondrial membrane
+r_2550;CL synthase (1-16:0, 2-16:1, 3-18:0, 4-16:1), mitochondrial membrane
+r_2551;CL synthase (1-16:0, 2-16:1, 3-18:1, 4-16:1), mitochondrial membrane
+r_2552;CL synthase (1-16:0, 2-16:1, 3-16:0, 4-18:1), mitochondrial membrane
+r_2553;CL synthase (1-16:0, 2-16:1, 3-16:1, 4-18:1), mitochondrial membrane
+r_2554;CL synthase (1-16:1, 2-16:1, 3-16:0, 4-16:1), mitochondrial membrane
+r_2555;CL synthase (1-16:1, 2-16:1, 3-16:1, 4-16:1), mitochondrial membrane
+r_2556;CL synthase (1-16:1, 2-16:1, 3-18:0, 4-16:1), mitochondrial membrane
+r_2557;CL synthase (1-16:1, 2-16:1, 3-18:1, 4-16:1), mitochondrial membrane
+r_2558;CL synthase (1-16:1, 2-16:1, 3-16:0, 4-18:1), mitochondrial membrane
+r_2559;CL synthase (1-16:1, 2-16:1, 3-16:1, 4-18:1), mitochondrial membrane
+r_2560;CL synthase (1-18:0, 2-16:1, 3-16:0, 4-16:1), mitochondrial membrane
+r_2561;CL synthase (1-18:0, 2-16:1, 3-16:1, 4-16:1), mitochondrial membrane
+r_2562;CL synthase (1-18:0, 2-16:1, 3-18:0, 4-16:1), mitochondrial membrane
+r_2563;CL synthase (1-18:0, 2-16:1, 3-18:1, 4-16:1), mitochondrial membrane
+r_2564;CL synthase (1-18:0, 2-16:1, 3-16:0, 4-18:1), mitochondrial membrane
+r_2565;CL synthase (1-18:0, 2-16:1, 3-16:1, 4-18:1), mitochondrial membrane
+r_2566;CL synthase (1-18:1, 2-16:1, 3-16:0, 4-16:1), mitochondrial membrane
+r_2567;CL synthase (1-18:1, 2-16:1, 3-16:1, 4-16:1), mitochondrial membrane
+r_2568;CL synthase (1-18:1, 2-16:1, 3-18:0, 4-16:1), mitochondrial membrane
+r_2569;CL synthase (1-18:1, 2-16:1, 3-18:1, 4-16:1), mitochondrial membrane
+r_2570;CL synthase (1-18:1, 2-16:1, 3-16:0, 4-18:1), mitochondrial membrane
+r_2571;CL synthase (1-18:1, 2-16:1, 3-16:1, 4-18:1), mitochondrial membrane
+r_2572;CL synthase (1-16:0, 2-18:1, 3-16:0, 4-16:1), mitochondrial membrane
+r_2573;CL synthase (1-16:0, 2-18:1, 3-16:1, 4-16:1), mitochondrial membrane
+r_2574;CL synthase (1-16:0, 2-18:1, 3-18:0, 4-16:1), mitochondrial membrane
+r_2575;CL synthase (1-16:0, 2-18:1, 3-18:1, 4-16:1), mitochondrial membrane
+r_2576;CL synthase (1-16:0, 2-18:1, 3-16:0, 4-18:1), mitochondrial membrane
+r_2577;CL synthase (1-16:0, 2-18:1, 3-16:1, 4-18:1), mitochondrial membrane
+r_2578;CL synthase (1-16:1, 2-18:1, 3-16:0, 4-16:1), mitochondrial membrane
+r_2579;CL synthase (1-16:1, 2-18:1, 3-16:1, 4-16:1), mitochondrial membrane
+r_2580;CL synthase (1-16:1, 2-18:1, 3-18:0, 4-16:1), mitochondrial membrane
+r_2581;CL synthase (1-16:1, 2-18:1, 3-18:1, 4-16:1), mitochondrial membrane
+r_2582;CL synthase (1-16:1, 2-18:1, 3-16:0, 4-18:1), mitochondrial membrane
+r_2583;CL synthase (1-16:1, 2-18:1, 3-16:1, 4-18:1), mitochondrial membrane
+r_2584;CL (1-16:0, 2-16:1, 3-16:0, 4-16:1) phospholipase (1-position), mitochondrial membrane
+r_2585;CL (1-16:0, 2-16:1, 3-16:1, 4-16:1) phospholipase (1-position), mitochondrial membrane
+r_2586;CL (1-16:0, 2-16:1, 3-18:0, 4-16:1) phospholipase (1-position), mitochondrial membrane
+r_2587;CL (1-16:0, 2-16:1, 3-18:1, 4-16:1) phospholipase (1-position), mitochondrial membrane
+r_2588;CL (1-16:0, 2-16:1, 3-16:0, 4-18:1) phospholipase (1-position), mitochondrial membrane
+r_2589;CL (1-16:0, 2-16:1, 3-16:1, 4-18:1) phospholipase (1-position), mitochondrial membrane
+r_2590;CL (1-18:0, 2-16:1, 3-16:0, 4-16:1) phospholipase (1-position), mitochondrial membrane
+r_2591;CL (1-18:0, 2-16:1, 3-16:1, 4-16:1) phospholipase (1-position), mitochondrial membrane
+r_2592;CL (1-18:0, 2-16:1, 3-18:0, 4-16:1) phospholipase (1-position), mitochondrial membrane
+r_2593;CL (1-18:0, 2-16:1, 3-18:1, 4-16:1) phospholipase (1-position), mitochondrial membrane
+r_2594;CL (1-18:0, 2-16:1, 3-16:0, 4-18:1) phospholipase (1-position), mitochondrial membrane
+r_2595;CL (1-18:0, 2-16:1, 3-16:1, 4-18:1) phospholipase (1-position), mitochondrial membrane
+r_2596;CL (1-16:0, 2-18:1, 3-16:0, 4-16:1) phospholipase (1-position), mitochondrial membrane
+r_2597;CL (1-16:0, 2-18:1, 3-16:1, 4-16:1) phospholipase (1-position), mitochondrial membrane
+r_2598;CL (1-16:0, 2-18:1, 3-18:0, 4-16:1) phospholipase (1-position), mitochondrial membrane
+r_2599;CL (1-16:0, 2-18:1, 3-18:1, 4-16:1) phospholipase (1-position), mitochondrial membrane
+r_2600;CL (1-16:0, 2-18:1, 3-16:0, 4-18:1) phospholipase (1-position), mitochondrial membrane
+r_2601;CL (1-16:0, 2-18:1, 3-16:1, 4-18:1) phospholipase (1-position), mitochondrial membrane
+r_2602;CL (1-16:0, 2-16:1, 3-16:0, 4-16:1) phospholipase (3-position), mitochondrial membrane
+r_2603;CL (1-16:0, 2-16:1, 3-18:0, 4-16:1) phospholipase (3-position), mitochondrial membrane
+r_2604;CL (1-16:0, 2-16:1, 3-16:0, 4-18:1) phospholipase (3-position), mitochondrial membrane
+r_2605;CL (1-16:1, 2-16:1, 3-16:0, 4-16:1) phospholipase (3-position), mitochondrial membrane
+r_2606;CL (1-16:1, 2-16:1, 3-18:0, 4-16:1) phospholipase (3-position), mitochondrial membrane
+r_2607;CL (1-16:1, 2-16:1, 3-16:0, 4-18:1) phospholipase (3-position), mitochondrial membrane
+r_2608;CL (1-18:0, 2-16:1, 3-16:0, 4-16:1) phospholipase (3-position), mitochondrial membrane
+r_2609;CL (1-18:0, 2-16:1, 3-18:0, 4-16:1) phospholipase (3-position), mitochondrial membrane
+r_2610;CL (1-18:0, 2-16:1, 3-16:0, 4-18:1) phospholipase (3-position), mitochondrial membrane
+r_2611;CL (1-18:1, 2-16:1, 3-16:0, 4-16:1) phospholipase (3-position), mitochondrial membrane
+r_2612;CL (1-18:1, 2-16:1, 3-18:0, 4-16:1) phospholipase (3-position), mitochondrial membrane
+r_2613;CL (1-18:1, 2-16:1, 3-16:0, 4-18:1) phospholipase (3-position), mitochondrial membrane
+r_2614;CL (1-16:0, 2-18:1, 3-16:0, 4-16:1) phospholipase (3-position), mitochondrial membrane
+r_2615;CL (1-16:0, 2-18:1, 3-18:0, 4-16:1) phospholipase (3-position), mitochondrial membrane
+r_2616;CL (1-16:0, 2-18:1, 3-16:0, 4-18:1) phospholipase (3-position), mitochondrial membrane
+r_2617;CL (1-16:1, 2-18:1, 3-16:0, 4-16:1) phospholipase (3-position), mitochondrial membrane
+r_2618;CL (1-16:1, 2-18:1, 3-18:0, 4-16:1) phospholipase (3-position), mitochondrial membrane
+r_2619;CL (1-16:1, 2-18:1, 3-16:0, 4-18:1) phospholipase (3-position), mitochondrial membrane
+r_2620;MLCL (2-16:1, 3-16:0, 4-16:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2621;MLCL (2-16:1, 3-16:0, 4-16:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2622;MLCL (2-16:1, 3-16:0, 4-16:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2623;MLCL (2-16:1, 3-16:0, 4-16:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2624;MLCL (2-16:1, 3-16:0, 4-16:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2625;MLCL (2-16:1, 3-16:0, 4-16:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2626;MLCL (2-16:1, 3-16:0, 4-16:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2627;MLCL (2-16:1, 3-16:0, 4-16:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2628;MLCL (2-16:1, 3-16:1, 4-16:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2629;MLCL (2-16:1, 3-16:1, 4-16:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2630;MLCL (2-16:1, 3-16:1, 4-16:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2631;MLCL (2-16:1, 3-16:1, 4-16:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2632;MLCL (2-16:1, 3-16:1, 4-16:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2633;MLCL (2-16:1, 3-16:1, 4-16:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2634;MLCL (2-16:1, 3-16:1, 4-16:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2635;MLCL (2-16:1, 3-16:1, 4-16:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2636;MLCL (2-16:1, 3-18:0, 4-16:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2637;MLCL (2-16:1, 3-18:0, 4-16:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2638;MLCL (2-16:1, 3-18:0, 4-16:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2639;MLCL (2-16:1, 3-18:0, 4-16:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2640;MLCL (2-16:1, 3-18:0, 4-16:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2641;MLCL (2-16:1, 3-18:0, 4-16:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2642;MLCL (2-16:1, 3-18:0, 4-16:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2643;MLCL (2-16:1, 3-18:0, 4-16:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2644;MLCL (2-16:1, 3-18:1, 4-16:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2645;MLCL (2-16:1, 3-18:1, 4-16:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2646;MLCL (2-16:1, 3-18:1, 4-16:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2647;MLCL (2-16:1, 3-18:1, 4-16:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2648;MLCL (2-16:1, 3-18:1, 4-16:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2649;MLCL (2-16:1, 3-18:1, 4-16:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2650;MLCL (2-16:1, 3-18:1, 4-16:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2651;MLCL (2-16:1, 3-18:1, 4-16:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2652;MLCL (2-16:1, 3-16:0, 4-18:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2653;MLCL (2-16:1, 3-16:0, 4-18:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2654;MLCL (2-16:1, 3-16:0, 4-18:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2655;MLCL (2-16:1, 3-16:0, 4-18:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2656;MLCL (2-16:1, 3-16:0, 4-18:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2657;MLCL (2-16:1, 3-16:0, 4-18:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2658;MLCL (2-16:1, 3-16:0, 4-18:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2659;MLCL (2-16:1, 3-16:0, 4-18:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2660;MLCL (2-16:1, 3-16:1, 4-18:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2661;MLCL (2-16:1, 3-16:1, 4-18:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2662;MLCL (2-16:1, 3-16:1, 4-18:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2663;MLCL (2-16:1, 3-16:1, 4-18:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2664;MLCL (2-16:1, 3-16:1, 4-18:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2665;MLCL (2-16:1, 3-16:1, 4-18:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2666;MLCL (2-16:1, 3-16:1, 4-18:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2667;MLCL (2-16:1, 3-16:1, 4-18:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2668;MLCL (2-18:1, 3-16:0, 4-16:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2669;MLCL (2-18:1, 3-16:0, 4-16:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2670;MLCL (2-18:1, 3-16:0, 4-16:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2671;MLCL (2-18:1, 3-16:0, 4-16:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2672;MLCL (2-18:1, 3-16:0, 4-16:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2673;MLCL (2-18:1, 3-16:0, 4-16:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2674;MLCL (2-18:1, 3-16:0, 4-16:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2675;MLCL (2-18:1, 3-16:0, 4-16:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2676;MLCL (2-18:1, 3-16:1, 4-16:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2677;MLCL (2-18:1, 3-16:1, 4-16:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2678;MLCL (2-18:1, 3-16:1, 4-16:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2679;MLCL (2-18:1, 3-16:1, 4-16:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2680;MLCL (2-18:1, 3-16:1, 4-16:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2681;MLCL (2-18:1, 3-16:1, 4-16:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2682;MLCL (2-18:1, 3-16:1, 4-16:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2683;MLCL (2-18:1, 3-16:1, 4-16:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2684;MLCL (2-18:1, 3-18:0, 4-16:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2685;MLCL (2-18:1, 3-18:0, 4-16:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2686;MLCL (2-18:1, 3-18:0, 4-16:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2687;MLCL (2-18:1, 3-18:0, 4-16:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2688;MLCL (2-18:1, 3-18:0, 4-16:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2689;MLCL (2-18:1, 3-18:0, 4-16:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2690;MLCL (2-18:1, 3-18:0, 4-16:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2691;MLCL (2-18:1, 3-18:0, 4-16:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2692;MLCL (2-18:1, 3-18:1, 4-16:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2693;MLCL (2-18:1, 3-18:1, 4-16:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2694;MLCL (2-18:1, 3-18:1, 4-16:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2695;MLCL (2-18:1, 3-18:1, 4-16:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2696;MLCL (2-18:1, 3-18:1, 4-16:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2697;MLCL (2-18:1, 3-18:1, 4-16:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2698;MLCL (2-18:1, 3-18:1, 4-16:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2699;MLCL (2-18:1, 3-18:1, 4-16:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2700;MLCL (2-18:1, 3-16:0, 4-18:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2701;MLCL (2-18:1, 3-16:0, 4-18:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2702;MLCL (2-18:1, 3-16:0, 4-18:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2703;MLCL (2-18:1, 3-16:0, 4-18:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2704;MLCL (2-18:1, 3-16:0, 4-18:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2705;MLCL (2-18:1, 3-16:0, 4-18:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2706;MLCL (2-18:1, 3-16:0, 4-18:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2707;MLCL (2-18:1, 3-16:0, 4-18:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2708;MLCL (2-18:1, 3-16:1, 4-18:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2709;MLCL (2-18:1, 3-16:1, 4-18:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2710;MLCL (2-18:1, 3-16:1, 4-18:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2711;MLCL (2-18:1, 3-16:1, 4-18:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2712;MLCL (2-18:1, 3-16:1, 4-18:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2713;MLCL (2-18:1, 3-16:1, 4-18:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2714;MLCL (2-18:1, 3-16:1, 4-18:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2715;MLCL (2-18:1, 3-16:1, 4-18:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2716;MLCL (1-16:0, 2-16:1, 4-16:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2717;MLCL (1-16:0, 2-16:1, 4-16:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2718;MLCL (1-16:0, 2-16:1, 4-16:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2719;MLCL (1-16:0, 2-16:1, 4-16:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2720;MLCL (1-16:0, 2-16:1, 4-16:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2721;MLCL (1-16:0, 2-16:1, 4-16:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2722;MLCL (1-16:0, 2-16:1, 4-16:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2723;MLCL (1-16:0, 2-16:1, 4-16:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2724;MLCL (1-16:0, 2-16:1, 4-18:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2725;MLCL (1-16:0, 2-16:1, 4-18:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2726;MLCL (1-16:0, 2-16:1, 4-18:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2727;MLCL (1-16:0, 2-16:1, 4-18:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2728;MLCL (1-16:0, 2-16:1, 4-18:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2729;MLCL (1-16:0, 2-16:1, 4-18:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2730;MLCL (1-16:0, 2-16:1, 4-18:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2731;MLCL (1-16:0, 2-16:1, 4-18:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2732;MLCL (1-16:1, 2-16:1, 4-16:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2733;MLCL (1-16:1, 2-16:1, 4-16:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2734;MLCL (1-16:1, 2-16:1, 4-16:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2735;MLCL (1-16:1, 2-16:1, 4-16:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2736;MLCL (1-16:1, 2-16:1, 4-16:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2737;MLCL (1-16:1, 2-16:1, 4-16:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2738;MLCL (1-16:1, 2-16:1, 4-16:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2739;MLCL (1-16:1, 2-16:1, 4-16:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2740;MLCL (1-16:1, 2-16:1, 4-18:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2741;MLCL (1-16:1, 2-16:1, 4-18:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2742;MLCL (1-16:1, 2-16:1, 4-18:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2743;MLCL (1-16:1, 2-16:1, 4-18:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2744;MLCL (1-16:1, 2-16:1, 4-18:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2745;MLCL (1-16:1, 2-16:1, 4-18:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2746;MLCL (1-16:1, 2-16:1, 4-18:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2747;MLCL (1-16:1, 2-16:1, 4-18:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2748;MLCL (1-18:0, 2-16:1, 4-16:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2749;MLCL (1-18:0, 2-16:1, 4-16:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2750;MLCL (1-18:0, 2-16:1, 4-16:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2751;MLCL (1-18:0, 2-16:1, 4-16:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2752;MLCL (1-18:0, 2-16:1, 4-16:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2753;MLCL (1-18:0, 2-16:1, 4-16:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2754;MLCL (1-18:0, 2-16:1, 4-16:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2755;MLCL (1-18:0, 2-16:1, 4-16:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2756;MLCL (1-18:0, 2-16:1, 4-18:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2757;MLCL (1-18:0, 2-16:1, 4-18:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2758;MLCL (1-18:0, 2-16:1, 4-18:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2759;MLCL (1-18:0, 2-16:1, 4-18:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2760;MLCL (1-18:0, 2-16:1, 4-18:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2761;MLCL (1-18:0, 2-16:1, 4-18:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2762;MLCL (1-18:0, 2-16:1, 4-18:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2763;MLCL (1-18:0, 2-16:1, 4-18:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2764;MLCL (1-18:1, 2-16:1, 4-16:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2765;MLCL (1-18:1, 2-16:1, 4-16:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2766;MLCL (1-18:1, 2-16:1, 4-16:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2767;MLCL (1-18:1, 2-16:1, 4-16:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2768;MLCL (1-18:1, 2-16:1, 4-16:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2769;MLCL (1-18:1, 2-16:1, 4-16:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2770;MLCL (1-18:1, 2-16:1, 4-16:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2771;MLCL (1-18:1, 2-16:1, 4-16:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2772;MLCL (1-18:1, 2-16:1, 4-18:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2773;MLCL (1-18:1, 2-16:1, 4-18:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2774;MLCL (1-18:1, 2-16:1, 4-18:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2775;MLCL (1-18:1, 2-16:1, 4-18:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2776;MLCL (1-18:1, 2-16:1, 4-18:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2777;MLCL (1-18:1, 2-16:1, 4-18:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2778;MLCL (1-18:1, 2-16:1, 4-18:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2779;MLCL (1-18:1, 2-16:1, 4-18:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2780;MLCL (1-16:0, 2-18:1, 4-16:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2781;MLCL (1-16:0, 2-18:1, 4-16:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2782;MLCL (1-16:0, 2-18:1, 4-16:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2783;MLCL (1-16:0, 2-18:1, 4-16:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2784;MLCL (1-16:0, 2-18:1, 4-16:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2785;MLCL (1-16:0, 2-18:1, 4-16:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2786;MLCL (1-16:0, 2-18:1, 4-16:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2787;MLCL (1-16:0, 2-18:1, 4-16:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2788;MLCL (1-16:0, 2-18:1, 4-18:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2789;MLCL (1-16:0, 2-18:1, 4-18:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2790;MLCL (1-16:0, 2-18:1, 4-18:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2791;MLCL (1-16:0, 2-18:1, 4-18:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2792;MLCL (1-16:0, 2-18:1, 4-18:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2793;MLCL (1-16:0, 2-18:1, 4-18:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2794;MLCL (1-16:0, 2-18:1, 4-18:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2795;MLCL (1-16:0, 2-18:1, 4-18:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2796;MLCL (1-16:1, 2-18:1, 4-16:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2797;MLCL (1-16:1, 2-18:1, 4-16:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2798;MLCL (1-16:1, 2-18:1, 4-16:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2799;MLCL (1-16:1, 2-18:1, 4-16:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2800;MLCL (1-16:1, 2-18:1, 4-16:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2801;MLCL (1-16:1, 2-18:1, 4-16:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2802;MLCL (1-16:1, 2-18:1, 4-16:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2803;MLCL (1-16:1, 2-18:1, 4-16:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2804;MLCL (1-16:1, 2-18:1, 4-18:1):PC (1-16:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2805;MLCL (1-16:1, 2-18:1, 4-18:1):PC (1-16:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2806;MLCL (1-16:1, 2-18:1, 4-18:1):PC (1-18:0, 2-16:1) acyltransferase, mitochondrial membrane
+r_2807;MLCL (1-16:1, 2-18:1, 4-18:1):PC (1-18:1, 2-16:1) acyltransferase, mitochondrial membrane
+r_2808;MLCL (1-16:1, 2-18:1, 4-18:1):PC (1-16:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2809;MLCL (1-16:1, 2-18:1, 4-18:1):PC (1-16:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2810;MLCL (1-16:1, 2-18:1, 4-18:1):PC (1-18:0, 2-18:1) acyltransferase, mitochondrial membrane
+r_2811;MLCL (1-16:1, 2-18:1, 4-18:1):PC (1-18:1, 2-18:1) acyltransferase, mitochondrial membrane
+r_2812;lysoPC acyltransferase (1-16:0, 2-16:1), mitochondrial membrane
+r_2813;lysoPC acyltransferase (1-16:0, 2-18:1), mitochondrial membrane
+r_2814;lysoPC acyltransferase (1-16:1, 2-16:1), mitochondrial membrane
+r_2815;lysoPC acyltransferase (1-16:1, 2-18:1), mitochondrial membrane
+r_2816;lysoPC acyltransferase (1-18:0, 2-16:1), mitochondrial membrane
+r_2817;lysoPC acyltransferase (1-18:0, 2-18:1), mitochondrial membrane
+r_2818;lysoPC acyltransferase (1-18:1, 2-16:1), mitochondrial membrane
+r_2819;lysoPC acyltransferase (1-18:1, 2-18:1), mitochondrial membrane
+r_2820;phosphatidylinositol 4-kinase (1-16:0, 2-16:1), cell envelope
+r_2821;phosphatidylinositol 4-kinase (1-16:1, 2-16:1), cell envelope
+r_2822;phosphatidylinositol 4-kinase (1-18:0, 2-16:1), cell envelope
+r_2823;phosphatidylinositol 4-kinase (1-18:1, 2-16:1), cell envelope
+r_2824;phosphatidylinositol 4-kinase (1-16:0, 2-18:1), cell envelope
+r_2825;phosphatidylinositol 4-kinase (1-16:1, 2-18:1), cell envelope
+r_2826;phosphatidylinositol 4-kinase (1-18:0, 2-18:1), cell envelope
+r_2827;phosphatidylinositol 4-kinase (1-18:1, 2-18:1), cell envelope
+r_2828;phosphatidylinositol 4-kinase (1-16:0, 2-16:1), vacuolar membrane
+r_2829;phosphatidylinositol 4-kinase (1-16:1, 2-16:1), vacuolar membrane
+r_2830;phosphatidylinositol 4-kinase (1-18:0, 2-16:1), vacuolar membrane
+r_2831;phosphatidylinositol 4-kinase (1-18:1, 2-16:1), vacuolar membrane
+r_2832;phosphatidylinositol 4-kinase (1-16:0, 2-18:1), vacuolar membrane
+r_2833;phosphatidylinositol 4-kinase (1-16:1, 2-18:1), vacuolar membrane
+r_2834;phosphatidylinositol 4-kinase (1-18:0, 2-18:1), vacuolar membrane
+r_2835;phosphatidylinositol 4-kinase (1-18:1, 2-18:1), vacuolar membrane
+r_2836;phosphatidylinositol 4-kinase (1-16:0, 2-16:1), Golgi membrane
+r_2837;phosphatidylinositol 4-kinase (1-16:1, 2-16:1), Golgi membrane
+r_2838;phosphatidylinositol 4-kinase (1-18:0, 2-16:1), Golgi membrane
+r_2839;phosphatidylinositol 4-kinase (1-18:1, 2-16:1), Golgi membrane
+r_2840;phosphatidylinositol 4-kinase (1-16:0, 2-18:1), Golgi membrane
+r_2841;phosphatidylinositol 4-kinase (1-16:1, 2-18:1), Golgi membrane
+r_2842;phosphatidylinositol 4-kinase (1-18:0, 2-18:1), Golgi membrane
+r_2843;phosphatidylinositol 4-kinase (1-18:1, 2-18:1), Golgi membrane
+r_2844;phosphatidylinositol 4-kinase (1-16:0, 2-16:1), nucleus
+r_2845;phosphatidylinositol 4-kinase (1-16:1, 2-16:1), nucleus
+r_2846;phosphatidylinositol 4-kinase (1-18:0, 2-16:1), nucleus
+r_2847;phosphatidylinositol 4-kinase (1-18:1, 2-16:1), nucleus
+r_2848;phosphatidylinositol 4-kinase (1-16:0, 2-18:1), nucleus
+r_2849;phosphatidylinositol 4-kinase (1-16:1, 2-18:1), nucleus
+r_2850;phosphatidylinositol 4-kinase (1-18:0, 2-18:1), nucleus
+r_2851;phosphatidylinositol 4-kinase (1-18:1, 2-18:1), nucleus
+r_2852;phosphatidylinositol 3-kinase (1-16:0, 2-16:1), vacuolar membrane
+r_2853;phosphatidylinositol 3-kinase (1-16:1, 2-16:1), vacuolar membrane
+r_2854;phosphatidylinositol 3-kinase (1-18:0, 2-16:1), vacuolar membrane
+r_2855;phosphatidylinositol 3-kinase (1-18:1, 2-16:1), vacuolar membrane
+r_2856;phosphatidylinositol 3-kinase (1-16:0, 2-18:1), vacuolar membrane
+r_2857;phosphatidylinositol 3-kinase (1-16:1, 2-18:1), vacuolar membrane
+r_2858;phosphatidylinositol 3-kinase (1-18:0, 2-18:1), vacuolar membrane
+r_2859;phosphatidylinositol 3-kinase (1-18:1, 2-18:1), vacuolar membrane
+r_2860;PI 4-P 5-kinase (1-16:0, 2-16:1), nucleus
+r_2861;PI 4-P 5-kinase (1-16:1, 2-16:1), nucleus
+r_2862;PI 4-P 5-kinase (1-18:0, 2-16:1), nucleus
+r_2863;PI 4-P 5-kinase (1-18:1, 2-16:1), nucleus
+r_2864;PI 4-P 5-kinase (1-16:0, 2-18:1), nucleus
+r_2865;PI 4-P 5-kinase (1-16:1, 2-18:1), nucleus
+r_2866;PI 4-P 5-kinase (1-18:0, 2-18:1), nucleus
+r_2867;PI 4-P 5-kinase (1-18:1, 2-18:1), nucleus
+r_2868;PI 4-P 5-kinase (1-16:0, 2-16:1), cell envelope
+r_2869;PI 4-P 5-kinase (1-16:1, 2-16:1), cell envelope
+r_2870;PI 4-P 5-kinase (1-18:0, 2-16:1), cell envelope
+r_2871;PI 4-P 5-kinase (1-18:1, 2-16:1), cell envelope
+r_2872;PI 4-P 5-kinase (1-16:0, 2-18:1), cell envelope
+r_2873;PI 4-P 5-kinase (1-16:1, 2-18:1), cell envelope
+r_2874;PI 4-P 5-kinase (1-18:0, 2-18:1), cell envelope
+r_2875;PI 4-P 5-kinase (1-18:1, 2-18:1), cell envelope
+r_2876;PI 3-P 5-kinase (1-16:0, 2-16:1), vacuolar membrane
+r_2877;PI 3-P 5-kinase (1-16:1, 2-16:1), vacuolar membrane
+r_2878;PI 3-P 5-kinase (1-18:0, 2-16:1), vacuolar membrane
+r_2879;PI 3-P 5-kinase (1-18:1, 2-16:1), vacuolar membrane
+r_2880;PI 3-P 5-kinase (1-16:0, 2-18:1), vacuolar membrane
+r_2881;PI 3-P 5-kinase (1-16:1, 2-18:1), vacuolar membrane
+r_2882;PI 3-P 5-kinase (1-18:0, 2-18:1), vacuolar membrane
+r_2883;PI 3-P 5-kinase (1-18:1, 2-18:1), vacuolar membrane
+r_2884;PE (1-16:0, 2-16:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2885;PE (1-16:1, 2-16:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2886;PE (1-18:0, 2-16:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2887;PE (1-18:1, 2-16:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2888;PE (1-16:0, 2-18:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2889;PE (1-16:1, 2-18:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2890;PE (1-18:0, 2-18:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2891;PE (1-18:1, 2-18:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2892;PE (1-16:0, 2-16:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2893;PE (1-16:1, 2-16:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2894;PE (1-18:0, 2-16:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2895;PE (1-18:1, 2-16:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2896;PE (1-16:0, 2-18:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2897;PE (1-16:1, 2-18:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2898;PE (1-18:0, 2-18:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2899;PE (1-18:1, 2-18:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2900;PE (1-16:0, 2-16:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2901;PE (1-16:1, 2-16:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2902;PE (1-18:0, 2-16:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2903;PE (1-18:1, 2-16:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2904;PE (1-16:0, 2-18:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2905;PE (1-16:1, 2-18:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2906;PE (1-18:0, 2-18:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2907;PE (1-18:1, 2-18:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2908;PE (1-16:0, 2-16:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2909;PE (1-16:1, 2-16:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2910;PE (1-18:0, 2-16:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2911;PE (1-18:1, 2-16:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2912;PE (1-16:0, 2-18:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2913;PE (1-16:1, 2-18:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2914;PE (1-18:0, 2-18:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2915;PE (1-18:1, 2-18:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2916;PE (1-16:0, 2-16:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2917;PE (1-16:1, 2-16:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2918;PE (1-18:0, 2-16:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2919;PE (1-18:1, 2-16:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2920;PE (1-16:0, 2-18:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2921;PE (1-16:1, 2-18:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2922;PE (1-18:0, 2-18:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2923;PE (1-18:1, 2-18:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2924;PE (1-16:0, 2-16:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2925;PE (1-16:1, 2-16:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2926;PE (1-18:0, 2-16:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2927;PE (1-18:1, 2-16:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2928;PE (1-16:0, 2-18:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2929;PE (1-16:1, 2-18:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2930;PE (1-18:0, 2-18:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2931;PE (1-18:1, 2-18:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2932;PE (1-16:0, 2-16:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_2933;PE (1-16:1, 2-16:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_2934;PE (1-18:0, 2-16:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_2935;PE (1-18:1, 2-16:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_2936;PE (1-16:0, 2-18:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_2937;PE (1-16:1, 2-18:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_2938;PE (1-18:0, 2-18:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_2939;PE (1-18:1, 2-18:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_2940;PE (1-16:0, 2-16:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_2941;PE (1-16:1, 2-16:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_2942;PE (1-18:0, 2-16:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_2943;PE (1-18:1, 2-16:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_2944;PE (1-16:0, 2-18:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_2945;PE (1-16:1, 2-18:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_2946;PE (1-18:0, 2-18:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_2947;PE (1-18:1, 2-18:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_2948;PC (1-16:0, 2-16:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2949;PC (1-16:1, 2-16:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2950;PC (1-18:0, 2-16:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2951;PC (1-18:1, 2-16:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2952;PC (1-16:0, 2-18:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2953;PC (1-16:1, 2-18:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2954;PC (1-18:0, 2-18:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2955;PC (1-18:1, 2-18:1) diacylglycerol (1-16:0, 2-16:1) acyltransferase, ER membrane
+r_2956;PC (1-16:0, 2-16:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2957;PC (1-16:1, 2-16:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2958;PC (1-18:0, 2-16:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2959;PC (1-18:1, 2-16:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2960;PC (1-16:0, 2-18:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2961;PC (1-16:1, 2-18:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2962;PC (1-18:0, 2-18:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2963;PC (1-18:1, 2-18:1) diacylglycerol (1-16:1, 2-16:1) acyltransferase, ER membrane
+r_2964;PC (1-16:0, 2-16:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2965;PC (1-16:1, 2-16:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2966;PC (1-18:0, 2-16:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2967;PC (1-18:1, 2-16:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2968;PC (1-16:0, 2-18:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2969;PC (1-16:1, 2-18:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2970;PC (1-18:0, 2-18:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2971;PC (1-18:1, 2-18:1) diacylglycerol (1-18:0, 2-16:1) acyltransferase, ER membrane
+r_2972;PC (1-16:0, 2-16:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2973;PC (1-16:1, 2-16:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2974;PC (1-18:0, 2-16:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2975;PC (1-18:1, 2-16:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2976;PC (1-16:0, 2-18:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2977;PC (1-16:1, 2-18:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2978;PC (1-18:0, 2-18:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2979;PC (1-18:1, 2-18:1) diacylglycerol (1-18:1, 2-16:1) acyltransferase, ER membrane
+r_2980;PC (1-16:0, 2-16:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2981;PC (1-16:1, 2-16:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2982;PC (1-18:0, 2-16:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2983;PC (1-18:1, 2-16:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2984;PC (1-16:0, 2-18:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2985;PC (1-16:1, 2-18:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2986;PC (1-18:0, 2-18:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2987;PC (1-18:1, 2-18:1) diacylglycerol (1-16:0, 2-18:1) acyltransferase, ER membrane
+r_2988;PC (1-16:0, 2-16:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2989;PC (1-16:1, 2-16:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2990;PC (1-18:0, 2-16:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2991;PC (1-18:1, 2-16:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2992;PC (1-16:0, 2-18:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2993;PC (1-16:1, 2-18:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2994;PC (1-18:0, 2-18:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2995;PC (1-18:1, 2-18:1) diacylglycerol (1-16:1, 2-18:1) acyltransferase, ER membrane
+r_2996;PC (1-16:0, 2-16:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_2997;PC (1-16:1, 2-16:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_2998;PC (1-18:0, 2-16:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_2999;PC (1-18:1, 2-16:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_3000;PC (1-16:0, 2-18:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_3001;PC (1-16:1, 2-18:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_3002;PC (1-18:0, 2-18:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_3003;PC (1-18:1, 2-18:1) diacylglycerol (1-18:0, 2-18:1) acyltransferase, ER membrane
+r_3004;PC (1-16:0, 2-16:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_3005;PC (1-16:1, 2-16:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_3006;PC (1-18:0, 2-16:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_3007;PC (1-18:1, 2-16:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_3008;PC (1-16:0, 2-18:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_3009;PC (1-16:1, 2-18:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_3010;PC (1-18:0, 2-18:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_3011;PC (1-18:1, 2-18:1) diacylglycerol (1-18:1, 2-18:1) acyltransferase, ER membrane
+r_3022;PC phospholipase B (1-16:0, 2-16:1), ER membrane
+r_3023;PC phospholipase B (1-16:1, 2-16:1), ER membrane
+r_3024;PC phospholipase B (1-18:0, 2-16:1), ER membrane
+r_3025;PC phospholipase B (1-18:1, 2-16:1), ER membrane
+r_3026;PC phospholipase B (1-16:0, 2-18:1), ER membrane
+r_3027;PC phospholipase B (1-16:1, 2-18:1), ER membrane
+r_3028;PC phospholipase B (1-18:0, 2-18:1), ER membrane
+r_3029;PC phospholipase B (1-18:1, 2-18:1), ER membrane
+r_3030;LPC phospholipase B (16:0), ER membrane
+r_3031;LPC phospholipase B (16:1), ER membrane
+r_3032;LPC phospholipase B (18:0), ER membrane
+r_3033;LPC phospholipase B (18:1), ER membrane
+r_3034;PC phospholipase B (1-16:0, 2-16:1), cell envelope
+r_3035;PC phospholipase B (1-16:1, 2-16:1), cell envelope
+r_3036;PC phospholipase B (1-18:0, 2-16:1), cell envelope
+r_3037;PC phospholipase B (1-18:1, 2-16:1), cell envelope
+r_3038;PC phospholipase B (1-16:0, 2-18:1), cell envelope
+r_3039;PC phospholipase B (1-16:1, 2-18:1), cell envelope
+r_3040;PC phospholipase B (1-18:0, 2-18:1), cell envelope
+r_3041;PC phospholipase B (1-18:1, 2-18:1), cell envelope
+r_3042;LPC phospholipase B (16:0), cell envelope
+r_3043;LPC phospholipase B (16:1), cell envelope
+r_3044;LPC phospholipase B (18:0), cell envelope
+r_3045;LPC phospholipase B (18:1), cell envelope
+r_3046;PE phospholipase B (1-16:0, 2-16:1), cell envelope
+r_3047;PE phospholipase B (1-16:1, 2-16:1), cell envelope
+r_3048;PE phospholipase B (1-18:0, 2-16:1), cell envelope
+r_3049;PE phospholipase B (1-18:1, 2-16:1), cell envelope
+r_3050;PE phospholipase B (1-16:0, 2-18:1), cell envelope
+r_3051;PE phospholipase B (1-16:1, 2-18:1), cell envelope
+r_3052;PE phospholipase B (1-18:0, 2-18:1), cell envelope
+r_3053;PE phospholipase B (1-18:1, 2-18:1), cell envelope
+r_3054;LPE phospholipase B (16:0), cell envelope
+r_3055;LPE phospholipase B (16:1), cell envelope
+r_3056;LPE phospholipase B (18:0), cell envelope
+r_3057;LPE phospholipase B (18:1), cell envelope
+r_3058;PS phospholipase B (1-16:0, 2-16:1), cell envelope
+r_3059;PS phospholipase B (1-16:1, 2-16:1), cell envelope
+r_3060;PS phospholipase B (1-18:0, 2-16:1), cell envelope
+r_3061;PS phospholipase B (1-18:1, 2-16:1), cell envelope
+r_3062;PS phospholipase B (1-16:0, 2-18:1), cell envelope
+r_3063;PS phospholipase B (1-16:1, 2-18:1), cell envelope
+r_3064;PS phospholipase B (1-18:0, 2-18:1), cell envelope
+r_3065;PS phospholipase B (1-18:1, 2-18:1), cell envelope
+r_3066;LPS phospholipase B (16:0), cell envelope
+r_3067;LPS phospholipase B (16:1), cell envelope
+r_3068;LPS phospholipase B (18:0), cell envelope
+r_3069;LPS phospholipase B (18:1), cell envelope
+r_3070;PI phospholipase B (1-16:0, 2-16:1), cell envelope
+r_3071;PI phospholipase B (1-16:1, 2-16:1), cell envelope
+r_3072;PI phospholipase B (1-18:0, 2-16:1), cell envelope
+r_3073;PI phospholipase B (1-18:1, 2-16:1), cell envelope
+r_3074;PI phospholipase B (1-16:0, 2-18:1), cell envelope
+r_3075;PI phospholipase B (1-16:1, 2-18:1), cell envelope
+r_3076;PI phospholipase B (1-18:0, 2-18:1), cell envelope
+r_3077;PI phospholipase B (1-18:1, 2-18:1), cell envelope
+r_3078;LPI phospholipase B (16:0), cell envelope
+r_3079;LPI phospholipase B (16:1), cell envelope
+r_3080;LPI phospholipase B (18:0), cell envelope
+r_3081;LPI phospholipase B (18:1), cell envelope
+r_3082;PI 4,5-P2 phospholipase C (1-16:0, 2-16:1), cytoplasm
+r_3083;PI 4,5-P2 phospholipase C (1-16:1, 2-16:1), cytoplasm
+r_3084;PI 4,5-P2 phospholipase C (1-18:0, 2-16:1), cytoplasm
+r_3085;PI 4,5-P2 phospholipase C (1-18:1, 2-16:1), cytoplasm
+r_3086;PI 4,5-P2 phospholipase C (1-16:0, 2-18:1), cytoplasm
+r_3087;PI 4,5-P2 phospholipase C (1-16:1, 2-18:1), cytoplasm
+r_3088;PI 4,5-P2 phospholipase C (1-18:0, 2-18:1), cytoplasm
+r_3089;PI 4,5-P2 phospholipase C (1-18:1, 2-18:1), cytoplasm
+r_3090;PI 4,5-P2 phospholipase C (1-16:0, 2-16:1), nucleus
+r_3091;PI 4,5-P2 phospholipase C (1-16:1, 2-16:1), nucleus
+r_3092;PI 4,5-P2 phospholipase C (1-18:0, 2-16:1), nucleus
+r_3093;PI 4,5-P2 phospholipase C (1-18:1, 2-16:1), nucleus
+r_3094;PI 4,5-P2 phospholipase C (1-16:0, 2-18:1), nucleus
+r_3095;PI 4,5-P2 phospholipase C (1-16:1, 2-18:1), nucleus
+r_3096;PI 4,5-P2 phospholipase C (1-18:0, 2-18:1), nucleus
+r_3097;PI 4,5-P2 phospholipase C (1-18:1, 2-18:1), nucleus
+r_3098;PG phospholipase C (1-16:0, 2-16:1), mitochondrial membrane
+r_3099;PG phospholipase C (1-16:1, 2-16:1), mitochondrial membrane
+r_3100;PG phospholipase C (1-18:0, 2-16:1), mitochondrial membrane
+r_3101;PG phospholipase C (1-18:1, 2-16:1), mitochondrial membrane
+r_3102;PG phospholipase C (1-16:0, 2-18:1), mitochondrial membrane
+r_3103;PG phospholipase C (1-16:1, 2-18:1), mitochondrial membrane
+r_3104;PC phospholipase D (1-16:0, 2-16:1), cell envelope
+r_3105;PC phospholipase D (1-16:1, 2-16:1), cell envelope
+r_3106;PC phospholipase D (1-18:0, 2-16:1), cell envelope
+r_3107;PC phospholipase D (1-18:1, 2-16:1), cell envelope
+r_3108;PC phospholipase D (1-16:0, 2-18:1), cell envelope
+r_3109;PC phospholipase D (1-16:1, 2-18:1), cell envelope
+r_3110;PC phospholipase D (1-18:0, 2-18:1), cell envelope
+r_3111;PC phospholipase D (1-18:1, 2-18:1), cell envelope
+r_3112;PI 3-P phosphatase (1-16:0, 2-16:1), cell envelope
+r_3113;PI 3-P phosphatase (1-16:1, 2-16:1), cell envelope
+r_3114;PI 3-P phosphatase (1-18:0, 2-16:1), cell envelope
+r_3115;PI 3-P phosphatase (1-18:1, 2-16:1), cell envelope
+r_3116;PI 3-P phosphatase (1-16:0, 2-18:1), cell envelope
+r_3117;PI 3-P phosphatase (1-16:1, 2-18:1), cell envelope
+r_3118;PI 3-P phosphatase (1-18:0, 2-18:1), cell envelope
+r_3119;PI 3-P phosphatase (1-18:1, 2-18:1), cell envelope
+r_3120;PI 3-P phosphatase (1-16:0, 2-16:1), cytoplasm
+r_3121;PI 3-P phosphatase (1-16:1, 2-16:1), cytoplasm
+r_3122;PI 3-P phosphatase (1-18:0, 2-16:1), cytoplasm
+r_3123;PI 3-P phosphatase (1-18:1, 2-16:1), cytoplasm
+r_3124;PI 3-P phosphatase (1-16:0, 2-18:1), cytoplasm
+r_3125;PI 3-P phosphatase (1-16:1, 2-18:1), cytoplasm
+r_3126;PI 3-P phosphatase (1-18:0, 2-18:1), cytoplasm
+r_3127;PI 3-P phosphatase (1-18:1, 2-18:1), cytoplasm
+r_3128;PI 3-P phosphatase (1-16:0, 2-16:1), ER membrane
+r_3129;PI 3-P phosphatase (1-16:1, 2-16:1), ER membrane
+r_3130;PI 3-P phosphatase (1-18:0, 2-16:1), ER membrane
+r_3131;PI 3-P phosphatase (1-18:1, 2-16:1), ER membrane
+r_3132;PI 3-P phosphatase (1-16:0, 2-18:1), ER membrane
+r_3133;PI 3-P phosphatase (1-16:1, 2-18:1), ER membrane
+r_3134;PI 3-P phosphatase (1-18:0, 2-18:1), ER membrane
+r_3135;PI 3-P phosphatase (1-18:1, 2-18:1), ER membrane
+r_3136;PI 3-P phosphatase (1-16:0, 2-16:1), Golgi membrane
+r_3137;PI 3-P phosphatase (1-16:1, 2-16:1), Golgi membrane
+r_3138;PI 3-P phosphatase (1-18:0, 2-16:1), Golgi membrane
+r_3139;PI 3-P phosphatase (1-18:1, 2-16:1), Golgi membrane
+r_3140;PI 3-P phosphatase (1-16:0, 2-18:1), Golgi membrane
+r_3141;PI 3-P phosphatase (1-16:1, 2-18:1), Golgi membrane
+r_3142;PI 3-P phosphatase (1-18:0, 2-18:1), Golgi membrane
+r_3143;PI 3-P phosphatase (1-18:1, 2-18:1), Golgi membrane
+r_3144;PI 4-P phosphatase (1-16:0, 2-16:1), cell envelope
+r_3145;PI 4-P phosphatase (1-16:1, 2-16:1), cell envelope
+r_3146;PI 4-P phosphatase (1-18:0, 2-16:1), cell envelope
+r_3147;PI 4-P phosphatase (1-18:1, 2-16:1), cell envelope
+r_3148;PI 4-P phosphatase (1-16:0, 2-18:1), cell envelope
+r_3149;PI 4-P phosphatase (1-16:1, 2-18:1), cell envelope
+r_3150;PI 4-P phosphatase (1-18:0, 2-18:1), cell envelope
+r_3151;PI 4-P phosphatase (1-18:1, 2-18:1), cell envelope
+r_3152;PI 4-P phosphatase (1-16:0, 2-16:1), cytoplasm
+r_3153;PI 4-P phosphatase (1-16:1, 2-16:1), cytoplasm
+r_3154;PI 4-P phosphatase (1-18:0, 2-16:1), cytoplasm
+r_3155;PI 4-P phosphatase (1-18:1, 2-16:1), cytoplasm
+r_3156;PI 4-P phosphatase (1-16:0, 2-18:1), cytoplasm
+r_3157;PI 4-P phosphatase (1-16:1, 2-18:1), cytoplasm
+r_3158;PI 4-P phosphatase (1-18:0, 2-18:1), cytoplasm
+r_3159;PI 4-P phosphatase (1-18:1, 2-18:1), cytoplasm
+r_3160;PI 4-P phosphatase (1-16:0, 2-16:1), ER membrane
+r_3161;PI 4-P phosphatase (1-16:1, 2-16:1), ER membrane
+r_3162;PI 4-P phosphatase (1-18:0, 2-16:1), ER membrane
+r_3163;PI 4-P phosphatase (1-18:1, 2-16:1), ER membrane
+r_3164;PI 4-P phosphatase (1-16:0, 2-18:1), ER membrane
+r_3165;PI 4-P phosphatase (1-16:1, 2-18:1), ER membrane
+r_3166;PI 4-P phosphatase (1-18:0, 2-18:1), ER membrane
+r_3167;PI 4-P phosphatase (1-18:1, 2-18:1), ER membrane
+r_3168;PI 4-P phosphatase (1-16:0, 2-16:1), Golgi membrane
+r_3169;PI 4-P phosphatase (1-16:1, 2-16:1), Golgi membrane
+r_3170;PI 4-P phosphatase (1-18:0, 2-16:1), Golgi membrane
+r_3171;PI 4-P phosphatase (1-18:1, 2-16:1), Golgi membrane
+r_3172;PI 4-P phosphatase (1-16:0, 2-18:1), Golgi membrane
+r_3173;PI 4-P phosphatase (1-16:1, 2-18:1), Golgi membrane
+r_3174;PI 4-P phosphatase (1-18:0, 2-18:1), Golgi membrane
+r_3175;PI 4-P phosphatase (1-18:1, 2-18:1), Golgi membrane
+r_3176;PI 3,5-P2 phosphatase (1-16:0, 2-16:1), cell envelope
+r_3177;PI 3,5-P2 phosphatase (1-16:1, 2-16:1), cell envelope
+r_3178;PI 3,5-P2 phosphatase (1-18:0, 2-16:1), cell envelope
+r_3179;PI 3,5-P2 phosphatase (1-18:1, 2-16:1), cell envelope
+r_3180;PI 3,5-P2 phosphatase (1-16:0, 2-18:1), cell envelope
+r_3181;PI 3,5-P2 phosphatase (1-16:1, 2-18:1), cell envelope
+r_3182;PI 3,5-P2 phosphatase (1-18:0, 2-18:1), cell envelope
+r_3183;PI 3,5-P2 phosphatase (1-18:1, 2-18:1), cell envelope
+r_3184;PI 3,5-P2 phosphatase (1-16:0, 2-16:1), cytoplasm
+r_3185;PI 3,5-P2 phosphatase (1-16:1, 2-16:1), cytoplasm
+r_3186;PI 3,5-P2 phosphatase (1-18:0, 2-16:1), cytoplasm
+r_3187;PI 3,5-P2 phosphatase (1-18:1, 2-16:1), cytoplasm
+r_3188;PI 3,5-P2 phosphatase (1-16:0, 2-18:1), cytoplasm
+r_3189;PI 3,5-P2 phosphatase (1-16:1, 2-18:1), cytoplasm
+r_3190;PI 3,5-P2 phosphatase (1-18:0, 2-18:1), cytoplasm
+r_3191;PI 3,5-P2 phosphatase (1-18:1, 2-18:1), cytoplasm
+r_3192;PI 4,5-P2 phosphatase (1-16:0, 2-16:1), cell envelope
+r_3193;PI 4,5-P2 phosphatase (1-16:1, 2-16:1), cell envelope
+r_3194;PI 4,5-P2 phosphatase (1-18:0, 2-16:1), cell envelope
+r_3195;PI 4,5-P2 phosphatase (1-18:1, 2-16:1), cell envelope
+r_3196;PI 4,5-P2 phosphatase (1-16:0, 2-18:1), cell envelope
+r_3197;PI 4,5-P2 phosphatase (1-16:1, 2-18:1), cell envelope
+r_3198;PI 4,5-P2 phosphatase (1-18:0, 2-18:1), cell envelope
+r_3199;PI 4,5-P2 phosphatase (1-18:1, 2-18:1), cell envelope
+r_3200;PI 4,5-P2 phosphatase (1-16:0, 2-16:1), cytoplasm
+r_3201;PI 4,5-P2 phosphatase (1-16:1, 2-16:1), cytoplasm
+r_3202;PI 4,5-P2 phosphatase (1-18:0, 2-16:1), cytoplasm
+r_3203;PI 4,5-P2 phosphatase (1-18:1, 2-16:1), cytoplasm
+r_3204;PI 4,5-P2 phosphatase (1-16:0, 2-18:1), cytoplasm
+r_3205;PI 4,5-P2 phosphatase (1-16:1, 2-18:1), cytoplasm
+r_3206;PI 4,5-P2 phosphatase (1-18:0, 2-18:1), cytoplasm
+r_3207;PI 4,5-P2 phosphatase (1-18:1, 2-18:1), cytoplasm
+r_3208;PI 4,5-P2 phosphatase (1-16:0, 2-16:1), ER membrane
+r_3209;PI 4,5-P2 phosphatase (1-16:1, 2-16:1), ER membrane
+r_3210;PI 4,5-P2 phosphatase (1-18:0, 2-16:1), ER membrane
+r_3211;PI 4,5-P2 phosphatase (1-18:1, 2-16:1), ER membrane
+r_3212;PI 4,5-P2 phosphatase (1-16:0, 2-18:1), ER membrane
+r_3213;PI 4,5-P2 phosphatase (1-16:1, 2-18:1), ER membrane
+r_3214;PI 4,5-P2 phosphatase (1-18:0, 2-18:1), ER membrane
+r_3215;PI 4,5-P2 phosphatase (1-18:1, 2-18:1), ER membrane
+r_3216;PI 3,5-P2 phosphatase (1-16:0, 2-16:1), vacuolar membrane
+r_3217;PI 3,5-P2 phosphatase (1-16:1, 2-16:1), vacuolar membrane
+r_3218;PI 3,5-P2 phosphatase (1-18:0, 2-16:1), vacuolar membrane
+r_3219;PI 3,5-P2 phosphatase (1-18:1, 2-16:1), vacuolar membrane
+r_3220;PI 3,5-P2 phosphatase (1-16:0, 2-18:1), vacuolar membrane
+r_3221;PI 3,5-P2 phosphatase (1-16:1, 2-18:1), vacuolar membrane
+r_3222;PI 3,5-P2 phosphatase (1-18:0, 2-18:1), vacuolar membrane
+r_3223;PI 3,5-P2 phosphatase (1-18:1, 2-18:1), vacuolar membrane
+r_3224;DGPP phosphatase (1-16:0, 2-16:1), vacuolar membrane
+r_3225;DGPP phosphatase (1-16:1, 2-16:1), vacuolar membrane
+r_3226;DGPP phosphatase (1-18:0, 2-16:1), vacuolar membrane
+r_3227;DGPP phosphatase (1-18:1, 2-16:1), vacuolar membrane
+r_3228;DGPP phosphatase (1-16:0, 2-18:1), vacuolar membrane
+r_3229;DGPP phosphatase (1-16:1, 2-18:1), vacuolar membrane
+r_3230;DGPP phosphatase (1-18:0, 2-18:1), vacuolar membrane
+r_3231;DGPP phosphatase (1-18:1, 2-18:1), vacuolar membrane
+r_3232;DGPP phosphatase (1-16:0, 2-16:1), Golgi membrane
+r_3233;DGPP phosphatase (1-16:1, 2-16:1), Golgi membrane
+r_3234;DGPP phosphatase (1-18:0, 2-16:1), Golgi membrane
+r_3235;DGPP phosphatase (1-18:1, 2-16:1), Golgi membrane
+r_3236;DGPP phosphatase (1-16:0, 2-18:1), Golgi membrane
+r_3237;DGPP phosphatase (1-16:1, 2-18:1), Golgi membrane
+r_3238;DGPP phosphatase (1-18:0, 2-18:1), Golgi membrane
+r_3239;DGPP phosphatase (1-18:1, 2-18:1), Golgi membrane
+r_3240;lysoPA phosphatase (16:0), cytoplasm
+r_3241;lysoPA phosphatase (16:1), cytoplasm
+r_3242;lysoPA phosphatase (18:0), cytoplasm
+r_3243;lysoPA phosphatase (18:1), cytoplasm
+r_3244;lysoPA phosphatase (16:0), vacuolar membrane
+r_3245;lysoPA phosphatase (16:1), vacuolar membrane
+r_3246;lysoPA phosphatase (18:0), vacuolar membrane
+r_3247;lysoPA phosphatase (18:1), vacuolar membrane
+r_3248;lysoPA phosphatase (16:0), Golgi membrane
+r_3249;lysoPA phosphatase (16:1), Golgi membrane
+r_3250;lysoPA phosphatase (18:0), Golgi membrane
+r_3251;lysoPA phosphatase (18:1), Golgi membrane
+r_3252;ergosteryl ester hydrolase (16:1), lipid particle
+r_3253;ergosteryl ester hydrolase (18:1), lipid particle
+r_3254;episteryl ester hydrolase (16:1), lipid particle
+r_3255;episteryl ester hydrolase (18:1), lipid particle
+r_3256;fecosteryl ester hydrolase (16:1), lipid particle
+r_3257;fecosteryl ester hydrolase (18:1), lipid particle
+r_3258;lanosteryl ester hydrolase (16:1), lipid particle
+r_3259;lanosteryl ester hydrolase (18:1), lipid particle
+r_3260;zymosteryl ester hydrolase (16:1), lipid particle
+r_3261;zymosteryl ester hydrolase (18:1), lipid particle
+r_3262;zymosteryl ester hydrolase (16:1), cell envelope
+r_3263;zymosteryl ester hydrolase (18:1), cell envelope
+r_3264;TAG lipase (1-16:0, 2-16:1, 3-16:0), lipid particle
+r_3265;TAG lipase (1-16:0, 2-16:1, 3-16:1), lipid particle
+r_3266;TAG lipase (1-16:0, 2-16:1, 3-18:0), lipid particle
+r_3267;TAG lipase (1-16:0, 2-16:1, 3-18:1), lipid particle
+r_3268;TAG lipase (1-16:1, 2-16:1, 3-16:0), lipid particle
+r_3269;TAG lipase (1-16:1, 2-16:1, 3-16:1), lipid particle
+r_3270;TAG lipase (1-16:1, 2-16:1, 3-18:0), lipid particle
+r_3271;TAG lipase (1-16:1, 2-16:1, 3-18:1), lipid particle
+r_3272;TAG lipase (1-18:0, 2-16:1, 3-16:0), lipid particle
+r_3273;TAG lipase (1-18:0, 2-16:1, 3-16:1), lipid particle
+r_3274;TAG lipase (1-18:0, 2-16:1, 3-18:0), lipid particle
+r_3275;TAG lipase (1-18:0, 2-16:1, 3-18:1), lipid particle
+r_3276;TAG lipase (1-18:1, 2-16:1, 3-16:0), lipid particle
+r_3277;TAG lipase (1-18:1, 2-16:1, 3-16:1), lipid particle
+r_3278;TAG lipase (1-18:1, 2-16:1, 3-18:0), lipid particle
+r_3279;TAG lipase (1-18:1, 2-16:1, 3-18:1), lipid particle
+r_3280;TAG lipase (1-16:0, 2-18:1, 3-16:0), lipid particle
+r_3281;TAG lipase (1-16:0, 2-18:1, 3-16:1), lipid particle
+r_3282;TAG lipase (1-16:0, 2-18:1, 3-18:0), lipid particle
+r_3283;TAG lipase (1-16:0, 2-18:1, 3-18:1), lipid particle
+r_3284;TAG lipase (1-16:1, 2-18:1, 3-16:0), lipid particle
+r_3285;TAG lipase (1-16:1, 2-18:1, 3-16:1), lipid particle
+r_3286;TAG lipase (1-16:1, 2-18:1, 3-18:0), lipid particle
+r_3287;TAG lipase (1-16:1, 2-18:1, 3-18:1), lipid particle
+r_3288;TAG lipase (1-18:0, 2-18:1, 3-16:0), lipid particle
+r_3289;TAG lipase (1-18:0, 2-18:1, 3-16:1), lipid particle
+r_3290;TAG lipase (1-18:0, 2-18:1, 3-18:0), lipid particle
+r_3291;TAG lipase (1-18:0, 2-18:1, 3-18:1), lipid particle
+r_3292;TAG lipase (1-18:1, 2-18:1, 3-16:0), lipid particle
+r_3293;TAG lipase (1-18:1, 2-18:1, 3-16:1), lipid particle
+r_3294;TAG lipase (1-18:1, 2-18:1, 3-18:0), lipid particle
+r_3295;TAG lipase (1-18:1, 2-18:1, 3-18:1), lipid particle
+r_3296;DAG lipase (1-16:0, 2-16:1), lipid particle
+r_3297;DAG lipase (1-16:1, 2-16:1), lipid particle
+r_3298;DAG lipase (1-18:0, 2-16:1), lipid particle
+r_3299;DAG lipase (1-18:1, 2-16:1), lipid particle
+r_3300;DAG lipase (1-16:0, 2-18:1), lipid particle
+r_3301;DAG lipase (1-16:1, 2-18:1), lipid particle
+r_3302;DAG lipase (1-18:0, 2-18:1), lipid particle
+r_3303;DAG lipase (1-18:1, 2-18:1), lipid particle
+r_3304;DAG lipase (1-16:0, 2-18:1), mitochondrion
+r_3305;DAG lipase (1-16:1, 2-18:1), mitochondrion
+r_3306;DAG lipase (1-18:0, 2-18:1), mitochondrion
+r_3307;DAG lipase (1-18:1, 2-18:1), mitochondrion
+r_3308;MAG lipase (1-16:0), lipid particle
+r_3309;MAG lipase (1-16:1), lipid particle
+r_3310;MAG lipase (1-18:0), lipid particle
+r_3311;MAG lipase (1-18:1), lipid particle
+r_3312;lysoPE (1-16:0) oleoyl-CoA acyltransferase, lipid particle
+r_3313;lysoPE (1-16:1) oleoyl-CoA acyltransferase, lipid particle
+r_3314;lysoPE (1-18:0) oleoyl-CoA acyltransferase, lipid particle
+r_3315;lysoPE (1-18:1) oleoyl-CoA acyltransferase, lipid particle
+r_3316;PC phospholipase A2 (1-16:0, 2-16:1), lipid particle
+r_3317;PC phospholipase A2 (1-16:1, 2-16:1), lipid particle
+r_3318;PC phospholipase A2 (1-18:0, 2-16:1), lipid particle
+r_3319;PC phospholipase A2 (1-18:1, 2-16:1), lipid particle
+r_3320;PC phospholipase A2 (1-16:0, 2-18:1), lipid particle
+r_3321;PC phospholipase A2 (1-16:1, 2-18:1), lipid particle
+r_3322;PC phospholipase A2 (1-18:0, 2-18:1), lipid particle
+r_3323;PC phospholipase A2 (1-18:1, 2-18:1), lipid particle
+r_3324;PE phospholipase A2 (1-16:0, 2-16:1), lipid particle
+r_3325;PE phospholipase A2 (1-16:1, 2-16:1), lipid particle
+r_3326;PE phospholipase A2 (1-18:0, 2-16:1), lipid particle
+r_3327;PE phospholipase A2 (1-18:1, 2-16:1), lipid particle
+r_3328;PE phospholipase A2 (1-16:0, 2-18:1), lipid particle
+r_3329;PE phospholipase A2 (1-16:1, 2-18:1), lipid particle
+r_3330;PE phospholipase A2 (1-18:0, 2-18:1), lipid particle
+r_3331;PE phospholipase A2 (1-18:1, 2-18:1), lipid particle
+r_3332;PA kinase (1-16:0, 2-16:1), Golgi membrane
+r_3333;PA kinase (1-16:1, 2-16:1), Golgi membrane
+r_3334;PA kinase (1-18:0, 2-16:1), Golgi membrane
+r_3335;PA kinase (1-18:1, 2-16:1), Golgi membrane
+r_3336;PA kinase (1-16:0, 2-18:1), Golgi membrane
+r_3337;PA kinase (1-16:1, 2-18:1), Golgi membrane
+r_3338;PA kinase (1-18:0, 2-18:1), Golgi membrane
+r_3339;PA kinase (1-18:1, 2-18:1), Golgi membrane
+r_3340;PA kinase (1-16:0, 2-16:1), vacuolar membrane
+r_3341;PA kinase (1-16:1, 2-16:1), vacuolar membrane
+r_3342;PA kinase (1-18:0, 2-16:1), vacuolar membrane
+r_3343;PA kinase (1-18:1, 2-16:1), vacuolar membrane
+r_3344;PA kinase (1-16:0, 2-18:1), vacuolar membrane
+r_3345;PA kinase (1-16:1, 2-18:1), vacuolar membrane
+r_3346;PA kinase (1-18:0, 2-18:1), vacuolar membrane
+r_3347;PA kinase (1-18:1, 2-18:1), vacuolar membrane
+r_3348;inositolphosphotransferase (PI (1-16:0, 2-16:1) MIPC-A (C24))
+r_3349;inositolphosphotransferase (PI (1-16:1, 2-16:1) MIPC-A (C24))
+r_3350;inositolphosphotransferase (PI (1-18:0, 2-16:1) MIPC-A (C24))
+r_3351;inositolphosphotransferase (PI (1-18:1, 2-16:1) MIPC-A (C24))
+r_3352;inositolphosphotransferase (PI (1-16:0, 2-18:1) MIPC-A (C24))
+r_3353;inositolphosphotransferase (PI (1-16:1, 2-18:1) MIPC-A (C24))
+r_3354;inositolphosphotransferase (PI (1-18:0, 2-18:1) MIPC-A (C24))
+r_3355;inositolphosphotransferase (PI (1-18:1, 2-18:1) MIPC-A (C24))
+r_3356;inositolphosphotransferase (PI (1-16:0, 2-16:1) MIPC-A (C26))
+r_3357;inositolphosphotransferase (PI (1-16:1, 2-16:1) MIPC-A (C26))
+r_3358;inositolphosphotransferase (PI (1-18:0, 2-16:1) MIPC-A (C26))
+r_3359;inositolphosphotransferase (PI (1-18:1, 2-16:1) MIPC-A (C26))
+r_3360;inositolphosphotransferase (PI (1-16:0, 2-18:1) MIPC-A (C26))
+r_3361;inositolphosphotransferase (PI (1-16:1, 2-18:1) MIPC-A (C26))
+r_3362;inositolphosphotransferase (PI (1-18:0, 2-18:1) MIPC-A (C26))
+r_3363;inositolphosphotransferase (PI (1-18:1, 2-18:1) MIPC-A (C26))
+r_3364;inositolphosphotransferase (PI (1-16:0, 2-16:1) MIPC-B' (C24))
+r_3365;inositolphosphotransferase (PI (1-16:1, 2-16:1) MIPC-B' (C24))
+r_3366;inositolphosphotransferase (PI (1-18:0, 2-16:1) MIPC-B' (C24))
+r_3367;inositolphosphotransferase (PI (1-18:1, 2-16:1) MIPC-B' (C24))
+r_3368;inositolphosphotransferase (PI (1-16:0, 2-18:1) MIPC-B' (C24))
+r_3369;inositolphosphotransferase (PI (1-16:1, 2-18:1) MIPC-B' (C24))
+r_3370;inositolphosphotransferase (PI (1-18:0, 2-18:1) MIPC-B' (C24))
+r_3371;inositolphosphotransferase (PI (1-18:1, 2-18:1) MIPC-B' (C24))
+r_3372;inositolphosphotransferase (PI (1-16:0, 2-16:1) MIPC-B' (C26))
+r_3373;inositolphosphotransferase (PI (1-16:1, 2-16:1) MIPC-B' (C26))
+r_3374;inositolphosphotransferase (PI (1-18:0, 2-16:1) MIPC-B' (C26))
+r_3375;inositolphosphotransferase (PI (1-18:1, 2-16:1) MIPC-B' (C26))
+r_3376;inositolphosphotransferase (PI (1-16:0, 2-18:1) MIPC-B' (C26))
+r_3377;inositolphosphotransferase (PI (1-16:1, 2-18:1) MIPC-B' (C26))
+r_3378;inositolphosphotransferase (PI (1-18:0, 2-18:1) MIPC-B' (C26))
+r_3379;inositolphosphotransferase (PI (1-18:1, 2-18:1) MIPC-B' (C26))
+r_3380;inositolphosphotransferase (PI (1-16:0, 2-16:1) MIPC-B (C24))
+r_3381;inositolphosphotransferase (PI (1-16:1, 2-16:1) MIPC-B (C24))
+r_3382;inositolphosphotransferase (PI (1-18:0, 2-16:1) MIPC-B (C24))
+r_3383;inositolphosphotransferase (PI (1-18:1, 2-16:1) MIPC-B (C24))
+r_3384;inositolphosphotransferase (PI (1-16:0, 2-18:1) MIPC-B (C24))
+r_3385;inositolphosphotransferase (PI (1-16:1, 2-18:1) MIPC-B (C24))
+r_3386;inositolphosphotransferase (PI (1-18:0, 2-18:1) MIPC-B (C24))
+r_3387;inositolphosphotransferase (PI (1-18:1, 2-18:1) MIPC-B (C24))
+r_3388;inositolphosphotransferase (PI (1-16:0, 2-16:1) MIPC-B (C26))
+r_3389;inositolphosphotransferase (PI (1-16:1, 2-16:1) MIPC-B (C26))
+r_3390;inositolphosphotransferase (PI (1-18:0, 2-16:1) MIPC-B (C26))
+r_3391;inositolphosphotransferase (PI (1-18:1, 2-16:1) MIPC-B (C26))
+r_3392;inositolphosphotransferase (PI (1-16:0, 2-18:1) MIPC-B (C26))
+r_3393;inositolphosphotransferase (PI (1-16:1, 2-18:1) MIPC-B (C26))
+r_3394;inositolphosphotransferase (PI (1-18:0, 2-18:1) MIPC-B (C26))
+r_3395;inositolphosphotransferase (PI (1-18:1, 2-18:1) MIPC-B (C26))
+r_3396;inositolphosphotransferase (PI (1-16:0, 2-16:1) MIPC-C (C24))
+r_3397;inositolphosphotransferase (PI (1-16:1, 2-16:1) MIPC-C (C24))
+r_3398;inositolphosphotransferase (PI (1-18:0, 2-16:1) MIPC-C (C24))
+r_3399;inositolphosphotransferase (PI (1-18:1, 2-16:1) MIPC-C (C24))
+r_3400;inositolphosphotransferase (PI (1-16:0, 2-18:1) MIPC-C (C24))
+r_3401;inositolphosphotransferase (PI (1-16:1, 2-18:1) MIPC-C (C24))
+r_3402;inositolphosphotransferase (PI (1-18:0, 2-18:1) MIPC-C (C24))
+r_3403;inositolphosphotransferase (PI (1-18:1, 2-18:1) MIPC-C (C24))
+r_3404;inositolphosphotransferase (PI (1-16:0, 2-16:1) MIPC-C (C26))
+r_3405;inositolphosphotransferase (PI (1-16:1, 2-16:1) MIPC-C (C26))
+r_3406;inositolphosphotransferase (PI (1-18:0, 2-16:1) MIPC-C (C26))
+r_3407;inositolphosphotransferase (PI (1-18:1, 2-16:1) MIPC-C (C26))
+r_3408;inositolphosphotransferase (PI (1-16:0, 2-18:1) MIPC-C (C26))
+r_3409;inositolphosphotransferase (PI (1-16:1, 2-18:1) MIPC-C (C26))
+r_3410;inositolphosphotransferase (PI (1-18:0, 2-18:1) MIPC-C (C26))
+r_3411;inositolphosphotransferase (PI (1-18:1, 2-18:1) MIPC-C (C26))
+r_3412;inositolphosphotransferase (PI (1-16:0, 2-16:1) MIPC-D (C24))
+r_3413;inositolphosphotransferase (PI (1-16:1, 2-16:1) MIPC-D (C24))
+r_3414;inositolphosphotransferase (PI (1-18:0, 2-16:1) MIPC-D (C24))
+r_3415;inositolphosphotransferase (PI (1-18:1, 2-16:1) MIPC-D (C24))
+r_3416;inositolphosphotransferase (PI (1-16:0, 2-18:1) MIPC-D (C24))
+r_3417;inositolphosphotransferase (PI (1-16:1, 2-18:1) MIPC-D (C24))
+r_3418;inositolphosphotransferase (PI (1-18:0, 2-18:1) MIPC-D (C24))
+r_3419;inositolphosphotransferase (PI (1-18:1, 2-18:1) MIPC-D (C24))
+r_3420;inositolphosphotransferase (PI (1-16:0, 2-16:1) MIPC-D (C26))
+r_3421;inositolphosphotransferase (PI (1-16:1, 2-16:1) MIPC-D (C26))
+r_3422;inositolphosphotransferase (PI (1-18:0, 2-16:1) MIPC-D (C26))
+r_3423;inositolphosphotransferase (PI (1-18:1, 2-16:1) MIPC-D (C26))
+r_3424;inositolphosphotransferase (PI (1-16:0, 2-18:1) MIPC-D (C26))
+r_3425;inositolphosphotransferase (PI (1-16:1, 2-18:1) MIPC-D (C26))
+r_3426;inositolphosphotransferase (PI (1-18:0, 2-18:1) MIPC-D (C26))
+r_3427;inositolphosphotransferase (PI (1-18:1, 2-18:1) MIPC-D (C26))
+r_3428;IPC synthase (PI (1-16:0, 2-16:1) ceramide-1 (C24))
+r_3429;IPC synthase (PI (1-16:1, 2-16:1) ceramide-1 (C24))
+r_3430;IPC synthase (PI (1-18:0, 2-16:1) ceramide-1 (C24))
+r_3431;IPC synthase (PI (1-18:1, 2-16:1) ceramide-1 (C24))
+r_3432;IPC synthase (PI (1-16:0, 2-18:1) ceramide-1 (C24))
+r_3433;IPC synthase (PI (1-16:1, 2-18:1) ceramide-1 (C24))
+r_3434;IPC synthase (PI (1-18:0, 2-18:1) ceramide-1 (C24))
+r_3435;IPC synthase (PI (1-18:1, 2-18:1) ceramide-1 (C24))
+r_3436;IPC synthase (PI (1-16:0, 2-16:1) ceramide-1 (C26))
+r_3437;IPC synthase (PI (1-16:1, 2-16:1) ceramide-1 (C26))
+r_3438;IPC synthase (PI (1-18:0, 2-16:1) ceramide-1 (C26))
+r_3439;IPC synthase (PI (1-18:1, 2-16:1) ceramide-1 (C26))
+r_3440;IPC synthase (PI (1-16:0, 2-18:1) ceramide-1 (C26))
+r_3441;IPC synthase (PI (1-16:1, 2-18:1) ceramide-1 (C26))
+r_3442;IPC synthase (PI (1-18:0, 2-18:1) ceramide-1 (C26))
+r_3443;IPC synthase (PI (1-18:1, 2-18:1) ceramide-1 (C26))
+r_3444;IPC synthase (PI (1-16:0, 2-16:1) ceramide-2' (C24))
+r_3445;IPC synthase (PI (1-16:1, 2-16:1) ceramide-2' (C24))
+r_3446;IPC synthase (PI (1-18:0, 2-16:1) ceramide-2' (C24))
+r_3447;IPC synthase (PI (1-18:1, 2-16:1) ceramide-2' (C24))
+r_3448;IPC synthase (PI (1-16:0, 2-18:1) ceramide-2' (C24))
+r_3449;IPC synthase (PI (1-16:1, 2-18:1) ceramide-2' (C24))
+r_3450;IPC synthase (PI (1-18:0, 2-18:1) ceramide-2' (C24))
+r_3451;IPC synthase (PI (1-18:1, 2-18:1) ceramide-2' (C24))
+r_3452;IPC synthase (PI (1-16:0, 2-16:1) ceramide-2' (C26))
+r_3453;IPC synthase (PI (1-16:1, 2-16:1) ceramide-2' (C26))
+r_3454;IPC synthase (PI (1-18:0, 2-16:1) ceramide-2' (C26))
+r_3455;IPC synthase (PI (1-18:1, 2-16:1) ceramide-2' (C26))
+r_3456;IPC synthase (PI (1-16:0, 2-18:1) ceramide-2' (C26))
+r_3457;IPC synthase (PI (1-16:1, 2-18:1) ceramide-2' (C26))
+r_3458;IPC synthase (PI (1-18:0, 2-18:1) ceramide-2' (C26))
+r_3459;IPC synthase (PI (1-18:1, 2-18:1) ceramide-2' (C26))
+r_3460;IPC synthase (PI (1-16:0, 2-16:1) ceramide-2 (C24))
+r_3461;IPC synthase (PI (1-16:1, 2-16:1) ceramide-2 (C24))
+r_3462;IPC synthase (PI (1-18:0, 2-16:1) ceramide-2 (C24))
+r_3463;IPC synthase (PI (1-18:1, 2-16:1) ceramide-2 (C24))
+r_3464;IPC synthase (PI (1-16:0, 2-18:1) ceramide-2 (C24))
+r_3465;IPC synthase (PI (1-16:1, 2-18:1) ceramide-2 (C24))
+r_3466;IPC synthase (PI (1-18:0, 2-18:1) ceramide-2 (C24))
+r_3467;IPC synthase (PI (1-18:1, 2-18:1) ceramide-2 (C24))
+r_3468;IPC synthase (PI (1-16:0, 2-16:1) ceramide-2 (C26))
+r_3469;IPC synthase (PI (1-16:1, 2-16:1) ceramide-2 (C26))
+r_3470;IPC synthase (PI (1-18:0, 2-16:1) ceramide-2 (C26))
+r_3471;IPC synthase (PI (1-18:1, 2-16:1) ceramide-2 (C26))
+r_3472;IPC synthase (PI (1-16:0, 2-18:1) ceramide-2 (C26))
+r_3473;IPC synthase (PI (1-16:1, 2-18:1) ceramide-2 (C26))
+r_3474;IPC synthase (PI (1-18:0, 2-18:1) ceramide-2 (C26))
+r_3475;IPC synthase (PI (1-18:1, 2-18:1) ceramide-2 (C26))
+r_3476;IPC synthase (PI (1-16:0, 2-16:1) ceramide-3 (C24))
+r_3477;IPC synthase (PI (1-16:1, 2-16:1) ceramide-3 (C24))
+r_3478;IPC synthase (PI (1-18:0, 2-16:1) ceramide-3 (C24))
+r_3479;IPC synthase (PI (1-18:1, 2-16:1) ceramide-3 (C24))
+r_3480;IPC synthase (PI (1-16:0, 2-18:1) ceramide-3 (C24))
+r_3481;IPC synthase (PI (1-16:1, 2-18:1) ceramide-3 (C24))
+r_3482;IPC synthase (PI (1-18:0, 2-18:1) ceramide-3 (C24))
+r_3483;IPC synthase (PI (1-18:1, 2-18:1) ceramide-3 (C24))
+r_3484;IPC synthase (PI (1-16:0, 2-16:1) ceramide-3 (C26))
+r_3485;IPC synthase (PI (1-16:1, 2-16:1) ceramide-3 (C26))
+r_3486;IPC synthase (PI (1-18:0, 2-16:1) ceramide-3 (C26))
+r_3487;IPC synthase (PI (1-18:1, 2-16:1) ceramide-3 (C26))
+r_3488;IPC synthase (PI (1-16:0, 2-18:1) ceramide-3 (C26))
+r_3489;IPC synthase (PI (1-16:1, 2-18:1) ceramide-3 (C26))
+r_3490;IPC synthase (PI (1-18:0, 2-18:1) ceramide-3 (C26))
+r_3491;IPC synthase (PI (1-18:1, 2-18:1) ceramide-3 (C26))
+r_3492;IPC synthase (PI (1-16:0, 2-16:1) ceramide-4 (C24))
+r_3493;IPC synthase (PI (1-16:1, 2-16:1) ceramide-4 (C24))
+r_3494;IPC synthase (PI (1-18:0, 2-16:1) ceramide-4 (C24))
+r_3495;IPC synthase (PI (1-18:1, 2-16:1) ceramide-4 (C24))
+r_3496;IPC synthase (PI (1-16:0, 2-18:1) ceramide-4 (C24))
+r_3497;IPC synthase (PI (1-16:1, 2-18:1) ceramide-4 (C24))
+r_3498;IPC synthase (PI (1-18:0, 2-18:1) ceramide-4 (C24))
+r_3499;IPC synthase (PI (1-18:1, 2-18:1) ceramide-4 (C24))
+r_3500;IPC synthase (PI (1-16:0, 2-16:1) ceramide-4 (C26))
+r_3501;IPC synthase (PI (1-16:1, 2-16:1) ceramide-4 (C26))
+r_3502;IPC synthase (PI (1-18:0, 2-16:1) ceramide-4 (C26))
+r_3503;IPC synthase (PI (1-18:1, 2-16:1) ceramide-4 (C26))
+r_3504;IPC synthase (PI (1-16:0, 2-18:1) ceramide-4 (C26))
+r_3505;IPC synthase (PI (1-16:1, 2-18:1) ceramide-4 (C26))
+r_3506;IPC synthase (PI (1-18:0, 2-18:1) ceramide-4 (C26))
+r_3507;IPC synthase (PI (1-18:1, 2-18:1) ceramide-4 (C26))
+r_3508;laurate transport, cytoplasm-ER membrane
+r_3509;myristate transport, cytoplasm-ER membrane
+r_3510;palmitate transport, cytoplasm-ER membrane
+r_3511;palmitoleate transport, cytoplasm-ER membrane
+r_3512;stearate transport, cytoplasm-ER membrane
+r_3513;oleate transport, cytoplasm-ER membrane
+r_3514;malonyl-CoA transport, cytoplasm-ER membrane
+r_3515;lauroyl-CoA transport, cytoplasm-ER membrane
+r_3516;myristoyl-CoA transport, cytoplasm-ER membrane
+r_3517;palmitoyl-CoA transport, cytoplasm-ER membrane
+r_3518;palmitoleoyl-CoA transport, cytoplasm-ER membrane
+r_3519;stearoyl-CoA transport, cytoplasm-ER membrane
+r_3520;oleoyl-CoA transport, cytoplasm-ER membrane
+r_3521;icosanoyl-CoA transport, cytoplasm-ER membrane
+r_3522;docosanoyl-CoA transport, cytoplasm-ER membrane
+r_3523;tetracosanoyl-CoA transport, cytoplasm-ER membrane
+r_3524;hexacosanoyl-CoA transport, cytoplasm-ER membrane
+r_3525;H+ transport, cytoplasm-ER membrane
+r_3526;H2O transport, cytoplasm-ER membrane
+r_3527;CO2 transport, cytoplasm-ER membrane
+r_3528;coenzyme A transport, cytoplasm-ER membrane
+r_3529;NADPH transport, cytoplasm-ER membrane
+r_3530;NADP(+) transport, cytoplasm-ER membrane
+r_3531;O2 transport, cytoplasm-ER membrane
+r_3532;NADH transport, cytoplasm-ER membrane
+r_3533;NAD transport, cytoplasm-ER membrane
+r_3534;glycerol 3-phosphate transport, cytoplasm-ER membrane
+r_3535;dihydroxyacetone phosphate transport, cytoplasm-ER membrane
+r_3536;diphosphate transport, cytoplasm-ER membrane
+r_3537;phosphate transport, cytoplasm-ER membrane
+r_3538;CTP transport, cytoplasm-ER membrane
+r_3539;CDP transport, cytoplasm-ER membrane
+r_3540;CMP transport, cytoplasm-ER membrane
+r_3541;CDP-ethanolamine transport, cytoplasm-ER membrane
+r_3542;CDP-choline transport, cytoplasm-ER membrane
+r_3543;ATP transport, cytoplasm-ER membrane
+r_3544;AMP transport, cytoplasm-ER membrane
+r_3545;L-serine transport, cytoplasm-ER membrane
+r_3546;myo-inositol transport, cytoplasm-ER membrane
+r_3547;S-adenosyl-L-methionine transport, cytoplasm-ER membrane
+r_3548;S-adenosyl-L-homocysteine transport, cytoplasm-ER membrane
+r_3549;episterol transport, cytoplasm-ER membrane
+r_3550;fecosterol transport, cytoplasm-ER membrane
+r_3551;lanosterol transport, cytoplasm-ER membrane
+r_3552;ergosterol transport, cytoplasm-ER membrane
+r_3553;zymosterol transport, cytoplasm-ER membrane
+r_3554;diglyceride (1-16:0, 2-16:1) transport, cytoplasm-ER membrane
+r_3555;diglyceride (1-16:1, 2-16:1) transport, cytoplasm-ER membrane
+r_3556;diglyceride (1-18:0, 2-16:1) transport, cytoplasm-ER membrane
+r_3557;diglyceride (1-18:1, 2-16:1) transport, cytoplasm-ER membrane
+r_3558;diglyceride (1-16:0, 2-18:1) transport, cytoplasm-ER membrane
+r_3559;diglyceride (1-16:1, 2-18:1) transport, cytoplasm-ER membrane
+r_3560;diglyceride (1-18:0, 2-18:1) transport, cytoplasm-ER membrane
+r_3561;diglyceride (1-18:1, 2-18:1) transport, cytoplasm-ER membrane
+r_3562;1-phosphatidyl-1D-myo-inositol (1-16:0, 2-16:1) transport, cytoplasm-ER membrane
+r_3563;1-phosphatidyl-1D-myo-inositol (1-16:1, 2-16:1) transport, cytoplasm-ER membrane
+r_3564;1-phosphatidyl-1D-myo-inositol (1-18:0, 2-16:1) transport, cytoplasm-ER membrane
+r_3565;1-phosphatidyl-1D-myo-inositol (1-18:1, 2-16:1) transport, cytoplasm-ER membrane
+r_3566;1-phosphatidyl-1D-myo-inositol (1-16:0, 2-18:1) transport, cytoplasm-ER membrane
+r_3567;1-phosphatidyl-1D-myo-inositol (1-16:1, 2-18:1) transport, cytoplasm-ER membrane
+r_3568;1-phosphatidyl-1D-myo-inositol (1-18:0, 2-18:1) transport, cytoplasm-ER membrane
+r_3569;1-phosphatidyl-1D-myo-inositol (1-18:1, 2-18:1) transport, cytoplasm-ER membrane
+r_3570;sn-glycero-3-phosphocholine transport, ER membrane-cytoplasm
+r_3571;hexadecanoate (n-C16:0) transport, cytoplasm-lipid particle
+r_3572;hexadecenoate (n-C16:1) transport, cytoplasm-lipid particle
+r_3573;octadecanoate (n-C18:0) transport, cytoplasm-lipid particle
+r_3574;octadecenoate (n-C18:1) transport, cytoplasm-lipid particle
+r_3575;lauroyl-CoA transport, cytoplasm-lipid particle
+r_3576;myristoyl-CoA transport, cytoplasm-lipid particle
+r_3577;palmitoyl-CoA transport, cytoplasm-lipid particle
+r_3578;palmitoleoyl-CoA transport, cytoplasm-lipid particle
+r_3579;stearoyl-CoA transport, cytoplasm-lipid particle
+r_3580;oleoyl-CoA transport, cytoplasm-lipid particle
+r_3581;glycerol 3-phosphate transport, cytoplasm-lipid particle
+r_3582;dihydroxyacetone phosphate transport, cytoplasm-lipid particle
+r_3583;NADPH transport, cytoplasm-lipid particle
+r_3584;NADP(+) transport, cytoplasm-lipid particle
+r_3585;ATP transport, cytoplasm-lipid particle
+r_3586;AMP transport, cytoplasm-lipid particle
+r_3587;diphosphate transport, cytoplasm-lipid particle
+r_3588;diglyceride (1-16:0, 2-16:1) transport, cytoplasm-lipid particle
+r_3589;diglyceride (1-16:1, 2-16:1) transport, cytoplasm-lipid particle
+r_3590;diglyceride (1-18:0, 2-16:1) transport, cytoplasm-lipid particle
+r_3591;diglyceride (1-18:1, 2-16:1) transport, cytoplasm-lipid particle
+r_3592;diglyceride (1-16:0, 2-18:1) transport, cytoplasm-lipid particle
+r_3593;diglyceride (1-16:1, 2-18:1) transport, cytoplasm-lipid particle
+r_3594;diglyceride (1-18:0, 2-18:1) transport, cytoplasm-lipid particle
+r_3595;diglyceride (1-18:1, 2-18:1) transport, cytoplasm-lipid particle
+r_3596;H2O transport, cytoplasm-lipid particle
+r_3597;glycerol transport, lipid particle-cytoplasm
+r_3598;docosanoyl-CoA transport, lipid particle-cytoplasm
+r_3599;tetracosanoyl-CoA transport, lipid particle-cytoplasm
+r_3600;hexacosanoyl-CoA transport, lipid particle-cytoplasm
+r_3601;ATP transport, cytoplasm-cell envelope
+r_3602;ADP transport, cytoplasm-cell envelope
+r_3603;H+ transport, cytoplasm-cell envelope
+r_3604;H2O transport, cytoplasm-cell envelope
+r_3605;phosphate transport, cytoplasm-cell envelope
+r_3606;sn-glycero-3-phosphocholine transport, cell envelope-cytoplasm
+r_3607;1-(sn-glycero-3-phospho)-1D-myo-inositol transport, cell envelope-cytoplasm
+r_3608;palmitate transport, cell envelope-cytoplasm
+r_3609;palmitoleate transport, cell envelope-cytoplasm
+r_3610;stearate transport, cell envelope-cytoplasm
+r_3611;oleate transport, cell envelope-cytoplasm
+r_3612;icosanoyl-CoA transport, cell envelope-cytoplasm
+r_3613;docosanoyl-CoA transport, cell envelope-cytoplasm
+r_3614;tetracosanoyl-CoA transport, cell envelope-cytoplasm
+r_3615;hexacosanoyl-CoA transport, cell envelope-cytoplasm
+r_3616;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-16:0, 2-16:1) transport, cell envelope-cytoplasm
+r_3617;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-16:1, 2-16:1) transport, cell envelope-cytoplasm
+r_3618;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-18:0, 2-16:1) transport, cell envelope-cytoplasm
+r_3619;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-18:1, 2-16:1) transport, cell envelope-cytoplasm
+r_3620;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-16:0, 2-18:1) transport, cell envelope-cytoplasm
+r_3621;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-16:1, 2-18:1) transport, cell envelope-cytoplasm
+r_3622;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-18:0, 2-18:1) transport, cell envelope-cytoplasm
+r_3623;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-18:1, 2-18:1) transport, cell envelope-cytoplasm
+r_3624;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-16:0, 2-16:1) transport, cell envelope-cytoplasm
+r_3625;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-16:1, 2-16:1) transport, cell envelope-cytoplasm
+r_3626;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-18:0, 2-16:1) transport, cell envelope-cytoplasm
+r_3627;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-18:1, 2-16:1) transport, cell envelope-cytoplasm
+r_3628;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-16:0, 2-18:1) transport, cell envelope-cytoplasm
+r_3629;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-16:1, 2-18:1) transport, cell envelope-cytoplasm
+r_3630;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-18:0, 2-18:1) transport, cell envelope-cytoplasm
+r_3631;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-18:1, 2-18:1) transport, cell envelope-cytoplasm
+r_3632;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-16:0, 2-16:1) transport, nucleus-cytoplasm
+r_3633;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-16:1, 2-16:1) transport, nucleus-cytoplasm
+r_3634;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-18:0, 2-16:1) transport, nucleus-cytoplasm
+r_3635;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-18:1, 2-16:1) transport, nucleus-cytoplasm
+r_3636;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-16:0, 2-18:1) transport, nucleus-cytoplasm
+r_3637;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-16:1, 2-18:1) transport, nucleus-cytoplasm
+r_3638;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-18:0, 2-18:1) transport, nucleus-cytoplasm
+r_3639;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-18:1, 2-18:1) transport, nucleus-cytoplasm
+r_3640;diglyceride (1-16:0, 2-16:1) transport, nucleus-cytoplasm
+r_3641;diglyceride (1-16:1, 2-16:1) transport, nucleus-cytoplasm
+r_3642;diglyceride (1-18:0, 2-16:1) transport, nucleus-cytoplasm
+r_3643;diglyceride (1-18:1, 2-16:1) transport, nucleus-cytoplasm
+r_3644;diglyceride (1-16:0, 2-18:1) transport, nucleus-cytoplasm
+r_3645;diglyceride (1-16:1, 2-18:1) transport, nucleus-cytoplasm
+r_3646;diglyceride (1-18:0, 2-18:1) transport, nucleus-cytoplasm
+r_3647;diglyceride (1-18:1, 2-18:1) transport, nucleus-cytoplasm
+r_3648;H2O transport, cytoplasm-vacuolar membrane
+r_3649;phosphate transport, cytoplasm-vacuolar membrane
+r_3650;H+ transport, cytoplasm-vacuolar membrane
+r_3651;ATP transport, cytoplasm-vacuolar membrane
+r_3652;ADP transport, cytoplasm-vacuolar membrane
+r_3653;carbon dioxide transport, cytoplasm-vacuolar membrane
+r_3654;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-16:0, 2-16:1) transport, vacuolar membrane-cytoplasm
+r_3655;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-16:1, 2-16:1) transport, vacuolar membrane-cytoplasm
+r_3656;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-18:0, 2-16:1) transport, vacuolar membrane-cytoplasm
+r_3657;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-18:1, 2-16:1) transport, vacuolar membrane-cytoplasm
+r_3658;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-16:0, 2-18:1) transport, vacuolar membrane-cytoplasm
+r_3659;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-16:1, 2-18:1) transport, vacuolar membrane-cytoplasm
+r_3660;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-18:0, 2-18:1) transport, vacuolar membrane-cytoplasm
+r_3661;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-18:1, 2-18:1) transport, vacuolar membrane-cytoplasm
+r_3662;H2O transport, cytoplasm-Golgi membrane
+r_3663;phosphate transport, cytoplasm-Golgi membrane
+r_3664;H+ transport, cytoplasm-Golgi membrane
+r_3665;carbon dioxide transport, cytoplasm-Golgi membrane
+r_3666;ATP transport, cytoplasm-Golgi membrane
+r_3667;ADP transport, cytoplasm-Golgi membrane
+r_3668;H2O transport, cytoplasm-mitochondrial membrane
+r_3669;carbon dioxide transport, cytoplasm-mitochondrial membrane
+r_3670;palmitoleoyl-CoA transport, cytoplasm-mitochondrial membrane
+r_3671;oleoyl-CoA transport, cytoplasm-mitochondrial membrane
+r_3672;diglyceride (1-16:0, 2-16:1) transport, mitochondrial membrane-cytoplasm
+r_3673;diglyceride (1-16:1, 2-16:1) transport, mitochondrial membrane-cytoplasm
+r_3674;diglyceride (1-18:0, 2-16:1) transport, mitochondrial membrane-cytoplasm
+r_3675;diglyceride (1-18:1, 2-16:1) transport, mitochondrial membrane-cytoplasm
+r_3676;diglyceride (1-16:0, 2-18:1) transport, mitochondrial membrane-cytoplasm
+r_3677;diglyceride (1-16:1, 2-18:1) transport, mitochondrial membrane-cytoplasm
+r_3678;palmitate transport, mitochondrial membrane-cytoplasm
+r_3679;stearate transport, mitochondrial membrane-cytoplasm
+r_3680;coenzyme A transport, mitochondrial membrane-cytoplasm
+r_3681;laurate transport, ER membrane-lipid particle
+r_3682;myristate transport, ER membrane-lipid particle
+r_3683;lignoceric acid transport, ER membrane-lipid particle
+r_3684;cerotic acid transport, ER membrane-lipid particle
+r_3685;TAG (1-16:0, 2-16:1, 3-16:0) transport, ER membrane-lipid particle
+r_3686;TAG (1-16:0, 2-16:1, 3-16:1) transport, ER membrane-lipid particle
+r_3687;TAG (1-16:0, 2-16:1, 3-18:0) transport, ER membrane-lipid particle
+r_3688;TAG (1-16:0, 2-16:1, 3-18:1) transport, ER membrane-lipid particle
+r_3689;TAG (1-16:1, 2-16:1, 3-16:0) transport, ER membrane-lipid particle
+r_3690;TAG (1-16:1, 2-16:1, 3-16:1) transport, ER membrane-lipid particle
+r_3691;TAG (1-16:1, 2-16:1, 3-18:0) transport, ER membrane-lipid particle
+r_3692;TAG (1-16:1, 2-16:1, 3-18:1) transport, ER membrane-lipid particle
+r_3693;TAG (1-18:0, 2-16:1, 3-16:0) transport, ER membrane-lipid particle
+r_3694;TAG (1-18:0, 2-16:1, 3-16:1) transport, ER membrane-lipid particle
+r_3695;TAG (1-18:0, 2-16:1, 3-18:0) transport, ER membrane-lipid particle
+r_3696;TAG (1-18:0, 2-16:1, 3-18:1) transport, ER membrane-lipid particle
+r_3697;TAG (1-18:1, 2-16:1, 3-16:0) transport, ER membrane-lipid particle
+r_3698;TAG (1-18:1, 2-16:1, 3-16:1) transport, ER membrane-lipid particle
+r_3699;TAG (1-18:1, 2-16:1, 3-18:0) transport, ER membrane-lipid particle
+r_3700;TAG (1-18:1, 2-16:1, 3-18:1) transport, ER membrane-lipid particle
+r_3701;TAG (1-16:0, 2-18:1, 3-16:0) transport, ER membrane-lipid particle
+r_3702;TAG (1-16:0, 2-18:1, 3-16:1) transport, ER membrane-lipid particle
+r_3703;TAG (1-16:0, 2-18:1, 3-18:0) transport, ER membrane-lipid particle
+r_3704;TAG (1-16:0, 2-18:1, 3-18:1) transport, ER membrane-lipid particle
+r_3705;TAG (1-16:1, 2-18:1, 3-16:0) transport, ER membrane-lipid particle
+r_3706;TAG (1-16:1, 2-18:1, 3-16:1) transport, ER membrane-lipid particle
+r_3707;TAG (1-16:1, 2-18:1, 3-18:0) transport, ER membrane-lipid particle
+r_3708;TAG (1-16:1, 2-18:1, 3-18:1) transport, ER membrane-lipid particle
+r_3709;TAG (1-18:0, 2-18:1, 3-16:0) transport, ER membrane-lipid particle
+r_3710;TAG (1-18:0, 2-18:1, 3-16:1) transport, ER membrane-lipid particle
+r_3711;TAG (1-18:0, 2-18:1, 3-18:0) transport, ER membrane-lipid particle
+r_3712;TAG (1-18:0, 2-18:1, 3-18:1) transport, ER membrane-lipid particle
+r_3713;TAG (1-18:1, 2-18:1, 3-16:0) transport, ER membrane-lipid particle
+r_3714;TAG (1-18:1, 2-18:1, 3-16:1) transport, ER membrane-lipid particle
+r_3715;TAG (1-18:1, 2-18:1, 3-18:0) transport, ER membrane-lipid particle
+r_3716;TAG (1-18:1, 2-18:1, 3-18:1) transport, ER membrane-lipid particle
+r_3717;episterol transport, ER membrane-lipid particle
+r_3718;fecosterol transport, ER membrane-lipid particle
+r_3719;lanosterol transport, ER membrane-lipid particle
+r_3720;zymosterol transport, ER membrane-lipid particle
+r_3721;ergosteryl palmitoleate transport, ER membrane-lipid particle
+r_3722;ergosteryl oleate transport, ER membrane-lipid particle
+r_3723;episteryl palmitoleate transport, ER membrane-lipid particle
+r_3724;episteryl oleate transport, ER membrane-lipid particle
+r_3725;fecosteryl palmitoleate transport, ER membrane-lipid particle
+r_3726;fecosteryl oleate transport, ER membrane-lipid particle
+r_3727;lanosteryl palmitoleate transport, ER membrane-lipid particle
+r_3728;lanosteryl oleate transport, ER membrane-lipid particle
+r_3729;zymosteryl palmitoleate transport, ER membrane-lipid particle
+r_3730;zymosteryl oleate transport, ER membrane-lipid particle
+r_3731;phosphatidylcholine (1-16:0, 2-16:1) transport, ER membrane-lipid particle
+r_3732;phosphatidylcholine (1-16:1, 2-16:1) transport, ER membrane-lipid particle
+r_3733;phosphatidylcholine (1-18:0, 2-16:1) transport, ER membrane-lipid particle
+r_3734;phosphatidylcholine (1-18:1, 2-16:1) transport, ER membrane-lipid particle
+r_3735;phosphatidylcholine (1-16:0, 2-18:1) transport, ER membrane-lipid particle
+r_3736;phosphatidylcholine (1-16:1, 2-18:1) transport, ER membrane-lipid particle
+r_3737;phosphatidylcholine (1-18:0, 2-18:1) transport, ER membrane-lipid particle
+r_3738;phosphatidylcholine (1-18:1, 2-18:1) transport, ER membrane-lipid particle
+r_3739;phosphatidylethanolamine (1-16:0, 2-16:1) transport, ER membrane-lipid particle
+r_3740;phosphatidylethanolamine (1-16:1, 2-16:1) transport, ER membrane-lipid particle
+r_3741;phosphatidylethanolamine (1-18:0, 2-16:1) transport, ER membrane-lipid particle
+r_3742;phosphatidylethanolamine (1-18:1, 2-16:1) transport, ER membrane-lipid particle
+r_3743;phosphatidylethanolamine (1-16:0, 2-18:1) transport, ER membrane-lipid particle
+r_3744;phosphatidylethanolamine (1-16:1, 2-18:1) transport, ER membrane-lipid particle
+r_3745;phosphatidylethanolamine (1-18:0, 2-18:1) transport, ER membrane-lipid particle
+r_3746;phosphatidylethanolamine (1-18:1, 2-18:1) transport, ER membrane-lipid particle
+r_3747;1-acylglycerophosphocholine (16:0) transport, ER membrane-lipid particle
+r_3748;1-acylglycerophosphocholine (16:1) transport, ER membrane-lipid particle
+r_3749;1-acylglycerophosphocholine (18:0) transport, ER membrane-lipid particle
+r_3750;1-acylglycerophosphocholine (18:1) transport, ER membrane-lipid particle
+r_3751;1-acylglycerophosphoethanolamine (16:0) transport, ER membrane-lipid particle
+r_3752;1-acylglycerophosphoethanolamine (16:1) transport, ER membrane-lipid particle
+r_3753;1-acylglycerophosphoethanolamine (18:0) transport, ER membrane-lipid particle
+r_3754;1-acylglycerophosphoethanolamine (18:1) transport, ER membrane-lipid particle
+r_3755;phosphatidate (1-16:0, 2-18:1) transport, lipid particle-ER membrane
+r_3756;phosphatidate (1-16:1, 2-18:1) transport, lipid particle-ER membrane
+r_3757;phosphatidate (1-18:0, 2-18:1) transport, lipid particle-ER membrane
+r_3758;phosphatidate (1-18:1, 2-18:1) transport, lipid particle-ER membrane
+r_3759;phosphatidate (1-16:0, 2-16:1) transport, ER membrane-mitochondrial membrane
+r_3760;phosphatidate (1-16:1, 2-16:1) transport, ER membrane-mitochondrial membrane
+r_3761;phosphatidate (1-18:0, 2-16:1) transport, ER membrane-mitochondrial membrane
+r_3762;phosphatidate (1-18:1, 2-16:1) transport, ER membrane-mitochondrial membrane
+r_3763;phosphatidate (1-16:0, 2-18:1) transport, ER membrane-mitochondrial membrane
+r_3764;phosphatidate (1-16:1, 2-18:1) transport, ER membrane-mitochondrial membrane
+r_3765;phosphatidyl-L-serine (1-16:0, 2-16:1) transport, ER membrane-mitochondrial membrane
+r_3766;phosphatidyl-L-serine (1-16:1, 2-16:1) transport, ER membrane-mitochondrial membrane
+r_3767;phosphatidyl-L-serine (1-18:0, 2-16:1) transport, ER membrane-mitochondrial membrane
+r_3768;phosphatidyl-L-serine (1-18:1, 2-16:1) transport, ER membrane-mitochondrial membrane
+r_3769;phosphatidyl-L-serine (1-16:0, 2-18:1) transport, ER membrane-mitochondrial membrane
+r_3770;phosphatidyl-L-serine (1-16:1, 2-18:1) transport, ER membrane-mitochondrial membrane
+r_3771;phosphatidyl-L-serine (1-18:0, 2-18:1) transport, ER membrane-mitochondrial membrane
+r_3772;phosphatidyl-L-serine (1-18:1, 2-18:1) transport, ER membrane-mitochondrial membrane
+r_3773;phosphatidylethanolamine (1-16:0, 2-16:1) transport, mitochondrial membrane-ER membrane
+r_3774;phosphatidylethanolamine (1-16:1, 2-16:1) transport, mitochondrial membrane-ER membrane
+r_3775;phosphatidylethanolamine (1-18:0, 2-16:1) transport, mitochondrial membrane-ER membrane
+r_3776;phosphatidylethanolamine (1-18:1, 2-16:1) transport, mitochondrial membrane-ER membrane
+r_3777;phosphatidylethanolamine (1-16:0, 2-18:1) transport, mitochondrial membrane-ER membrane
+r_3778;phosphatidylethanolamine (1-16:1, 2-18:1) transport, mitochondrial membrane-ER membrane
+r_3779;phosphatidylethanolamine (1-18:0, 2-18:1) transport, mitochondrial membrane-ER membrane
+r_3780;phosphatidylethanolamine (1-18:1, 2-18:1) transport, mitochondrial membrane-ER membrane
+r_3781;phosphatidylcholine (1-16:0, 2-16:1) transport, ER membrane-mitochondrial membrane
+r_3782;phosphatidylcholine (1-16:1, 2-16:1) transport, ER membrane-mitochondrial membrane
+r_3783;phosphatidylcholine (1-18:0, 2-16:1) transport, ER membrane-mitochondrial membrane
+r_3784;phosphatidylcholine (1-18:1, 2-16:1) transport, ER membrane-mitochondrial membrane
+r_3785;phosphatidylcholine (1-16:0, 2-18:1) transport, ER membrane-mitochondrial membrane
+r_3786;phosphatidylcholine (1-16:1, 2-18:1) transport, ER membrane-mitochondrial membrane
+r_3787;phosphatidylcholine (1-18:0, 2-18:1) transport, ER membrane-mitochondrial membrane
+r_3788;phosphatidylcholine (1-18:1, 2-18:1) transport, ER membrane-mitochondrial membrane
+r_3789;diglyceride (1-16:0, 2-16:1) transport, ER membrane-Golgi membrane
+r_3790;diglyceride (1-16:1, 2-16:1) transport, ER membrane-Golgi membrane
+r_3791;diglyceride (1-18:0, 2-16:1) transport, ER membrane-Golgi membrane
+r_3792;diglyceride (1-18:1, 2-16:1) transport, ER membrane-Golgi membrane
+r_3793;diglyceride (1-16:0, 2-18:1) transport, ER membrane-Golgi membrane
+r_3794;diglyceride (1-16:1, 2-18:1) transport, ER membrane-Golgi membrane
+r_3795;diglyceride (1-18:0, 2-18:1) transport, ER membrane-Golgi membrane
+r_3796;diglyceride (1-18:1, 2-18:1) transport, ER membrane-Golgi membrane
+r_3797;phosphatidate (1-16:0, 2-16:1) transport, ER membrane-Golgi membrane
+r_3798;phosphatidate (1-16:1, 2-16:1) transport, ER membrane-Golgi membrane
+r_3799;phosphatidate (1-18:0, 2-16:1) transport, ER membrane-Golgi membrane
+r_3800;phosphatidate (1-18:1, 2-16:1) transport, ER membrane-Golgi membrane
+r_3801;phosphatidate (1-16:0, 2-18:1) transport, ER membrane-Golgi membrane
+r_3802;phosphatidate (1-16:1, 2-18:1) transport, ER membrane-Golgi membrane
+r_3803;phosphatidate (1-18:0, 2-18:1) transport, ER membrane-Golgi membrane
+r_3804;phosphatidate (1-18:1, 2-18:1) transport, ER membrane-Golgi membrane
+r_3805;1-phosphatidyl-1D-myo-inositol (1-16:0, 2-16:1) transport, ER membrane-Golgi membrane
+r_3806;1-phosphatidyl-1D-myo-inositol (1-16:1, 2-16:1) transport, ER membrane-Golgi membrane
+r_3807;1-phosphatidyl-1D-myo-inositol (1-18:0, 2-16:1) transport, ER membrane-Golgi membrane
+r_3808;1-phosphatidyl-1D-myo-inositol (1-18:1, 2-16:1) transport, ER membrane-Golgi membrane
+r_3809;1-phosphatidyl-1D-myo-inositol (1-16:0, 2-18:1) transport, ER membrane-Golgi membrane
+r_3810;1-phosphatidyl-1D-myo-inositol (1-16:1, 2-18:1) transport, ER membrane-Golgi membrane
+r_3811;1-phosphatidyl-1D-myo-inositol (1-18:0, 2-18:1) transport, ER membrane-Golgi membrane
+r_3812;1-phosphatidyl-1D-myo-inositol (1-18:1, 2-18:1) transport, ER membrane-Golgi membrane
+r_3813;phosphatidyl-L-serine (1-16:0, 2-16:1) transport, ER membrane-Golgi membrane
+r_3814;phosphatidyl-L-serine (1-16:1, 2-16:1) transport, ER membrane-Golgi membrane
+r_3815;phosphatidyl-L-serine (1-18:0, 2-16:1) transport, ER membrane-Golgi membrane
+r_3816;phosphatidyl-L-serine (1-18:1, 2-16:1) transport, ER membrane-Golgi membrane
+r_3817;phosphatidyl-L-serine (1-16:0, 2-18:1) transport, ER membrane-Golgi membrane
+r_3818;phosphatidyl-L-serine (1-16:1, 2-18:1) transport, ER membrane-Golgi membrane
+r_3819;phosphatidyl-L-serine (1-18:0, 2-18:1) transport, ER membrane-Golgi membrane
+r_3820;phosphatidyl-L-serine (1-18:1, 2-18:1) transport, ER membrane-Golgi membrane
+r_3821;phosphatidylethanolamine (1-16:0, 2-16:1) transport, Golgi membrane-ER membrane
+r_3822;phosphatidylethanolamine (1-16:1, 2-16:1) transport, Golgi membrane-ER membrane
+r_3823;phosphatidylethanolamine (1-18:0, 2-16:1) transport, Golgi membrane-ER membrane
+r_3824;phosphatidylethanolamine (1-18:1, 2-16:1) transport, Golgi membrane-ER membrane
+r_3825;phosphatidylethanolamine (1-16:0, 2-18:1) transport, Golgi membrane-ER membrane
+r_3826;phosphatidylethanolamine (1-16:1, 2-18:1) transport, Golgi membrane-ER membrane
+r_3827;phosphatidylethanolamine (1-18:0, 2-18:1) transport, Golgi membrane-ER membrane
+r_3828;phosphatidylethanolamine (1-18:1, 2-18:1) transport, Golgi membrane-ER membrane
+r_3829;phosphatidate (1-16:0, 2-16:1) transport, ER membrane-vacuolar membrane
+r_3830;phosphatidate (1-16:1, 2-16:1) transport, ER membrane-vacuolar membrane
+r_3831;phosphatidate (1-18:0, 2-16:1) transport, ER membrane-vacuolar membrane
+r_3832;phosphatidate (1-18:1, 2-16:1) transport, ER membrane-vacuolar membrane
+r_3833;phosphatidate (1-16:0, 2-18:1) transport, ER membrane-vacuolar membrane
+r_3834;phosphatidate (1-16:1, 2-18:1) transport, ER membrane-vacuolar membrane
+r_3835;phosphatidate (1-18:0, 2-18:1) transport, ER membrane-vacuolar membrane
+r_3836;phosphatidate (1-18:1, 2-18:1) transport, ER membrane-vacuolar membrane
+r_3837;1-phosphatidyl-1D-myo-inositol (1-16:0, 2-16:1) transport, ER membrane-vacuolar membrane
+r_3838;1-phosphatidyl-1D-myo-inositol (1-16:1, 2-16:1) transport, ER membrane-vacuolar membrane
+r_3839;1-phosphatidyl-1D-myo-inositol (1-18:0, 2-16:1) transport, ER membrane-vacuolar membrane
+r_3840;1-phosphatidyl-1D-myo-inositol (1-18:1, 2-16:1) transport, ER membrane-vacuolar membrane
+r_3841;1-phosphatidyl-1D-myo-inositol (1-16:0, 2-18:1) transport, ER membrane-vacuolar membrane
+r_3842;1-phosphatidyl-1D-myo-inositol (1-16:1, 2-18:1) transport, ER membrane-vacuolar membrane
+r_3843;1-phosphatidyl-1D-myo-inositol (1-18:0, 2-18:1) transport, ER membrane-vacuolar membrane
+r_3844;1-phosphatidyl-1D-myo-inositol (1-18:1, 2-18:1) transport, ER membrane-vacuolar membrane
+r_3845;phosphatidyl-L-serine (1-16:0, 2-16:1) transport, ER membrane-vacuolar membrane
+r_3846;phosphatidyl-L-serine (1-16:1, 2-16:1) transport, ER membrane-vacuolar membrane
+r_3847;phosphatidyl-L-serine (1-18:0, 2-16:1) transport, ER membrane-vacuolar membrane
+r_3848;phosphatidyl-L-serine (1-18:1, 2-16:1) transport, ER membrane-vacuolar membrane
+r_3849;phosphatidyl-L-serine (1-16:0, 2-18:1) transport, ER membrane-vacuolar membrane
+r_3850;phosphatidyl-L-serine (1-16:1, 2-18:1) transport, ER membrane-vacuolar membrane
+r_3851;phosphatidyl-L-serine (1-18:0, 2-18:1) transport, ER membrane-vacuolar membrane
+r_3852;phosphatidyl-L-serine (1-18:1, 2-18:1) transport, ER membrane-vacuolar membrane
+r_3853;phosphatidylethanolamine (1-16:0, 2-16:1) transport, vacuolar membrane-ER membrane
+r_3854;phosphatidylethanolamine (1-16:1, 2-16:1) transport, vacuolar membrane-ER membrane
+r_3855;phosphatidylethanolamine (1-18:0, 2-16:1) transport, vacuolar membrane-ER membrane
+r_3856;phosphatidylethanolamine (1-18:1, 2-16:1) transport, vacuolar membrane-ER membrane
+r_3857;phosphatidylethanolamine (1-16:0, 2-18:1) transport, vacuolar membrane-ER membrane
+r_3858;phosphatidylethanolamine (1-16:1, 2-18:1) transport, vacuolar membrane-ER membrane
+r_3859;phosphatidylethanolamine (1-18:0, 2-18:1) transport, vacuolar membrane-ER membrane
+r_3860;phosphatidylethanolamine (1-18:1, 2-18:1) transport, vacuolar membrane-ER membrane
+r_3861;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-16:0, 2-16:1) transport, vacuolar membrane-ER membrane
+r_3862;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-16:1, 2-16:1) transport, vacuolar membrane-ER membrane
+r_3863;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-18:0, 2-16:1) transport, vacuolar membrane-ER membrane
+r_3864;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-18:1, 2-16:1) transport, vacuolar membrane-ER membrane
+r_3865;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-16:0, 2-18:1) transport, vacuolar membrane-ER membrane
+r_3866;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-16:1, 2-18:1) transport, vacuolar membrane-ER membrane
+r_3867;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-18:0, 2-18:1) transport, vacuolar membrane-ER membrane
+r_3868;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-18:1, 2-18:1) transport, vacuolar membrane-ER membrane
+r_3869;1-phosphatidyl-1D-myo-inositol (1-16:0, 2-16:1) transport, ER membrane-cell envelope
+r_3870;1-phosphatidyl-1D-myo-inositol (1-16:1, 2-16:1) transport, ER membrane-cell envelope
+r_3871;1-phosphatidyl-1D-myo-inositol (1-18:0, 2-16:1) transport, ER membrane-cell envelope
+r_3872;1-phosphatidyl-1D-myo-inositol (1-18:1, 2-16:1) transport, ER membrane-cell envelope
+r_3873;1-phosphatidyl-1D-myo-inositol (1-16:0, 2-18:1) transport, ER membrane-cell envelope
+r_3874;1-phosphatidyl-1D-myo-inositol (1-16:1, 2-18:1) transport, ER membrane-cell envelope
+r_3875;1-phosphatidyl-1D-myo-inositol (1-18:0, 2-18:1) transport, ER membrane-cell envelope
+r_3876;1-phosphatidyl-1D-myo-inositol (1-18:1, 2-18:1) transport, ER membrane-cell envelope
+r_3877;phosphatidylcholine (1-16:0, 2-16:1) transport, ER membrane-cell envelope
+r_3878;phosphatidylcholine (1-16:1, 2-16:1) transport, ER membrane-cell envelope
+r_3879;phosphatidylcholine (1-18:0, 2-16:1) transport, ER membrane-cell envelope
+r_3880;phosphatidylcholine (1-18:1, 2-16:1) transport, ER membrane-cell envelope
+r_3881;phosphatidylcholine (1-16:0, 2-18:1) transport, ER membrane-cell envelope
+r_3882;phosphatidylcholine (1-16:1, 2-18:1) transport, ER membrane-cell envelope
+r_3883;phosphatidylcholine (1-18:0, 2-18:1) transport, ER membrane-cell envelope
+r_3884;phosphatidylcholine (1-18:1, 2-18:1) transport, ER membrane-cell envelope
+r_3885;phosphatidylethanolamine (1-16:0, 2-16:1) transport, ER membrane-cell envelope
+r_3886;phosphatidylethanolamine (1-16:1, 2-16:1) transport, ER membrane-cell envelope
+r_3887;phosphatidylethanolamine (1-18:0, 2-16:1) transport, ER membrane-cell envelope
+r_3888;phosphatidylethanolamine (1-18:1, 2-16:1) transport, ER membrane-cell envelope
+r_3889;phosphatidylethanolamine (1-16:0, 2-18:1) transport, ER membrane-cell envelope
+r_3890;phosphatidylethanolamine (1-16:1, 2-18:1) transport, ER membrane-cell envelope
+r_3891;phosphatidylethanolamine (1-18:0, 2-18:1) transport, ER membrane-cell envelope
+r_3892;phosphatidylethanolamine (1-18:1, 2-18:1) transport, ER membrane-cell envelope
+r_3893;phosphatidyl-L-serine (1-16:0, 2-16:1) transport, ER membrane-cell envelope
+r_3894;phosphatidyl-L-serine (1-16:1, 2-16:1) transport, ER membrane-cell envelope
+r_3895;phosphatidyl-L-serine (1-18:0, 2-16:1) transport, ER membrane-cell envelope
+r_3896;phosphatidyl-L-serine (1-18:1, 2-16:1) transport, ER membrane-cell envelope
+r_3897;phosphatidyl-L-serine (1-16:0, 2-18:1) transport, ER membrane-cell envelope
+r_3898;phosphatidyl-L-serine (1-16:1, 2-18:1) transport, ER membrane-cell envelope
+r_3899;phosphatidyl-L-serine (1-18:0, 2-18:1) transport, ER membrane-cell envelope
+r_3900;phosphatidyl-L-serine (1-18:1, 2-18:1) transport, ER membrane-cell envelope
+r_3901;lignoceric acid transport, cell envelope-ER membrane
+r_3902;cerotic acid transport, cell envelope-ER membrane
+r_3903;phosphatidate (1-16:0, 2-16:1) transport, cell envelope-ER membrane
+r_3904;phosphatidate (1-16:1, 2-16:1) transport, cell envelope-ER membrane
+r_3905;phosphatidate (1-18:0, 2-16:1) transport, cell envelope-ER membrane
+r_3906;phosphatidate (1-18:1, 2-16:1) transport, cell envelope-ER membrane
+r_3907;phosphatidate (1-16:0, 2-18:1) transport, cell envelope-ER membrane
+r_3908;phosphatidate (1-16:1, 2-18:1) transport, cell envelope-ER membrane
+r_3909;phosphatidate (1-18:0, 2-18:1) transport, cell envelope-ER membrane
+r_3910;phosphatidate (1-18:1, 2-18:1) transport, cell envelope-ER membrane
+r_3911;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-16:0, 2-16:1) transport, cell envelope-ER membrane
+r_3912;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-16:1, 2-16:1) transport, cell envelope-ER membrane
+r_3913;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-18:0, 2-16:1) transport, cell envelope-ER membrane
+r_3914;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-18:1, 2-16:1) transport, cell envelope-ER membrane
+r_3915;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-16:0, 2-18:1) transport, cell envelope-ER membrane
+r_3916;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-16:1, 2-18:1) transport, cell envelope-ER membrane
+r_3917;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-18:0, 2-18:1) transport, cell envelope-ER membrane
+r_3918;1-phosphatidyl-1D-myo-inositol 4-phosphate (1-18:1, 2-18:1) transport, cell envelope-ER membrane
+r_3919;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-16:0, 2-16:1) transport, cell envelope-ER membrane
+r_3920;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-16:1, 2-16:1) transport, cell envelope-ER membrane
+r_3921;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-18:0, 2-16:1) transport, cell envelope-ER membrane
+r_3922;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-18:1, 2-16:1) transport, cell envelope-ER membrane
+r_3923;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-16:0, 2-18:1) transport, cell envelope-ER membrane
+r_3924;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-16:1, 2-18:1) transport, cell envelope-ER membrane
+r_3925;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-18:0, 2-18:1) transport, cell envelope-ER membrane
+r_3926;1-phosphatidyl-1D-myo-inositol 4,5-bisphosphate (1-18:1, 2-18:1) transport, cell envelope-ER membrane
+r_3927;zymosteryl palmitoleate transport, ER membrane-cell envelope
+r_3928;zymosteryl oleate transport, ER membrane-cell envelope
+r_3929;1-phosphatidyl-1D-myo-inositol (1-16:0, 2-16:1) transport, ER membrane-nucleus
+r_3930;1-phosphatidyl-1D-myo-inositol (1-16:1, 2-16:1) transport, ER membrane-nucleus
+r_3931;1-phosphatidyl-1D-myo-inositol (1-18:0, 2-16:1) transport, ER membrane-nucleus
+r_3932;1-phosphatidyl-1D-myo-inositol (1-18:1, 2-16:1) transport, ER membrane-nucleus
+r_3933;1-phosphatidyl-1D-myo-inositol (1-16:0, 2-18:1) transport, ER membrane-nucleus
+r_3934;1-phosphatidyl-1D-myo-inositol (1-16:1, 2-18:1) transport, ER membrane-nucleus
+r_3935;1-phosphatidyl-1D-myo-inositol (1-18:0, 2-18:1) transport, ER membrane-nucleus
+r_3936;1-phosphatidyl-1D-myo-inositol (1-18:1, 2-18:1) transport, ER membrane-nucleus
+r_3937;lignoceric acid transport, ER membrane-ER
+r_3938;cerotic acid transport, ER membrane-ER
+r_3939;ergosterol transport, ER-ER membrane
+r_3940;phosphate transport, ER-ER membrane
+r_3941;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-16:0, 2-16:1) transport, vacuolar membrane-Golgi membrane
+r_3942;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-16:1, 2-16:1) transport, vacuolar membrane-Golgi membrane
+r_3943;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-18:0, 2-16:1) transport, vacuolar membrane-Golgi membrane
+r_3944;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-18:1, 2-16:1) transport, vacuolar membrane-Golgi membrane
+r_3945;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-16:0, 2-18:1) transport, vacuolar membrane-Golgi membrane
+r_3946;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-16:1, 2-18:1) transport, vacuolar membrane-Golgi membrane
+r_3947;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-18:0, 2-18:1) transport, vacuolar membrane-Golgi membrane
+r_3948;1-phosphatidyl-1D-myo-inositol 3-phosphate (1-18:1, 2-18:1) transport, vacuolar membrane-Golgi membrane
+r_3949;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-16:0, 2-16:1) transport, vacuolar membrane-cell envelope
+r_3950;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-16:1, 2-16:1) transport, vacuolar membrane-cell envelope
+r_3951;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-18:0, 2-16:1) transport, vacuolar membrane-cell envelope
+r_3952;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-18:1, 2-16:1) transport, vacuolar membrane-cell envelope
+r_3953;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-16:0, 2-18:1) transport, vacuolar membrane-cell envelope
+r_3954;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-16:1, 2-18:1) transport, vacuolar membrane-cell envelope
+r_3955;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-18:0, 2-18:1) transport, vacuolar membrane-cell envelope
+r_3956;1-phosphatidyl-1D-myo-inositol 3,5-bisphosphate (1-18:1, 2-18:1) transport, vacuolar membrane-cell envelope
+r_3957;H+ transport, mitochondrion-mitochondrial membrane
+r_3958;glycerol 3-phosphate transport, mitochondrion-mitochondrial membrane
+r_3959;CMP transport, mitochondrion-mitochondrial membrane
+r_3960;CTP transport, mitochondrion-mitochondrial membrane
+r_3961;phosphate transport, mitochondrion-mitochondrial membrane
+r_3962;diphosphate transport, mitochondrion-mitochondrial membrane
+r_3963;isa 1-phosphatidyl-1D-myo-inositol for PI (1-16:0, 2-16:1)
+r_3964;isa 1-phosphatidyl-1D-myo-inositol for PI (1-16:1, 2-16:1)
+r_3965;isa 1-phosphatidyl-1D-myo-inositol for PI (1-18:0, 2-16:1)
+r_3966;isa 1-phosphatidyl-1D-myo-inositol for PI (1-18:1, 2-16:1)
+r_3967;isa 1-phosphatidyl-1D-myo-inositol for PI (1-16:0, 2-18:1)
+r_3968;isa 1-phosphatidyl-1D-myo-inositol for PI (1-16:1, 2-18:1)
+r_3969;isa 1-phosphatidyl-1D-myo-inositol for PI (1-18:0, 2-18:1)
+r_3970;isa 1-phosphatidyl-1D-myo-inositol for PI (1-18:1, 2-18:1)
+r_3971;isa ergosterol ester for ergosteryl palmitoleate
+r_3972;isa ergosterol ester for ergosteryl oleate
+r_3973;ergosterol ester transport, ER membrane-cytoplasm
+r_3974;isa fatty acid for myristate
+r_3975;isa fatty acid for palmitate
+r_3976;isa fatty acid for palmitoleate
+r_3977;isa fatty acid for stearate
+r_3978;isa fatty acid for oleate
+r_3979;isa phosphatidyl-L-serine for PS (1-16:0, 2-16:1)
+r_3980;isa phosphatidyl-L-serine for PS (1-16:1, 2-16:1)
+r_3981;isa phosphatidyl-L-serine for PS (1-18:0, 2-16:1)
+r_3982;isa phosphatidyl-L-serine for PS (1-18:1, 2-16:1)
+r_3983;isa phosphatidyl-L-serine for PS (1-16:0, 2-18:1)
+r_3984;isa phosphatidyl-L-serine for PS (1-16:1, 2-18:1)
+r_3985;isa phosphatidyl-L-serine for PS (1-18:0, 2-18:1)
+r_3986;isa phosphatidyl-L-serine for PS (1-18:1, 2-18:1)
+r_3987;phosphatidyl-L-serine transport, ER membrane-cytoplasm
+r_3988;isa phosphatidylcholine for PC (1-16:0, 2-16:1)
+r_3989;isa phosphatidylcholine for PC (1-16:1, 2-16:1)
+r_3990;isa phosphatidylcholine for PC (1-18:0, 2-16:1)
+r_3991;isa phosphatidylcholine for PC (1-18:1, 2-16:1)
+r_3992;isa phosphatidylcholine for PC (1-16:0, 2-18:1)
+r_3993;isa phosphatidylcholine for PC (1-16:1, 2-18:1)
+r_3994;isa phosphatidylcholine for PC (1-18:0, 2-18:1)
+r_3995;isa phosphatidylcholine for PC (1-18:1, 2-18:1)
+r_3996;phosphatidylcholine transport, ER membrane-cytoplasm
+r_3997;isa phosphatidylethanolamine for PE (1-16:0, 2-16:1)
+r_3998;isa phosphatidylethanolamine for PE (1-16:1, 2-16:1)
+r_3999;isa phosphatidylethanolamine for PE (1-18:0, 2-16:1)
+r_4000;isa phosphatidylethanolamine for PE (1-18:1, 2-16:1)
+r_4001;isa phosphatidylethanolamine for PE (1-16:0, 2-18:1)
+r_4002;isa phosphatidylethanolamine for PE (1-16:1, 2-18:1)
+r_4003;isa phosphatidylethanolamine for PE (1-18:0, 2-18:1)
+r_4004;isa phosphatidylethanolamine for PE (1-18:1, 2-18:1)
+r_4005;phosphatidylethanolamine transport, ER membrane-cytoplasm
+r_4006;isa triglyceride for TAG (1-16:0, 2-16:1, 3-16:0)
+r_4007;isa triglyceride for TAG (1-16:0, 2-18:1, 3-16:0)
+r_4008;isa triglyceride for TAG (1-16:1, 2-16:1, 3-16:0)
+r_4009;isa triglyceride for TAG (1-16:1, 2-18:1, 3-16:0)
+r_4010;isa triglyceride for TAG (1-18:0, 2-16:1, 3-16:0)
+r_4011;isa triglyceride for TAG (1-18:0, 2-18:1, 3-16:0)
+r_4012;isa triglyceride for TAG (1-18:1, 2-16:1, 3-16:0)
+r_4013;isa triglyceride for TAG (1-18:1, 2-18:1, 3-16:0)
+r_4014;isa triglyceride for TAG (1-16:0, 2-16:1, 3-16:1)
+r_4015;isa triglyceride for TAG (1-16:0, 2-18:1, 3-16:1)
+r_4016;isa triglyceride for TAG (1-16:1, 2-16:1, 3-16:1)
+r_4017;isa triglyceride for TAG (1-16:1, 2-18:1, 3-16:1)
+r_4018;isa triglyceride for TAG (1-18:0, 2-16:1, 3-16:1)
+r_4019;isa triglyceride for TAG (1-18:0, 2-18:1, 3-16:1)
+r_4020;isa triglyceride for TAG (1-18:1, 2-16:1, 3-16:1)
+r_4021;isa triglyceride for TAG (1-18:1, 2-18:1, 3-16:1)
+r_4022;isa triglyceride for TAG (1-16:0, 2-16:1, 3-18:0)
+r_4023;isa triglyceride for TAG (1-16:0, 2-18:1, 3-18:0)
+r_4024;isa triglyceride for TAG (1-16:1, 2-16:1, 3-18:0)
+r_4025;isa triglyceride for TAG (1-16:1, 2-18:1, 3-18:0)
+r_4026;isa triglyceride for TAG (1-18:0, 2-16:1, 3-18:0)
+r_4027;isa triglyceride for TAG (1-18:0, 2-18:1, 3-18:0)
+r_4028;isa triglyceride for TAG (1-18:1, 2-16:1, 3-18:0)
+r_4029;isa triglyceride for TAG (1-18:1, 2-18:1, 3-18:0)
+r_4030;isa triglyceride for TAG (1-16:0, 2-16:1, 3-18:1)
+r_4031;isa triglyceride for TAG (1-16:0, 2-18:1, 3-18:1)
+r_4032;isa triglyceride for TAG (1-16:1, 2-16:1, 3-18:1)
+r_4033;isa triglyceride for TAG (1-16:1, 2-18:1, 3-18:1)
+r_4034;isa triglyceride for TAG (1-18:0, 2-16:1, 3-18:1)
+r_4035;isa triglyceride for TAG (1-18:0, 2-18:1, 3-18:1)
+r_4036;isa triglyceride for TAG (1-18:1, 2-16:1, 3-18:1)
+r_4037;isa triglyceride for TAG (1-18:1, 2-18:1, 3-18:1)
+r_4038;triglyceride transport, ER membrane-cytoplasm
+r_4039;succinyl-CoA:acetate CoA transferase
