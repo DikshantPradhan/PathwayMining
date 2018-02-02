@@ -713,3 +713,50 @@ sample_multiple_sets_to_composition <- function(n_samples, size_class, size_comp
 
   return(set_lists)
 }
+
+check_composition_error <- function(composition_set_full, r0_set_list){
+  composition_set <- composition_set_full$composition
+
+  print('composition error check')
+
+  # check for errors in compositions of r1 sets (intermediate) (each blockage within the same set should have the same effects)
+  for (i in 1:length(r0_set_list)){ # print sets joined by each deletion
+    #print(r0_set_list[[i]])
+    if (length(r0_set_list[[i]]) > 1){
+      for (j in 1:(length(r0_set_list[[i]])-1)){
+        rxn1 <- get_rxn_idx(vars, r0_set_list[[i]][[j]])
+        rxn2 <- get_rxn_idx(vars, r0_set_list[[i]][[j+1]])
+        #print(c(rxn1, rxn2))
+        #print(paste(composition_set[[rxn1]], composition_set[[rxn2]]))
+        if (rxn1 > length(composition_set) | rxn2 > length(composition_set)){next}
+
+        if (length(composition_set[[rxn1]]) != length(composition_set[[rxn2]])){
+          print("composition error")
+          print(c(r0_set_list[[i]][[j]], ";", r0_set_list[[i]][[j+1]]))
+          print(c(composition_set[[rxn1]], ";", composition_set[[rxn2]]))
+        }
+        #print(j)
+        #print(composition_set[[GRB_get_rxn_idx(yeast, j)]])
+      }
+    }
+  }
+}
+
+check_deletion_error <- function(deletion_list, r0_set_list){
+  # check for inconsistencies in deletions of sets (each blockage within the same set should have the same effects)
+  for (i in 1:length(r0_set_list)){ # print sets joined by each deletion
+    #print(r0_set_list[[i]])
+    if (length(r0_set_list[[i]]) > 1){
+      for (j in 1:(length(r0_set_list[[i]])-1)){
+        rxn1 <- get_rxn_idx(vars, r0_set_list[[i]][[j]])
+        rxn2 <- get_rxn_idx(vars, r0_set_list[[i]][[j+1]])
+        #print(c(rxn1, rxn2))
+        if (length(deletion_list[[rxn1]]) != length(deletion_list[[rxn2]])){
+          print("deletion error")
+          print(c(r0_set_list[[i]][[j]], ";", r0_set_list[[i]][[j+1]]))
+          print(c(deletion_list[[rxn1]], ";", deletion_list[[rxn2]]))
+        }
+      }
+    }
+  }
+}

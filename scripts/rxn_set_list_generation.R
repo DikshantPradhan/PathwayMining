@@ -10,12 +10,15 @@ source('~/GitHub/PathwayMining/falcon_tools.R')
 
 ## YEAST MODEL
 
+ptm <- proc.time() # timing start
+
 yeast <- GRB_yeast_model()
 n <- yeast$get_sizes()$NumVars
 vars <- yeast$get_names()$VarName
 
 yeast_r0_set_list <- GRB_generate_set_list(yeast)
-#yeast_test_set_list <- get_list_of_sets(return_couples(flux_coupling_raptor(yeast)$coupled))
+
+proc.time() - ptm # timing end
 
 yeast <- GRB_yeast_model()
 yeast_set_lists <- GRB_generate_set_lists(yeast, yeast_r0_set_list, 1:n)
@@ -32,7 +35,7 @@ check_deletion_error(yeast_deletion_list, yeast_r0_set_list)
 
 save(yeast_r0_set_list, yeast_set_lists, yeast_composition_set_full, yeast_deletion_list, file = "yeast_run_data.RData")
 
-proc.time() - ptm
+#proc.time() - ptm # timing end
 
 yeast_r0_pairs <- return_pairs_from_set_list(yeast_r0_set_list)
 yeast_new_r1_pairs <- new_pairs_from_composition(yeast_r0_set_list, yeast_composition_set)
