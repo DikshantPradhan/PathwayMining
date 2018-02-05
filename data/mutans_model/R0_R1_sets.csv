@@ -1,0 +1,947 @@
+[[1]]
+[1] "ACALD"
+
+[[2]]
+[1] "ACALDt"      "EX_acald(e)"
+
+[[3]]
+[1] "ACKr"     "ACt2r"    "EX_ac(e)" "PTAr"    
+
+[[4]]
+[1] "ACONTa"     "ACONTb"     "CS"         "Ex_a_b0720"
+
+[[5]]
+[1] "ADK1"       "PPS"        "Ex_a_b0474" "Ex_a_b1702"
+
+[[6]]
+[1] "AKGDH"      "SUCOAS"     "Ex_a_b0728" "Ex_a_b0729"
+
+[[7]]
+[1] "AKGt2r"     "EX_akg(e)"  "Ex_a_b2587"
+
+[[8]]
+[1] "ALCD2x"     "ETOHt2r"    "EX_etoh(e)"
+
+[[9]]
+[1] "ATPM"
+
+[[10]]
+[1] "ATPS4r"     "Ex_a_b3736" "Ex_a_b3737" "Ex_a_b3738" "Ex_a_b3731"
+[6] "Ex_a_b3732" "Ex_a_b3733" "Ex_a_b3734" "Ex_a_b3735"
+
+[[11]]
+[1] "CO2t"      "EX_co2(e)"
+
+[[12]]
+[1] "CYTBD"    "EX_o2(e)" "O2t"     
+
+[[13]]
+[1] "D_LACt2"     "EX_lac_D(e)" "LDH_D"      
+
+[[14]]
+[1] "ENO"        "GAPD"       "PGK"        "PGM"        "Ex_a_b2779"
+[6] "Ex_a_b1779" "Ex_a_b2926"
+
+[[15]]
+[1] "EX_for(e)" "PFL"      
+
+[[16]]
+[1] "EX_fru(e)" "FRUpts2"  
+
+[[17]]
+[1] "EX_fum(e)" "FUMt2_2"  
+
+[[18]]
+[1] "EX_glc(e)" "GLCpts"   
+
+[[19]]
+[1] "EX_gln_L(e)" "GLNabc"      "Ex_a_b0811"  "Ex_a_b0810"  "Ex_a_b0809" 
+
+[[20]]
+[1] "EX_glu_L(e)" "GLUt2r"      "Ex_a_b4077" 
+
+[[21]]
+[1] "EX_h(e)"
+
+[[22]]
+[1] "EX_h2o(e)" "H2Ot"     
+
+[[23]]
+[1] "EX_mal_L(e)" "MALt2_2"    
+
+[[24]]
+[1] "EX_nh4(e)" "NH4t"     
+
+[[25]]
+[1] "EX_pyr(e)" "PYRt2r"   
+
+[[26]]
+[1] "EX_succ(e)"
+
+[[27]]
+[1] "FBA"        "TPI"        "Ex_a_b3919"
+
+[[28]]
+[1] "FBP"
+
+[[29]]
+[1] "FORt2"
+
+[[30]]
+[1] "FORti"
+
+[[31]]
+[1] "FRD7"       "Ex_a_b4151" "Ex_a_b4152" "Ex_a_b4153" "Ex_a_b4154"
+
+[[32]]
+[1] "FUM"
+
+[[33]]
+ [1] "G6PDH2r"    "GND"        "PGL"        "RPE"        "RPI"       
+ [6] "TALA"       "TKT1"       "TKT2"       "Ex_a_b1852" "Ex_a_b2029"
+[11] "Ex_a_b0767"
+
+[[34]]
+[1] "GLNS"
+
+[[35]]
+[1] "GLUDy"      "Ex_a_b1761"
+
+[[36]]
+[1] "GLUN"
+
+[[37]]
+[1] "GLUSy"      "Ex_a_b3212" "Ex_a_b3213"
+
+[[38]]
+[1] "ICDHyr"     "Ex_a_b1136"
+
+[[39]]
+[1] "ICL"        "MALS"       "Ex_a_b4015"
+
+[[40]]
+[1] "MDH"        "Ex_a_b3236"
+
+[[41]]
+[1] "ME1"        "Ex_a_b1479"
+
+[[42]]
+[1] "ME2"        "Ex_a_b2463"
+
+[[43]]
+ [1] "NADH16"     "Ex_a_b2276" "Ex_a_b2277" "Ex_a_b2278" "Ex_a_b2279"
+ [6] "Ex_a_b2280" "Ex_a_b2281" "Ex_a_b2282" "Ex_a_b2283" "Ex_a_b2284"
+[11] "Ex_a_b2285" "Ex_a_b2286" "Ex_a_b2287" "Ex_a_b2288"
+
+[[44]]
+[1] "NADTRHD"
+
+[[45]]
+[1] "PDH"
+
+[[46]]
+[1] "PFK"
+
+[[47]]
+[1] "PGI"        "Ex_a_b4025"
+
+[[48]]
+[1] "PPC"        "Ex_a_b3956"
+
+[[49]]
+[1] "PPCK"       "Ex_a_b3403"
+
+[[50]]
+[1] "PYK"
+
+[[51]]
+[1] "SUCCt2_2"
+
+[[52]]
+[1] "SUCCt3"
+
+[[53]]
+[1] "SUCDi"      "Ex_a_b0721" "Ex_a_b0722" "Ex_a_b0723" "Ex_a_b0724"
+
+[[54]]
+[1] "THD2"
+
+[[55]]
+[1] "Ex_a_b0351"
+
+[[56]]
+[1] "Ex_a_b1241"
+
+[[57]]
+[1] "Ex_a_s0001"
+
+[[58]]
+[1] "Ex_a_b3115"          "a_ACKr conversion 1"
+
+[[59]]
+[1] "Ex_a_b2296"          "a_ACKr conversion 2"
+
+[[60]]
+[1] "Ex_a_b1849"          "a_ACKr conversion 3"
+
+[[61]]
+[1] "Ex_a_b0118"
+
+[[62]]
+[1] "Ex_a_b1276"
+
+[[63]]
+[1] "Ex_a_b0116"
+
+[[64]]
+[1] "Ex_a_b0726" "Ex_a_b0727"
+
+[[65]]
+[1] "Ex_a_b0356"
+
+[[66]]
+[1] "Ex_a_b1478"
+
+[[67]]
+[1] "Ex_a_b3739"            "a_ATPS4r conversion 2"
+
+[[68]]
+[1] "Ex_a_b0978"           "Ex_a_b0979"           "a_CYTBD conversion 1"
+
+[[69]]
+[1] "Ex_a_b0733"           "Ex_a_b0734"           "a_CYTBD conversion 2"
+
+[[70]]
+[1] "Ex_a_b2975"             "a_D_LACt2 conversion 1"
+
+[[71]]
+[1] "Ex_a_b3603"             "a_D_LACt2 conversion 2"
+
+[[72]]
+[1] "Ex_a_b2097"         "a_FBA conversion 1"
+
+[[73]]
+[1] "Ex_a_b1773"         "a_FBA conversion 2"
+
+[[74]]
+[1] "Ex_a_b2925"         "a_FBA conversion 3"
+
+[[75]]
+[1] "Ex_a_b3925"         "a_FBP conversion 1"
+
+[[76]]
+[1] "Ex_a_b4232"         "a_FBP conversion 2"
+
+[[77]]
+[1] "Ex_a_b0904"
+
+[[78]]
+[1] "Ex_a_b2492"
+
+[[79]]
+[1] "Ex_a_b1817" "Ex_a_b1818" "Ex_a_b1819"
+
+[[80]]
+[1] "Ex_a_b2415" "Ex_a_b2416"
+
+[[81]]
+[1] "Ex_a_b1612"         "a_FUM conversion 1"
+
+[[82]]
+[1] "Ex_a_b4122"         "a_FUM conversion 2"
+
+[[83]]
+[1] "Ex_a_b1611"         "a_FUM conversion 3"
+
+[[84]]
+[1] "Ex_a_b3528"
+
+[[85]]
+[1] "Ex_a_b2417"
+
+[[86]]
+[1] "Ex_a_b1101"
+
+[[87]]
+[1] "Ex_a_b1621"
+
+[[88]]
+[1] "Ex_a_b3870"          "a_GLNS conversion 1"
+
+[[89]]
+[1] "Ex_a_b1297"          "a_GLNS conversion 2"
+
+[[90]]
+[1] "Ex_a_b1812"          "a_GLUN conversion 1"
+
+[[91]]
+[1] "Ex_a_b0485"          "a_GLUN conversion 2"
+
+[[92]]
+[1] "Ex_a_b1524"          "a_GLUN conversion 3"
+
+[[93]]
+[1] "Ex_a_b0875"
+
+[[94]]
+[1] "Ex_a_b2133"           "a_LDH_D conversion 1"
+
+[[95]]
+[1] "Ex_a_b1380"           "a_LDH_D conversion 2"
+
+[[96]]
+[1] "Ex_a_b4014"          "a_MALS conversion 1"
+
+[[97]]
+[1] "Ex_a_b2976"          "a_MALS conversion 2"
+
+[[98]]
+[1] "Ex_a_b3962"
+
+[[99]]
+[1] "Ex_a_b1602" "Ex_a_b1603"
+
+[[100]]
+[1] "Ex_a_b0451"
+
+[[101]]
+[1] "Ex_a_b0114" "Ex_a_b0115"
+
+[[102]]
+[1] "Ex_a_b3916"         "a_PFK conversion 1"
+
+[[103]]
+[1] "Ex_a_b1723"         "a_PFK conversion 2"
+
+[[104]]
+[1] "Ex_a_b0902"
+
+[[105]]
+[1] "Ex_a_b0903"
+
+[[106]]
+[1] "Ex_a_b2579"         "a_PFL conversion 1"
+
+[[107]]
+[1] "Ex_a_b3114"         "a_PFL conversion 3"
+
+[[108]]
+[1] "Ex_a_b3951"         "Ex_a_b3952"         "a_PFL conversion 4"
+
+[[109]]
+[1] "Ex_a_b3612"         "a_PGM conversion 1"
+
+[[110]]
+[1] "Ex_a_b4395"         "a_PGM conversion 2"
+
+[[111]]
+[1] "Ex_a_b0755"         "a_PGM conversion 3"
+
+[[112]]
+[1] "Ex_a_b2987"           "Ex_a_b3493"           "a_PIt2r conversion 1"
+[4] "a_PIt2r conversion 2"
+
+[[113]]
+[1] "Ex_a_b2297"          "a_PTAr conversion 1"
+
+[[114]]
+[1] "Ex_a_b2458"          "a_PTAr conversion 2"
+
+[[115]]
+[1] "Ex_a_b1854"         "a_PYK conversion 1"
+
+[[116]]
+[1] "Ex_a_b1676"         "a_PYK conversion 2"
+
+[[117]]
+[1] "Ex_a_b3386"         "a_RPE conversion 1"
+
+[[118]]
+[1] "Ex_a_b4301"         "a_RPE conversion 2"
+
+[[119]]
+[1] "Ex_a_b2914"         "a_RPI conversion 1"
+
+[[120]]
+[1] "Ex_a_b4090"         "a_RPI conversion 2"
+
+[[121]]
+[1] "Ex_a_b2464"          "a_TALA conversion 1"
+
+[[122]]
+[1] "Ex_a_b0008"          "a_TALA conversion 2"
+
+[[123]]
+[1] "Ex_a_b2935"
+
+[[124]]
+[1] "Ex_a_b2465"
+
+[[125]]
+[1] "a_ATPS4r conversion 1"
+
+[[126]]
+[1] "a_PFL conversion 2"
+
+[[127]]
+[1] "a_ACALD fwd conversion 1"
+
+[[128]]
+[1] "a_ACALD rev conversion 1"
+
+[[129]]
+[1] "a_ACALD fwd conversion 2"
+
+[[130]]
+[1] "a_ACALD rev conversion 2"
+
+[[131]]
+[1] "a_ACALDt fwd conversion 1"
+
+[[132]]
+[1] "a_ACALDt rev conversion 1"
+
+[[133]]
+[1] "a_ACONTa fwd conversion 1"
+
+[[134]]
+[1] "a_ACONTa rev conversion 1"
+
+[[135]]
+[1] "a_ACONTa fwd conversion 2"
+
+[[136]]
+[1] "a_ACONTa rev conversion 2"
+
+[[137]]
+[1] "a_ACONTb fwd conversion 1"
+
+[[138]]
+[1] "a_ACONTb rev conversion 1"
+
+[[139]]
+[1] "a_ACONTb fwd conversion 2"
+
+[[140]]
+[1] "a_ACONTb rev conversion 2"
+
+[[141]]
+[1] "a_AKGDH fwd conversion 1"
+
+[[142]]
+[1] "a_AKGDH rev conversion 1"
+
+[[143]]
+[1] "a_ALCD2x fwd conversion 1"
+
+[[144]]
+[1] "a_ALCD2x rev conversion 1"
+
+[[145]]
+[1] "a_ALCD2x fwd conversion 2"
+
+[[146]]
+[1] "a_ALCD2x rev conversion 2"
+
+[[147]]
+[1] "a_ALCD2x fwd conversion 3"
+
+[[148]]
+[1] "a_ALCD2x rev conversion 3"
+
+[[149]]
+[1] "a_CO2t fwd conversion 1"
+
+[[150]]
+[1] "a_CO2t rev conversion 1"
+
+[[151]]
+[1] "a_FORt2 fwd conversion 1"
+
+[[152]]
+[1] "a_FORt2 rev conversion 1"
+
+[[153]]
+[1] "a_FORt2 fwd conversion 2"
+
+[[154]]
+[1] "a_FORt2 rev conversion 2"
+
+[[155]]
+[1] "a_FORti fwd conversion 1"
+
+[[156]]
+[1] "a_FORti rev conversion 1"
+
+[[157]]
+[1] "a_FORti fwd conversion 2"
+
+[[158]]
+[1] "a_FORti rev conversion 2"
+
+[[159]]
+[1] "a_FRUpts2 fwd conversion 1"
+
+[[160]]
+[1] "a_FRUpts2 rev conversion 1"
+
+[[161]]
+[1] "a_FUMt2_2 fwd conversion 1"
+
+[[162]]
+[1] "a_FUMt2_2 rev conversion 1"
+
+[[163]]
+[1] "a_GLCpts fwd conversion 1"
+
+[[164]]
+[1] "a_GLCpts rev conversion 1"
+
+[[165]]
+[1] "a_GLCpts fwd conversion 2"
+
+[[166]]
+[1] "a_GLCpts rev conversion 2"
+
+[[167]]
+[1] "a_GLCpts fwd conversion 3"
+
+[[168]]
+[1] "a_GLCpts rev conversion 3"
+
+[[169]]
+[1] "a_H2Ot fwd conversion 1"
+
+[[170]]
+[1] "a_H2Ot rev conversion 1"
+
+[[171]]
+[1] "a_H2Ot fwd conversion 2"
+
+[[172]]
+[1] "a_H2Ot rev conversion 2"
+
+[[173]]
+[1] "a_MALt2_2 fwd conversion 1"
+
+[[174]]
+[1] "a_MALt2_2 rev conversion 1"
+
+[[175]]
+[1] "a_NADTRHD fwd conversion 1"
+
+[[176]]
+[1] "a_NADTRHD rev conversion 1"
+
+[[177]]
+[1] "a_NADTRHD fwd conversion 2"
+
+[[178]]
+[1] "a_NADTRHD rev conversion 2"
+
+[[179]]
+[1] "a_NH4t fwd conversion 1"
+
+[[180]]
+[1] "a_NH4t rev conversion 1"
+
+[[181]]
+[1] "a_NH4t fwd conversion 2"
+
+[[182]]
+[1] "a_NH4t rev conversion 2"
+
+[[183]]
+[1] "a_O2t fwd conversion 1"
+
+[[184]]
+[1] "a_O2t rev conversion 1"
+
+[[185]]
+[1] "a_PDH fwd conversion 1"
+
+[[186]]
+[1] "a_PDH rev conversion 1"
+
+[[187]]
+[1] "a_SUCCt2_2 fwd conversion 1"
+
+[[188]]
+[1] "a_SUCCt2_2 rev conversion 1"
+
+[[189]]
+[1] "a_THD2 fwd conversion 1"
+
+[[190]]
+[1] "a_THD2 rev conversion 1"
+
+[[191]]
+[1] "a_TKT1 fwd conversion 1"
+
+[[192]]
+[1] "a_TKT1 rev conversion 1"
+
+[[193]]
+[1] "a_TKT1 fwd conversion 2"
+
+[[194]]
+[1] "a_TKT1 rev conversion 2"
+
+[[195]]
+[1] "a_TKT2 fwd conversion 1"
+
+[[196]]
+[1] "a_TKT2 rev conversion 1"
+
+[[197]]
+[1] "a_TKT2 fwd conversion 2"
+
+[[198]]
+[1] "a_TKT2 rev conversion 2"
+
+[[199]]
+[1] "I_a_ACALD"
+
+[[200]]
+[1] "I_a_ACALDt"
+
+[[201]]
+[1] "I_a_ACONTa"
+
+[[202]]
+[1] "I_a_ACONTb"
+
+[[203]]
+[1] "I_a_AKGDH"
+
+[[204]]
+[1] "I_a_ALCD2x"
+
+[[205]]
+[1] "I_a_CO2t"
+
+[[206]]
+[1] "I_a_FORt2"
+
+[[207]]
+[1] "I_a_FORti"
+
+[[208]]
+[1] "I_a_FRUpts2"
+
+[[209]]
+[1] "I_a_FUMt2_2"
+
+[[210]]
+[1] "I_a_GLCpts"
+
+[[211]]
+[1] "I_a_H2Ot"
+
+[[212]]
+[1] "I_a_MALt2_2"
+
+[[213]]
+[1] "I_a_NADTRHD"
+
+[[214]]
+[1] "I_a_NH4t"
+
+[[215]]
+[1] "I_a_O2t"
+
+[[216]]
+[1] "I_a_PDH"
+
+[[217]]
+[1] "I_a_SUCCt2_2"
+
+[[218]]
+[1] "I_a_THD2"
+
+[[219]]
+[1] "I_a_TKT1"
+
+
+###
+
+[[1]]
+[1] "Ex_a_b0351"
+
+[[2]]
+[1] "Ex_a_b1241"
+
+[[3]]
+[1] "Ex_a_s0001"
+
+[[4]]
+[1] "Ex_a_b3115"
+
+[[5]]
+[1] "Ex_a_b2296"
+
+[[6]]
+[1] "Ex_a_b1849"
+
+[[7]]
+[1] "Ex_a_b0118"
+
+[[8]]
+[1] "Ex_a_b1276"
+
+[[9]]
+[1] "Ex_a_b0474" "Ex_a_b1702"
+
+[[10]]
+[1] "Ex_a_b0116"
+
+[[11]]
+[1] "Ex_a_b0726" "Ex_a_b0727"
+
+[[12]]
+[1] "Ex_a_b2587"
+
+[[13]]
+[1] "Ex_a_b0356"
+
+[[14]]
+[1] "Ex_a_b1478"
+
+[[15]]
+[1] "Ex_a_b3736" "Ex_a_b3737" "Ex_a_b3738" "Ex_a_b3731" "Ex_a_b3732"
+[6] "Ex_a_b3733" "Ex_a_b3734" "Ex_a_b3735"
+
+[[16]]
+[1] "Ex_a_b3739"
+
+[[17]]
+[1] "Ex_a_b0720"
+
+[[18]]
+[1] "Ex_a_b0978" "Ex_a_b0979"
+
+[[19]]
+[1] "Ex_a_b0733" "Ex_a_b0734"
+
+[[20]]
+[1] "Ex_a_b2975"
+
+[[21]]
+[1] "Ex_a_b3603"
+
+[[22]]
+[1] "Ex_a_b2779" "Ex_a_b1779" "Ex_a_b2926"
+
+[[23]]
+[1] "Ex_a_b2097"
+
+[[24]]
+[1] "Ex_a_b1773"
+
+[[25]]
+[1] "Ex_a_b2925"
+
+[[26]]
+[1] "Ex_a_b3925"
+
+[[27]]
+[1] "Ex_a_b4232"
+
+[[28]]
+[1] "Ex_a_b0904"
+
+[[29]]
+[1] "Ex_a_b2492"
+
+[[30]]
+[1] "Ex_a_b4151" "Ex_a_b4152" "Ex_a_b4153" "Ex_a_b4154"
+
+[[31]]
+[1] "Ex_a_b1817" "Ex_a_b1818" "Ex_a_b1819"
+
+[[32]]
+[1] "Ex_a_b2415" "Ex_a_b2416"
+
+[[33]]
+[1] "Ex_a_b1612"
+
+[[34]]
+[1] "Ex_a_b4122"
+
+[[35]]
+[1] "Ex_a_b1611"
+
+[[36]]
+[1] "Ex_a_b3528"
+
+[[37]]
+[1] "Ex_a_b1852" "Ex_a_b2029" "Ex_a_b0767"
+
+[[38]]
+[1] "Ex_a_b2417"
+
+[[39]]
+[1] "Ex_a_b1101"
+
+[[40]]
+[1] "Ex_a_b1621"
+
+[[41]]
+[1] "Ex_a_b3870"
+
+[[42]]
+[1] "Ex_a_b1297"
+
+[[43]]
+[1] "Ex_a_b0811" "Ex_a_b0810" "Ex_a_b0809"
+
+[[44]]
+[1] "Ex_a_b1761"
+
+[[45]]
+[1] "Ex_a_b1812"
+
+[[46]]
+[1] "Ex_a_b0485"
+
+[[47]]
+[1] "Ex_a_b1524"
+
+[[48]]
+[1] "Ex_a_b3212" "Ex_a_b3213"
+
+[[49]]
+[1] "Ex_a_b4077"
+
+[[50]]
+[1] "Ex_a_b0875"
+
+[[51]]
+[1] "Ex_a_b1136"
+
+[[52]]
+[1] "Ex_a_b4015"
+
+[[53]]
+[1] "Ex_a_b2133"
+
+[[54]]
+[1] "Ex_a_b1380"
+
+[[55]]
+[1] "Ex_a_b4014"
+
+[[56]]
+[1] "Ex_a_b2976"
+
+[[57]]
+[1] "Ex_a_b3236"
+
+[[58]]
+[1] "Ex_a_b1479"
+
+[[59]]
+[1] "Ex_a_b2463"
+
+[[60]]
+ [1] "Ex_a_b2276" "Ex_a_b2277" "Ex_a_b2278" "Ex_a_b2279" "Ex_a_b2280"
+ [6] "Ex_a_b2281" "Ex_a_b2282" "Ex_a_b2283" "Ex_a_b2284" "Ex_a_b2285"
+[11] "Ex_a_b2286" "Ex_a_b2287" "Ex_a_b2288"
+
+[[61]]
+[1] "Ex_a_b3962"
+
+[[62]]
+[1] "Ex_a_b1602" "Ex_a_b1603"
+
+[[63]]
+[1] "Ex_a_b0451"
+
+[[64]]
+[1] "Ex_a_b0114" "Ex_a_b0115"
+
+[[65]]
+[1] "Ex_a_b3916"
+
+[[66]]
+[1] "Ex_a_b1723"
+
+[[67]]
+[1] "Ex_a_b0902"
+
+[[68]]
+[1] "Ex_a_b0903"
+
+[[69]]
+[1] "Ex_a_b2579"
+
+[[70]]
+[1] "Ex_a_b3114"
+
+[[71]]
+[1] "Ex_a_b3951" "Ex_a_b3952"
+
+[[72]]
+[1] "Ex_a_b4025"
+
+[[73]]
+[1] "Ex_a_b3612"
+
+[[74]]
+[1] "Ex_a_b4395"
+
+[[75]]
+[1] "Ex_a_b0755"
+
+[[76]]
+[1] "Ex_a_b2987" "Ex_a_b3493"
+
+[[77]]
+[1] "Ex_a_b3956"
+
+[[78]]
+[1] "Ex_a_b3403"
+
+[[79]]
+[1] "Ex_a_b2297"
+
+[[80]]
+[1] "Ex_a_b2458"
+
+[[81]]
+[1] "Ex_a_b1854"
+
+[[82]]
+[1] "Ex_a_b1676"
+
+[[83]]
+[1] "Ex_a_b3386"
+
+[[84]]
+[1] "Ex_a_b4301"
+
+[[85]]
+[1] "Ex_a_b2914"
+
+[[86]]
+[1] "Ex_a_b4090"
+
+[[87]]
+[1] "Ex_a_b0721" "Ex_a_b0722" "Ex_a_b0723" "Ex_a_b0724"
+
+[[88]]
+[1] "Ex_a_b0728" "Ex_a_b0729"
+
+[[89]]
+[1] "Ex_a_b2464"
+
+[[90]]
+[1] "Ex_a_b0008"
+
+[[91]]
+[1] "Ex_a_b2935"
+
+[[92]]
+[1] "Ex_a_b2465"
+
+

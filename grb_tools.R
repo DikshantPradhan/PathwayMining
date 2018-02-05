@@ -1,4 +1,4 @@
-source('falcon_tools.R')
+source('~/GitHub/PathwayMining/falcon_tools.R')
 
 ## MODELS
 
@@ -61,7 +61,7 @@ GRB_mutans_model <- function(){
   #setwd("~/GitHub/PathwayMining/")
 
   #load('mutans_model.RData')
-  load('data/mutans_model/mutans_model.RData')
+  load('~/GitHub/PathwayMining/data/mutans_model/mutans_model.RData')
   # for (i in findExchReact(mutans)@react_pos){
   #   mutans <- changeBounds(mutans, i, lb = -1000, ub = 1000)
   # }
