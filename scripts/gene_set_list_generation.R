@@ -110,20 +110,28 @@ ecoli_falcon_r1_set_list <- get_list_of_sets(ecoli_falcon_r1_pairs)
 
 ## MUTANS MODEL ~ 6 HRS
 
+load('~/GitHub/PathwayMining/data/mutans_model/mutans_model.RData')
+
+sybil_mutans <- mutans
+
+non_gene_assc_rxns <- which(mutans@genes == "")
+
 mutans_falcon <- GRB_mutans_falcon_model()
 n <- mutans_falcon$get_sizes()$NumVars
 vars <- mutans_falcon$get_names()$VarName
 
-reaction_indexes <- c()
-reaction_indexes <- grep('Ex_a', vars)
+gene_indexes <- c()
+gene_indexes <- grep('Ex_a', vars)
+suppr_indexes <- c(reaction_indexes, non_gene_assc_rxns)
+reaction_indexes <- 1:1115
 
 print(paste('num genes:', length(reaction_indexes)))
 ptm <- proc.time() # timing start
 mutans_falcon_og_set_list <- GRB_generate_set_list(mutans_falcon, reaction_indexes = reaction_indexes)
-proc.time() - ptm # timing end
-mutans_falcon <- GRB_mutans_falcon_model()
-mutans_falcon_set_lists <- GRB_generate_set_lists(mutans_falcon, mutans_falcon_og_set_list, 1:n, reaction_indexes)
 
+#proc.time() - ptm # timing end
+mutans_falcon <- GRB_mutans_falcon_model()
+mutans_falcon_set_lists <- GRB_generate_set_lists(mutans_falcon, mutans_falcon_og_set_list, suppr_indexes, reaction_indexes)
 mutans_falcon_composition_set_full <- return_composition_sets(mutans_falcon_og_set_list, mutans_falcon_set_lists, mutans_falcon)
 
 mutans_falcon_composition_set <- mutans_falcon_composition_set_full$composition
