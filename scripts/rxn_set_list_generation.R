@@ -24,6 +24,7 @@ ecoli <- GRB_ecoli_model()
 ecoli_set_lists <- GRB_generate_set_lists(ecoli, ecoli_r0_set_list, 1:n)
 
 ecoli_composition_set_full <- return_composition_sets(ecoli_r0_set_list, ecoli_set_lists, ecoli)
+ecoli_composition_set <- ecoli_composition_set_full$composition
 
 check_composition_error(ecoli_composition_set_full, ecoli_r0_set_list)
 
@@ -57,12 +58,13 @@ vars <- mutans$get_names()$VarName
 
 mutans_r0_set_list <- GRB_generate_set_list(mutans)
 
-proc.time() - ptm # timing end
+#proc.time() - ptm # timing end
 
 mutans <- GRB_mutans_model()
 mutans_set_lists <- GRB_generate_set_lists(mutans, mutans_r0_set_list, 1:n)
 
 mutans_composition_set_full <- return_composition_sets(mutans_r0_set_list, mutans_set_lists, mutans)
+mutans_composition_set <- mutans_composition_set_full$composition
 
 check_composition_error(mutans_composition_set_full, mutans_r0_set_list)
 
@@ -74,7 +76,7 @@ check_deletion_error(mutans_deletion_list, mutans_r0_set_list)
 
 save(mutans_r0_set_list, mutans_set_lists, mutans_composition_set_full, mutans_deletion_list, file = "mutans_run_data.RData")
 
-#proc.time() - ptm # timing end
+proc.time() - ptm # timing end
 
 mutans_r0_pairs <- return_pairs_from_set_list(mutans_r0_set_list)
 mutans_new_r1_pairs <- new_pairs_from_composition(mutans_r0_set_list, mutans_composition_set)
@@ -102,6 +104,7 @@ yeast <- GRB_yeast_model()
 yeast_set_lists <- GRB_generate_set_lists(yeast, yeast_r0_set_list, 1:n)
 
 yeast_composition_set_full <- return_composition_sets(yeast_r0_set_list, yeast_set_lists, yeast)
+yeast_composition_set <- yeast_composition_set_full$composition
 
 check_composition_error(yeast_composition_set_full, yeast_r0_set_list)
 

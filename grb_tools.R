@@ -183,8 +183,7 @@ GRB_generate_pair_list <- function(model_og){
 
 GRB_generate_set_list <- function(model_og, reaction_indexes = c()){
   model <- model_og$copy()
-  return(get_list_of_sets(return_couples(flux_coupling_raptor(model,
-                                reaction_indexes = reaction_indexes)$coupled)))
+  return(get_list_of_sets(return_couples(flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled)))
 }
 
 GRB_generate_pair_lists <- function(model_og, suppression_idxs){

@@ -250,11 +250,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     model$setattr("LB", prev_lb)
   }
 
-  i <- reaction_indexes[length(reaction_indexes)]
-  if (!blocked[i]){
-    coupled[i,i] <- TRUE
-    active[i] <- FALSE
-  }
+  #i <- reaction_indexes[length(reaction_indexes)]
+  #if (!blocked[i] | active[i]){
+  #  coupled[i,i] <- TRUE
+  #  active[i] <- FALSE
+  #}
 
   model$setattr("Obj", prev_obj)
   model$setattr("ModelSense", prev_sense)

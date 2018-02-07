@@ -118,9 +118,9 @@ reaction_indexes <- c()
 reaction_indexes <- grep('Ex_a', vars)
 
 print(paste('num genes:', length(reaction_indexes)))
-
+ptm <- proc.time() # timing start
 mutans_falcon_og_set_list <- GRB_generate_set_list(mutans_falcon, reaction_indexes = reaction_indexes)
-
+proc.time() - ptm # timing end
 mutans_falcon <- GRB_mutans_falcon_model()
 mutans_falcon_set_lists <- GRB_generate_set_lists(mutans_falcon, mutans_falcon_og_set_list, 1:n, reaction_indexes)
 
