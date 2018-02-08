@@ -113,8 +113,7 @@ ecoli_falcon_r1_set_list <- get_list_of_sets(ecoli_falcon_r1_pairs)
 load('~/GitHub/PathwayMining/data/mutans_model/mutans_model.RData')
 
 sybil_mutans <- mutans
-
-non_gene_assc_rxns <- which(mutans@genes == "")
+non_gene_assc_rxns <- which(sybil_mutans@genes == "")
 
 mutans_falcon <- GRB_mutans_falcon_model()
 n <- mutans_falcon$get_sizes()$NumVars

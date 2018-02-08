@@ -104,7 +104,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     return(flux_)
   }
 
-  for (idx in 1:(length(reaction_indexes)-1)) { # (i in 1:(n-1))
+  for (idx in 1:(length(reaction_indexes))) { # (i in 1:(n-1))
     # iterate over passed in idxs instead (idx in 1:length(reaction_indexes)); i <-  reaction_indexes[idx]
     i <-  reaction_indexes[idx]
 
@@ -174,10 +174,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       active[i] <- FALSE
     }
 
+    if (idx == length(reaction_indexes)){break}
+
     for (idx2 in (idx+1):length(reaction_indexes)) { # (j in (i+1):n)
       # also keep this in passed in idxs (idx2 in (idx+1):length(reaction_indexes)); j <-  reaction_indexes[idx2]
       j <-  reaction_indexes[idx2]
-      #if (j == 137){print('137')}
       # check for fixed or blocked
       if (!active[j] | blocked[j]) next
 
@@ -250,11 +251,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     model$setattr("LB", prev_lb)
   }
 
-  #i <- reaction_indexes[length(reaction_indexes)]
-  #if (!blocked[i] | active[i]){
-  #  coupled[i,i] <- TRUE
-  #  active[i] <- FALSE
-  #}
+  i <- reaction_indexes[length(reaction_indexes)]
+  if (!blocked[i] & active[i]){
+    coupled[i,i] <- TRUE
+    active[i] <- FALSE
+  }
 
   model$setattr("Obj", prev_obj)
   model$setattr("ModelSense", prev_sense)

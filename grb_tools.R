@@ -215,7 +215,7 @@ GRB_generate_set_lists <- function(model_og, og_set_list, suppression_idxs, reac
   vars <- model_og$get_names()$VarName
 
   for (i in suppression_idxs){
-    print(i)
+    print(paste('suppression index: ', i))
     if (!(vars[i] %in% unblocked_rxns)){
       print(paste(vars[i], ' blocked'))
       next
