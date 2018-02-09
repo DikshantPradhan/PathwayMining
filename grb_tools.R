@@ -279,6 +279,21 @@ GRB_generate_set_lists_array <- function(model_og, og_set_list, suppression_idxs
   return(coupling_array)
 }
 
+coupling_matrix_from_array <- function(coupling_array){
+  coupling_matrix <- matrix(data = 0, nrow = dim(coupling_array)[1], ncol = dim(coupling_array)[2],
+                            dimnames = dimnames(coupling_array)[1:2])
+  
+  for (i in 1:length(nrow(coupling_matrix))){
+    for (j in i:length(ncol(coupling_matrix))){
+      
+      coupling_matrix[i,j] <- length(which(coupling_array[i,j,]))
+      
+    }
+  }
+  
+  return(coupling_matrix)
+}
+
 GRB_get_union_set_from_degen_pairs <- function(model, pair_lists){
 
   set_list = model$get_names()$VarName
