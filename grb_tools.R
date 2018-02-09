@@ -242,6 +242,43 @@ GRB_generate_set_lists <- function(model_og, og_set_list, suppression_idxs, reac
   return(set_lists)
 }
 
+GRB_generate_set_lists_array <- function(model_og, og_set_list, suppression_idxs, reaction_indexes = c()){
+  
+  unblocked_rxns <- unlist(og_set_list)
+  
+  n <- model_og$get_sizes()$NumVars
+  vars <- model_og$get_names()$VarName
+  
+  # dim: rxns_row, rxns_col, deletions
+  coupling_array <- array(data = FALSE, dim = c(n,n,n), dimnames = list(vars, vars, paste('del', vars, sep = "_"))) 
+  
+  for (i in suppression_idxs){
+    print(paste('suppression index: ', i))
+    if (!(vars[i] %in% unblocked_rxns)){
+      print(paste(vars[i], ' blocked'))
+      next
+    }
+    
+    #prev_ub <- model$getattr("UB")[vars[i]]
+    #prev_lb <- model$getattr("LB")[vars[i]]
+    
+    model <- model_og$copy() #GRB_ecoli_model()
+    
+    # block i
+    model$setattr("UB", setNames(0, vars[i]))
+    model$setattr("LB", setNames(0, vars[i]))
+    
+    set_lists[,,i] <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
+    
+    # unfix i
+    #model$setattr("UB", prev_ub)
+    #model$setattr("LB", prev_lb)
+    
+  }
+  
+  return(set_lists)
+}
+
 GRB_get_union_set_from_degen_pairs <- function(model, pair_lists){
 
   set_list = model$get_names()$VarName

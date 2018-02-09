@@ -268,6 +268,44 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
   )
 }
 
+fill_coupling_matrix <- function(coupled){
+  rows <- nrow(coupled)
+  
+  for (i in 1:nrow(coupled)){
+    #identify set
+    set <- which(coupled[i,]) # true values in row
+    
+    # fill in TRUE for all pairs in set
+    for (j in 1:length(set)){
+      idx1 <- set[j]
+      for (k in j:length(set)){
+        idx2 <- set[k]
+        coupled[idx1, idx2] <- TRUE
+      }
+    }
+    
+  }
+  
+  return(coupled)
+}
+
+set_vector <- function(coupled){
+  active <- matrix(data = TRUE, nrow = 1, ncol = ncol(coupled))
+  set_num <- matrix(data = 0, nrow = 1, ncol = ncol(coupled))
+  
+  set_iter <- 1
+  for (i in nrow(coupled)){
+    if (!active[i]){next} # skip if already in a set
+    set <- which(coupled[i,])
+    if (length(set) < 1){next} # skip if blocked reaction (will not be coupled to itself)
+    active[set] <- FALSE
+    set_num[set] <- set_iter # enter same set # into all indexes in the same set 
+    set_iter <- set_iter + 1
+  }
+  
+  return(set_num)
+}
+
 #ecoli <- as_GRBmodel(model)
 #ecoli$show_output(FALSE)
 #print(flux_coupling_raptor(ecoli))
