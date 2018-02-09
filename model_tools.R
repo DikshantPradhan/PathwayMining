@@ -203,7 +203,7 @@ get_dwnst_rxns_2 <- function(rxn_idx, sample = NULL){
 
 get_upst_rxns <- function(rxn_idx, model){
   S <- model@S
-  
+
   upst_mets <- which(S[,rxn_idx] < 0)
 
   if (model@react_rev[rxn_idx]){
@@ -238,7 +238,7 @@ print_mets_and_coeffs <- function(model, rxn_idx){
 check_for_duplicate_reactions <- function(model){
   S <- model@S
   n_rxn <- dim(S)[2]
-  
+
   for (i in 1:(n_rxn-1)){
     test <- S[,i]
     for (j in (i+1):n_rxn){
@@ -426,13 +426,14 @@ get_list_of_sets <- function(pairs, rxns_list = c()){ #2d columns
       rxns_list <- c(rxns_list, list(i))
     }
   }
-
-  # rxn_list <- c(rxn_list[-c(1, 13)], list(union(rxn_list[1], rxn_list[13])))
-  # grep("MALt2_2", rxn_list)
+  # print(rxns_list)
 
   for (i in 1:nrow(pairs)){
     idx1 <- get_set_idx(pairs[i,1], rxns_list) #grep(core_rxn_id(pairs[i,1]), rxns_list)
     idx2 <- get_set_idx(pairs[i,2], rxns_list) #grep(core_rxn_id(pairs[i,2]), rxns_list)
+
+    #print(idx1)
+    #print(idx2)
 
     # print(paste(pairs[i, 1], "&", pairs[i,2], ":", idx1, idx2))
 
