@@ -230,8 +230,7 @@ GRB_generate_set_lists <- function(model_og, og_set_list, suppression_idxs, reac
     model$setattr("UB", setNames(0, vars[i]))
     model$setattr("LB", setNames(0, vars[i]))
 
-    set_lists[i] <- list(get_list_of_sets(return_couples(flux_coupling_raptor(model,
-                            reaction_indexes = reaction_indexes)$coupled)))
+    set_lists[i] <- list(get_list_of_sets(return_couples(flux_coupling_raptor(model,reaction_indexes = reaction_indexes)$coupled)))
 
     # unfix i
     #model$setattr("UB", prev_ub)
@@ -282,15 +281,15 @@ GRB_generate_set_lists_array <- function(model_og, og_set_list, suppression_idxs
 coupling_matrix_from_array <- function(coupling_array){
   coupling_matrix <- matrix(data = 0, nrow = dim(coupling_array)[1], ncol = dim(coupling_array)[2],
                             dimnames = dimnames(coupling_array)[1:2])
-  
-  for (i in 1:length(nrow(coupling_matrix))){
-    for (j in i:length(ncol(coupling_matrix))){
-      
+
+  for (i in 1:nrow(coupling_matrix)){
+    for (j in i:ncol(coupling_matrix)){
+      #print(paste(i,j))
       coupling_matrix[i,j] <- length(which(coupling_array[i,j,]))
-      
+      #print(length(which(coupling_array[i,j,])))
     }
   }
-  
+
   return(coupling_matrix)
 }
 
