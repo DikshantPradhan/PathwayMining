@@ -241,7 +241,7 @@ GRB_generate_set_lists <- function(model_og, og_set_list, suppression_idxs, reac
   return(set_lists)
 }
 
-GRB_generate_set_lists_array <- function(model_og, og_set_list, suppression_idxs, reaction_indexes = c()){
+GRB_generate_set_lists_array <- function(model_og, suppression_idxs, reaction_indexes = c()){
 
   unblocked_rxns <- unlist(og_set_list)
 
