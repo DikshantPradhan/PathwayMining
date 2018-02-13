@@ -224,7 +224,7 @@ GRB_generate_set_lists <- function(model_og, og_set_list, suppression_idxs, reac
     #prev_ub <- model$getattr("UB")[vars[i]]
     #prev_lb <- model$getattr("LB")[vars[i]]
 
-    model <- model_og$copy() #GRB_ecoli_model()
+    model <- model_og$copy() 
 
     # block i
     model$setattr("UB", setNames(0, vars[i]))
@@ -249,11 +249,14 @@ GRB_generate_set_lists_array <- function(model_og, og_set_list, suppression_idxs
   vars <- model_og$get_names()$VarName
 
   # dim: rxns_row, rxns_col, deletions
+  model <- model_og$copy()
+  r0_coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
+  
   coupling_array <- array(data = FALSE, dim = c(n,n,n), dimnames = list(vars, vars, paste('del', vars, sep = "_")))
 
   for (i in suppression_idxs){
     print(paste('suppression index: ', i))
-    if (!(vars[i] %in% unblocked_rxns)){
+    if (!(r0_coupling_mtx[i,i])){
       print(paste(vars[i], ' blocked'))
       next
     }
@@ -274,7 +277,10 @@ GRB_generate_set_lists_array <- function(model_og, og_set_list, suppression_idxs
     #model$setattr("LB", prev_lb)
 
   }
+  
+  output <- list(r0_mtx <- r0_coupling_mtx, r1_coupling_array = coupling_array)
 
+  #return(coupling_array)
   return(coupling_array)
 }
 
