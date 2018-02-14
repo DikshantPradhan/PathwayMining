@@ -6,57 +6,39 @@ source('~/GitHub/PathwayMining/set_tools.R')
 source('~/GitHub/PathwayMining/falcon_tools.R')
 source('~/GitHub/PathwayMining/load_mod.R')
 
-# for (i in 1:length(mutans_model@react_id)){
-#   if (mutans_model@lowbnd[i] != mutans_falcon@lowbnd[i]){print(c(i, "wrong lowbnd"))}
-#   if (mutans_model@uppbnd[i] != mutans_falcon@uppbnd[i]){print(c(i, "wrong uppbnd"))}
-# }
 
-yeast_falcon_compar_react <- function(react_id){
-  idx <- which(yeast_model@react_id == react_id)
-  f_idx <- which(yeast_falcon@react_id == react_id)
+
+#model <- model_og$copy()
+r0_coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
+
+GRB_set_list_mtx <- function(){
   
-  met_idx <- which(yeast_model@S[,idx] != 0)
-  f_met_idx <- which(yeast_falcon@S[,f_idx] != 0)
+  # load model, r0_mtx as rdata file, make copies
+  # params: suppression indices, reaction test indices
   
-  met_coeff <- yeast_model@S[met_idx, idx]
-  f_met_coeff <- yeast_falcon@S[f_met_idx, f_idx]
+  print(paste('suppression index: ', i))
+  if (!(r0_coupling_mtx[i,i])){
+    print(paste(vars[i], ' blocked'))
+    next
+  }
   
-  met_id <- yeast_model@met_id[met_idx]
-  f_met_id <- yeast_falcon@met_id[f_met_idx]
+  #prev_ub <- model$getattr("UB")[vars[i]]
+  #prev_lb <- model$getattr("LB")[vars[i]]
   
-  print(react_id)
-  print('Yeast Model')
-  print(paste(met_coeff, met_id))
-  print(paste(yeast_model@lowbnd[idx], yeast_model@uppbnd[idx]))
-  print('Yeast Falcon')
-  print(paste(f_met_coeff, f_met_id))
-  print(paste(yeast_falcon@lowbnd[f_idx], yeast_falcon@uppbnd[f_idx]))
+  model <- model_og$copy() #GRB_ecoli_model()
+  
+  # block i
+  model$setattr("UB", setNames(0, vars[i]))
+  model$setattr("LB", setNames(0, vars[i]))
+  
+  coupling_array[,,i] <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
+  
+  # unfix i
+  #model$setattr("UB", prev_ub)
+  #model$setattr("LB", prev_lb)
+  
 }
 
-yeast_falcon_compar_met <- function(met_id){
-  met_idx <- which(yeast_model@met_id == met_id)
-  f_met_idx <- which(yeast_falcon@met_id == met_id)
-  
-  r_idxs <- which(yeast_model@S[met_idx,] != 0)
-  f_r_idxs <- which(yeast_falcon@S[f_met_idx,] != 0)
-  
-  print(met_id)
-  print('Yeast Model')
-  print(yeast_model@react_id[r_idxs])
-  print('Yeast Falcon')
-  print(yeast_falcon@react_id[f_r_idxs])
-}
-
-# yeast_falcon_compar_met("s_0097")
-# yeast_falcon_compar_met("s_0102")
-# yeast_falcon_compar_react("r_0036")
-# yeast_falcon_compar_react("r_0084")
-# yeast_falcon_compar_react("r_0360")
-# yeast_falcon_compar_react("r_1414")
-#yeast_falcon_compar_react("EX_s_0199")
-
-model@react_id[3484]
-biomass_mets <- which(model@S[,3484] != 0)
-for (met in biomass_mets){
-  print(paste(model@met_id[met], length(which(model@S[met,] != 0))))
-}
+lapply(suppr_idxs,
+       FUN = GRB_set_list_mtx
+)

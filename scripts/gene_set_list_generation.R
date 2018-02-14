@@ -130,7 +130,7 @@ mutans_falcon_og_set_list <- GRB_generate_set_list(mutans_falcon, reaction_index
 
 proc.time() - ptm # timing end
 mutans_falcon <- GRB_mutans_falcon_model()
-mutans_falcon_coupling_array <- GRB_generate_set_lists_array(mutans_falcon, mutans_falcon_og_set_list, suppr_indexes, reaction_indexes)
+mutans_falcon_coupling_array <- GRB_generate_set_lists_array(mutans_falcon, suppr_indexes, reaction_indexes)
 mutans_falcon_g1_matrix <- coupling_matrix_from_array(mutans_falcon_coupling_array)
 mutans_falcon_g1_matrix <- (mutans_falcon_g1_matrix > 0)
 mutans_falcon_g1_sets <- list(get_list_of_sets(return_couples(mutans_falcon_g1_matrix)))
