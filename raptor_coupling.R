@@ -46,7 +46,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
 
   if (nrow(known_set_mtx) < n){compare_mtx <- FALSE}
   if (ncol(known_set_mtx) < n){compare_mtx <- FALSE}
-  
+
   # if empty set, then assume all reactions are to be inspected
   if (length(reaction_indexes) == 0){
     reaction_indexes <- c(1:n)
@@ -108,16 +108,18 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
   }
 
   # if j is coupled to i, couple the rxns known to be coupled to j to i as well
-  known_set_coupling <- function(i, j){ 
+  known_set_coupling <- function(i, j, coupled, active){
     sets <- which(known_set_mtx[,j])
     for (set in sets){
       known_coupled_rxns <- which(known_set_mtx[set,])
-      
+
       coupled[i, known_coupled_rxns] <- TRUE
       active[known_coupled_rxns] <- FALSE
     }
+
+    list(coupled = coupled, active = active)
   }
-  
+
   for (idx in 1:(length(reaction_indexes))) { # (i in 1:(n-1))
     # iterate over passed in idxs instead (idx in 1:length(reaction_indexes)); i <-  reaction_indexes[idx]
     i <-  reaction_indexes[idx]
@@ -252,9 +254,12 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       if (!skip) { # finally label as coupled
         coupled[i,j] <- TRUE
         active[j] <- FALSE
-        
+
         if (compare_mtx){
-          known_set_coupling(i, j)
+          output <- known_set_coupling(i, j, coupled, active)
+          coupled <- output$coupled
+          active <- output$active
+          
         }
       }
 
@@ -288,11 +293,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
 
 fill_coupling_matrix <- function(coupled){
   rows <- nrow(coupled)
-  
+
   for (i in 1:nrow(coupled)){
     #identify set
     set <- which(coupled[i,]) # true values in row
-    
+
     # fill in TRUE for all pairs in set
     for (j in 1:length(set)){
       idx1 <- set[j]
@@ -301,26 +306,26 @@ fill_coupling_matrix <- function(coupled){
         coupled[idx1, idx2] <- TRUE
       }
     }
-    
+
   }
-  
+
   return(coupled)
 }
 
 set_vector <- function(coupled){
   active <- matrix(data = TRUE, nrow = 1, ncol = ncol(coupled))
   set_num <- matrix(data = 0, nrow = 1, ncol = ncol(coupled))
-  
+
   set_iter <- 1
   for (i in nrow(coupled)){
     if (!active[i]){next} # skip if already in a set
     set <- which(coupled[i,])
     if (length(set) < 1){next} # skip if blocked reaction (will not be coupled to itself)
     active[set] <- FALSE
-    set_num[set] <- set_iter # enter same set # into all indexes in the same set 
+    set_num[set] <- set_iter # enter same set # into all indexes in the same set
     set_iter <- set_iter + 1
   }
-  
+
   return(set_num)
 }
 

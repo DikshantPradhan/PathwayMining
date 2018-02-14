@@ -51,7 +51,7 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
 
   # helper function for simple_add and or_add
   normal_add <- function(model, new_met_list, rxn_id, simple = FALSE, addExch = FALSE, identifier = NULL){
-  
+
     rxn_idx <- which(model@react_id == rxn_id)
     exch <- findExchReact(model)
 
@@ -73,13 +73,13 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
     met_list <- met_list[!is.na(met_list)]
 
     if (!simple){ # add reverse reaction if needed
-      
+
       model <- addReact(model, paste(rxn_id, identifier, 'fwd', sep = '_'), met = met_list,
                         Scoef = c(old_met_coeff, rep(-1, length(new_met_list))), lb = 0, ub = 1000, reversible = FALSE)
       model <- addReact(model, paste(rxn_id, identifier, 'rev', sep = '_'), met = met_list,
                         Scoef = c(old_met_coeff, rep(1, length(new_met_list))), lb = -1000, ub = 0, reversible = FALSE)
       # rxn_removal_ids <- c(rxn_removal_ids, rxn_id)
-      
+
       ## NEED CONSTRAINTS TO PREVENT MODEL FROM PUSHING FLUX THROUGH BOTH DIRECTIONS AT ONCE
     }
     else { # changed from [-1000 to 1000] to [lowbnd to uppbnd]
@@ -272,7 +272,7 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
     # }
     marked_rxns[rxn_idx] <- TRUE
   }
-  
+
   # if gene_activity is only consumed, then exchange reaction should only flow inwards??
 
   #print('FINAL COUNT')
@@ -441,16 +441,16 @@ clean_rxn_names_in_set <- function(set_list){
 yeast_falcon_compar_react <- function(react_id){
   idx <- which(yeast_model@react_id == react_id)
   f_idx <- which(yeast_falcon@react_id == react_id)
-  
+
   met_idx <- which(yeast_model@S[,idx] != 0)
   f_met_idx <- which(yeast_falcon@S[,f_idx] != 0)
-  
+
   met_coeff <- yeast_model@S[met_idx, idx]
   f_met_coeff <- yeast_falcon@S[f_met_idx, f_idx]
-  
+
   met_id <- yeast_model@met_id[met_idx]
   f_met_id <- yeast_falcon@met_id[f_met_idx]
-  
+
   print(react_id)
   print('Yeast Model')
   print(paste(met_coeff, met_id))
@@ -463,10 +463,10 @@ yeast_falcon_compar_react <- function(react_id){
 yeast_falcon_compar_met <- function(met_id){
   met_idx <- which(yeast_model@met_id == met_id)
   f_met_idx <- which(yeast_falcon@met_id == met_id)
-  
+
   r_idxs <- which(yeast_model@S[met_idx,] != 0)
   f_r_idxs <- which(yeast_falcon@S[f_met_idx,] != 0)
-  
+
   print(met_id)
   print('Yeast Model')
   print(yeast_model@react_id[r_idxs])
@@ -482,9 +482,8 @@ yeast_falcon_compar_met <- function(met_id){
 # yeast_falcon_compar_react("r_1414")
 #yeast_falcon_compar_react("EX_s_0199")
 
-model@react_id[3484]
-biomass_mets <- which(model@S[,3484] != 0)
-for (met in biomass_mets){
-  print(paste(model@met_id[met], length(which(model@S[met,] != 0))))
-}
-
+#model@react_id[3484]
+#biomass_mets <- which(model@S[,3484] != 0)
+#for (met in biomass_mets){
+#  print(paste(model@met_id[met], length(which(model@S[met,] != 0))))
+#}

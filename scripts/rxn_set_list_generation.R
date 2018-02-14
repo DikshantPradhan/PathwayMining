@@ -23,6 +23,11 @@ proc.time() - ptm # timing end
 ecoli <- GRB_ecoli_model()
 ecoli_set_lists <- GRB_generate_set_lists(ecoli, ecoli_r0_set_list, 1:n)
 
+ecoli_coupling_array <- GRB_generate_set_lists_array(ecoli, 1:n, compare_known_r0_sets = TRUE, optimize_suppr=TRUE)
+ecoli_r1_matrix <- coupling_matrix_from_array(ecoli_coupling_array)
+ecoli_r1_matrix <- (ecoli_r1_matrix > 0)
+ecoli_r1_sets <- list(get_list_of_sets(return_couples(ecoli_r1_matrix)))
+
 ecoli_composition_set_full <- return_composition_sets(ecoli_r0_set_list, ecoli_set_lists, ecoli)
 ecoli_composition_set <- ecoli_composition_set_full$composition
 

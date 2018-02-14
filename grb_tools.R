@@ -224,7 +224,7 @@ GRB_generate_set_lists <- function(model_og, og_set_list, suppression_idxs, reac
     #prev_ub <- model$getattr("UB")[vars[i]]
     #prev_lb <- model$getattr("LB")[vars[i]]
 
-    model <- model_og$copy() 
+    model <- model_og$copy()
 
     # block i
     model$setattr("UB", setNames(0, vars[i]))
@@ -241,7 +241,8 @@ GRB_generate_set_lists <- function(model_og, og_set_list, suppression_idxs, reac
   return(set_lists)
 }
 
-GRB_generate_set_lists_array <- function(model_og, suppression_idxs = -1, reaction_indexes = c(), optimize_suppr = FALSE){
+GRB_generate_set_lists_array <- function(model_og, suppression_idxs = -1, reaction_indexes = c(),
+  compare_known_r0_sets = FALSE, optimize_suppr = FALSE){
 
   n <- model_og$get_sizes()$NumVars
   vars <- model_og$get_names()$VarName
@@ -249,11 +250,11 @@ GRB_generate_set_lists_array <- function(model_og, suppression_idxs = -1, reacti
   if (suppression_idxs == -1){
     suppression_idxs = 1:n
   }
-  
+
   # dim: rxns_row, rxns_col, deletions
   model <- model_og$copy()
   r0_coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
-  
+
   suppr_vector <- matrix(data = FALSE, nrow = 1, ncol = n)
   suppr_vector[suppression_idxs] <- TRUE
   if (optimize_suppr){
@@ -269,9 +270,9 @@ GRB_generate_set_lists_array <- function(model_og, suppression_idxs = -1, reacti
       i <- i+1
     }
   }
-  
+
   coupling_array <- array(data = FALSE, dim = c(n,n,n), dimnames = list(vars, vars, paste('del', vars, sep = "_")))
-  
+
   for (i in which(suppr_vector)){
     print(paste('suppression index: ', i))
     if (!(r0_coupling_mtx[i,i])){
@@ -288,14 +289,15 @@ GRB_generate_set_lists_array <- function(model_og, suppression_idxs = -1, reacti
     model$setattr("UB", setNames(0, vars[i]))
     model$setattr("LB", setNames(0, vars[i]))
 
-    coupling_array[,,i] <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
+    coupling_array[,,i] <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes,
+      compare_mtx = compare_known_r0_sets, known_set_mtx = r0_coupling_mtx)$coupled
 
     # unfix i
     #model$setattr("UB", prev_ub)
     #model$setattr("LB", prev_lb)
 
   }
-  
+
   output <- list(r0_mtx <- r0_coupling_mtx, r1_coupling_array = coupling_array)
 
   #return(coupling_array)
