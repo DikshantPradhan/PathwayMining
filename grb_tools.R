@@ -241,18 +241,38 @@ GRB_generate_set_lists <- function(model_og, og_set_list, suppression_idxs, reac
   return(set_lists)
 }
 
-GRB_generate_set_lists_array <- function(model_og, suppression_idxs, reaction_indexes = c()){
+GRB_generate_set_lists_array <- function(model_og, suppression_idxs = -1, reaction_indexes = c(), optimize_suppr = FALSE){
 
   n <- model_og$get_sizes()$NumVars
   vars <- model_og$get_names()$VarName
 
+  if (suppression_idxs == -1){
+    suppression_idxs = 1:n
+  }
+  
   # dim: rxns_row, rxns_col, deletions
   model <- model_og$copy()
   r0_coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
   
+  suppr_vector <- matrix(data = FALSE, nrow = 1, ncol = n)
+  suppr_vector[suppression_idxs] <- TRUE
+  if (optimize_suppr){
+    i <- 1
+    while (i <= n){
+      if (suppr_vector[i]){ # if tagged to be suppressed
+        set_idx <- which(r0_coupling_mtx[,i])[1] # which is first reaction (row) i is coupled to
+        rxn_idxs <- which(r0_coupling_mtx[set_idx,]) # other reactions in set
+        # only suppress first reaction in set since, theoretically, suppressing any should have the same effect
+        suppr_vector[rxn_idxs] <- FALSE
+        suppr_vector[rxn_idxs[1]] <- TRUE
+      }
+      i <- i+1
+    }
+  }
+  
   coupling_array <- array(data = FALSE, dim = c(n,n,n), dimnames = list(vars, vars, paste('del', vars, sep = "_")))
-
-  for (i in suppression_idxs){
+  
+  for (i in which(suppr_vector)){
     print(paste('suppression index: ', i))
     if (!(r0_coupling_mtx[i,i])){
       print(paste(vars[i], ' blocked'))
