@@ -29,7 +29,7 @@ optimize_rxn <- function(model, rxn, max){
 
 flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01,
       bnd_tol = 0.1, stored_obs = 4000, cor_iter = 5, cor_check = TRUE,
-      reaction_indexes = c()) {
+      reaction_indexes = c(), compare_mtx = FALSE, known_set_mtx = matrix(data = FALSE, nrow = 1, ncol = 1)) {
 
   # min_fva_cor is minimum correlation between fluxes
   # bnd_tol is allowed error in comparing max & min flux
@@ -44,6 +44,9 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
 
   n <- model$get_sizes()$NumVars
 
+  if (nrow(known_set_mtx) < n){compare_mtx <- FALSE}
+  if (ncol(known_set_mtx) < n){compare_mtx <- FALSE}
+  
   # if empty set, then assume all reactions are to be inspected
   if (length(reaction_indexes) == 0){
     reaction_indexes <- c(1:n)
@@ -104,6 +107,17 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     return(flux_)
   }
 
+  # if j is coupled to i, couple the rxns known to be coupled to j to i as well
+  known_set_coupling <- function(i, j){ 
+    sets <- which(known_set_mtx[,j])
+    for (set in sets){
+      known_coupled_rxns <- which(known_set_mtx[set,])
+      
+      coupled[i, known_coupled_rxns] <- TRUE
+      active[known_coupled_rxns] <- FALSE
+    }
+  }
+  
   for (idx in 1:(length(reaction_indexes))) { # (i in 1:(n-1))
     # iterate over passed in idxs instead (idx in 1:length(reaction_indexes)); i <-  reaction_indexes[idx]
     i <-  reaction_indexes[idx]
@@ -238,6 +252,10 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       if (!skip) { # finally label as coupled
         coupled[i,j] <- TRUE
         active[j] <- FALSE
+        
+        if (compare_mtx){
+          known_set_coupling(i, j)
+        }
       }
 
       # print(lp_calls)
