@@ -272,7 +272,7 @@ GRB_generate_set_lists_array <- function(model_og, suppression_idxs = -1, reacti
   }
 
   coupling_array <- array(data = FALSE, dim = c(n,n,n), dimnames = list(vars, vars, paste('del', vars, sep = "_")))
-
+  print(paste("# of suppressions:", length(which(suppr_vector)), sep = " "))
   for (i in which(suppr_vector)){
     print(paste('suppression index: ', i))
     if (!(r0_coupling_mtx[i,i])){
