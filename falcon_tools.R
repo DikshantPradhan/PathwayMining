@@ -415,12 +415,12 @@ gprRule_to_idx <- function(list){
 
 
 clean_rxn_names_in_set <- function(set_list){
-
+  
   clean_ex_a <- function(name){
     new_name <- strsplit(name, 'Ex_a_')[[1]]
     return(new_name[2])
   }
-
+  
   for (i in 1:length(set_list)){
     for (j in 1:length(set_list[[i]])){
       new_name <- clean_ex_a(set_list[[i]][j])
@@ -429,8 +429,17 @@ clean_rxn_names_in_set <- function(set_list){
       }
     }
   }
-
+  
   return(set_list)
+}
+
+isolate_gene_matrix <- function(coupling_matrix){
+  row_genes <- which(grepl('Ex_a', rownames(coupling_matrix)))
+  col_genes <- which(grepl('Ex_a', colnames(coupling_matrix)))
+  
+  gene_matrix <- coupling_matrix[row_genes, col_genes]
+  
+  return(gene_matrix)
 }
 
 # for (i in 1:length(mutans_model@react_id)){

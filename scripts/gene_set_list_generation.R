@@ -10,7 +10,7 @@ source('~/GitHub/PathwayMining/falcon_tools.R')
 
 ptm <- proc.time()
 
-# # test composition of set_lists (make sure that blocking any reaction in an og_set results in the same r1 set)
+# # test composition of set_lists (make sure that blocking any reaction in an og_set results in the same g1 set)
 
 ## ECOLI MODEL
 
@@ -34,7 +34,7 @@ ecoli_falcon_composition_set <- ecoli_falcon_composition_set_full$composition
 
 print('composition error check')
 
-# check for errors in compositions of r1 sets (intermediate) (each blockage within the same set should have the same effects)
+# check for errors in compositions of g1 sets (intermediate) (each blockage within the same set should have the same effects)
 for (i in 1:length(ecoli_falcon_og_set_list)){ # print sets joined by each deletion
   #print(ecoli_falcon_og_set_list[[i]])
   if (length(ecoli_falcon_og_set_list[[i]]) > 1){
@@ -100,12 +100,12 @@ print('specific error')
 
 print(ct)
 
-ecoli_falcon_r0_pairs <- return_pairs_from_set_list(ecoli_falcon_og_set_list)
-ecoli_falcon_new_r1_pairs <- new_pairs_from_composition(ecoli_falcon_og_set_list, ecoli_falcon_composition_set)
-ecoli_falcon_r1_pairs <- append_pair_lists(ecoli_falcon_r0_pairs, ecoli_falcon_new_r1_pairs)
+ecoli_falcon_g0_pairs <- return_pairs_from_set_list(ecoli_falcon_og_set_list)
+ecoli_falcon_new_g1_pairs <- new_pairs_from_composition(ecoli_falcon_og_set_list, ecoli_falcon_composition_set)
+ecoli_falcon_g1_pairs <- append_pair_lists(ecoli_falcon_g0_pairs, ecoli_falcon_new_g1_pairs)
 
-ecoli_falcon_r0_set_list <- ecoli_falcon_og_set_list
-ecoli_falcon_r1_set_list <- get_list_of_sets(ecoli_falcon_r1_pairs)
+ecoli_falcon_g0_set_list <- ecoli_falcon_og_set_list
+ecoli_falcon_g1_set_list <- get_list_of_sets(ecoli_falcon_g1_pairs)
 
 
 ## MUTANS MODEL ~ 6 HRS
@@ -131,12 +131,15 @@ print(paste('num genes:', length(reaction_indexes)))
 #proc.time() - ptm # timing end
 ptm <- proc.time() # timing start
 mutans_falcon <- GRB_mutans_falcon_model()
-mutans_falcon_coupling_array <- GRB_generate_set_lists_array(mutans_falcon, reaction_indexes, compare_known_r0_sets = TRUE, optimize_suppr = TRUE)
-mutans_falcon_r1_matrix <- coupling_matrix_from_array(mutans_falcon_coupling_array)
-mutans_falcon_r1_matrix <- (mutans_falcon_r1_matrix > 0)
-mutans_falcon_r1_sets <- list(get_list_of_sets(return_couples(mutans_falcon_r1_matrix)))
+mutans_falcon_coupling_array <- GRB_generate_set_lists_array(mutans_falcon, reaction_indexes, compare_known_g0_sets = TRUE, optimize_suppr = TRUE)
+mutans_falcon_g1_matrix <- coupling_matrix_from_array(mutans_falcon_coupling_array)
+mutans_falcon_g1_matrix <- (mutans_falcon_g1_matrix > 0)
 proc.time() - ptm
-save(mutans_falcon_r1_matrix, file = 'mutans_falcon_g1_matrix.RData')
+save(mutans_falcon_g1_matrix, file = 'mutans_falcon_g1_matrix.RData')
+
+mutans_falcon_g1_sets <- list(get_list_of_sets(return_couples(mutans_falcon_g1_matrix)))
+mutans_g1_matrix <- isolate_gene_matrix(mutans_falcon_g1_matrix)
+clean_mutans_g1_set <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(mutans_g1_matrix))))
 
 mutans_falcon_set_lists <- GRB_generate_set_lists(mutans_falcon, mutans_falcon_og_set_list, suppr_indexes, reaction_indexes)
 mutans_falcon_composition_set_full <- return_composition_sets(mutans_falcon_og_set_list, mutans_falcon_set_lists, mutans_falcon)
@@ -145,7 +148,7 @@ mutans_falcon_composition_set <- mutans_falcon_composition_set_full$composition
 
 print('composition error check')
 
-# check for errors in compositions of r1 sets (intermediate) (each blockage within the same set should have the same effects)
+# check for errors in compositions of g1 sets (intermediate) (each blockage within the same set should have the same effects)
 for (i in 1:length(mutans_falcon_og_set_list)){ # print sets joined by each deletion
   #print(mutans_falcon_og_set_list[[i]])
   if (length(mutans_falcon_og_set_list[[i]]) > 1){
@@ -211,14 +214,14 @@ print('specific error')
 
 #print(ct)
 
-mutans_falcon_r0_pairs <- return_pairs_from_set_list(mutans_falcon_og_set_list)
-mutans_falcon_new_r1_pairs <- new_pairs_from_composition(mutans_falcon_og_set_list, mutans_falcon_composition_set)
-mutans_falcon_r1_pairs <- append_pair_lists(mutans_falcon_r0_pairs, mutans_falcon_new_r1_pairs)
+mutans_falcon_g0_pairs <- return_pairs_from_set_list(mutans_falcon_og_set_list)
+mutans_falcon_new_g1_pairs <- new_pairs_from_composition(mutans_falcon_og_set_list, mutans_falcon_composition_set)
+mutans_falcon_g1_pairs <- append_pair_lists(mutans_falcon_g0_pairs, mutans_falcon_new_g1_pairs)
 
-mutans_falcon_r0_set_list <- mutans_falcon_og_set_list
-mutans_falcon_r1_set_list <- get_list_of_sets(mutans_falcon_r1_pairs)
+mutans_falcon_g0_set_list <- mutans_falcon_og_set_list
+mutans_falcon_g1_set_list <- get_list_of_sets(mutans_falcon_g1_pairs)
 
-save(mutans_falcon_r0_pairs, mutans_falcon_new_r1_pairs, mutans_falcon_r1_pairs, mutans_falcon_r0_set_list, mutans_falcon_r1_set_list, file = 'mutans_falcon_pairs_sets.RData')
+save(mutans_falcon_g0_pairs, mutans_falcon_new_g1_pairs, mutans_falcon_g1_pairs, mutans_falcon_g0_set_list, mutans_falcon_g1_set_list, file = 'mutans_falcon_pairs_sets.RData')
 
 ## YEAST MODEL ~ 5 DAYS
 
@@ -243,7 +246,7 @@ yeast_falcon_composition_set <- yeast_falcon_composition_set_full$composition
 
 print('composition error check')
 
-# check for errors in compositions of r1 sets (intermediate) (each blockage within the same set should have the same effects)
+# check for errors in compositions of g1 sets (intermediate) (each blockage within the same set should have the same effects)
 for (i in 1:length(yeast_falcon_og_set_list)){ # print sets joined by each deletion
   #print(yeast_falcon_og_set_list[[i]])
   if (length(yeast_falcon_og_set_list[[i]]) > 1){
@@ -309,13 +312,13 @@ print('specific error')
 
 print(ct)
 
-yeast_falcon_r0_pairs <- return_pairs_from_set_list(yeast_falcon_og_set_list)
-yeast_falcon_new_r1_pairs <- new_pairs_from_composition(yeast_falcon_og_set_list, yeast_falcon_composition_set)
-yeast_falcon_r1_pairs <- append_pair_lists(yeast_falcon_r0_pairs, yeast_falcon_new_r1_pairs)
+yeast_falcon_g0_pairs <- return_pairs_from_set_list(yeast_falcon_og_set_list)
+yeast_falcon_new_g1_pairs <- new_pairs_from_composition(yeast_falcon_og_set_list, yeast_falcon_composition_set)
+yeast_falcon_g1_pairs <- append_pair_lists(yeast_falcon_g0_pairs, yeast_falcon_new_g1_pairs)
 
-yeast_falcon_r0_set_list <- yeast_falcon_og_set_list
-yeast_falcon_r1_set_list <- get_list_of_sets(yeast_falcon_r1_pairs)
+yeast_falcon_g0_set_list <- yeast_falcon_og_set_list
+yeast_falcon_g1_set_list <- get_list_of_sets(yeast_falcon_g1_pairs)
 
-save(yeast_falcon_r0_pairs, yeast_falcon_new_r1_pairs, yeast_falcon_r1_pairs, yeast_falcon_r0_set_list, yeast_falcon_r1_set_list, file = 'yeast_falcon_pairs_sets.RData')
+save(yeast_falcon_g0_pairs, yeast_falcon_new_g1_pairs, yeast_falcon_g1_pairs, yeast_falcon_g0_set_list, yeast_falcon_g1_set_list, file = 'yeast_falcon_pairs_sets.RData')
 
 print('FIN')
