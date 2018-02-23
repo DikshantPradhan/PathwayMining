@@ -13,6 +13,22 @@ get_set_idx <- function(rxn, rxns_list){
   return(integer(0))
 }
 
+map_elements_to_set <- function(elem_list, set_list){
+  elem_map <- matrix(data = NA, nrow = 1, ncol = length(elem_list))
+  
+  for (i in 1:length(elem_list)){
+    idx <- get_set_idx(elem_list[i], set_list)
+    print(elem_list[i])
+    print(any(grepl(elem_list[i], mutans@allGenes)))
+    print(idx)
+    if (length(idx) > 0){
+      elem_map[i] <- idx
+    }
+  }
+  
+  return(elem_map)
+}
+
 check_sets_for_containing <- function(rxns, set_list){
 
   for (i in 1:length(set_list)){

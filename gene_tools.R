@@ -1,4 +1,4 @@
-
+library(dplyr)
 
 #for (i in 1:length(Y_OPEN_GPR$react)){
 #  genes <- strsplit(Y_OPEN_GPR$GPR[i], split = c("\\(|\\)|and|or| "))
@@ -421,4 +421,25 @@ get_num_interactions <- function(set_list, e_matrix){
 
   return(total_int)
 
+}
+
+# find genes with high expression change but low fitness change
+identify_fitn_expr_relation <- function(fit_expr_mtx, fitn_thresh = 1, expr_thresh = 1){
+  # col 1: genes, col 2: fitness fold change, col 3: expression fold change
+  # assume log2 scaling
+  
+  interesting_genes <- matrix(data = FALSE, nrow = nrow(fit_expr_mtx), ncol = 1)
+  
+  for (i in 1:nrow(fit_expr_mtx)){
+    fitn <- as.numeric(fit_expr_mtx[i,2])
+    expr <- as.numeric(fit_expr_mtx[i,3])
+    
+    if (is.na(fitn) | is.na(expr)){next}
+    
+    if (near(fitn, 0, tol = fitn_thresh) & !near(expr, 0, tol = expr_thresh)){
+      interesting_genes[i] <- TRUE
+    }
+  }
+  
+  return(fit_expr_mtx[which(interesting_genes),1])
 }

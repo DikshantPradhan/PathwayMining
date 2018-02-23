@@ -139,7 +139,7 @@ save(mutans_falcon_g1_matrix, file = 'mutans_falcon_g1_matrix.RData')
 
 mutans_falcon_g1_sets <- list(get_list_of_sets(return_couples(mutans_falcon_g1_matrix)))
 mutans_g1_matrix <- isolate_gene_matrix(mutans_falcon_g1_matrix)
-clean_mutans_g1_set <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(mutans_g1_matrix))))
+clean_mutans_g1_set <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(mutans_g1_matrix)))[[1]])
 
 mutans_falcon_set_lists <- GRB_generate_set_lists(mutans_falcon, mutans_falcon_og_set_list, suppr_indexes, reaction_indexes)
 mutans_falcon_composition_set_full <- return_composition_sets(mutans_falcon_og_set_list, mutans_falcon_set_lists, mutans_falcon)
