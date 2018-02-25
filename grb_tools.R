@@ -248,7 +248,12 @@ GRB_generate_set_lists_array <- function(model_og, suppression_idxs = -1, reacti
   vars <- model_og$get_names()$VarName
 
   if (suppression_idxs == -1){
-    suppression_idxs = 1:n
+    if (length(reaction_indexes) > 0){
+      suppression_idxs = reaction_indexes
+    }
+    else {
+      suppression_idxs = 1:n
+    }
   }
 
   # dim: rxns_row, rxns_col, deletions

@@ -131,11 +131,11 @@ print(paste('num genes:', length(reaction_indexes)))
 #proc.time() - ptm # timing end
 ptm <- proc.time() # timing start
 mutans_falcon <- GRB_mutans_falcon_model()
-mutans_falcon_coupling_array <- GRB_generate_set_lists_array(mutans_falcon, reaction_indexes, compare_known_g0_sets = TRUE, optimize_suppr = TRUE)
+mutans_falcon_coupling_array <- GRB_generate_set_lists_array(mutans_falcon, reaction_indexes = reaction_indexes, compare_known_r0_sets = TRUE, optimize_suppr = TRUE)
 mutans_falcon_g1_matrix <- coupling_matrix_from_array(mutans_falcon_coupling_array)
 mutans_falcon_g1_matrix <- (mutans_falcon_g1_matrix > 0)
 proc.time() - ptm
-save(mutans_falcon_g1_matrix, file = 'mutans_falcon_g1_matrix.RData')
+save(mutans_falcon_g1_matrix, file = '~/GitHub/PathwayMining/data/mutans_model/mutans_falcon_g1_matrix.RData')
 
 mutans_falcon_g1_sets <- list(get_list_of_sets(return_couples(mutans_falcon_g1_matrix)))
 mutans_g1_matrix <- isolate_gene_matrix(mutans_falcon_g1_matrix)

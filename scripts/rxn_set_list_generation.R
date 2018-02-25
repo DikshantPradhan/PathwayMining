@@ -66,6 +66,14 @@ mutans_r0_set_list <- GRB_generate_set_list(mutans)
 #proc.time() - ptm # timing end
 
 mutans <- GRB_mutans_model()
+ptm <- proc.time() # timing start
+mutans_coupling_array <- GRB_generate_set_lists_array(mutans, compare_known_r0_sets = TRUE, optimize_suppr = TRUE)
+mutans_r1_matrix <- coupling_matrix_from_array(mutans_coupling_array)
+mutans_r1_matrix <- (mutans_r1_matrix > 0)
+mutans_r1_sets <- list(get_list_of_sets(return_couples(mutans_r1_matrix)))
+proc.time() - ptm
+save(mutans_r1_matrix, file = 'data/mutans_model/mutans_g1_matrix.RData')
+
 mutans_set_lists <- GRB_generate_set_lists(mutans, mutans_r0_set_list, 1:n)
 
 mutans_composition_set_full <- return_composition_sets(mutans_r0_set_list, mutans_set_lists, mutans)
