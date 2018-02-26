@@ -320,7 +320,8 @@ coupling_matrix_from_array <- function(coupling_array){
       #print(length(which(coupling_array[i,j,])))
     }
   }
-
+  
+  # coupling_matrix <- apply(coupling_array, 3, sum)
   return(coupling_matrix)
 }
 
