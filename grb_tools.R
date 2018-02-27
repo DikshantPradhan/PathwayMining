@@ -294,8 +294,7 @@ GRB_generate_set_lists_array <- function(model_og, suppression_idxs = -1, reacti
     model$setattr("UB", setNames(0, vars[i]))
     model$setattr("LB", setNames(0, vars[i]))
 
-    coupling_array[,,i] <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes,
-      compare_mtx = compare_known_r0_sets, known_set_mtx = r0_coupling_mtx)$coupled
+    coupling_array[,,i] <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes, compare_mtx = compare_known_r0_sets, known_set_mtx = r0_coupling_mtx)$coupled
 
     # unfix i
     #model$setattr("UB", prev_ub)
@@ -320,8 +319,8 @@ coupling_matrix_from_array <- function(coupling_array){
       #print(length(which(coupling_array[i,j,])))
     }
   }
-  
-  # coupling_matrix <- apply(coupling_array, 3, sum)
+
+  #coupling_matrix <- apply(coupling_array, 3, sum)
   return(coupling_matrix)
 }
 

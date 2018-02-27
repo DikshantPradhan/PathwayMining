@@ -135,6 +135,7 @@ mutans_falcon_coupling_array <- GRB_generate_set_lists_array(mutans_falcon, reac
 mutans_falcon_g1_matrix <- coupling_matrix_from_array(mutans_falcon_coupling_array)
 mutans_falcon_g1_matrix <- (mutans_falcon_g1_matrix > 0)
 proc.time() - ptm
+save(mutans_falcon_coupling_array, file = '~/GitHub/PathwayMining/data/mutans_model/mutans_falcon_coupling_array.RData')
 save(mutans_falcon_g1_matrix, file = '~/GitHub/PathwayMining/data/mutans_model/mutans_falcon_g1_matrix.RData')
 
 mutans_falcon_g1_sets <- list(get_list_of_sets(return_couples(mutans_falcon_g1_matrix)))

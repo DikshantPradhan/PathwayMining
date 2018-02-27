@@ -1,99 +1,12 @@
-# source('~/GitHub/PathwayMining/network_tools.R')
-library('raptor')
-source('~/GitHub/PathwayMining/sampling_tools.R')
-source('~/GitHub/PathwayMining/fit_comparison_run.R')
-source('~/GitHub/PathwayMining/model_tools.R')
-source('~/GitHub/PathwayMining/set_tools.R')
-source('~/GitHub/PathwayMining/falcon_tools.R')
-source('~/GitHub/PathwayMining/load_mod.R')
-source('~/GitHub/PathwayMining/grb_tools.R')
-source('~/GitHub/PathwayMining/raptor_coupling.R')
+source('grb_tools.R')
 
-yeast_model <- GRB_yeast_model()
-yeast_falcon_model <- GRB_yeast_falcon_model()
+test <- coupling_matrix_from_array(mutans_falcon_coupling_array)
+test <- (test > 0)
 
-yeast_set_list <- GRB_generate_set_list(yeast_model)
-# yeast_falcon_set_list <- GRB_generate_set_list(yeast_falcon_model)
+#mutans_falcon_g1_sets <- list(get_list_of_sets(return_couples(mutans_falcon_g1_matrix)))
+mutans_g1_matrix <- isolate_gene_matrix(test)
+clean_mutans_g1_set <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(mutans_g1_matrix)))[[1]])
 
-# Start the clock!
-ptm <- proc.time()
 
-#yeast_falcon_set_list <- get_list_of_sets(return_couples(flux_coupling_raptor(yeast_falcon_model, cor_check = FALSE)$coupled))
-yeast_falcon_set_list <- get_list_of_sets(return_couples(flux_coupling_raptor(yeast_falcon)$coupled))
-
-print('Checking Sets')
-check_all_sets_for_containing(yeast_set_list, yeast_falcon_set_list)
-sink(file = 'output2.txt')
-print(yeast_falcon_set_list)
-sink()
-
-# Stop the clock
-proc.time() - ptm
-
-print('FIN')
-
-# for (rxn_idx in 1:length(yeast_open_mod@react_id)){
-#   if (!(yeast_open_mod@react_id[rxn_idx] %in% unlist(yeast_falcon_test))){next}
-#   for (gene in yeast_open_mod@genes[[rxn_idx]]){
-#     if (gene == ''){next}
-#     if (!(gene %in% unlist(yeast_falcon_test))){
-#       print(paste('error', rxn_idx, gene))
-#     }
-#   }
-# }
-#
-# for (rxn_idx in 1:length(mutans@react_id)){
-#   if (!(mutans@react_id[rxn_idx] %in% unlist(mutans_falcon_test))){next}
-#   for (gene in mutans@genes[[rxn_idx]]){
-#     if (gene == ''){next}
-#     if (!(gene %in% unlist(mutans_falcon_test))){
-#       print(paste('error', rxn_idx, mutans@react_id[rxn_idx], gene))
-#     }
-#   }
-# }
-
-# > mutans_og_set_list <- GRB_generate_set_list(GRB_mutans_model())
-# Academic license - for non-commercial use only
-# Academic license - for non-commercial use only
-# [1] "new rxn list"
-# [1] "blocked: 22"
-# [1] "blocked: 396"
-# [1] "blocked: 489"
-# [1] "blocked: 490"
-# [1] "blocked: 493"
-# [1] "blocked: 499"
-# [1] "blocked: 529"
-# [1] "blocked: 554"
-# [1] "blocked: 555"
-# [1] "blocked: 558"
-# [1] "blocked: 563"
-# [1] "blocked: 607"
-# [1] "blocked: 651"
-# [1] 1110
-# There were 50 or more warnings (use warnings() to see the first 50)
-# > mutans_falcon_og_set_list <- GRB_generate_set_list(GRB_mutans_falcon_model())
-# Academic license - for non-commercial use only
-# Academic license - for non-commercial use only
-# [1] "new rxn list"
-# [1] "blocked: 22"
-# [1] "blocked: 396"
-# [1] "blocked: 489"
-# [1] "blocked: 490"
-# [1] "blocked: 493"
-# [1] "blocked: 499"
-# [1] "blocked: 529"
-# [1] "blocked: 554"
-# [1] "blocked: 555"
-# [1] "blocked: 558"
-# [1] "blocked: 563"
-# [1] "blocked: 607"
-# [1] "blocked: 651"
-# [1] "blocked: 726"
-# [1] "blocked: 1001"
-# [1] "blocked: 1079"
-# [1] "blocked: 1080"
-# [1] "blocked: 1081"
-# [1] "blocked: 1088"
-# [1] "blocked: 1089"
-# [1] "blocked: 1090"
-# [1] 5394
+#mutans_test_g1_matrix <- isolate_gene_matrix(mutans_falcon_coupling_array[,,100])
+#clean_mutans_g1_set_test <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(mutans_test_g1_matrix)))[[1]])
