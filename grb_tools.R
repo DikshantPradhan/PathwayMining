@@ -258,7 +258,12 @@ GRB_generate_set_lists_array <- function(model_og, suppression_idxs = -1, reacti
 
   # dim: rxns_row, rxns_col, deletions
   model <- model_og$copy()
-  r0_coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
+
+  r0_coupling_mtx <- c()
+  if (compare_known_r0_sets){
+    r0_coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
+    r0_coupling_mtx <- fill_coupling_matrix(r0_coupling_mtx)
+  }
 
   suppr_vector <- matrix(data = FALSE, nrow = 1, ncol = n)
   suppr_vector[suppression_idxs] <- TRUE
@@ -279,7 +284,7 @@ GRB_generate_set_lists_array <- function(model_og, suppression_idxs = -1, reacti
   coupling_array <- array(data = FALSE, dim = c(n,n,n), dimnames = list(vars, vars, paste('del', vars, sep = "_")))
   print(paste("# of suppressions:", length(which(suppr_vector)), sep = " "))
   for (i in which(suppr_vector)){
-    print(paste('suppression index: ', i))
+    print(paste('suppression index:', i))
     if (!(r0_coupling_mtx[i,i])){
       print(paste(vars[i], ' blocked'))
       next

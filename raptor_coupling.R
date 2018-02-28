@@ -109,13 +109,23 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
 
   # if j is coupled to i, couple the rxns known to be coupled to j to i as well
   known_set_coupling <- function(i, j, coupled, active){
-    sets <- which(known_set_mtx[,j])
-    for (set in sets){
-      known_coupled_rxns <- which(known_set_mtx[set,])
+    #sets <- which(known_set_mtx[,j])
+    set <- which(known_set_mtx[j,])
 
-      coupled[i, known_coupled_rxns] <- TRUE
-      active[known_coupled_rxns] <- FALSE
-    }
+    #for (k in set){
+    #  coupled[i, k] <- TRUE
+    #  coupled[k, k] <- TRUE
+    #}
+
+    coupled[i, set] <- TRUE
+    coupled[set, set] <- TRUE
+    active[set] <- FALSE
+    #for (set in sets){
+      #known_coupled_rxns <- which(known_set_mtx[set,])
+
+      #coupled[i, known_coupled_rxns] <- TRUE
+      #active[known_coupled_rxns] <- FALSE
+    #}
 
     list(coupled = coupled, active = active)
   }
@@ -260,7 +270,6 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
           output <- known_set_coupling(i, j, coupled, active)
           coupled <- output$coupled
           active <- output$active
-
         }
       }
 
