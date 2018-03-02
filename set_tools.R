@@ -18,9 +18,9 @@ map_elements_to_set <- function(elem_list, set_list){
   
   for (i in 1:length(elem_list)){
     idx <- get_set_idx(elem_list[i], set_list)
-    print(elem_list[i])
-    print(any(grepl(elem_list[i], mutans@allGenes)))
-    print(idx)
+    # print(elem_list[i])
+    # print(any(grepl(elem_list[i], mutans@allGenes)))
+    # print(idx)
     if (length(idx) > 0){
       elem_map[i] <- idx
     }
