@@ -162,3 +162,7 @@ print('synth lethality:')
 print(length(which(captured_pairs)))
 print('out of')
 print(length(lethal_double_dels))
+
+# check overlap between model simulation and observed data
+potential_synth_lethals <- pairs[lethal_double_dels,]
+potential_synth_lethals <- unique(c(potential_synth_lethals[,1], potential_synth_lethals[,2]))
