@@ -363,23 +363,25 @@ GRB_get_blocked <- function(model){
 
 GRB_maximize <- function(model_og, obj, suppress = c()){ # suppress is characters
   model <- model_og$copy()
-  
+
+  n <- model$get_sizes()$NumVars
   vars <- model$get_names()$VarName
   # clear obj
-  model$setattr("Obj", setNames(0.0, vars))
-  
+  model$setattr("Obj", setNames(rep(0.0, times = n), vars))
+
   # set suppressions
   if (length(suppress) > 0){
+    #print(suppress)
     suppr_idxs <- which(vars %in% suppress)
-    model$setattr("UB", setNames(0.0, vars[i]))
-    model$setattr("LB", setNames(0.0, vars[i]))
+    model$setattr("UB", setNames(rep(0.0, times = length(suppr_idxs)), vars[suppr_idxs]))
+    model$setattr("LB", setNames(rep(0.0, times = length(suppr_idxs)), vars[suppr_idxs]))
   }
-  
+
   # set obj
   model$setattr("Obj", setNames(1.0, vars[obj]))
   model$set_model_sense(maximize=TRUE)
   model$optimize()
   sol <- model$get_solution()
-  obj_max <- sol$X[obj]
-  return(max)
+  obj_max <- sol$ObjVal
+  return(obj_max)
 }
