@@ -23,6 +23,7 @@ source('~/GitHub/PathwayMining/gene_tools.R')
 # length(unlist(clean_mutans_test_set))
 
 load('~/GitHub/PathwayMining/data/mutans_model/mutans_model_w_obj.RData')
+load('~/GitHub/PathwayMining/data/mutans_model/mutans_gene_dels.RData')
 # model name: 'mutans_obj'
 sybil_mutans_obj <- mutans_obj
 mutans_obj <- as_GRBmodel(mutans_obj)
