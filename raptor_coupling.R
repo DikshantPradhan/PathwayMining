@@ -44,8 +44,12 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
 
   n <- model$get_sizes()$NumVars
 
-  if (nrow(known_set_mtx) < n){compare_mtx <- FALSE}
-  if (ncol(known_set_mtx) < n){compare_mtx <- FALSE}
+  if (is.null(known_set_mtx)){
+    compare_mtx <- FALSE
+  }
+  else {
+    if ((nrow(known_set_mtx) < n) | (ncol(known_set_mtx) < n)){compare_mtx <- FALSE}
+  }
 
   # if empty set, then assume all reactions are to be inspected
   if (length(reaction_indexes) == 0){

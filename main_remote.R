@@ -48,3 +48,5 @@ print(lethal_single_dels)
 print('lethal double dels:')
 lethal_double_dels <- which(near(0, double_gene_ko_max_flux))
 print(lethal_double_dels)
+
+#save(double_gene_ko_max_flux, single_gene_ko_max_flux, file = '~/GitHub/PathwayMining/data/mutans_model/deletion/mutans_gene_del_flux.RData')
