@@ -135,3 +135,23 @@ gene_idxs_of_special_interest <- which(gene_map %in% sets_of_interest)
 
 ## FIND SYNTHETIC LETHAL PAIRS
 
+mutans_obj <- get_mutans_model_w_obj()
+
+singleGeneDels <- oneGeneDel(mutans_obj, geneList = mutans_obj@allGenes)
+doubleGeneDels <- doubleGeneDel(mutans_obj, allComb = TRUE)
+
+effect <- which(dblGeneDels@hasEffect)
+synth_lethal_pairs <- dblGeneDels@dels[effect,]
+
+captured_pairs <- matrix(data = FALSE, nrow = nrow(synth_lethal_pairs), ncol = 1)
+for (i in 1:nrow(synth_lethal_pairs)){
+  set1 <- get_set_idx(synth_lethal_pairs[i, 1], clean_mutans_g1_set)
+  set2 <- get_set_idx(synth_lethal_pairs[i, 2], clean_mutans_g1_set)
+  if (length(set1) > 0 & length(set2) > 0){
+  if (set1 == set2){captured_pairs[i] <- TRUE}
+  }
+}
+
+print('synth lethality:')
+print(length(which(captured_pairs)))
+print(nrow(synth_lethal_pairs))

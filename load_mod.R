@@ -233,6 +233,20 @@ get_mutans_model <- function(){
   return(mutans_model)
 }
 
+get_mutans_model_w_obj <- function(){
+  mutans_model <- readTSVmod(reactList = "mutans_model_test.csv", metList = "mutans_model_met.csv")
+  
+  # print('biomass')
+  # print(mutans_model@S[which(mutans_model@S[,477] != 0), 477])
+  
+  mutans_model@met_name[401] <- "DAP-type peptidoglycan"
+  mutans_model@met_name[422] <- "Lys-type peptidoglycan"
+  
+  mutans_model@obj_coef[477] <- 1
+  
+  return(mutans_model)
+}
+
 get_blocked <- function(model){
   lb <- which(model@lowbnd > -1000)
   ub <- which(model@uppbnd < 1000)

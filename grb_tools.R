@@ -360,3 +360,26 @@ GRB_get_blocked <- function(model){
 
   return(model$get_names()$VarName[blocked])
 }
+
+GRB_maximize <- function(model_og, obj, suppress = c()){ # suppress is characters
+  model <- model_og$copy()
+  
+  vars <- model$get_names()$VarName
+  # clear obj
+  model$setattr("Obj", setNames(0.0, vars))
+  
+  # set suppressions
+  if (length(suppress) > 0){
+    suppr_idxs <- which(vars %in% suppress)
+    model$setattr("UB", setNames(0.0, vars[i]))
+    model$setattr("LB", setNames(0.0, vars[i]))
+  }
+  
+  # set obj
+  model$setattr("Obj", setNames(1.0, vars[obj]))
+  model$set_model_sense(maximize=TRUE)
+  model$optimize()
+  sol <- model$get_solution()
+  obj_max <- sol$X[obj]
+  return(max)
+}
