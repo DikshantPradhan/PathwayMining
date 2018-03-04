@@ -1,3 +1,14 @@
+source('~/GitHub/PathwayMining/raptor_coupling.R')
+source('~/GitHub/PathwayMining/grb_tools.R')
+source('~/GitHub/PathwayMining/model_tools.R')
+source('~/GitHub/PathwayMining/set_tools.R')
+source('~/GitHub/PathwayMining/falcon_tools.R')
+source('~/GitHub/PathwayMining/load_mod.R')
+source('~/GitHub/PathwayMining/data_tools.R')
+source('~/GitHub/PathwayMining/gene_tools.R')
+
+
+
 # test_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
 # 
 # save(test_mtx, file = 'test_mtx.RData')
