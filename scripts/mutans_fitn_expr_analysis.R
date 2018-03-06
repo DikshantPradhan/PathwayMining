@@ -87,8 +87,8 @@ length(which(available_genes3))
 # load g0 mtx
 load("~/GitHub/PathwayMining/data/mutans_model/mutans_r0_coupling_mtx.RData")
 
-mutans_g0_matrix <- isolate_gene_matrix(mutans_r0_coupling_mtx)
-clean_mutans_g0_set <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(mutans_g0_matrix)))[[1]])
+#mutans_g0_matrix <- isolate_gene_matrix(mutans_r0_coupling_mtx)
+#clean_mutans_g0_set <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(mutans_g0_matrix)))[[1]])
 
 g0_gene_map <- map_elements_to_set(genes_of_interest, clean_mutans_g0_set)
 
@@ -101,8 +101,8 @@ print('sets containing multiple genes of interest')
 print(genes[g0_dupl])
 
 # g1
-mutans_g1_matrix <- isolate_gene_matrix(mutans_falcon_g1_matrix)
-clean_mutans_g1_set <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(mutans_g1_matrix)))[[1]])
+#mutans_g1_matrix <- isolate_gene_matrix(mutans_falcon_g1_matrix)
+#clean_mutans_g1_set <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(mutans_g1_matrix)))[[1]])
 
 gene_map <- map_elements_to_set(genes_of_interest, clean_mutans_g1_set)
 
