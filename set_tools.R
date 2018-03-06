@@ -15,7 +15,7 @@ get_set_idx <- function(rxn, rxns_list){
 
 map_elements_to_set <- function(elem_list, set_list){
   elem_map <- matrix(data = NA, nrow = 1, ncol = length(elem_list))
-  
+
   for (i in 1:length(elem_list)){
     idx <- get_set_idx(elem_list[i], set_list)
     # print(elem_list[i])
@@ -25,7 +25,7 @@ map_elements_to_set <- function(elem_list, set_list){
       elem_map[i] <- idx
     }
   }
-  
+
   return(elem_map)
 }
 
@@ -192,7 +192,7 @@ compare_r1_sets <- function(og_set_list, set_lists){ # see which og_sets don't a
 return_composition_sets <- function(og_set_list, set_lists, model){
   composition <- c()
 
-  error <- c() # 94 is not a set number
+  error <- c()
 
   for (i in 1:length(model$get_names()$VarName)){
     error[i] <- paste(model$get_names()$VarName[i], ":", sep = "")

@@ -166,3 +166,77 @@ print(length(lethal_double_dels))
 # check overlap between model simulation and observed data
 potential_synth_lethals <- pairs[lethal_double_dels,]
 potential_synth_lethals <- unique(c(potential_synth_lethals[,1], potential_synth_lethals[,2]))
+
+## test lethality in falcon model
+
+pairs <- doubleGeneDels@dels
+new_pairs <- matrix(nrow = nrow(pairs), ncol = ncol(pairs))
+for (i in 1:nrow(pairs)){
+  for (j in 1:ncol(pairs)){
+    new_pairs[i,j] <- paste('Ex_a_', pairs[i,j], sep = '')
+  }
+}
+
+print('lethal single dels:')
+lethal_single_dels <- which(near(0, single_gene_ko_max_flux))
+print(lethal_single_dels)
+print('lethal double dels:')
+lethal_double_dels <- which(near(0, double_gene_ko_max_flux))
+print(lethal_double_dels)
+
+lethality <- matrix(data = FALSE, nrow = length(lethal_double_dels), ncol = 1)
+for (i in 1:length(lethal_double_dels)){
+  lethality[i] <- GRB_maximize(mutans_obj_falcon_model, 477, new_pairs[lethal_double_dels[i],])
+}
+
+print('synth lethality:')
+print(length(which(captured_pairs)))
+print('out of')
+print(length(lethal_double_dels))
+
+## look for synth lethals in g0 sets
+
+g0_gene_set_location <- matrix(data = FALSE, nrow = length(lethal_double_dels), ncol = 1)
+for (i in 1:length(lethal_double_dels)){
+  location1 <- get_set_idx(new_pairs[lethal_double_dels[i],1], mutans_falcon_g0_sets)
+  location2 <- get_set_idx(new_pairs[lethal_double_dels[i],2], mutans_falcon_g0_sets)
+  if (is.null(location1) | is.null(location2)){next}
+  g0_gene_set_location[i] <- (location1 == location2)
+}
+
+print(which(g0_gene_set_location))
+
+## repeat
+g0_gene_set_location <- matrix(data = FALSE, nrow = length(lethal_double_dels), ncol = 1)
+for (i in 1:length(lethal_double_dels)){
+  location1 <- get_set_idx(pairs[lethal_double_dels[i],1], clean_mutans_g0_sets)
+  location2 <- get_set_idx(pairs[lethal_double_dels[i],2], clean_mutans_g0_sets)
+  if (is.null(location1) | is.null(location2)){next}
+  g0_gene_set_location[i] <- (location1 == location2)
+}
+
+print(which(g0_gene_set_location))
+
+
+## look for synth lethals in g1 sets
+
+g1_gene_set_location <- matrix(data = FALSE, nrow = length(lethal_double_dels), ncol = 1)
+for (i in 1:length(lethal_double_dels)){
+  location1 <- get_set_idx(new_pairs[lethal_double_dels[i],1], mutans_falcon_g1_sets)
+  location2 <- get_set_idx(new_pairs[lethal_double_dels[i],2], mutans_falcon_g1_sets)
+  #if (is.null(location1) | is.null(location2)){next}
+  g1_gene_set_location[i] <- (location1 == location2)
+}
+
+print(which(g1_gene_set_location))
+
+## repeat
+g1_gene_set_location <- matrix(data = FALSE, nrow = length(lethal_double_dels), ncol = 1)
+for (i in 1:length(lethal_double_dels)){
+  location1 <- get_set_idx(pairs[lethal_double_dels[i],1], clean_mutans_g1_set)
+  location2 <- get_set_idx(pairs[lethal_double_dels[i],2], clean_mutans_g1_set)
+  #if (is.null(location1) | is.null(location2)){next}
+  g1_gene_set_location[i] <- (location1 == location2)
+}
+
+print(which(g1_gene_set_location))

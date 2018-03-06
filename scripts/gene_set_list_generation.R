@@ -126,7 +126,7 @@ reaction_indexes <- 1:1115
 
 mutans_g0_coupling_mtx <- flux_coupling_raptor(mutans_falcon, reaction_indexes = reaction_indexes)$coupled
 mutans_falcon_g0_sets <- get_list_of_sets(return_couples(mutans_g0_coupling_mtx))
-mutans_g0_matrix <- isolate_gene_matrix(mutans_g0_coupling_mtx)
+mutans_g0_matrix <- isolate_gene_matrix(fill_coupling_matrix(mutans_g0_coupling_mtx))
 clean_mutans_g0_sets <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(mutans_g0_matrix)))[[1]])
 save(mutans_g0_coupling_mtx, file = 'data/mutans_model/mutans_g0_coupling_mtx.RData')
 
@@ -144,8 +144,8 @@ proc.time() - ptm
 save(mutans_falcon_coupling_array, file = '~/GitHub/PathwayMining/data/mutans_model/mutans_falcon_coupling_array.RData')
 save(mutans_falcon_g1_matrix, file = '~/GitHub/PathwayMining/data/mutans_model/mutans_falcon_g1_matrix.RData')
 
-mutans_falcon_g1_sets <- list(get_list_of_sets(return_couples(mutans_falcon_g1_matrix)))
-mutans_g1_matrix <- isolate_gene_matrix(mutans_falcon_g1_matrix)
+mutans_falcon_g1_sets <- get_list_of_sets(return_couples(mutans_falcon_g1_matrix))
+mutans_g1_matrix <- isolate_gene_matrix(fill_coupling_matrix(mutans_falcon_g1_matrix))
 clean_mutans_g1_set <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(mutans_g1_matrix)))[[1]])
 
 mutans_falcon_set_lists <- GRB_generate_set_lists(mutans_falcon, mutans_falcon_og_set_list, suppr_indexes, reaction_indexes)
@@ -229,6 +229,22 @@ mutans_falcon_g0_set_list <- mutans_falcon_og_set_list
 mutans_falcon_g1_set_list <- get_list_of_sets(mutans_falcon_g1_pairs)
 
 save(mutans_falcon_g0_pairs, mutans_falcon_new_g1_pairs, mutans_falcon_g1_pairs, mutans_falcon_g0_set_list, mutans_falcon_g1_set_list, file = 'mutans_falcon_pairs_sets.RData')
+
+# id g1 set compositions
+
+g0_sets <- clean_mutans_g0_sets
+g1_sets <- clean_mutans_g1_set
+
+g1_compositions <- matrix(data = 0, nrow = length(g1_sets), ncol = length(g0_sets))
+for (i in 1:length(g1_sets)){
+  composition <- find_composing_sets(g1_sets[[i]], g0_sets)
+  for (j in composition){
+    g1_compositions[i, j] <- 1
+  }
+}
+
+g1_comp_num <- rowSums(g1_compositions)
+print(which(g1_comp_num > 1))
 
 ## YEAST MODEL ~ 5 DAYS
 
