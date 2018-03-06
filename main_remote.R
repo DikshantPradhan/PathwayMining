@@ -50,3 +50,14 @@ lethal_double_dels <- which(near(0, double_gene_ko_max_flux))
 print(lethal_double_dels)
 
 #save(double_gene_ko_max_flux, single_gene_ko_max_flux, file = '~/GitHub/PathwayMining/data/mutans_model/deletion/mutans_gene_del_flux.RData')
+
+r1_set_containment <- matrix(FALSE, nrow = length(double_gene_ko_flux_dels), ncol = 1)
+for (i in 1:length(double_gene_ko_flux_dels)){
+  r1_set_containment[i] <- check_sets_for_containing(double_gene_ko_flux_dels[[i]], mutans_r1_sets)
+}
+
+lethal_flux_dels <- double_gene_ko_flux_dels[lethal_double_dels]
+r1_lethal_set_containment <- matrix(FALSE, nrow = length(lethal_flux_dels), ncol = 1)
+for (i in 1:length(lethal_flux_dels)){
+  r1_set_containment[i] <- check_sets_for_containing(lethal_flux_dels[[i]], mutans_r1_sets)
+}

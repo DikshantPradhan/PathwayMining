@@ -431,7 +431,7 @@ get_list_of_sets <- function(pairs, rxns_list = c()){ #2d columns
   for (i in 1:nrow(pairs)){
     idx1 <- get_set_idx(pairs[i,1], rxns_list) #grep(core_rxn_id(pairs[i,1]), rxns_list)
     idx2 <- get_set_idx(pairs[i,2], rxns_list) #grep(core_rxn_id(pairs[i,2]), rxns_list)
-
+    if (length(idx1) < 1 | length(idx2) < 1){next}
     #print(idx1)
     #print(idx2)
 

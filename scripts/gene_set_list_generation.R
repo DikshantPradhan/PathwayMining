@@ -124,6 +124,12 @@ gene_indexes <- grep('Ex_a', vars)
 suppr_indexes <- c(gene_indexes, non_gene_assc_rxns)
 reaction_indexes <- 1:1115
 
+mutans_g0_coupling_mtx <- flux_coupling_raptor(mutans_falcon, reaction_indexes = reaction_indexes)$coupled
+mutans_falcon_g0_sets <- get_list_of_sets(return_couples(mutans_g0_coupling_mtx))
+mutans_g0_matrix <- isolate_gene_matrix(mutans_g0_coupling_mtx)
+clean_mutans_g0_sets <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(mutans_g0_matrix)))[[1]])
+save(mutans_g0_coupling_mtx, file = 'data/mutans_model/mutans_g0_coupling_mtx.RData')
+
 print(paste('num genes:', length(reaction_indexes)))
 #ptm <- proc.time() # timing start
 #mutans_falcon_og_set_list <- GRB_generate_set_list(mutans_falcon, reaction_indexes = reaction_indexes)
@@ -234,6 +240,31 @@ reaction_indexes <- c()
 reaction_indexes <- grep('Ex_a', vars)
 
 print(paste('num genes:', length(reaction_indexes)))
+
+yeast_g0_coupling_mtx <- flux_coupling_raptor(yeast_falcon, reaction_indexes = reaction_indexes)$coupled
+yeast_falcon_g0_sets <- get_list_of_sets(return_couples(yeast_g0_coupling_mtx))
+yeast_g0_matrix <- isolate_gene_matrix(yeast_g0_coupling_mtx)
+clean_yeast_g0_sets <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(yeast_g0_matrix)))[[1]])
+save(yeast_g0_coupling_mtx, file = 'data/yeast_model/yeast_g0_coupling_mtx.RData')
+
+print(paste('num genes:', length(reaction_indexes)))
+#ptm <- proc.time() # timing start
+#yeast_falcon_og_set_list <- GRB_generate_set_list(yeast_falcon, reaction_indexes = reaction_indexes)
+
+#proc.time() - ptm # timing end
+ptm <- proc.time() # timing start
+yeast_falcon <- GRB_yeast_falcon_model()
+yeast_falcon_coupling_array <- GRB_generate_set_lists_array(yeast_falcon, reaction_indexes = reaction_indexes, compare_known_r0_sets = TRUE, optimize_suppr = TRUE)
+yeast_falcon_g1_matrix <- coupling_matrix_from_array(yeast_falcon_coupling_array)
+yeast_falcon_g1_matrix <- (yeast_falcon_g1_matrix > 0)
+proc.time() - ptm
+save(yeast_falcon_coupling_array, file = '~/GitHub/PathwayMining/data/yeast_model/yeast_falcon_coupling_array.RData')
+save(yeast_falcon_g1_matrix, file = '~/GitHub/PathwayMining/data/yeast_model/yeast_falcon_g1_matrix.RData')
+
+yeast_falcon_g1_sets <- list(get_list_of_sets(return_couples(yeast_falcon_g1_matrix)))
+yeast_g1_matrix <- isolate_gene_matrix(yeast_falcon_g1_matrix)
+clean_yeast_g1_set <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(yeast_g1_matrix)))[[1]])
+
 
 yeast_falcon_og_set_list <- GRB_generate_set_list(yeast_falcon, reaction_indexes = reaction_indexes)
 #yeast_falcon_test_set_list <- get_list_of_sets(return_couples(flux_coupling_raptor(yeast_falcon)$coupled))

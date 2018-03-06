@@ -40,16 +40,18 @@ GRB_yeast_model <- function(){
 
 GRB_yeast_falcon_model <- function(){
   # setwd("~/GitHub/PathwayMining/data/yeast_model")
-  load('~/GitHub/PathwayMining/data/yeast_model/yeast_open_mod.RData')
-  for (i in findExchReact(yeast_open_mod)@react_pos){
-    yeast_open_mod <- changeBounds(yeast_open_mod, i, lb = -1000, ub = 1000)
-  }
+  #load('~/GitHub/PathwayMining/data/yeast_model/Price Models/yeast_open_mod.RData')
+  load('~/GitHub/PathwayMining/data/yeast_model/Maranas_model/maranas_model_lipid_exch.RData')
+  #for (i in findExchReact(yeast_open_mod)@react_pos){
+  #  yeast_open_mod <- changeBounds(yeast_open_mod, i, lb = -1000, ub = 1000)
+  #}
   # for (i in 1:length(yeast_open_mod@react_id)){
   #   yeast_open_mod@lowbnd[i] <- -1000
   #   yeast_open_mod@uppbnd[i] <- 1000
   # }
   # setwd("~/GitHub/PathwayMining/")
-  sybil_yeast <- yeast_open_mod
+  #sybil_yeast <- yeast_open_mod
+  sybil_yeast <- yeast_model
   yeast_falcon_model <- GRB_generate_falcon_model(sybil_yeast)
   return(yeast_falcon_model)
 }
@@ -65,10 +67,10 @@ GRB_mutans_model <- function(){
   # for (i in findExchReact(mutans)@react_pos){
   #   mutans <- changeBounds(mutans, i, lb = -1000, ub = 1000)
   # }
-  for (i in 1:length(mutans@react_id)){
-    mutans@lowbnd[i] <- -1000
-    mutans@uppbnd[i] <- 1000
-  }
+  #for (i in 1:length(mutans@react_id)){
+  #  mutans@lowbnd[i] <- -1000
+  #  mutans@uppbnd[i] <- 1000
+  #}
 
   # setwd("~/GitHub/PathwayMining/")
 

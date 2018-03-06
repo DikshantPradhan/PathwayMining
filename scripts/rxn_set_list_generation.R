@@ -65,14 +65,18 @@ mutans_r0_set_list <- GRB_generate_set_list(mutans)
 
 #proc.time() - ptm # timing end
 
+mutans_r0_coupling_mtx <- flux_coupling_raptor(mutans)$coupled
+mutans_r0_sets <- list(get_list_of_sets(return_couples(mutans_r0_coupling_mtx)))
+
+
 mutans <- GRB_mutans_model()
 ptm <- proc.time() # timing start
 mutans_coupling_array <- GRB_generate_set_lists_array(mutans, compare_known_r0_sets = TRUE, optimize_suppr = TRUE)
 mutans_r1_matrix <- coupling_matrix_from_array(mutans_coupling_array)
 mutans_r1_matrix <- (mutans_r1_matrix > 0)
-mutans_r1_sets <- list(get_list_of_sets(return_couples(mutans_r1_matrix)))
+mutans_r1_sets <- get_list_of_sets(return_couples(mutans_r1_matrix))
 proc.time() - ptm
-save(mutans_r1_matrix, file = 'data/mutans_model/mutans_g1_matrix.RData')
+save(mutans_r1_matrix, file = 'data/mutans_model/mutans_r1_matrix.RData')
 
 mutans_set_lists <- GRB_generate_set_lists(mutans, mutans_r0_set_list, 1:n)
 
@@ -112,6 +116,21 @@ vars <- yeast$get_names()$VarName
 yeast_r0_set_list <- GRB_generate_set_list(yeast)
 
 proc.time() - ptm # timing end
+
+
+yeast_r0_coupling_mtx <- flux_coupling_raptor(yeast)$coupled
+yeast_r0_sets <- list(get_list_of_sets(return_couples(yeast_r0_coupling_mtx)))
+
+
+yeast <- GRB_yeast_model()
+ptm <- proc.time() # timing start
+yeast_coupling_array <- GRB_generate_set_lists_array(yeast, compare_known_r0_sets = TRUE, optimize_suppr = TRUE)
+yeast_r1_matrix <- coupling_matrix_from_array(yeast_coupling_array)
+yeast_r1_matrix <- (yeast_r1_matrix > 0)
+yeast_r1_sets <- list(get_list_of_sets(return_couples(yeast_r1_matrix)))
+proc.time() - ptm
+save(yeast_r1_matrix, file = 'data/yeast_model/yeast_r1_matrix.RData')
+
 
 yeast <- GRB_yeast_model()
 yeast_set_lists <- GRB_generate_set_lists(yeast, yeast_r0_set_list, 1:n)
