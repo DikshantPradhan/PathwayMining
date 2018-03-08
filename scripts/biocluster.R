@@ -9,6 +9,9 @@ source('~/GitHub/PathwayMining/gene_tools.R')
 
 ## script for biocluster
 
+load('scripts/ecoli_falcon_grb_model.RData') # model name is ecoli_falcon
+load('scripts/mutans_falcon_grb_model.RData') # model name is mutans_falcon
+
 GRB_flux_coupling_raptor_wrapper <- function(i, vars, model_og, reaction_indexes = 1:length(vars), compare_mtx = FALSE, r0_coupling_mtx = c()){
   print(paste('suppression index:', i))
 
@@ -96,20 +99,20 @@ convert_coupling_list_to_array <- function(coupling_list){
 #  return(coupling_mtx)
 #}
 
-model <- GRB_ecoli_model()
-ecoli_coupling_list <- GRB_generate_set_lists_cluster(model, suppression_idxs = c(1,5,9), compare_known_r0_sets = TRUE, optimize_suppr = TRUE)
-ecoli_coupling_array <- convert_coupling_list_to_array(ecoli_coupling_list)
+#model <- ecoli_falcon
+#ecoli_coupling_mtx_list <- GRB_generate_set_lists_cluster(model, suppression_idxs = c(1,5,9), compare_known_r0_sets = TRUE, optimize_suppr = TRUE)
+#ecoli_coupling_array <- convert_coupling_list_to_array(ecoli_coupling_mtx_list)
 
-ecoli_r1_matrix <- coupling_matrix_from_array(ecoli_coupling_array)
-ecoli_r1_matrix <- (ecoli_r1_matrix > 0)
-ecoli_r1_sets_cluster <- list(get_list_of_sets(return_couples(ecoli_r1_matrix)))
+#ecoli_r1_matrix <- coupling_matrix_from_array(ecoli_coupling_array)
+#ecoli_r1_matrix <- (ecoli_r1_matrix > 0)
+#ecoli_r1_sets_cluster <- list(get_list_of_sets(return_couples(ecoli_r1_matrix)))
 
-ecoli <- GRB_ecoli_model()
-n <- ecoli$get_sizes()$NumVars
-vars <- ecoli$get_names()$VarName
-ecoli_coupling_array <- GRB_generate_set_lists_array(ecoli, suppression_idxs = c(1,5,9), compare_known_r0_sets = TRUE, optimize_suppr=TRUE)
-ecoli_r1_matrix <- coupling_matrix_from_array(ecoli_coupling_array)
-ecoli_r1_matrix <- (ecoli_r1_matrix > 0)
-ecoli_r1_sets <- list(get_list_of_sets(return_couples(ecoli_r1_matrix)))
+model <- mutans_falcon #GRB_mutans_model()
+n <- model$get_sizes()$NumVars
+vars <- model$get_names()$VarName
+coupling_array <- GRB_generate_set_lists_array(model, suppression_idxs = c(1,5,9), compare_known_r0_sets = TRUE, optimize_suppr=TRUE)
+r1_matrix <- coupling_matrix_from_array(coupling_array)
+r1_matrix <- (r1_matrix > 0)
+r1_sets <- get_list_of_sets(return_couples(r1_matrix))
 
-print(compare_sets(ecoli_r1_sets, ecoli_r1_sets_cluster))
+#print(compare_sets(ecoli_r1_sets, ecoli_r1_sets_cluster))
