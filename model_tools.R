@@ -1,6 +1,7 @@
 # functions related to model access and usage
 
 library(rstack)
+library(datastructures)
 
 # data(Ec_core);
 # model=Ec_core;
@@ -19,6 +20,21 @@ get_rxn_name_from_idx <- function(model, rxn_idx){
 
 get_rxn_id_from_idx <- function(vars, rxn_idx){
   return(vars[rxn_idx])
+}
+
+get_path_between_reactions <- function(S, start, end,
+    active_mets = matrix(data = TRUE, nrow = nrow(S), ncol = ncol(S)), q = queue()){ # start and end are rows (metabolites) of S
+  
+  linked_rxns <- which(S[start,] != 0)
+  linked_mets <- unique(unlist(lapply(linked_rxns, function(x) which(S[,x] != 0))))
+  new_linked_mets <- intersect(which(active_mets), linked_mets)
+  active_mets[new_linked_mets] <- FALSE
+  
+  for (met in active_mets){
+    q <- insert(q, met)
+  }
+  
+  return(q)
 }
 
 get_dwnst_rxns <- function(rxn_idx, model, sample = NULL){
