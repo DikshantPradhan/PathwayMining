@@ -11,7 +11,7 @@ load("~/Documents/jensn lab/mutans_data/Fitness & Expression/Tn_seq_Counts.RData
 load("~/Documents/jensn lab/mutans_data/Fitness & Expression/Baker_UA159ss_pH7_Glucose_Shock.RData")
 load("~/GitHub/PathwayMining/data/mutans_model/mutans_falcon_g1_matrix.RData")
 load("~/GitHub/PathwayMining/data/mutans_model/mutans_model.RData")
-
+mutans_falcon <- generate_falcon_model(mutans)
 ## IDENTIFY GENES OF INTEREST WITH HIGH EXPRESSION CHANGE AND LOW FITNESS CHANGE
 
 ## get fold change of fitness from Burne paper
@@ -123,10 +123,13 @@ plot(1:nrow(log2_fitn_expr_fold_change), log2_fitn_expr_fold_change[,3], main = 
 
 # non_zero <- which(fitn_expr_fold_change[,3] > 0)
 
-composition_size <- matrix(data = 0, nrow = length(composition), ncol = 1)
-for (i in 1:length(composition)){
-  composition_size[i] <- length(composition[[i]])
-}
+# composition_size <- matrix(data = 0, nrow = length(composition), ncol = 1)
+# for (i in 1:length(composition)){
+#   composition_size[i] <- length(composition[[i]])
+# }
+
+mutans_g1_set_composition <- find_set_list_composition(mutans_falcon_g1_sets, mutans_falcon_g0_sets)
+composition_size <- rowSums(mutans_g1_set_composition)
 composing_sets <- which(composition_size > 1)
 sets_of_interest <- intersect(composing_sets, gene_map)
 gene_idxs_of_special_interest <- which(gene_map %in% sets_of_interest)
@@ -230,6 +233,8 @@ for (i in 1:length(lethal_double_dels)){
 
 print(which(g1_gene_set_location))
 
+captured_pairs <- which(g1_gene_set_location)
+
 ## repeat
 g1_gene_set_location <- matrix(data = FALSE, nrow = length(lethal_double_dels), ncol = 1)
 for (i in 1:length(lethal_double_dels)){
@@ -240,3 +245,54 @@ for (i in 1:length(lethal_double_dels)){
 }
 
 print(which(g1_gene_set_location))
+
+
+# metabolite distances
+
+# get mets and set up active
+
+library(readr)
+mutans_model_met <- read_delim("~/GitHub/PathwayMining/data/mutans_model/mutans_model_met.csv", 
+                               "\t", escape_double = FALSE, trim_ws = TRUE)
+# View(mutans_model_met)
+
+inactive_mets <- c('H+','CTP','Adenine','BIOT','H2O','Acetyl-CoA','ocdca','Adenosine','ATP','UMP','H2O2','Mn2+','ADP','trdox','dADP','Ca2+','Phosphate','trdrd','dGDP','Cl-','PPi','O2','dTDP','Co2+','CO2','Isopentenyldiphosphate','dCTP','H2S','NADP','UDP-N-acetylglucosamine','dCDP','dTMP','NADPH','GTP','dUDP','Na+','CoA','S-Adenosyl-L-methionine','Heme','Cd2+','ACP','UTP','Malonyl-CoA','dCMP','NAD','GDP','Zn2+','H2S2O3','NADH','Niacin','Cu2+','Hg2+','CMP','dATP','H2CO3','Pb','Malonyl-acyl-carrierprotein-','GMP','Mg','Biomass','NH3','K+','dUMP','dGMP','AMP','dGTP','dUTP','O2-','UDP','Fe2+','fe3')
+inactive_met_idxs <- c()
+
+for (met in inactive_mets){
+  idx <- which(mutans_falcon@met_name == met)
+  if (length(idx) < 1){next}
+  inactive_met_idxs <- c(idx, inactive_met_idxs)
+}
+
+a_pairs <- matrix(nrow = nrow(pairs), ncol = ncol(pairs)) # lethal pairs represented by corresponding metabolites (a_SMU...)
+for (i in 1:nrow(pairs)){
+  for (j in 1:ncol(pairs)){
+    a_pairs[i,j] <- paste('a_', pairs[i,j], sep = '')
+  }
+}
+lethal_a_pairs <- a_pairs[lethal_double_dels,]
+
+active_mets <- matrix(data = TRUE, nrow = 1, ncol = length(mutans_falcon@met_id)) # need to substitute falcon model
+# colnames(active_mets) <- mutans_falcon@met_id
+active_mets[inactive_met_idxs] <- FALSE
+
+for (i in 1:nrow(lethal_a_pairs)){
+  if (i %in% captured_pairs){next}
+  gene_1 <- which(mutans_falcon@met_id == lethal_a_pairs[i,1])
+  gene_2 <- which(mutans_falcon@met_id == lethal_a_pairs[i,2])
+  
+  output <- get_path_mtx_between_reactions(mutans_falcon@S, gene_1, gene_2, active_mets = active_mets)
+  path <- trace_path_mtx_between_reactions(output, gene_2, gene_1)
+  print(length(path))
+}
+
+for (i in captured_pairs){
+  gene_1 <- which(mutans_falcon@met_id == lethal_a_pairs[i,1])
+  gene_2 <- which(mutans_falcon@met_id == lethal_a_pairs[i,2])
+  # print(gene_1)
+  # print(gene_2)
+  output <- get_path_mtx_between_reactions(mutans_falcon@S, gene_1, gene_2, active_mets = active_mets)
+  path <- trace_path_mtx_between_reactions(output, gene_2, gene_1)
+  print(length(path))
+}

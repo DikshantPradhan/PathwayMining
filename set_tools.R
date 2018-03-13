@@ -243,12 +243,12 @@ find_composing_sets <- function(rxns, sets){
 
 # find the r0 sets combined to form the r1 sets
 find_set_list_composition <- function(new_set_list, og_set_list){
-  composition <- c()
+  composition <- matrix(data = FALSE, nrow = length(new_set_list), ncol = length(og_set_list))
 
   for (i in 1:length(new_set_list)){
-    composing <- list(find_composing_sets(new_set_list[[i]], og_set_list))
-    #print(composing)
-    composition[i] <- composing
+    composing <- find_composing_sets(new_set_list[[i]], og_set_list)
+    # print(composing)
+    composition[i,composing] <- TRUE
   }
 
   return(composition)

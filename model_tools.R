@@ -22,19 +22,55 @@ get_rxn_id_from_idx <- function(vars, rxn_idx){
   return(vars[rxn_idx])
 }
 
-get_path_between_reactions <- function(S, start, end,
-    active_mets = matrix(data = TRUE, nrow = nrow(S), ncol = ncol(S)), q = queue()){ # start and end are rows (metabolites) of S
+get_path_mtx_between_reactions <- function(S, start, end,
+    active_mets = matrix(data = TRUE, nrow = nrow(S), ncol = 1)){ # start and end are rows (metabolites) of S
   
-  linked_rxns <- which(S[start,] != 0)
-  linked_mets <- unique(unlist(lapply(linked_rxns, function(x) which(S[,x] != 0))))
-  new_linked_mets <- intersect(which(active_mets), linked_mets)
-  active_mets[new_linked_mets] <- FALSE
+  q = queue()
+  q <- insert(q, as.character(start))
   
-  for (met in active_mets){
-    q <- insert(q, met)
+  tracing_mtx <- matrix(data = FALSE, nrow = nrow(S), ncol = nrow(S)) # rows are parents, columns are children
+  
+  traverse <- function(q, index, active_mets, tracing_mtx){
+    # print(index)
+    linked_rxns <- which(S[index,] != 0)
+    linked_mets <- unique(unlist(lapply(linked_rxns, function(x) which(S[,x] != 0))))
+    new_linked_mets <- intersect(which(active_mets), linked_mets)
+    active_mets[new_linked_mets] <- FALSE
+    tracing_mtx[index, new_linked_mets] <- TRUE
+    # print(which(active_mets))
+    for (met in new_linked_mets){
+      # print(met)
+      q <- insert(q, as.character(met))
+    }
+    
+    list(q = q, active_mets = active_mets, tracing_mtx = tracing_mtx)
   }
   
-  return(q)
+  while (size(q) > 0 & active_mets[end]){
+    next_met <- as.numeric(pop(q))
+    # if (next_met == end){break}
+    traverse_iter <- traverse(q, next_met, active_mets, tracing_mtx)
+    
+    q <- traverse_iter$q
+    active_mets <- traverse_iter$active_mets
+    tracing_mtx <- traverse_iter$tracing_mtx
+  }
+  
+  return(tracing_mtx) # path matrix; TRUE indicates that row idx is parent of col idx
+}
+
+trace_path_mtx_between_reactions <- function(mtx, start, end){ # start is leaf of tree encoded in matrix
+  # path <- c(end)
+  path <- c()
+  # print(paste(start, end))
+  # print(start != end)
+  while (start != end){
+    start <- which(mtx[,start])
+    # print(start)
+    path <- c(start, path)
+  }
+  
+  return(path)
 }
 
 get_dwnst_rxns <- function(rxn_idx, model, sample = NULL){
