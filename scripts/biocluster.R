@@ -2,8 +2,8 @@ source('~/GitHub/PathwayMining/raptor_coupling.R')
 source('~/GitHub/PathwayMining/grb_tools.R')
 #source('~/GitHub/PathwayMining/model_tools.R')
 source('~/GitHub/PathwayMining/set_tools.R')
-source('~/GitHub/PathwayMining/logic_tools.R')
-source('~/GitHub/PathwayMining/falcon_tools.R')
+# source('~/GitHub/PathwayMining/logic_tools.R')
+# source('~/GitHub/PathwayMining/falcon_tools.R')
 #source('~/GitHub/PathwayMining/load_mod.R')
 #source('~/GitHub/PathwayMining/data_tools.R')
 #source('~/GitHub/PathwayMining/gene_tools.R')
@@ -82,12 +82,13 @@ GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reac
 
 
 ptm <- proc.time() # timing start
-
-model <- GRB_yeast_falcon_model()
+load('maranas_falcon_model.RData')
+sybil_falcon_model <- yeast_falcon_model # load sybil falcon model
+model <- GRB_generate_falcon_model(sybil_falcon_model, falcon_model = TRUE)
 n <- model$get_sizes()$NumVars
 vars <- model$get_names()$VarName
 
-load('~/GitHub/PathwayMining/data/yeast_model/Maranas_model/maranas_model_lipid_exch.RData')
+load('maranas_model_lipid_exch.RData')
 
 sybil_model <- yeast_model
 non_gene_assc_rxns <- which(sybil_model@genes == "")

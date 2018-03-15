@@ -88,9 +88,13 @@ GRB_mutans_falcon_model <- function(){
   return(mutans_falcon_model)
 }
 
-GRB_generate_falcon_model <- function(sybil_model, r0_gene_set = c(), r0_rxn_set_list = c()){
+GRB_generate_falcon_model <- function(sybil_model, falcon_model = FALSE, r0_gene_set = c(), r0_rxn_set_list = c()){
 
-  sybil_falcon_model <- generate_falcon_model(sybil_model, r0_gene_set, r0_rxn_set_list)
+  sybil_falcon_model <- sybil_model
+  
+  if (falcon_model){ # if user has not passed in a falcon model already
+    sybil_falcon_model <- generate_falcon_model(sybil_model, r0_gene_set, r0_rxn_set_list)
+  }
 
   grb_falcon_model <- as_GRBmodel(sybil_falcon_model)
   grb_falcon_model$show_output(FALSE)
