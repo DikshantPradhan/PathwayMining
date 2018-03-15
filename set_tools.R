@@ -776,3 +776,61 @@ check_deletion_error <- function(deletion_list, r0_set_list){
     }
   }
 }
+
+# generate set list from pairs
+get_list_of_sets <- function(pairs, rxns_list = c()){ #2d columns
+
+  if (length(rxns_list) == 0){
+    print("new rxn list")
+    rxns <- unique(union(pairs[,1], pairs[,2]))
+    # rxns_list <- c()
+
+    for (i in rxns){
+      rxns_list <- c(rxns_list, list(i))
+    }
+  }
+  # print(rxns_list)
+
+  for (i in 1:nrow(pairs)){
+    idx1 <- get_set_idx(pairs[i,1], rxns_list) #grep(core_rxn_id(pairs[i,1]), rxns_list)
+    idx2 <- get_set_idx(pairs[i,2], rxns_list) #grep(core_rxn_id(pairs[i,2]), rxns_list)
+    if (length(idx1) < 1 | length(idx2) < 1){next}
+    #print(idx1)
+    #print(idx2)
+
+    # print(paste(pairs[i, 1], "&", pairs[i,2], ":", idx1, idx2))
+
+    rxns_list <- c(rxns_list[-c(idx1, idx2)], list(union(unlist(rxns_list[idx1]), unlist(rxns_list[idx2]))))
+  }
+
+  return(rxns_list)
+}
+
+return_couples <- function(array){ # correlation array (output from flux_coupling)
+
+  row <- dimnames(array)[[1]]
+  col <- dimnames(array)[[2]]
+
+  rxn_col1 <- c()
+  rxn_col2 <- c()
+
+  for (i in 1:dim(array)[1]){
+    for (j in 1:dim(array)[2]){
+      if (is.na(array[i,j])){
+        # do nothing
+      }
+      else if (abs(array[i,j]) > 0.99 | array[i,j] == TRUE){ # allow for different inputs (correlation or T/F)
+        rxn_col1 <- c(rxn_col1, row[i])
+        rxn_col2 <- c(rxn_col2, col[j])
+      }
+    }
+  }
+
+  rxns <- cbind(rxn_col1, rxn_col2)
+  colnames(rxns) <- c("rxn1", "rxn2")
+  return(rxns)
+}
+
+core_rxn_id <- function(rxn_id){ # rxn id with parenthesis
+  return(strsplit(rxn_id, split = "\\(")[[1]][1])
+}

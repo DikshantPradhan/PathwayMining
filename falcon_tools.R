@@ -301,126 +301,13 @@ gprRule_to_idx <- function(list){
   return(as.numeric(list))
 }
 
-# # print(gprRule_to_idx(c('x[2]', 'x[5]', 'x[7]')))
-# #model <- get_ecoli_model()
-# #gene_sets <- ecoli_r0_gene_set
-# #rxn_sets <- ecoli_og_set_list
-# #test_model <- generate_falcon_model(model, ecoli_r0_gene_set, ecoli_og_set_list)
-# # test_model2 <- generate_falcon_model(model)
-# #a <- apply(test_model@S, 1, function(x) sum(abs(x)))
-# #print(test_model@met_id[which(a == 0)])
-#
-# test_falcon <- function(test_model){
-#
-# test_falcon_ <- function(model, idx1, idx2 = 0){
-#   if (idx2 == 0){idx2 <- idx1 + 1}
-#
-#   rxn1_all <- which(test_model@S[,idx1] != 0)
-#   rxn2_all <- which(test_model@S[,idx2] != 0)
-#
-#   rxn1_pdt <- which(test_model@S[,idx1] > 0)
-#   rxn2_pdt <- which(test_model@S[,idx2] > 0)
-#
-#   rxn1_rct <- which(test_model@S[,idx1] < 0)
-#   rxn2_rct <- which(test_model@S[,idx2] < 0)
-#
-#   rct_diff <- unique(union(setdiff(rxn1_rct, rxn2_rct), setdiff(rxn2_rct, rxn1_rct)))
-#   pdt_diff <- unique(union(setdiff(rxn2_pdt, rxn1_pdt), setdiff(rxn1_pdt, rxn2_pdt)))
-#
-#   if (!identical(rxn1_all, rxn2_all)){return(FALSE)}
-#
-#   if (!identical(rct_diff, pdt_diff)){return(FALSE)}
-#
-#   return(TRUE)
-# }
-#
-# test_seq <- seq(287, 341, 2)
-# for (idx in test_seq){
-#   print(test_falcon_(test_model, idx))
-# }
-#
-# print('TESTING CONVERSION REACTIONS')
-#
-# conv_rxns <- c("ACKr","ATPS4r","CYTBD","D_LACt2","FBA","FBP","FUM","GLNS","LDH_D","MALS","PFK","PFL","PGM","PIt2r","PTAr",
-#                "PYK","RPE","RPI","TALA","ACONTa","ACONTb","TKT1","TKT2")
-#
-# # REACTANTS AND PRODUCTS SHOULD SHARE SAME DIFFERING METABOLITE
-# for (rxn in conv_rxns){
-#   print(paste('new rxn:', rxn))
-#   og_idx <- which(model@react_id == rxn)
-#   print(model@gpr[og_idx])
-#   gpr_rule <- model@gprRules[og_idx]
-#   gpr_paths <- find_gpr_paths(gpr_rule)
-#
-#   new_rxns <- grep(paste(rxn, 'conversion'), test_model@react_id)
-#   if (length(new_rxns) != length(gpr_paths)){print(paste('error', rxn))}
-#
-#   for (new_rxn in new_rxns){
-#     met_idxs <- which(test_model@S[,new_rxn] != 0)
-#     print(paste(test_model@met_id[met_idxs], test_model@S[met_idxs, new_rxn]))
-#   }
-#
-#   new_idx <- which(test_model@react_id == rxn)
-#   met_idxs <- which(test_model@S[,new_idx] != 0)
-#   print(paste(test_model@met_id[met_idxs], test_model@S[met_idxs, new_idx]))
-# }
-#
-# print('TEST ALL SIMPLE RXNS')
-# # PRINT ALL METABOLTES AND COEFFICIENTS
-# for (rxn in model@react_id){
-#   print(paste('new rxn:', rxn))
-#   old_idx <- which(model@react_id == rxn)
-#   print(model@gpr[old_idx])
-#
-#   new_idx <- which(test_model@react_id == rxn)
-#   if (length(new_idx) > 0){
-#     met_idxs <- which(test_model@S[,new_idx] != 0)
-#     print(paste(test_model@met_id[met_idxs], test_model@S[met_idxs, new_idx]))
-#   }
-#   else {
-#     print(paste('deleted rxn:', (length(grep(rxn, test_model@react_id[267:324])) > 1)))
-#   }
-# }
-#
-# print('METABOLITE TEST')
-# # ORIGINAL REACTIONS SHOULD SHARE SAME METABOLITE AND COEFFICIENTS
-# for (rxn in model@react_id){
-#   print(paste('new rxn:', rxn))
-#   old_idx <- which(model@react_id == rxn)
-#   old_met_idxs <- which(model@S[,old_idx] != 0)
-#   old_met_coeffs <- model@S[old_met_idxs, old_idx]
-#
-#   new_idxs <- grep(rxn, test_model@react_id)
-#
-#   for (new_idx in new_idxs){
-#     new_rxn_id <- test_model@react_id[new_idx]
-#     # print(new_rxn_id)
-#     new_met_idxs <- which(test_model@S[,new_idx] != 0)
-#     new_met_coeffs <- test_model@S[old_met_idxs, new_idx]
-#     if (!all(old_met_idxs %in% new_met_idxs)){
-#       print(paste(new_rxn_id, 'error'))
-#       print(old_met_idxs)
-#       print(new_met_idxs)
-#     }
-#     if (!identical(old_met_coeffs, new_met_coeffs)){
-#       print(paste(new_rxn_id, 'error2'))
-#       print(old_met_coeffs)
-#       print(new_met_coeffs)
-#     }
-#   }
-# }
-#
-# # model_2 <- generate_falcon_model(model, ecoli_r0_gene_set, ecoli_og_set_list)
-# }
-
-
 clean_rxn_names_in_set <- function(set_list){
-  
+
   clean_ex_a <- function(name){
     new_name <- strsplit(name, 'Ex_a_')[[1]]
     return(new_name[2])
   }
-  
+
   for (i in 1:length(set_list)){
     for (j in 1:length(set_list[[i]])){
       new_name <- clean_ex_a(set_list[[i]][j])
@@ -429,16 +316,16 @@ clean_rxn_names_in_set <- function(set_list){
       }
     }
   }
-  
+
   return(set_list)
 }
 
 isolate_gene_matrix <- function(coupling_matrix){
   row_genes <- which(grepl('Ex_a', rownames(coupling_matrix)))
   col_genes <- which(grepl('Ex_a', colnames(coupling_matrix)))
-  
+
   gene_matrix <- coupling_matrix[row_genes, col_genes]
-  
+
   return(gene_matrix)
 }
 

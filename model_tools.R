@@ -24,12 +24,12 @@ get_rxn_id_from_idx <- function(vars, rxn_idx){
 
 get_path_mtx_between_reactions <- function(S, start, end,
     active_mets = matrix(data = TRUE, nrow = nrow(S), ncol = 1)){ # start and end are rows (metabolites) of S
-  
+
   q = queue()
   q <- insert(q, as.character(start))
-  
+
   tracing_mtx <- matrix(data = FALSE, nrow = nrow(S), ncol = nrow(S)) # rows are parents, columns are children
-  
+
   traverse <- function(q, index, active_mets, tracing_mtx){
     # print(index)
     linked_rxns <- which(S[index,] != 0)
@@ -42,20 +42,20 @@ get_path_mtx_between_reactions <- function(S, start, end,
       # print(met)
       q <- insert(q, as.character(met))
     }
-    
+
     list(q = q, active_mets = active_mets, tracing_mtx = tracing_mtx)
   }
-  
+
   while (size(q) > 0 & active_mets[end]){
     next_met <- as.numeric(pop(q))
     # if (next_met == end){break}
     traverse_iter <- traverse(q, next_met, active_mets, tracing_mtx)
-    
+
     q <- traverse_iter$q
     active_mets <- traverse_iter$active_mets
     tracing_mtx <- traverse_iter$tracing_mtx
   }
-  
+
   return(tracing_mtx) # path matrix; TRUE indicates that row idx is parent of col idx
 }
 
@@ -69,7 +69,7 @@ trace_path_mtx_between_reactions <- function(mtx, start, end){ # start is leaf o
     # print(start)
     path <- c(start, path)
   }
-  
+
   return(path)
 }
 
@@ -453,10 +453,6 @@ convert_pair_strings_to_vector <- function(pair_string_list){
   return(pair_vec)
 }
 
-core_rxn_id <- function(rxn_id){ # rxn id with parenthesis
-  return(strsplit(rxn_id, split = "\\(")[[1]][1])
-}
-
 group_sets <- function(set_list, rxn1, rxn2){
   idx1 <- get_set_idx(rxn1, set_list)
   idx2 <- get_set_idx(rxn2, set_list)
@@ -464,35 +460,6 @@ group_sets <- function(set_list, rxn1, rxn2){
   set_list <- c(set_list[-c(idx1, idx2)], list(union(unlist(set_list[idx1]), unlist(set_list[idx2]))))
 
   return(set_list)
-}
-
-# generate set list from pairs
-get_list_of_sets <- function(pairs, rxns_list = c()){ #2d columns
-
-  if (length(rxns_list) == 0){
-    print("new rxn list")
-    rxns <- unique(union(pairs[,1], pairs[,2]))
-    # rxns_list <- c()
-
-    for (i in rxns){
-      rxns_list <- c(rxns_list, list(i))
-    }
-  }
-  # print(rxns_list)
-
-  for (i in 1:nrow(pairs)){
-    idx1 <- get_set_idx(pairs[i,1], rxns_list) #grep(core_rxn_id(pairs[i,1]), rxns_list)
-    idx2 <- get_set_idx(pairs[i,2], rxns_list) #grep(core_rxn_id(pairs[i,2]), rxns_list)
-    if (length(idx1) < 1 | length(idx2) < 1){next}
-    #print(idx1)
-    #print(idx2)
-
-    # print(paste(pairs[i, 1], "&", pairs[i,2], ":", idx1, idx2))
-
-    rxns_list <- c(rxns_list[-c(idx1, idx2)], list(union(unlist(rxns_list[idx1]), unlist(rxns_list[idx2]))))
-  }
-
-  return(rxns_list)
 }
 
 correlating_sets_from_sample <- function(sample){

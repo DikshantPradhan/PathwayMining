@@ -177,31 +177,6 @@ coupling_generalize <- function(array){
   return(array)
 }
 
-return_couples <- function(array){ # correlation array (output from flux_coupling)
-
-  row <- dimnames(array)[[1]]
-  col <- dimnames(array)[[2]]
-
-  rxn_col1 <- c()
-  rxn_col2 <- c()
-  
-  for (i in 1:dim(array)[1]){
-    for (j in 1:dim(array)[2]){
-      if (is.na(array[i,j])){
-        # do nothing
-      }
-      else if (abs(array[i,j]) > 0.99 | array[i,j] == TRUE){ # allow for different inputs (correlation or T/F)
-        rxn_col1 <- c(rxn_col1, row[i])
-        rxn_col2 <- c(rxn_col2, col[j])
-      }
-    }
-  }
-
-  rxns <- cbind(rxn_col1, rxn_col2)
-  colnames(rxns) <- c("rxn1", "rxn2")
-  return(rxns)
-}
-
 return_coupling_change <- function(og_array, suppr_array, couples_list){
 
   row <- dimnames(og_array)[[1]]

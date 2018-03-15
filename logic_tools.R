@@ -1,5 +1,5 @@
 library(data.tree)
-library(rstack)
+#library(rstack)
 library(pryr)
 
 str_to_char <- function(string){
@@ -113,7 +113,7 @@ find_gpr_paths <- function(gprRule){
   }
 
   ast <- capture.output(call_tree(parse(text = gprRule)))
-  
+
   logic_flag <- FALSE
   i <- 0 #starting idx
   while (!logic_flag){
@@ -122,9 +122,9 @@ find_gpr_paths <- function(gprRule){
       logic_flag <- TRUE
     }
   }
-  
+
   # print(i)
-  # 
+  #
   # print(matrix(ast, nrow = length(ast), ncol = 1))
   gpr_tree <- tree_building(ast, i)
   # print(gpr_tree)
@@ -134,16 +134,13 @@ find_gpr_paths <- function(gprRule){
 }
 
 tree_building <- function(list, index){
-  # print('new')
-  # print(index)
-  # print(list)
+
   chars <- strsplit(list[index], "")[[1]]
   og_depth <- (which(strsplit(list[index], "")[[1]] == "\\")-1)/2
   og_id <- chars[length(chars)]
   id1 <- "_" #og_id
   id2 <- "_"
 
-  # print(paste('start', og_id))
   new_node <- Node$new(og_id)
 
   start_1 <- index + 1
@@ -162,7 +159,6 @@ tree_building <- function(list, index){
     id2 <- chars[length(chars)]
   }
 
-  # print(paste(start_1, start_2))
 
   # depth1 <- og_depth
   # child_ct <- 0
@@ -170,9 +166,8 @@ tree_building <- function(list, index){
   # chars <- strsplit(list[index1], "")[[1]]
   # depth1 <- (which(chars == "\\")-1)/2
   # id1 <- chars[length(chars)]
-  # print('starting id1')
+
   while (!(id1 %in% c( '|', '&', 'x'))){
-    # print(paste(index1, id1, depth1))
     index1 <- index1 + 1
     chars <- strsplit(list[index1], "")[[1]]
     depth1 <- (which(chars == "\\")-1)/2
@@ -181,17 +176,12 @@ tree_building <- function(list, index){
 
   index2 <- start_2
   while (!(id2 %in% c( '|', '&', 'x'))){
-    # print(paste(index1, id1, depth1))
     index2 <- index2 + 1
     chars <- strsplit(list[index2], "")[[1]]
     depth2 <- (which(chars == "\\")-1)/2
     id2 <- chars[length(chars)]
   }
 
-  # print(paste('indexes',index1, index2))
-  # print(paste('ids',id1, id2))
-  # print('ending')
-  #
   left_node <- Node$new("_")
   right_node <- Node$new("_")
   if (id1 == 'x'){
@@ -207,17 +197,11 @@ tree_building <- function(list, index){
       id1 <- paste(chars[len-1], chars[len], sep = '')
     }
 
-    # print(paste('1 x', id1, id2))
-    # new_node$AddChild(id1)
     left_node <- Node$new(id1)
   }
   else{
-    # print(paste('1 node', id1, id2))
     left_node <- tree_building(list, index1)
-    # print('extra node')
-    # print(next_node)
     # new_node$AddChildNode(next_node)
-    # print(new_node)
   }
   #
   if (id2 == 'x'){
@@ -233,16 +217,12 @@ tree_building <- function(list, index){
       id2 <- paste(chars[len-1], chars[len], sep = '')
     }
 
-    # print(paste('2 x', id1, id2))
     right_node <- Node$new(id2)
     # new_node$AddChild(id2)
   }
   else {
-    # print(paste('2 node', id1, id2))
     right_node <- tree_building(list, index2)
-    # print(next_node)
     # new_node$AddChildNode(next_node)
-    # print(new_node)
   }
 
   if (right_node$name == left_node$name){
@@ -252,13 +232,7 @@ tree_building <- function(list, index){
   new_node$AddChildNode(left_node)
   new_node$AddChildNode(right_node)
   # left_node$AddSiblingNode(right_node)
-  # print('check nodes')
-  # print('left')
-  # print(left_node)
-  # print('right')
-  # print(right_node)
-  # print('final')
-  # print(new_node)
+
   return(new_node)
 }
 
@@ -302,9 +276,6 @@ get_paths_from_gpr <- function(node){
   return(paths)
 }
 
-# print(find_gpr_paths(yeast_open_mod@gprRules[996]))
-# print(find_gpr_paths(''))
-
 get_all_gpr_paths <- function(gprRules){
   paths <- c()
 
@@ -314,8 +285,6 @@ get_all_gpr_paths <- function(gprRules){
 
   return(paths)
 }
-
-#ecoli_gpr_paths <- get_all_gpr_paths(model@gprRules)
 
 additional_reaction_count <- function(gpr, gpr_paths){
   binary <- matrix(0, nrow = length(gpr), ncol = 1)
@@ -334,5 +303,3 @@ additional_reaction_count <- function(gpr, gpr_paths){
 
   return(paths - binary)
 }
-
-#ecoli_split <- additional_reaction_count(model@gpr, ecoli_gpr_paths)

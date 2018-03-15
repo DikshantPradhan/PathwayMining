@@ -243,6 +243,77 @@ GRB_generate_set_lists <- function(model_og, og_set_list, suppression_idxs, reac
   return(set_lists)
 }
 
+GRB_generate_set_lists <- function(model_og, suppression_idxs = -1, reaction_indexes = c(),
+  compare_known_r0_sets = FALSE, optimize_suppr = FALSE){
+
+  n <- model_og$get_sizes()$NumVars
+  vars <- model_og$get_names()$VarName
+
+  if (suppression_idxs == -1){
+    if (length(reaction_indexes) > 0){
+      suppression_idxs = reaction_indexes
+    }
+    else {
+      suppression_idxs = 1:n
+    }
+  }
+
+  # dim: rxns_row, rxns_col, deletions
+  model <- model_og$copy()
+
+  r0_coupling_mtx <- c()
+  if (compare_known_r0_sets){
+    r0_coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
+    r0_coupling_mtx <- fill_coupling_matrix(r0_coupling_mtx)
+  }
+
+  suppr_vector <- matrix(data = FALSE, nrow = 1, ncol = n)
+  suppr_vector[suppression_idxs] <- TRUE
+  if (optimize_suppr){
+    i <- 1
+    while (i <= n){
+      if (suppr_vector[i]){ # if tagged to be suppressed
+        set_idx <- which(r0_coupling_mtx[,i])[1] # which is first reaction (row) i is coupled to
+        rxn_idxs <- which(r0_coupling_mtx[set_idx,]) # other reactions in set
+        # only suppress first reaction in set since, theoretically, suppressing any should have the same effect
+        suppr_vector[rxn_idxs] <- FALSE
+        suppr_vector[rxn_idxs[1]] <- TRUE
+      }
+      i <- i+1
+    }
+  }
+
+  set_lists <- c()
+  print(paste("# of suppressions:", length(which(suppr_vector)), sep = " "))
+  for (i in which(suppr_vector)){
+    print(paste('suppression index:', i))
+    if (!(r0_coupling_mtx[i,i])){
+      print(paste(vars[i], ' blocked'))
+      next
+    }
+
+    #prev_ub <- model$getattr("UB")[vars[i]]
+    #prev_lb <- model$getattr("LB")[vars[i]]
+
+    model <- model_og$copy() #GRB_ecoli_model()
+
+    # block i
+    model$setattr("UB", setNames(0, vars[i]))
+    model$setattr("LB", setNames(0, vars[i]))
+
+    coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes, compare_mtx = compare_known_r0_sets, known_set_mtx = r0_coupling_mtx)$coupled
+    set_lists[i] <- list(get_list_of_sets(return_couples(coupling_mtx)))
+    # unfix i
+    #model$setattr("UB", prev_ub)
+    #model$setattr("LB", prev_lb)
+  }
+
+  #output <- list(r0_mtx <- r0_coupling_mtx, r1_coupling_array = coupling_array)
+
+  #return(coupling_array)
+  return(set_lists)
+}
+
 GRB_generate_set_lists_array <- function(model_og, suppression_idxs = -1, reaction_indexes = c(),
   compare_known_r0_sets = FALSE, optimize_suppr = FALSE){
 

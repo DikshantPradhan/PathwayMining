@@ -18,10 +18,10 @@ vars <- ecoli$get_names()$VarName
 
 ecoli_r0_set_list <- GRB_generate_set_list(ecoli)
 
-proc.time() - ptm # timing end
+#proc.time() - ptm # timing end
 
 ecoli <- GRB_ecoli_model()
-ecoli_set_lists <- GRB_generate_set_lists(ecoli, ecoli_r0_set_list, 1:n)
+ecoli_set_lists <- GRB_generate_set_lists(ecoli, 1:n, compare_known_r0_sets = TRUE, optimize_suppr=TRUE) #GRB_generate_set_lists(ecoli, ecoli_r0_set_list, 1:n)
 
 ecoli_coupling_array <- GRB_generate_set_lists_array(ecoli, 1:n, compare_known_r0_sets = TRUE, optimize_suppr=TRUE)
 ecoli_r1_matrix <- coupling_matrix_from_array(ecoli_coupling_array)
