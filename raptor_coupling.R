@@ -29,7 +29,7 @@ optimize_rxn <- function(model, rxn, max){
 
 flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01,
       bnd_tol = 0.1, stored_obs = 4000, cor_iter = 5, cor_check = TRUE,
-      reaction_indexes = c(), compare_mtx = FALSE, known_set_mtx = matrix(data = FALSE, nrow = 1, ncol = 1)) {
+      reaction_indexes = c(), compare_mtx = FALSE, known_set_mtx = Matrix(data = FALSE, nrow = 1, ncol = 1, sparse = TRUE)) {
 
   # min_fva_cor is minimum correlation between fluxes
   # bnd_tol is allowed error in comparing max & min flux
@@ -64,7 +64,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
   global_max <- rep(0, n)
   global_min <- rep(0, n)
 
-  coupled <- matrix(FALSE, nrow=n, ncol=n, dimnames=list(vars, vars))
+  coupled <- Matrix(FALSE, nrow=n, ncol=n, dimnames=list(vars, vars), sparse = TRUE)
 
   blocked <- rep(FALSE, n)
   active <- rep(TRUE, n)
@@ -101,7 +101,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     return(TRUE)
   }
 
-  flux <- matrix(c(0), nrow = stored_obs, ncol = n)
+  flux <- Matrix(c(0), nrow = stored_obs, ncol = n, sparse = TRUE)
   lp_calls <- 0
 
   update_flux <- function(flux_, idx, sol){
@@ -210,7 +210,8 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       # also keep this in passed in idxs (idx2 in (idx+1):length(reaction_indexes)); j <-  reaction_indexes[idx2]
       j <-  reaction_indexes[idx2]
       # check for fixed or blocked
-      if (!active[j] | blocked[j]) next
+      if (!active[j] | blocked[j]){next}
+      if (not_fixed(sub_max[j], sub_min[j])){next}
 
       # check for uncoupled via correlation
       if (stored_obs > 0){
@@ -311,6 +312,7 @@ fill_coupling_matrix <- function(coupled){
   for (i in 1:nrow(coupled)){
     #identify set
     set <- which(coupled[i,]) # true values in row
+    if (length(set) < 1){next}
 
     # fill in TRUE for all pairs in set
     for (j in 1:length(set)){

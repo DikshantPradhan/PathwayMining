@@ -111,6 +111,7 @@ non_gene_assc_rxns <- which(sybil_model@genes == "")
 gene_indexes <- c()
 gene_indexes <- grep('Ex_a', vars)
 suppr_indexes <- c(non_gene_assc_rxns, gene_indexes)
+suppr_indexes <- suppr_indexes[1:150]
 
 #reaction_indexes <- c()
 #reaction_indexes <- grep('Ex_a', vars)

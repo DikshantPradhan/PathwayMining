@@ -39,18 +39,10 @@ GRB_yeast_model <- function(){
 }
 
 GRB_yeast_falcon_model <- function(){
-  # setwd("~/GitHub/PathwayMining/data/yeast_model")
+
   #load('~/GitHub/PathwayMining/data/yeast_model/Price Models/yeast_open_mod.RData')
   load('~/GitHub/PathwayMining/data/yeast_model/Maranas_model/maranas_model_lipid_exch.RData')
-  #for (i in findExchReact(yeast_open_mod)@react_pos){
-  #  yeast_open_mod <- changeBounds(yeast_open_mod, i, lb = -1000, ub = 1000)
-  #}
-  # for (i in 1:length(yeast_open_mod@react_id)){
-  #   yeast_open_mod@lowbnd[i] <- -1000
-  #   yeast_open_mod@uppbnd[i] <- 1000
-  # }
-  # setwd("~/GitHub/PathwayMining/")
-  #sybil_yeast <- yeast_open_mod
+
   sybil_yeast <- yeast_model
   yeast_falcon_model <- GRB_generate_falcon_model(sybil_yeast)
   return(yeast_falcon_model)
@@ -91,7 +83,7 @@ GRB_mutans_falcon_model <- function(){
 GRB_generate_falcon_model <- function(sybil_model, falcon_model = FALSE, r0_gene_set = c(), r0_rxn_set_list = c()){
 
   sybil_falcon_model <- sybil_model
-  
+
   if (falcon_model){ # if user has not passed in a falcon model already
     sybil_falcon_model <- generate_falcon_model(sybil_model, r0_gene_set, r0_rxn_set_list)
   }
@@ -270,7 +262,6 @@ GRB_generate_set_lists <- function(model_og, suppression_idxs = -1, reaction_ind
     r0_coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
     r0_coupling_mtx <- fill_coupling_matrix(r0_coupling_mtx)
   }
-
   suppr_vector <- matrix(data = FALSE, nrow = 1, ncol = n)
   suppr_vector[suppression_idxs] <- TRUE
   if (optimize_suppr){
@@ -278,16 +269,23 @@ GRB_generate_set_lists <- function(model_og, suppression_idxs = -1, reaction_ind
     while (i <= n){
       if (suppr_vector[i]){ # if tagged to be suppressed
         set_idx <- which(r0_coupling_mtx[,i])[1] # which is first reaction (row) i is coupled to
-        rxn_idxs <- which(r0_coupling_mtx[set_idx,]) # other reactions in set
-        # only suppress first reaction in set since, theoretically, suppressing any should have the same effect
-        suppr_vector[rxn_idxs] <- FALSE
-        suppr_vector[rxn_idxs[1]] <- TRUE
+        if (!is.na(set_idx)){
+          rxn_idxs <- which(r0_coupling_mtx[set_idx,]) # other reactions in set
+          # only suppress first reaction in set since, theoretically, suppressing any should have the same effect
+          suppr_vector[rxn_idxs] <- FALSE
+          suppr_vector[rxn_idxs[1]] <- TRUE
+        }
+        else {
+          suppr_vector[i] <- FALSE
+        }
+
       }
       i <- i+1
     }
   }
 
   set_lists <- c()
+  print(length(suppr_vector))
   print(paste("# of suppressions:", length(which(suppr_vector)), sep = " "))
   for (i in which(suppr_vector)){
     print(paste('suppression index:', i))
