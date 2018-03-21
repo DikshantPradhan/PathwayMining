@@ -101,7 +101,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     return(TRUE)
   }
 
-  flux <- Matrix(c(0), nrow = stored_obs, ncol = n, sparse = TRUE)
+  flux <- matrix(c(0), nrow = stored_obs, ncol = n)
   lp_calls <- 0
 
   update_flux <- function(flux_, idx, sol){
@@ -211,7 +211,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       j <-  reaction_indexes[idx2]
       # check for fixed or blocked
       if (!active[j] | blocked[j]){next}
-      if (not_fixed(sub_max[j], sub_min[j])){next}
+      if (not_fixed(sub_max[j], sub_min[j])){next} # put this back in!
 
       # check for uncoupled via correlation
       if (stored_obs > 0){
@@ -219,8 +219,6 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         # C <- cor(flux[,i], flux[,j])
         # if (!is.na(C) & (abs(C) < min_fva_cor)){next}
       }
-
-      if (not_fixed(sub_max[j], sub_min[j])) next
 
       skip <- FALSE
 
