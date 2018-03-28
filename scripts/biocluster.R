@@ -28,8 +28,11 @@ GRB_flux_coupling_raptor_wrapper <- function(i, vars, model_og, reaction_indexes
   model$setattr("LB", setNames(0, vars[i]))
 
   coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes, compare_mtx = compare_mtx, known_set_mtx = r0_coupling_mtx)$coupled
-  output <- list(get_list_of_sets(return_couples(coupling_mtx)))
-  return(output)
+  coupling_list <- Matrix(data = FALSE, nrow = 1, ncol = length(coupling_mtx))
+  coupling_list[which(coupling_mtx)] <- TRUE
+
+  #output <- list(which(coupling_mtx)) #list(get_list_of_sets(return_couples(coupling_mtx)))
+  return(coupling_list)
 }
 
 GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reaction_indexes = c(),
@@ -78,32 +81,32 @@ GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reac
   }
 
   print(paste("# of suppressions:", length(which(suppr_vector)), sep = " "))
-  coupling <- mclapply(which(suppr_vector), function(x) GRB_flux_coupling_raptor_wrapper(x, vars, model_og, reaction_indexes = reaction_indexes, compare_mtx = compare_known_r0_sets, r0_coupling_mtx = r0_coupling_mtx))
+  coupling <- lapply(which(suppr_vector), function(x) GRB_flux_coupling_raptor_wrapper(x, vars, model_og, reaction_indexes = reaction_indexes, compare_mtx = compare_known_r0_sets, r0_coupling_mtx = r0_coupling_mtx))
 
   return(coupling)
 }
 
 
-ecoli <- GRB_ecoli_model()
-n <- ecoli$get_sizes()$NumVars
-vars <- ecoli$get_names()$VarName
+#ecoli <- GRB_ecoli_model()
+#n <- ecoli$get_sizes()$NumVars
+#vars <- ecoli$get_names()$VarName
 
-ecoli_r0_set_list <- GRB_generate_set_list(ecoli)
+#ecoli_r0_set_list <- GRB_generate_set_list(ecoli)
 
 #proc.time() - ptm # timing end
 
-ecoli <- GRB_ecoli_model()
-ecoli_set_lists <- GRB_generate_set_lists(ecoli, 1:n, compare_known_r0_sets = TRUE, optimize_suppr=TRUE) #GRB_generate_set_lists(ecoli, ecoli_r0_set_list, 1:n)
+#ecoli <- GRB_ecoli_model()
+#ecoli_set_lists <- GRB_generate_set_lists(ecoli, 1:n, compare_known_r0_sets = TRUE, optimize_suppr=TRUE) #GRB_generate_set_lists(ecoli, ecoli_r0_set_list, 1:n)
 
 
 ptm <- proc.time() # timing start
-load('maranas_falcon_model.RData')
-sybil_falcon_model <- yeast_falcon_model # load sybil falcon model
-model <- GRB_generate_falcon_model(sybil_falcon_model, falcon_model = TRUE)
+#load('maranas_falcon_model.RData')
+#sybil_falcon_model <- yeast_falcon_model # load sybil falcon model
+model <- GRB_yeast_falcon_model() #GRB_generate_falcon_model(sybil_falcon_model, falcon_model = TRUE)
 n <- model$get_sizes()$NumVars
 vars <- model$get_names()$VarName
 
-load('maranas_model_lipid_exch.RData')
+load('~/GitHub/PathwayMining/data/yeast_model/Maranas_model/maranas_model_lipid_exch.RData')
 
 sybil_model <- yeast_model
 non_gene_assc_rxns <- which(sybil_model@genes == "")
@@ -111,11 +114,11 @@ non_gene_assc_rxns <- which(sybil_model@genes == "")
 gene_indexes <- c()
 gene_indexes <- grep('Ex_a', vars)
 suppr_indexes <- c(non_gene_assc_rxns, gene_indexes)
-suppr_indexes <- suppr_indexes[1:150]
+#suppr_indexes <- suppr_indexes[1:150]
 
 #reaction_indexes <- c()
 #reaction_indexes <- grep('Ex_a', vars)
 
-set_lists <- GRB_generate_set_lists_cluster(model, suppression_idxs = suppr_indexes, reaction_indexes = suppr_indexes, compare_known_r0_sets = TRUE, optimize_suppr=TRUE)
+set_lists <- GRB_generate_set_lists_cluster(model, suppression_idxs = suppr_indexes[1:3], reaction_indexes = gene_indexes, compare_known_r0_sets = TRUE, optimize_suppr=FALSE)
 proc.time() - ptm # timing end
 #print(compare_sets(ecoli_r1_sets, ecoli_r1_sets_cluster))

@@ -84,7 +84,7 @@ GRB_generate_falcon_model <- function(sybil_model, falcon_model = FALSE, r0_gene
 
   sybil_falcon_model <- sybil_model
 
-  if (falcon_model){ # if user has not passed in a falcon model already
+  if (!falcon_model){ # if user has not passed in a falcon model already
     sybil_falcon_model <- generate_falcon_model(sybil_model, r0_gene_set, r0_rxn_set_list)
   }
 
