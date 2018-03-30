@@ -2,8 +2,10 @@ source('~/GitHub/PathwayMining/raptor_coupling.R')
 source('~/GitHub/PathwayMining/grb_tools.R')
 source('~/GitHub/PathwayMining/load_mod.R')
 source('~/GitHub/PathwayMining/gene_tools.R')
+source('~/GitHub/PathwayMining/set_tools.R')
 
 # LOAD MODELS
+print('loading models...')
 load('~/GitHub/PathwayMining/data/mutans_model/mutans_model.RData')
 mutans_sybil <- mutans
 load('~/GitHub/PathwayMining/data/yeast_model/Maranas_model/maranas_model_lipid_exch.RData')
@@ -13,6 +15,7 @@ mutans <- GRB_mutans_model()
 yeast <- GRB_yeast_model()
 
 # GENERATE FALCON MODELS
+print('generating falcon models...')
 mutans_falcon <- GRB_mutans_falcon_model()
 yeast_falcon <- GRB_yeast_falcon_model()
 
@@ -29,13 +32,17 @@ save(mutans_gpr, file = 'final_paper_data/mutans_gpr.RData')
 save(yeast_gpr, file = 'final_paper_data/yeast_gpr.RData')
 
 # R0 SETS
+print('r0 sets...')
+print('mutans:')
 mutans_r0_sets <- GRB_generate_set_list(mutans)
+print('yeast:')
 yeast_r0_sets <- GRB_generate_set_list(yeast)
 
 save(mutans_r0_sets, file = 'final_paper_data/mutans_r0_sets.RData')
 save(yeast_r0_sets, file = 'final_paper_data/yeast_r0_sets.RData')
 
 # G(R0) SETS
+print('gr0 sets...')
 mutans_gr0_sets <- gene_set_from_rxn_set(mutans_gpr, mutans_r0_sets)
 yeast_gr0_sets <- gene_set_from_rxn_set(yeast_gpr, yeast_r0_sets)
 
@@ -43,13 +50,18 @@ save(mutans_r0_sets, file = 'final_paper_data/mutans_gr0_sets.RData')
 save(yeast_r0_sets, file = 'final_paper_data/yeast_gr0_sets.RData')
 
 # G0 SETS
+print('g0 sets...')
+print('mutans:')
 mutans_falcon_r0_sets <- GRB_generate_set_list(mutans_falcon)
+print('yeast:')
 yeast_falcon_r0_sets <- GRB_generate_set_list(yeast_falcon)
 
 save(mutans_r0_sets, file = 'final_paper_data/mutans_g0_sets.RData')
 save(yeast_r0_sets, file = 'final_paper_data/yeast_g0_sets.RData')
 
 # R1 SETS
+print('r1 sets...')
+print('mutans:')
 mutans_coupling_array <- GRB_generate_set_lists_array(mutans, 1:mutans_n, compare_known_r0_sets = TRUE, optimize_suppr=TRUE)
 mutans_r1_matrix <- coupling_matrix_from_array(mutans_coupling_array)
 mutans_r1_matrix <- (mutans_r1_matrix > 0)
@@ -57,6 +69,7 @@ mutans_r1_sets <- list(get_list_of_sets(return_couples(mutans_r1_matrix)))
 
 save(mutans_r1_sets, file = 'final_paper_data/mutans_r1_sets.RData')
 
+print('yeast:')
 yeast_coupling_array <- GRB_generate_set_lists_array(yeast, 1:yeast_n, compare_known_r0_sets = TRUE, optimize_suppr=TRUE)
 yeast_r1_matrix <- coupling_matrix_from_array(yeast_coupling_array)
 yeast_r1_matrix <- (yeast_r1_matrix > 0)
@@ -65,6 +78,7 @@ yeast_r1_sets <- list(get_list_of_sets(return_couples(yeast_r1_matrix)))
 save(yeast_r1_sets, file = 'final_paper_data/yeast_r1_sets.RData')
 
 # G(R1) SETS
+print('gr1 sets...')
 mutans_gr1_sets <- gene_set_from_rxn_set(mutans_gpr, mutans_r1_sets)
 yeast_gr1_sets <- gene_set_from_rxn_set(yeast_gpr, yeast_r1_sets)
 
@@ -74,6 +88,7 @@ save(yeast_gr1_sets, file = 'final_paper_data/yeast_gr1_sets.RData')
 # G1 SETS
 
 # SET STATISTICS
+print('set sizes...')
 mutans_r0_set_size <- get_size_list(mutans_r0_sets)
 mutans_r0_set_size_dist <- get_size_distribution(mutans_r0_sets)
 yeast_r0_set_size <- get_size_list(yeast_r0_sets)
@@ -104,7 +119,7 @@ mutans_g1_set_size_dist <- get_size_distribution(mutans_g1_sets)
 
 size_data <- matrix(nrow = 2, ncol = 12)
 rownames(size_data) <- c('mutans', 'yeast')
-colnames(size_data) <- c('r0_size', 'r0_size_dist', 'g0_size', 'g0_size_dist', 'gr0_size', 'gr0_size_dist', 'r1_size', 'r1_size_dist', 
+colnames(size_data) <- c('r0_size', 'r0_size_dist', 'g0_size', 'g0_size_dist', 'gr0_size', 'gr0_size_dist', 'r1_size', 'r1_size_dist',
                          'gr1_size', 'gr1_size_dist', 'g1_size', 'g1_size_dist')
 size_data[1,1] <- list(mutans_r0_set_size)
 size_data[1,2] <- list(mutans_r0_set_size_dist)
@@ -131,3 +146,5 @@ size_data[2,9] <- list(yeast_gr1_set_size)
 size_data[2,10] <- list(yeast_gr1_set_size_dist)
 # size_data[1,11] <- list(yeast_g1_set_size)
 # size_data[1,12] <- list(yeast_g1_set_size_dist)
+
+save(size_data, file = 'final_paper_data/size_data.RData')
