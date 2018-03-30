@@ -102,7 +102,7 @@ yeast_gr1_set_size_dist <- get_size_distribution(yeast_gr1_sets)
 mutans_g1_set_size <- get_size_list(mutans_g1_sets)
 mutans_g1_set_size_dist <- get_size_distribution(mutans_g1_sets)
 
-size_data <- matrix(nrow = 12, ncol = 2)
+size_data <- matrix(nrow = 2, ncol = 12)
 rownames(size_data) <- c('mutans', 'yeast')
 colnames(size_data) <- c('r0_size', 'r0_size_dist', 'g0_size', 'g0_size_dist', 'gr0_size', 'gr0_size_dist', 'r1_size', 'r1_size_dist', 
                          'gr1_size', 'gr1_size_dist', 'g1_size', 'g1_size_dist')
