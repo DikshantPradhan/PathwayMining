@@ -242,6 +242,53 @@ get_mutans_model_w_obj <- function(){
   return(mutans_model)
 }
 
+get_PAO_model <- function(){
+  
+  # need to change file names
+  pao_model <- readTSVmod(reactList = "PAO1recon1_v23_reactions.csv", fielddelim = "\t") # metList = "PAO1recon1_v23_metabolites.csv", 
+  
+  reactions_to_replace <- c('PAO1_Biomass', 'PA_Biomass_v13ub', 'PA_Biomass_v13', 'PA_Biomass_v4')
+  replacement_idxs <- which(pao_model@react_id %in% reactions_to_replace)
+  
+  exch_idxs <- c() # biomass
+  consumed_met_idxs <- c()
+  produced_met_idxs <- c()
+  
+  for (rxn in replacement_idxs){
+    exch_idxs <- c(exch_idxs, which(pao_model@S[,rxn] != 0)) # biomass
+    consumed_met_idxs <- c(consumed_met_idxs, which(pao_model@S[,rxn] < 0))
+    produced_met_idxs <- c(produced_met_idxs, which(pao_model@S[,rxn] > 0))
+  }
+  consumed_mets <- pao_model@met_id[consumed_met_idxs]
+  produced_mets <- pao_model@met_id[produced_met_idxs]
+  
+  exch <- findExchReact(pao_model)
+  
+  # add outlets for consumed metabolites
+  for (met in consumed_mets){
+    if (met %in% exch@met_id){
+      exch_idx <- exch@react_pos[which(exch@met_id == met)]
+      pao_model@uppbnd[exch_idx] <- 1000
+      next
+    }
+    pao_model <- addExchReact(pao_model, met <- met, lb <- 0, ub <- 1000)
+  }
+  # add inlets or produced metabolites
+  for (met in produced_mets){
+    if (met %in% exch@met_id){
+      exch_idx <- exch@react_pos[which(exch@met_id == met)]
+      pao_model@lowbnd[exch_idx] <- -1000
+      next
+    }
+    pao_model <- addExchReact(pao_model, met <- met, lb <- -1000, ub <- 0)
+  }
+  
+  # remove biomass reactions
+  pao_model <- rmReact(model = pao_model, react = replacement_idxs)
+  
+  return(pao_model)
+}
+
 get_blocked <- function(model){
   lb <- which(model@lowbnd > -1000)
   ub <- which(model@uppbnd < 1000)
