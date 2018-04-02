@@ -121,7 +121,7 @@ get_yeast_maranas_model <- function(){
 
   yeast_model <- rmReact(model = yeast_model, react = biomass_idx, rm_met = TRUE) # last biomass reaction
   yeast_model <- rmReact(model = yeast_model, react = growth_idx, rm_met = TRUE) # growth reaction (objective function; biomass exchange)
-  yeast_model <- rmReact(model = yeast_model, react = lipid_idx, rm_met = TRUE) # growth reaction (objective function; biomass exchange)
+  yeast_model <- rmReact(model = yeast_model, react = lipid_idx, rm_met = TRUE) # lipid reaction (objective function; biomass exchange)
 
   return(yeast_model)
 }
@@ -162,17 +162,12 @@ get_mutans_model <- function(){
   exch <- findExchReact(mutans_model)
   add_exch <- c()
   for (i in exch_idxs){
-    # if ((mutans_model@met_id[i] %in% exch@met_id) | (paste(mutans_model@met_id[i], '[e]', sep = "") %in% exch@met_id)){
-    #   #print(mutans_model@react_id[i] %in% exch@met_id)
-    #   print(paste('existing exch:', mutans_model@met_id[i]))
-    #   next
-    # }
+  
     if (mutans_model@met_id[i] %in% c('C00002', 'C00044')){
       next
     }
 
     else {
-      # print(generate_exch_rxn(mutans_model, i))
       add_exch <- c(add_exch, i)
       # mutans_model <- addReact(mutans_model, paste('new_exch', i, sep = "_"),
       #                          met = mutans_model@met_id[i], Scoef = c(mutans_model@S[i, 477]), reversible = FALSE,

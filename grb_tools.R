@@ -421,11 +421,12 @@ GRB_flux_coupling_raptor_wrapper <- function(i, vars, model_og, reaction_indexes
   model$setattr("LB", setNames(0, vars[i]))
 
   coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes, compare_mtx = compare_mtx, known_set_mtx = r0_coupling_mtx)$coupled
-  coupling_list <- Matrix(data = FALSE, nrow = 1, ncol = length(coupling_mtx))
-  coupling_list[which(coupling_mtx)] <- TRUE
+  # coupling_list <- Matrix(data = FALSE, nrow = 1, ncol = length(coupling_mtx))
+  # coupling_list[which(coupling_mtx)] <- TRUE
 
   #output <- list(which(coupling_mtx)) #list(get_list_of_sets(return_couples(coupling_mtx)))
-  return(coupling_list)
+  # return(coupling_list)
+  return(which(coupling_mtx))
 }
 
 GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reaction_indexes = c(),
