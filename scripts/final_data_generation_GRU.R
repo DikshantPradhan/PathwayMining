@@ -27,6 +27,11 @@ mutans_vars <- mutans$get_names()$VarName
 yeast_n <- yeast$get_sizes()$NumVars
 yeast_vars <- yeast$get_names()$VarName
 
+mutans_falcon_n <- mutans_falcon$get_sizes()$NumVars
+mutans_falcon_vars <- mutans_falcon$get_names()$VarName
+yeast_falcon_n <- yeast_falcon$get_sizes()$NumVars
+yeast_falcon_vars <- yeast_falcon$get_names()$VarName
+
 mutans_gpr <- generate_gpr(mutans_sybil)
 yeast_gpr <- generate_gpr(yeast_sybil)
 
@@ -116,7 +121,7 @@ toc()
 print(proc.time() - ptm)
 ptm <- proc.time()
 tic()
-mutans_r1_matrix <- coupling_matrix_from_coupling_vector_list(mutans_coupling_vector_list) #coupling_matrix_from_array(mutans_coupling_array)
+mutans_r1_matrix <- coupling_matrix_from_coupling_vector_list(mutans_coupling_vector_list, mutans_n) #coupling_matrix_from_array(mutans_coupling_array)
 #mutans_r1_matrix <- (mutans_r1_matrix > 0)
 mutans_r1_sets <- list(get_list_of_sets(return_couples(mutans_r1_matrix)))
 toc()
@@ -131,7 +136,7 @@ toc()
 print(proc.time() - ptm)
 ptm <- proc.time()
 tic()
-yeast_r1_matrix <- coupling_matrix_from_coupling_vector_list(yeast_coupling_vector_list)
+yeast_r1_matrix <- coupling_matrix_from_coupling_vector_list(yeast_coupling_vector_list, yeast_n)
 yeast_r1_sets <- list(get_list_of_sets(return_couples(yeast_r1_matrix)))
 toc()
 print(proc.time() - ptm)
