@@ -119,6 +119,10 @@ suppr_indexes <- c(non_gene_assc_rxns, gene_indexes)
 #reaction_indexes <- c()
 #reaction_indexes <- grep('Ex_a', vars)
 
-set_lists <- GRB_generate_set_lists_cluster(model, suppression_idxs = suppr_indexes[1:3], reaction_indexes = gene_indexes, compare_known_r0_sets = TRUE, optimize_suppr=FALSE)
+yeast_r0_coupling_mtx <- flux_coupling_raptor(model$copy(), reaction_indexes = gene_indexes)$coupled
+
+save(yeast_r0_coupling_mtx, file = 'yeast_r0_coupling_mtx.RData')
+
+set_lists <- GRB_generate_set_lists_cluster(model, suppression_idxs = suppr_indexes, reaction_indexes = suppr_indexes, compare_known_r0_sets = TRUE, optimize_suppr=TRUE)
 proc.time() - ptm # timing end
 #print(compare_sets(ecoli_r1_sets, ecoli_r1_sets_cluster))
