@@ -92,8 +92,7 @@ GRB_pao_model <- function(){
 GRB_pao_falcon_model <- function(){
   load('~/GitHub/PathwayMining/data/pao_model/pao_model.RData')
   
-  pao <- as_GRBmodel(pao_model)
-  pao_falcon <- GRB_generate_falcon_model(pao)
+  pao_falcon <- GRB_generate_falcon_model(pao_model)
   pao_falcon$show_output(FALSE)
   
   return(pao_falcon)
