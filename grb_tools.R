@@ -482,10 +482,10 @@ GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reac
   return(coupling)
 }
 
-coupling_matrix_from_coupling_vector_list <- function(coupling_list, len){
+coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_react){
 
   #len <- length(coupling_list[[1]])
-  len <- len*len
+  len <- n_react*n_react
   coupling_vector <- Matrix(data = FALSE, nrow = 1, ncol = len)
 
   for (i in 1:length(coupling_list)){
