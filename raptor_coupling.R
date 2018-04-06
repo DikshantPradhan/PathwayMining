@@ -155,11 +155,12 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         model$optimize()
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
-
-        global_max <- pmax(global_max, sol$X)
-        global_min <- pmin(global_min, sol$X)
-
-        flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
+        
+        if (sol$Status == 2){
+          global_max <- pmax(global_max, sol$X)
+          global_min <- pmin(global_min, sol$X)
+          flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
+        }
 
         if (!near(global_max[i], 0) | !near(global_min[i], 0)){
           fixed_val <- rxn_fix(global_max[i], global_min[i])
@@ -175,10 +176,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
 
-        global_max <- pmax(global_max, sol$X)
-        global_min <- pmin(global_min, sol$X)
-
-        flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
+        if (sol$Status == 2){
+          global_max <- pmax(global_max, sol$X)
+          global_min <- pmin(global_min, sol$X)
+          flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
+        }
 
         if (!near(global_min[i], 0) | !near(global_min[i], 0)){
           fixed_val <- rxn_fix(global_max[i], global_min[i])
@@ -231,15 +233,17 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         model$optimize()
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
-
-        flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
-
-        global_max <- pmax(global_max, sol$X)
-        global_min <- pmin(global_min, sol$X)
-        sub_max <- pmax(sub_max, sol$X)
-        sub_min <- pmin(sub_min, sol$X)
-
-        max <- sol$X[j]
+        
+        if (sol$Status == 2){
+          flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
+          
+          global_max <- pmax(global_max, sol$X)
+          global_min <- pmin(global_min, sol$X)
+          sub_max <- pmax(sub_max, sol$X)
+          sub_min <- pmin(sub_min, sol$X)
+          
+          max <- sol$X[j]
+        }
 
         skip <- not_fixed(sub_max[j], sub_min[j])
       }
@@ -250,15 +254,17 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         lp_calls <- lp_calls + 1
         sol <- model$get_solution()
 
-        flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
-
-        global_max <- pmax(global_max, sol$X)
-        global_min <- pmin(global_min, sol$X)
-        sub_max <- pmax(sub_max, sol$X)
-        sub_min <- pmin(sub_min, sol$X)
-
-        min <- sol$X[j]
-
+        if (sol$Status == 2){
+          flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
+          
+          global_max <- pmax(global_max, sol$X)
+          global_min <- pmin(global_min, sol$X)
+          sub_max <- pmax(sub_max, sol$X)
+          sub_min <- pmin(sub_min, sol$X)
+          
+          max <- sol$X[j]
+        }
+        
         skip <- not_fixed(sub_max[j], sub_min[j])
       }
 
