@@ -403,8 +403,9 @@ coupling_matrix_from_array <- function(coupling_array){
   #coupling_matrix <- apply(coupling_array, 3, sum)
   return(coupling_matrix)
 }
+
 GRB_flux_coupling_raptor_wrapper <- function(i, vars, model_og, reaction_indexes = 1:length(vars), compare_mtx = FALSE, r0_coupling_mtx = c()){
-  #print(paste('suppression index:', i))
+  print(paste('suppression index:', i))
 
   #if (!(r0_coupling_mtx[i,i])){
   #  print(paste(vars[i], ' blocked'))
@@ -430,7 +431,7 @@ GRB_flux_coupling_raptor_wrapper <- function(i, vars, model_og, reaction_indexes
 }
 
 GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reaction_indexes = c(),
-                                         compare_known_r0_sets = FALSE, optimize_suppr = FALSE){
+                                         compare_known_r0_sets = FALSE, optimize_suppr = FALSE, cores = 1){
 
   n <- model_og$get_sizes()$NumVars
   vars <- model_og$get_names()$VarName
@@ -475,18 +476,20 @@ GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reac
   }
 
   print(paste("# of suppressions:", length(which(suppr_vector)), sep = " "))
-  coupling <- lapply(which(suppr_vector), function(x) GRB_flux_coupling_raptor_wrapper(x, vars, model_og, reaction_indexes = reaction_indexes, compare_mtx = compare_known_r0_sets, r0_coupling_mtx = r0_coupling_mtx))
+  coupling <- mclapply(which(suppr_vector), function(x) GRB_flux_coupling_raptor_wrapper(x, vars, model_og, reaction_indexes = reaction_indexes, compare_mtx = compare_known_r0_sets, r0_coupling_mtx = r0_coupling_mtx),
+    mc.cores = cores)
 
   return(coupling)
 }
 
-coupling_matrix_from_coupling_vector_list <- function(coupling_list){
+coupling_matrix_from_coupling_vector_list <- function(coupling_list, len){
 
-  len <- length(coupling_list[[1]])
+  #len <- length(coupling_list[[1]])
+  len <- len*len
   coupling_vector <- Matrix(data = FALSE, nrow = 1, ncol = len)
 
   for (i in 1:length(coupling_list)){
-    coupling_vector[which(coupling_list[[i]])] <- TRUE
+    coupling_vector[coupling_list[[i]]] <- TRUE
   }
 
   matrix_dim_size <- sqrt(len)
