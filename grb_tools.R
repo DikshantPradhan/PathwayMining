@@ -80,6 +80,25 @@ GRB_mutans_falcon_model <- function(){
   return(mutans_falcon_model)
 }
 
+GRB_pao_model <- function(){
+  load('~/GitHub/PathwayMining/data/pao_model/pao_model.RData')
+  
+  pao <- as_GRBmodel(pao_model)
+  pao$show_output(FALSE)
+  
+  return(pao)
+}
+
+GRB_pao_falcon_model <- function(){
+  load('~/GitHub/PathwayMining/data/pao_model/pao_model.RData')
+  
+  pao <- as_GRBmodel(pao_model)
+  pao_falcon <- GRB_generate_falcon_model(pao)
+  pao_falcon$show_output(FALSE)
+  
+  return(pao_falcon)
+}
+
 GRB_generate_falcon_model <- function(sybil_model, falcon_model = FALSE, r0_gene_set = c(), r0_rxn_set_list = c()){
 
   sybil_falcon_model <- sybil_model
