@@ -122,6 +122,8 @@ print(proc.time() - ptm)
 ptm <- proc.time()
 tic()
 mutans_r1_matrix <- coupling_matrix_from_coupling_vector_list(mutans_coupling_vector_list, mutans_n) #coupling_matrix_from_array(mutans_coupling_array)
+rownames(mutans_r1_matrix) <- mutans_vars
+colnames(mutans_r1_matrix) <- mutans_vars
 #mutans_r1_matrix <- (mutans_r1_matrix > 0)
 mutans_r1_sets <- list(get_list_of_sets(return_couples(mutans_r1_matrix)))
 toc()
