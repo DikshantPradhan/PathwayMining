@@ -82,19 +82,19 @@ GRB_mutans_falcon_model <- function(){
 
 GRB_pao_model <- function(){
   load('~/GitHub/PathwayMining/data/pao_model/pao_model.RData')
-  
+
   pao <- as_GRBmodel(pao_model)
   pao$show_output(FALSE)
-  
+
   return(pao)
 }
 
 GRB_pao_falcon_model <- function(){
   load('~/GitHub/PathwayMining/data/pao_model/pao_model.RData')
-  
+
   pao_falcon <- GRB_generate_falcon_model(pao_model)
   pao_falcon$show_output(FALSE)
-  
+
   return(pao_falcon)
 }
 
@@ -439,22 +439,24 @@ GRB_flux_coupling_raptor_wrapper <- function(i, vars, model_og, reaction_indexes
   model$setattr("UB", setNames(0, vars[i]))
   model$setattr("LB", setNames(0, vars[i]))
 
-  coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes, compare_mtx = compare_mtx, known_set_mtx = r0_coupling_mtx)$coupled
+  coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes, compare_mtx = compare_mtx, known_set_mtx = r0_coupling_mtx, stored_obs = 4000)$coupled
   # coupling_list <- Matrix(data = FALSE, nrow = 1, ncol = length(coupling_mtx))
   # coupling_list[which(coupling_mtx)] <- TRUE
 
   #output <- list(which(coupling_mtx)) #list(get_list_of_sets(return_couples(coupling_mtx)))
   # return(coupling_list)
-  return(which(coupling_mtx))
+  coupling_idxs <- which(coupling_mtx)
+  write(paste(c(i,coupling_idxs), collapse = ','),file="pao_coupling.csv",append=TRUE)
+  return(coupling_idxs)
 }
 
 GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reaction_indexes = c(),
-                                         compare_known_r0_sets = FALSE, optimize_suppr = FALSE, cores = 1){
+                                         compare_known_r0_sets = FALSE, optimize_suppr = FALSE, cores = 1, avoid_idxs <- c()){
 
   n <- model_og$get_sizes()$NumVars
   vars <- model_og$get_names()$VarName
 
-  if (suppression_idxs == -1){
+  if (suppression_idxs[1] == -1){
     if (length(reaction_indexes) > 0){
       suppression_idxs = reaction_indexes
     }
@@ -493,26 +495,40 @@ GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reac
     }
   }
 
+  suppr_vector[avoid_idxs] <- FALSE
+
   print(paste("# of suppressions:", length(which(suppr_vector)), sep = " "))
-  coupling <- mclapply(which(suppr_vector), function(x) GRB_flux_coupling_raptor_wrapper(x, vars, model_og, reaction_indexes = reaction_indexes, compare_mtx = compare_known_r0_sets, r0_coupling_mtx = r0_coupling_mtx),
-    mc.cores = cores)
+  coupling <- mclapply(which(suppr_vector), function(x) GRB_flux_coupling_raptor_wrapper(x, vars, model_og, reaction_indexes = reaction_indexes, compare_mtx = compare_known_r0_sets, r0_coupling_mtx = r0_coupling_mtx), mc.cores = cores)
+
+  #coupling_idxs <- c()
+  #for (i in which(suppr_vector)){
+  #  intermediate_coupling_idxs <- GRB_flux_coupling_raptor_wrapper(i, vars, model_og, reaction_indexes = reaction_indexes, compare_mtx = compare_known_r0_sets, r0_coupling_mtx = r0_coupling_mtx)
+  #  #write(paste(),file="myfile",append=TRUE)
+  #  coupling_idxs <- c(coupling_idxs, intermediate_coupling_idxs)
+  #  coupling_idxs <- unique(coupling_idxs)
+  #}
 
   return(coupling)
 }
 
-coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_react){
+coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_react, vars){
 
   #len <- length(coupling_list[[1]])
-  len <- n_react*n_react
-  coupling_vector <- Matrix(data = FALSE, nrow = 1, ncol = len)
+  #len <- n_react*n_react
+  #coupling_vector <- Matrix(data = FALSE, nrow = 1, ncol = len)
 
+  #for (i in 1:length(coupling_list)){
+  #  coupling_vector[coupling_list[[i]]] <- TRUE
+  #}
+
+  #matrix_dim_size <- sqrt(len)
+  coupling_matrix <- Matrix(data = FALSE, nrow = n_react, ncol = n_react)
   for (i in 1:length(coupling_list)){
-    coupling_vector[coupling_list[[i]]] <- TRUE
+    coupling_matrix[coupling_list[[i]]] <- TRUE
   }
-
-  matrix_dim_size <- sqrt(len)
-  coupling_matrix <- Matrix(data = FALSE, nrow = matrix_dim_size, ncol = matrix_dim_size)
-  coupling_matrix[which(coupling_vector)] <- TRUE
+  #coupling_matrix[which(coupling_vector)] <- TRUE
+  rownames(coupling_matrix) <- vars
+  colnames(coupling_matrix) <- vars
 
   return(coupling_matrix)
 }
