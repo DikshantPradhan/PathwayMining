@@ -246,127 +246,160 @@ for (i in 1:length(g1_sets)){
 g1_comp_num <- rowSums(g1_compositions)
 print(which(g1_comp_num > 1))
 
-## YEAST MODEL ~ 5 DAYS
+## YEAST MODEL
+rm(list = ls())
+source('~/GitHub/PathwayMining/raptor_coupling.R')
+source('~/GitHub/PathwayMining/grb_tools.R')
+source('~/GitHub/PathwayMining/load_mod.R')
+source('~/GitHub/PathwayMining/gene_tools.R')
+source('~/GitHub/PathwayMining/set_tools.R')
+source('~/GitHub/PathwayMining/data_tools.R')
+library(parallel)
+library(tictoc)
+library(sybil)
 
-yeast_falcon <- GRB_yeast_falcon_model()
-n <- yeast_falcon$get_sizes()$NumVars
-vars <- yeast_falcon$get_names()$VarName
+load('~/GitHub/PathwayMining/data/yeast_model/Maranas_model/maranas_model_lipid_exch.RData')
+yeast_falcon_model <- GRB_generate_falcon_model(yeast_model)
 
-reaction_indexes <- c()
-reaction_indexes <- grep('Ex_a', vars)
+n <- yeast_falcon_model$get_sizes()$NumVars
+vars <- yeast_falcon_model$get_names()$VarName
 
-print(paste('num genes:', length(reaction_indexes)))
+non_gene_assc_rxns <- which(yeast_model@genes == "")
+gene_indexes <- grep('Ex_a', yeast_falcon_model$get_names()$VarName)
+suppr_indexes <- c(non_gene_assc_rxns, gene_indexes)
 
-yeast_g0_coupling_mtx <- flux_coupling_raptor(yeast_falcon, reaction_indexes = reaction_indexes)$coupled
-yeast_falcon_g0_sets <- get_list_of_sets(return_couples(yeast_g0_coupling_mtx))
-yeast_g0_matrix <- isolate_gene_matrix(yeast_g0_coupling_mtx)
-clean_yeast_g0_sets <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(yeast_g0_matrix)))[[1]])
-save(yeast_g0_coupling_mtx, file = 'data/yeast_model/yeast_g0_coupling_mtx.RData')
+coupling_vector <- read_coupling_csv('~/GitHub/PathwayMining/scripts/yeast_g1_coupling.csv')
+avoid_rxns <- coupling_vector$completed_idxs
 
-print(paste('num genes:', length(reaction_indexes)))
-#ptm <- proc.time() # timing start
-#yeast_falcon_og_set_list <- GRB_generate_set_list(yeast_falcon, reaction_indexes = reaction_indexes)
+ptm <- proc.time()
+tic()
+coupling_vector_list <- GRB_generate_set_lists_cluster(yeast_falcon_model, suppression_idxs = suppr_indexes, reaction_indexes = suppr_indexes, compare_known_init_sets = TRUE, optimize_suppr=TRUE, cores = 6, avoid_idxs = avoid_rxns, file_output = '~/GitHub/PathwayMining/scripts/yeast_g1_coupling.csv')
+save(coupling_vector_list, file = '~/GitHub/PathwayMining/scripts/yeast_g1_coupling_vector.RData')
+toc()
+print(proc.time() - ptm)
 
-#proc.time() - ptm # timing end
-ptm <- proc.time() # timing start
-yeast_falcon <- GRB_yeast_falcon_model()
-yeast_falcon_coupling_array <- GRB_generate_set_lists_array(yeast_falcon, reaction_indexes = reaction_indexes, compare_known_r0_sets = TRUE, optimize_suppr = TRUE)
-yeast_falcon_g1_matrix <- coupling_matrix_from_array(yeast_falcon_coupling_array)
-yeast_falcon_g1_matrix <- (yeast_falcon_g1_matrix > 0)
-proc.time() - ptm
-save(yeast_falcon_coupling_array, file = '~/GitHub/PathwayMining/data/yeast_model/yeast_falcon_coupling_array.RData')
-save(yeast_falcon_g1_matrix, file = '~/GitHub/PathwayMining/data/yeast_model/yeast_falcon_g1_matrix.RData')
-
-yeast_falcon_g1_sets <- list(get_list_of_sets(return_couples(yeast_falcon_g1_matrix)))
-yeast_g1_matrix <- isolate_gene_matrix(yeast_falcon_g1_matrix)
-clean_yeast_g1_set <- clean_rxn_names_in_set(list(get_list_of_sets(return_couples(yeast_g1_matrix)))[[1]])
+ptm <- proc.time()
+tic()
+yeast_g1_coupling_matrix <- coupling_matrix_from_coupling_vector_list(coupling_vector$coupling_vector, n, vars)
+yeast_g1_sets <- get_list_of_sets_from_mtx(yeast_g1_coupling_matrix)
+toc()
+print(proc.time() - ptm)
+save(yeast_g1_sets, file = '~/GitHub/PathwayMining/scripts/final_paper_data/yeast_g1_sets.RData')
 
 
-yeast_falcon_og_set_list <- GRB_generate_set_list(yeast_falcon, reaction_indexes = reaction_indexes)
-#yeast_falcon_test_set_list <- get_list_of_sets(return_couples(flux_coupling_raptor(yeast_falcon)$coupled))
+# PAO MODEL
+rm(list = ls())
+source('~/GitHub/PathwayMining/raptor_coupling.R')
+source('~/GitHub/PathwayMining/grb_tools.R')
+source('~/GitHub/PathwayMining/load_mod.R')
+source('~/GitHub/PathwayMining/gene_tools.R')
+source('~/GitHub/PathwayMining/set_tools.R')
+source('~/GitHub/PathwayMining/data_tools.R')
+library(parallel)
+library(tictoc)
+library(sybil)
+load('~/GitHub/PathwayMining/data/pao_model/pao_model.RData')
 
-yeast_falcon <- GRB_yeast_falcon_model()
-yeast_falcon_set_lists <- GRB_generate_set_lists(yeast_falcon, yeast_falcon_og_set_list, 1:n, reaction_indexes)
+pao_falcon_model <- GRB_generate_falcon_model(pao_model)
 
-yeast_falcon_composition_set_full <- return_composition_sets(yeast_falcon_og_set_list, yeast_falcon_set_lists, yeast_falcon)
+n <- pao_falcon_model$get_sizes()$NumVars
+vars <- pao_falcon_model$get_names()$VarName
 
-yeast_falcon_composition_set <- yeast_falcon_composition_set_full$composition
+non_gene_assc_rxns <- which(pao_model@genes == "")
+gene_indexes <- grep('Ex_a', pao_falcon_model$get_names()$VarName)
+suppr_indexes <- c(non_gene_assc_rxns, gene_indexes)
 
-print('composition error check')
+coupling_vector <- read_coupling_csv('~/GitHub/PathwayMining/scripts/pao_coupling.csv')
+avoid_rxns <- coupling_vector$completed_idxs
 
-# check for errors in compositions of g1 sets (intermediate) (each blockage within the same set should have the same effects)
-for (i in 1:length(yeast_falcon_og_set_list)){ # print sets joined by each deletion
-  #print(yeast_falcon_og_set_list[[i]])
-  if (length(yeast_falcon_og_set_list[[i]]) > 1){
-    for (j in 1:(length(yeast_falcon_og_set_list[[i]])-1)){
-      rxn1 <- get_rxn_idx(vars, yeast_falcon_og_set_list[[i]][[j]])
-      rxn2 <- get_rxn_idx(vars, yeast_falcon_og_set_list[[i]][[j+1]])
-      #print(c(rxn1, rxn2))
-      #print(paste(yeast_falcon_composition_set[[rxn1]], yeast_falcon_composition_set[[rxn2]]))
-      if (rxn1 > length(yeast_falcon_composition_set) | rxn2 > length(yeast_falcon_composition_set)){next}
+ptm <- proc.time()
+tic()
+coupling_vector_list <- GRB_generate_set_lists_cluster(pao_falcon_model, suppression_idxs = suppr_indexes, reaction_indexes = suppr_indexes, compare_known_r0_sets = TRUE, optimize_suppr=TRUE, cores = 6, avoid_idxs = avoid_rxns, file_output = '~/GitHub/PathwayMining/scripts/pao_coupling.csv')
+save(coupling_vector_list, file = 'pao_coupling_vector.RData')
+toc()
+print(proc.time() - ptm)
 
-      if (length(yeast_falcon_composition_set[[rxn1]]) != length(yeast_falcon_composition_set[[rxn2]])){
-        print("composition error")
-        print(c(yeast_falcon_og_set_list[[i]][[j]], ";", yeast_falcon_og_set_list[[i]][[j+1]]))
-        print(c(yeast_falcon_composition_set[[rxn1]], ";", yeast_falcon_composition_set[[rxn2]]))
+ptm <- proc.time()
+tic()
+pao_g1_coupling_matrix <- coupling_matrix_from_coupling_vector_list(coupling_vector$coupling_vector, n, vars)
+pao_g1_sets <- get_list_of_sets_from_mtx(pao_g1_coupling_matrix)
+toc()
+print(proc.time() - ptm)
+save(pao_g1_sets, file = '~/GitHub/PathwayMining/scripts/final_paper_data/pao_g1_sets.RData')
+
+
+r0_coupling_mtx <- flux_coupling_raptor(pao_falcon_model, reaction_indexes = suppr_indexes)$coupled
+r0_coupling_mtx <- fill_coupling_matrix(r0_coupling_mtx)
+
+suppr_vector <- Matrix(data = FALSE, nrow = 1, ncol = n, sparse = TRUE)
+suppr_vector[suppr_indexes] <- TRUE
+i <- 1
+while (i <= n){
+  if (suppr_vector[i]){ # if tagged to be suppressed
+    set_idx <- which(r0_coupling_mtx[,i])[1] # which is first reaction (row) i is coupled to
+    if (!is.na(set_idx)){
+      rxn_idxs <- which(r0_coupling_mtx[set_idx,]) # other reactions in set
+      # only suppress first reaction in set since, theoretically, suppressing any should have the same effect
+      suppr_vector[rxn_idxs] <- FALSE
+      suppr_vector[rxn_idxs[1]] <- TRUE
       }
-      #print(j)
-      #print(yeast_falcon_composition_set[[GRB_get_rxn_idx(yeast_falcon, j)]])
+    else {
+      suppr_vector[i] <- FALSE
     }
   }
+  i <- i+1
 }
 
-print(yeast_falcon_composition_set_full$error)
+init_suppr <- length(which(suppr_vector))
 
-print('deletion error check')
 
-yeast_falcon_deletion_list <- check_set_list_for_deletion(vars, yeast_falcon_set_lists)
+coupling_vector <- read_coupling_csv('~/GitHub/PathwayMining/scripts/pao_coupling.csv')
+avoid_rxns <- coupling_vector$completed_idxs
 
-# check for inconsistencies in deletions of sets (each blockage within the same set should have the same effects)
-for (i in 1:length(yeast_falcon_og_set_list)){ # print sets joined by each deletion
-  #print(yeast_falcon_og_set_list[[i]])
-  if (length(yeast_falcon_og_set_list[[i]]) > 1){
-    for (j in 1:(length(yeast_falcon_og_set_list[[i]])-1)){
-      rxn1 <- get_rxn_idx(vars, yeast_falcon_og_set_list[[i]][[j]])
-      rxn2 <- get_rxn_idx(vars, yeast_falcon_og_set_list[[i]][[j+1]])
-      #print(c(rxn1, rxn2))
-      if (length(yeast_falcon_deletion_list[[rxn1]]) != length(yeast_falcon_deletion_list[[rxn2]])){
-        print("deletion error")
-        print(c(yeast_falcon_og_set_list[[i]][[j]], ";", yeast_falcon_og_set_list[[i]][[j+1]]))
-        print(c(yeast_falcon_deletion_list[[rxn1]], ";", yeast_falcon_deletion_list[[rxn2]]))
-      }
-      #print(j)
-      #print(yeast_falcon_composition_set[[GRB_get_rxn_idx(yeast_falcon, j)]])
-    }
-  }
+suppr_vector[avoid_rxns] <- FALSE
+
+iter <- 1
+while (length(avoid_rxns) < init_suppr){
+  print(paste(length(avoid_rxns), '/', 712, "...", sep = ''))
+
+  suppr_vector[avoid_rxns] <- FALSE
+
+  ptm <- proc.time()
+  tic()
+  coupling_vector_list <- GRB_generate_set_lists_cluster(pao_falcon_model, suppression_idxs = which(suppr_vector), reaction_indexes = suppr_indexes, compare_known_r0_sets = TRUE, optimize_suppr=FALSE, cores = 6, avoid_idxs = avoid_rxns, file_output = '~/GitHub/PathwayMining/scripts/pao_coupling.csv')
+  save(coupling_vector_list, file = 'pao_coupling_vector.RData')
+  toc()
+  print(proc.time() - ptm)
+  print(paste('FIN', iter))
+  iter <- iter + 1
+  coupling_vector <- read_coupling_csv('~/GitHub/PathwayMining/scripts/pao_coupling.csv')
+  avoid_rxns <- coupling_vector$completed_idxs
 }
-
-save(yeast_falcon_og_set_list, yeast_falcon_set_lists, yeast_falcon_composition_set_full, yeast_falcon_deletion_list, file = "yeast_falcon_run_data.RData")
-
-proc.time() - ptm
-
-print('specific error')
-
-#ct <- 0
-#blocked <- c()
-#for (i in 1:length(yeast_composition_set_full$error)){
-#  if (nchar(yeast_composition_set_full$error[i]) > 8){
-#    ct <- ct + 1
-#    #blocked <- c(blocked, yeast_vars[i])
-#    print(yeast_composition_set_full$error[i])
-#    #print(yeast_composition_set_full$error[i])
-#  }
-#}
-
-print(ct)
-
-yeast_falcon_g0_pairs <- return_pairs_from_set_list(yeast_falcon_og_set_list)
-yeast_falcon_new_g1_pairs <- new_pairs_from_composition(yeast_falcon_og_set_list, yeast_falcon_composition_set)
-yeast_falcon_g1_pairs <- append_pair_lists(yeast_falcon_g0_pairs, yeast_falcon_new_g1_pairs)
-
-yeast_falcon_g0_set_list <- yeast_falcon_og_set_list
-yeast_falcon_g1_set_list <- get_list_of_sets(yeast_falcon_g1_pairs)
-
-save(yeast_falcon_g0_pairs, yeast_falcon_new_g1_pairs, yeast_falcon_g1_pairs, yeast_falcon_g0_set_list, yeast_falcon_g1_set_list, file = 'yeast_falcon_pairs_sets.RData')
 
 print('FIN')
+
+# PAO MODEL
+rm(list = ls())
+source('~/GitHub/PathwayMining/raptor_coupling.R')
+source('~/GitHub/PathwayMining/grb_tools.R')
+source('~/GitHub/PathwayMining/load_mod.R')
+source('~/GitHub/PathwayMining/gene_tools.R')
+source('~/GitHub/PathwayMining/set_tools.R')
+source('~/GitHub/PathwayMining/data_tools.R')
+library(parallel)
+library(tictoc)
+library(sybil)
+load('~/GitHub/PathwayMining/data/pao_model/pao_model.RData')
+pao_falcon_model <- GRB_generate_falcon_model(pao_model)
+
+non_gene_assc_rxns <- which(pao_model@genes == "")
+gene_indexes <- grep('Ex_a', pao_falcon_model$get_names()$VarName)
+suppr_indexes <- c(non_gene_assc_rxns, gene_indexes)
+avoid_rxns <- coupling_vector$completed_idxs
+ptm <- proc.time()
+tic()
+coupling_vector_list <- GRB_generate_set_lists_cluster(pao_falcon_model, suppression_idxs = suppr_indexes, reaction_indexes = suppr_indexes, compare_known_r0_sets = TRUE, optimize_suppr=TRUE, cores = 6, avoid_idxs = avoid_rxns, file_output = '~/GitHub/PathwayMining/scripts/pao_coupling.csv')
+save(coupling_vector_list, file = 'pao_coupling_vector.RData')
+toc()
+print(proc.time() - ptm)
+print('FIN2')

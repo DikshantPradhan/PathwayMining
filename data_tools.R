@@ -36,4 +36,4 @@ read_coupling_csv <- function(filename, coupling_vector = c(), completed_idxs = 
   )
 }
 
-coupling_vector <- read_coupling_csv('~/GitHub/PathwayMining/scripts/pao_coupling.csv')
+#coupling_vector <- read_coupling_csv('~/GitHub/PathwayMining/scripts/pao_coupling.csv')

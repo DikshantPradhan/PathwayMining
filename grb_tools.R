@@ -422,10 +422,10 @@ coupling_matrix_from_array <- function(coupling_array){
   return(coupling_matrix)
 }
 
-GRB_flux_coupling_raptor_wrapper <- function(i, vars, model_og, reaction_indexes = 1:length(vars), compare_mtx = FALSE, r0_coupling_mtx = c()){
+GRB_flux_coupling_raptor_wrapper <- function(i, vars, model_og, reaction_indexes = 1:length(vars), compare_mtx = FALSE, init_coupling_mtx = c(), file_output = NULL){
   print(paste('suppression index:', i))
 
-  #if (!(r0_coupling_mtx[i,i])){
+  #if (!(init_coupling_mtx[i,i])){
   #  print(paste(vars[i], ' blocked'))
   #  next
   #}
@@ -439,19 +439,21 @@ GRB_flux_coupling_raptor_wrapper <- function(i, vars, model_og, reaction_indexes
   model$setattr("UB", setNames(0, vars[i]))
   model$setattr("LB", setNames(0, vars[i]))
 
-  coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes, compare_mtx = compare_mtx, known_set_mtx = r0_coupling_mtx, stored_obs = 4000)$coupled
+  coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes, compare_mtx = compare_mtx, known_set_mtx = init_coupling_mtx, stored_obs = 4000)$coupled
   # coupling_list <- Matrix(data = FALSE, nrow = 1, ncol = length(coupling_mtx))
   # coupling_list[which(coupling_mtx)] <- TRUE
 
   #output <- list(which(coupling_mtx)) #list(get_list_of_sets(return_couples(coupling_mtx)))
   # return(coupling_list)
   coupling_idxs <- which(coupling_mtx)
-  write(paste(c(i,coupling_idxs), collapse = ','),file="pao_coupling.csv",append=TRUE)
+  if (!is.null(file_output)){
+    write(paste(c(i,coupling_idxs), collapse = ','),file = file_output,append=TRUE)
+  }
   return(coupling_idxs)
 }
 
 GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reaction_indexes = c(),
-                                         compare_known_r0_sets = FALSE, optimize_suppr = FALSE, cores = 1, avoid_idxs <- c()){
+                                         compare_known_init_sets = FALSE, optimize_suppr = FALSE, cores = 1, avoid_idxs = c(), file_output = NULL){
 
   n <- model_og$get_sizes()$NumVars
   vars <- model_og$get_names()$VarName
@@ -468,20 +470,20 @@ GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reac
   # dim: rxns_row, rxns_col, deletions
   model <- model_og$copy()
 
-  r0_coupling_mtx <- c()
-  if (compare_known_r0_sets){
-    r0_coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
-    r0_coupling_mtx <- fill_coupling_matrix(r0_coupling_mtx)
+  init_coupling_mtx <- c()
+  if (compare_known_init_sets){
+    init_coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
+    init_coupling_mtx <- fill_coupling_matrix(init_coupling_mtx)
   }
   suppr_vector <- Matrix(data = FALSE, nrow = 1, ncol = n, sparse = TRUE)
   suppr_vector[suppression_idxs] <- TRUE
-  if (optimize_suppr){
+  if (compare_known_init_sets & optimize_suppr){
     i <- 1
     while (i <= n){
       if (suppr_vector[i]){ # if tagged to be suppressed
-        set_idx <- which(r0_coupling_mtx[,i])[1] # which is first reaction (row) i is coupled to
+        set_idx <- which(init_coupling_mtx[,i])[1] # which is first reaction (row) i is coupled to
         if (!is.na(set_idx)){
-          rxn_idxs <- which(r0_coupling_mtx[set_idx,]) # other reactions in set
+          rxn_idxs <- which(init_coupling_mtx[set_idx,]) # other reactions in set
           # only suppress first reaction in set since, theoretically, suppressing any should have the same effect
           suppr_vector[rxn_idxs] <- FALSE
           suppr_vector[rxn_idxs[1]] <- TRUE
@@ -495,14 +497,16 @@ GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reac
     }
   }
 
-  suppr_vector[avoid_idxs] <- FALSE
+  if (length(avoid_idxs) > 0){
+    suppr_vector[avoid_idxs] <- FALSE
+  }
 
   print(paste("# of suppressions:", length(which(suppr_vector)), sep = " "))
-  coupling <- mclapply(which(suppr_vector), function(x) GRB_flux_coupling_raptor_wrapper(x, vars, model_og, reaction_indexes = reaction_indexes, compare_mtx = compare_known_r0_sets, r0_coupling_mtx = r0_coupling_mtx), mc.cores = cores)
+  coupling <- mclapply(which(suppr_vector), function(x) GRB_flux_coupling_raptor_wrapper(x, vars, model_og, reaction_indexes = reaction_indexes, compare_mtx = compare_known_init_sets, init_coupling_mtx = init_coupling_mtx, file_output = file_output), mc.cores = cores)
 
   #coupling_idxs <- c()
   #for (i in which(suppr_vector)){
-  #  intermediate_coupling_idxs <- GRB_flux_coupling_raptor_wrapper(i, vars, model_og, reaction_indexes = reaction_indexes, compare_mtx = compare_known_r0_sets, r0_coupling_mtx = r0_coupling_mtx)
+  #  intermediate_coupling_idxs <- GRB_flux_coupling_raptor_wrapper(i, vars, model_og, reaction_indexes = reaction_indexes, compare_mtx = compare_known_init_sets, init_coupling_mtx = init_coupling_mtx)
   #  #write(paste(),file="myfile",append=TRUE)
   #  coupling_idxs <- c(coupling_idxs, intermediate_coupling_idxs)
   #  coupling_idxs <- unique(coupling_idxs)
@@ -524,6 +528,7 @@ coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_react, va
   #matrix_dim_size <- sqrt(len)
   coupling_matrix <- Matrix(data = FALSE, nrow = n_react, ncol = n_react)
   for (i in 1:length(coupling_list)){
+    if (is.null(coupling_list[[i]])){next}
     coupling_matrix[coupling_list[[i]]] <- TRUE
   }
   #coupling_matrix[which(coupling_vector)] <- TRUE
