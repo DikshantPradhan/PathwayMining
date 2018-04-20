@@ -832,27 +832,41 @@ return_couples <- function(array){ # correlation array (output from flux_couplin
 }
 
 # generate set list from coupling mtx
-get_list_of_sets_from_mtx <- function(coupling_mtx, rxns_list = c()){ #2d columns
+get_list_of_sets_from_mtx <- function(coupling_mtx){ #2d columns
 
   if (!all.equal(rownames(coupling_mtx), colnames(coupling_mtx))){
     print("names mismatch in coupling matrix")
     break
   }
 
-  rxns_list <- rownames(coupling_mtx)
+  coupling_mtx <- fill_coupling_matrix(coupling_mtx)
+  sets <- c()
 
-  for (i in 1:nrow(coupling_mtx)){
-    for (j in 1:ncol(coupling_mtx)){
-      if (coupling_mtx[i,j]){
-        idx1 <- get_set_idx(rownames(coupling_mtx)[i], rxns_list)
-        idx2 <- get_set_idx(colnames(coupling_mtx)[j], rxns_list)
-        if (length(idx1) < 1 | length(idx2) < 1){next}
-        rxns_list <- c(rxns_list[-c(idx1, idx2)], list(union(unlist(rxns_list[idx1]), unlist(rxns_list[idx2]))))
-      }
-    }
+  rxns_list <- rownames(coupling_mtx)
+  active <- matrix(data = TRUE, nrow = length(rxns_list), ncol = 1)
+
+  for (i in 1:length(rxns_list)){
+    if (!active[i]){next}
+    if (!coupling_mtx[i,i]){active[i] <- FALSE; next}
+
+    rxns_in_set <- which(coupling_mtx[i,])
+    active[rxns_in_set] <- FALSE
+    sets <- c(sets, list(rxns_list[rxns_in_set]))
   }
 
-  return(rxns_list)
+  #for (i in 1:nrow(coupling_mtx)){
+  #  for (j in 1:ncol(coupling_mtx)){
+  #    if (coupling_mtx[i,j]){
+  #      idx1 <- get_set_idx(rownames(coupling_mtx)[i], rxns_list)
+  #      idx2 <- get_set_idx(colnames(coupling_mtx)[j], rxns_list)
+  #      if (length(idx1) < 1 | length(idx2) < 1){next}
+  #      rxns_list <- c(rxns_list[-c(idx1, idx2)], list(union(unlist(rxns_list[idx1]), unlist(rxns_list[idx2]))))
+  #    }
+  #  }
+  #}
+
+  #return(rxns_list)
+  return(sets)
 }
 
 core_rxn_id <- function(rxn_id){ # rxn id with parenthesis

@@ -126,3 +126,19 @@ model_data_generation <- function(sybil_model, grb_model, model_name,
 
   # sets size distributions
 }
+
+# PAO MODEL
+rm(list = ls())
+source('~/GitHub/PathwayMining/raptor_coupling.R')
+source('~/GitHub/PathwayMining/grb_tools.R')
+source('~/GitHub/PathwayMining/load_mod.R')
+source('~/GitHub/PathwayMining/gene_tools.R')
+source('~/GitHub/PathwayMining/set_tools.R')
+source('~/GitHub/PathwayMining/data_tools.R')
+library(parallel)
+library(tictoc)
+library(sybil)
+load('~/GitHub/PathwayMining/data/pao_model/pao_model.RData')
+pao <- GRB_pao_model()
+
+#model_data_generation(pao_model, pao, 'pao', g0 = FALSE, r1 = FALSE, gr1 = FALSE, g1 = FALSE)
