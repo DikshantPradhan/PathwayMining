@@ -329,6 +329,15 @@ isolate_gene_matrix <- function(coupling_matrix){
   return(gene_matrix)
 }
 
+isolate_rxn_matrix <- function(coupling_matrix){
+  row_rxns <- which(!grepl('a_', rownames(coupling_matrix)))
+  col_rxns <- which(!grepl('a_', colnames(coupling_matrix)))
+
+  rxn_matrix <- coupling_matrix[row_rxns, col_rxns]
+
+  return(rxn_matrix)
+}
+
 # for (i in 1:length(mutans_model@react_id)){
 #   if (mutans_model@lowbnd[i] != mutans_falcon@lowbnd[i]){print(c(i, "wrong lowbnd"))}
 #   if (mutans_model@uppbnd[i] != mutans_falcon@uppbnd[i]){print(c(i, "wrong uppbnd"))}

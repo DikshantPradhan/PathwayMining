@@ -403,20 +403,40 @@ enrichment_test_seq <- function(gene_data, gi_e_matrix, e_vals){
   return(enrichment_data)
 }
 
+get_num_interactions_in_set <- function(set, e_matrix, threshold = 0){
+  row_remove <- which(!(set %in% rownames(e_matrix)))
+  col_remove <- which(!(set %in% colnames(e_matrix)))
+  #print(row_remove)
+  #print(col_remove)
+  row_set <- set[-c(row_remove)]
+  col_set <- set[-c(col_remove)]
+  #if (length(set) < 2){return(0)}
+  Mp <- (abs(e_matrix) > threshold)
+  #print(row_set)
+  #print(col_set)
+  sub_Mp <- Mp[row_set, col_set]
+  #print(sub_Mp)
+  total <- sum(colSums(sub_Mp)) / 2
+  return(total)
+}
+
 # quicker running function for finding number of gene interactions
 # e matrix is mtx of binary values, needs to differ for each threshold
-get_num_interactions <- function(set_list, e_matrix){
+get_num_interactions <- function(set_list, e_matrix, threshold = 0.5){
 
-  Mp <- e_matrix
+  #Mp <- (e_matrix > threshold)
   total_int <- 0
 
   for (r in set_list) {
     if (length(r) < 2){next}
-    #print(r)
-    sub_Mp <- Mp[r,r]
-    #print(sub_Mp)
-    total_int <- total_int + (sum(colSums(sub_Mp)) / 2)
-    Mp[r,r] <- 0
+    total_int <- total_int + get_num_interactions_in_set(r, e_matrix, threshold)
+    # rm <- which(!(r %in% rownames(Mp)))
+    # r <- r[-c(rm)]
+    # #print(r)
+    # sub_Mp <- Mp[r,r]
+    # #print(sub_Mp)
+    # total_int <- total_int + (sum(colSums(sub_Mp)) / 2)
+    # Mp[r,r] <- 0
   }
 
   return(total_int)
@@ -427,19 +447,19 @@ get_num_interactions <- function(set_list, e_matrix){
 identify_fitn_expr_relation <- function(fit_expr_mtx, fitn_thresh = 1, expr_thresh = 1){
   # col 1: genes, col 2: fitness fold change, col 3: expression fold change
   # assume log2 scaling
-  
+
   interesting_genes <- matrix(data = FALSE, nrow = nrow(fit_expr_mtx), ncol = 1)
-  
+
   for (i in 1:nrow(fit_expr_mtx)){
     fitn <- as.numeric(fit_expr_mtx[i,2])
     expr <- as.numeric(fit_expr_mtx[i,3])
-    
+
     if (is.na(fitn) | is.na(expr)){next}
-    
+
     if (near(fitn, 0, tol = fitn_thresh) & !near(expr, 0, tol = expr_thresh)){
       interesting_genes[i] <- TRUE
     }
   }
-  
+
   return(fit_expr_mtx[which(interesting_genes),1])
 }
