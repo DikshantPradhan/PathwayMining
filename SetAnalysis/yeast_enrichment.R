@@ -5,6 +5,13 @@ source('~/GitHub/PathwayMining/falcon_tools.R')
 load("~/GitHub/PathwayMining/scripts/final_paper_data/yeast_g1_sets.RData")
 load("~/GitHub/PathwayMining/scripts/final_paper_data/yeast_g0_sets.RData")
 
+
+## GENE DELETION FROM MODEL
+
+#pairwiseGeneDel <- doubleGeneDel(yeast_model, allComb = TRUE)
+
+## ENRICHMENT ANALYSIS
+
 e_matrix <- gi_matrix$e
 
 clean_row_names <- function(names){
@@ -20,6 +27,10 @@ colnames(e_matrix) <- clean_row_names(colnames(e_matrix))
 g0 <- clean_rxn_names_in_set(g0_sets)
 g1 <- clean_rxn_names_in_set(yeast_g1_sets)
 
-g1_interact <- get_num_interactions(g1, enrichment_mtx, 0)
+g1_interact <- get_num_interactions(g1, e_matrix, 0.5)
 print(g1_interact)
 print(get_num_interactions_in_set(g1[[986]], e_matrix, 0))
+
+pairs <- return_pairs_from_set_list(g1)
+enrichment <- check_for_enrichment(pairs, e_matrix, 0)
+
