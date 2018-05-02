@@ -245,7 +245,7 @@ get_mutans_model_w_obj <- function(){
 get_PAO_model <- function(){
   
   # need to change file names
-  pao_model <- readTSVmod(reactList = "PAO1recon1_v23_reactions.csv", fielddelim = "\t") # metList = "PAO1recon1_v23_metabolites.csv", 
+  pao_model <- readTSVmod(reactList = "PAO1recon1_v23_reactions_2.csv", fielddelim = "\t") # metList = "PAO1recon1_v23_metabolites.csv", 
   
   reactions_to_replace <- c('PAO1_Biomass', 'PA_Biomass_v13ub', 'PA_Biomass_v13', 'PA_Biomass_v4')
   replacement_idxs <- which(pao_model@react_id %in% reactions_to_replace)
