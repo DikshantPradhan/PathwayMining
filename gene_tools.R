@@ -50,7 +50,7 @@ get_gene_pairs_from_rxn_pair_list <- function(pairs, GPR){
   g2 <- c()
 
   for (i in 1:nrow(pairs)){
-    print(i)
+    #print(i)
     new_pairs <- get_gene_pairs_from_rxn_pair(pairs[i,1], pairs[i,2], GPR)
     if (length(new_pairs) > 0){
       for (j in 1:nrow(new_pairs)){
@@ -125,7 +125,7 @@ gene_set_from_rxn_set <- function(GPR, rxn_set_list){
   gene_set_list <- c()
 
   for (i in 1:length(rxn_set_list)){
-    print(i)
+    #print(i)
     gene_set <- c()
     for (rxn in rxn_set_list[[i]]){
       gene_set <- union(gene_set, get_genes_from_react_id(GPR,rxn))
@@ -208,35 +208,41 @@ build_gi_matrix <- function(gi_ExE, gi_NxN, gi_ExN_NxE){
 
   print("ExE")
   for (i in 1:nrow(gi_ExE)){
-    print(i)
+    # print(i)
     query <- gi_ExE$"Query Strain ID"[i]
     array <- gi_ExE$"Array Strain ID"[i]
-    #e <- gi_ExE$"Genetic interaction score (ε)"[i]
+    e <- gi_ExE$"Genetic interaction score (ε)"[i]
     p <- gi_ExE$"P-value"[i]
-    gi_e_matrix[query, array] <- e
-    gi_p_matrix[query, array] <- p
+    if (abs(e) > abs(gi_e_matrix[query, array])){
+      gi_e_matrix[query, array] <- e
+      gi_p_matrix[query, array] <- p
+    }
   }
 
   print("NxN")
   for (i in 1:nrow(gi_NxN)){
-    print(i)
+    # print(i)
     query <- gi_NxN$"Query Strain ID"[i]
     array <- gi_NxN$"Array Strain ID"[i]
-    #e <- gi_NxN$"Genetic interaction score (ε)"[i]
+    e <- gi_NxN$"Genetic interaction score (ε)"[i]
     p <- gi_NxN$"P-value"[i]
-    gi_e_matrix[query, array] <- e
-    gi_p_matrix[query, array] <- p
+    if (abs(e) > abs(gi_e_matrix[query, array])){
+      gi_e_matrix[query, array] <- e
+      gi_p_matrix[query, array] <- p
+    }
   }
 
   print("ExN_NxE")
   for (i in 1:nrow(gi_ExN_NxE)){
-    print(i)
+    # print(i)
     query <- gi_ExN_NxE$"Query Strain ID"[i]
     array <- gi_ExN_NxE$"Array Strain ID"[i]
-    #e <- gi_ExN_NxE$"Genetic interaction score (ε)"[i]
+    e <- gi_ExN_NxE$"Genetic interaction score (ε)"[i]
     p <- gi_ExN_NxE$"P-value"[i]
-    gi_e_matrix[query, array] <- e
-    gi_p_matrix[query, array] <- p
+    if (abs(e) > abs(gi_e_matrix[query, array])){
+      gi_e_matrix[query, array] <- e
+      gi_p_matrix[query, array] <- p
+    }
   }
 
   gi_matrix <- c()
@@ -287,7 +293,7 @@ build_gi_matrix_from_pairs <- function(genes, gene_pairs){
 
 # matrix of binary values (1, 0) based on whether or not gi pair is above or below threshold
 binary_e_matrix <- function(full_matrix, threshold){
-  e_matrix <- matrix(as.numeric(abs(full_matrix) >= 0.1), nrow = nrow(full_matrix), ncol = ncol(full_matrix))
+  e_matrix <- matrix(as.numeric(full_matrix >= threshold), nrow = nrow(full_matrix), ncol = ncol(full_matrix))
   rownames(e_matrix) <- rownames(full_matrix)
   colnames(e_matrix) <- colnames(full_matrix)
   return(e_matrix)
@@ -403,38 +409,42 @@ enrichment_test_seq <- function(gene_data, gi_e_matrix, e_vals){
   return(enrichment_data)
 }
 
-get_num_interactions_in_set <- function(set, e_matrix, threshold = 0){
-  row_remove <- which(!(set %in% rownames(e_matrix)))
-  col_remove <- which(!(set %in% colnames(e_matrix)))
+get_num_interactions_in_set <- function(set, e_matrix){
+  row <- which(set %in% rownames(e_matrix))
+  col <- which(set %in% colnames(e_matrix))
   #print(row_remove)
   #print(col_remove)
-  row_set <- set[-c(row_remove)]
-  col_set <- set[-c(col_remove)]
-  #if (length(set) < 2){return(0)}
-  Mp <- (abs(e_matrix) > threshold)
-  #print(row_set)
-  #print(col_set)
-  sub_Mp <- Mp[row_set, col_set]
-  #print(sub_Mp)
-  total <- sum(colSums(sub_Mp)) / 2
+  row_set <- set[row]
+  col_set <- set[col]
+  if (length(row_set) < 2 & length(col_set) < 2){return(0)}
+  # Mp <- (abs(e_matrix) > threshold)
+  # print(row_set)
+  # print(col_set)
+  sub_Mp <- e_matrix[row_set, col_set]
+  # print(sub_Mp)
+  # total <- sum(colSums(sub_Mp))# / 2
+  total <- sum(sub_Mp)
+  # Mp[r,r] <- 0
   return(total)
 }
 
 # quicker running function for finding number of gene interactions
 # e matrix is mtx of binary values, needs to differ for each threshold
-get_num_interactions <- function(set_list, e_matrix, threshold = 0.5){
+get_num_interactions <- function(set_list, e_matrix, threshold = 0.0){
 
-  #Mp <- (e_matrix > threshold)
+  # Mp <- e_matrix
+  Mp <- (e_matrix >= threshold)
+  
   total_int <- 0
 
   for (r in set_list) {
-    if (length(r) < 2){next}
-    total_int <- total_int + get_num_interactions_in_set(r, e_matrix, threshold)
+    # if (length(r) < 2){next}
+    total_int <- total_int + get_num_interactions_in_set(r, Mp)
     # rm <- which(!(r %in% rownames(Mp)))
     # r <- r[-c(rm)]
-    # #print(r)
+    #print(r)
     # sub_Mp <- Mp[r,r]
-    # #print(sub_Mp)
+    #print(sub_Mp)
     # total_int <- total_int + (sum(colSums(sub_Mp)) / 2)
     # Mp[r,r] <- 0
   }

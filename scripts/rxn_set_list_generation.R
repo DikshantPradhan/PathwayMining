@@ -157,4 +157,103 @@ yeast_r0_set_list <- yeast_r0_set_list
 yeast_r1_set_list <- get_list_of_sets(yeast_r1_pairs)
 save(yeast_r0_pairs, yeast_new_r1_pairs, yeast_r1_pairs, yeast_r0_set_list, yeast_r1_set_list, file = 'yeast_pairs_sets.RData')
 
+rm(list = ls())
+source('~/GitHub/PathwayMining/raptor_coupling.R')
+source('~/GitHub/PathwayMining/grb_tools.R')
+source('~/GitHub/PathwayMining/load_mod.R')
+source('~/GitHub/PathwayMining/gene_tools.R')
+source('~/GitHub/PathwayMining/set_tools.R')
+source('~/GitHub/PathwayMining/data_tools.R')
+library(parallel)
+library(tictoc)
+library(sybil)
+
+load('~/GitHub/PathwayMining/data/yeast_model/Maranas_model/maranas_model_lipid_exch.RData')
+
+yeast <- GRB_yeast_model()
+n <- yeast$get_sizes()$NumVars
+vars <- yeast$get_names()$VarName
+
+coupling_vector <- read_coupling_csv('~/GitHub/PathwayMining/scripts/yeast_r1_coupling.csv')
+avoid_rxns <- coupling_vector$completed_idxs
+
+ptm <- proc.time()
+tic()
+coupling_vector_list <- GRB_generate_set_lists_cluster(yeast, compare_known_init_sets = TRUE, optimize_suppr=TRUE, cores = 6, avoid_idxs = avoid_rxns, file_output = '~/GitHub/PathwayMining/scripts/yeast_r1_coupling.csv')
+save(coupling_vector_list, file = '~/GitHub/PathwayMining/scripts/yeast_g1_coupling_vector.RData')
+toc()
+print(proc.time() - ptm)
+
+ptm <- proc.time()
+tic()
+yeast_g1_coupling_matrix <- coupling_matrix_from_coupling_vector_list(coupling_vector$coupling_vector, n, vars)
+yeast_g1_sets <- get_list_of_sets_from_mtx(yeast_g1_coupling_matrix)
+toc()
+print(proc.time() - ptm)
+save(yeast_g1_sets, file = '~/GitHub/PathwayMining/scripts/final_paper_data/yeast_r1_sets.RData')
+
+
 print('FIN')
+
+
+# PAO MODEL
+rm(list = ls())
+source('~/GitHub/PathwayMining/raptor_coupling.R')
+source('~/GitHub/PathwayMining/grb_tools.R')
+source('~/GitHub/PathwayMining/load_mod.R')
+source('~/GitHub/PathwayMining/gene_tools.R')
+source('~/GitHub/PathwayMining/set_tools.R')
+source('~/GitHub/PathwayMining/data_tools.R')
+library(parallel)
+library(tictoc)
+library(sybil)
+pao <- GRB_pao_model()
+n <- pao$get_sizes()$NumVars
+vars <- pao$get_names()$VarName
+
+output_file <- '~/GitHub/PathwayMining/scripts/pao_r1_coupling.csv'
+
+coupling_vector <- read_coupling_csv(output_file)
+avoid_rxns <- coupling_vector$completed_idxs
+
+ptm <- proc.time()
+tic()
+coupling_vector_list <- GRB_generate_set_lists_cluster(pao, compare_known_init_sets = TRUE, optimize_suppr=TRUE, cores = 6, avoid_idxs = avoid_rxns, file_output = output_file)
+save(coupling_vector_list, file = 'pao_coupling_vector.RData')
+toc()
+print(proc.time() - ptm)
+
+ptm <- proc.time()
+tic()
+pao_r1_coupling_matrix <- coupling_matrix_from_coupling_vector_list(coupling_vector$coupling_vector, n, vars)
+pao_r1_sets <- get_list_of_sets_from_mtx(pao_r1_coupling_matrix)
+toc()
+print(proc.time() - ptm)
+save(pao_r1_sets, file = '~/GitHub/PathwayMining/scripts/final_paper_data/pao_r1_sets.RData')
+
+
+pao_r0_coupling_mtx <- flux_coupling_raptor(pao)$coupled
+r0_sets <- get_list_of_sets_from_mtx(pao_r0_coupling_mtx)
+pao_falcon <- GRB_pao_falcon_model()
+n <- pao_falcon$get_sizes()$NumVars
+vars <- pao_falcon$get_names()$VarName
+
+pao_g0_coupling_mtx <- flux_coupling_raptor(pao_falcon, reaction_indexes = 1:2699)$coupled
+g0_sets <- get_list_of_sets_from_mtx(pao_g0_coupling_mtx)
+
+check_all_sets_for_containing(r0_sets, g0_sets)
+
+load('~/GitHub/PathwayMining/data/pao_model/pao_model.RData')
+pao_falcon_model <- GRB_generate_falcon_model(pao_model)
+n <- pao_falcon_model$get_sizes()$NumVars
+vars <- pao_falcon_model$get_names()$VarName
+
+non_gene_assc_rxns <- which(pao_model@genes == "")
+gene_indexes <- grep('Ex_a', pao_falcon_model$get_names()$VarName)
+suppr_indexes <- c(non_gene_assc_rxns, gene_indexes)
+
+pao_g0_coupling_mtx_2 <- flux_coupling_raptor(pao_falcon_model, reaction_indexes = suppr_indexes)$coupled
+g0_sets_2 <- get_list_of_sets_from_mtx(pao_g0_coupling_mtx)
+
+check_all_sets_for_containing(r0_sets, g0_sets_2)
+check_all_sets_for_containing(g0_sets, g0_sets_2)

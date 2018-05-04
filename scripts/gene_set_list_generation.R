@@ -300,6 +300,8 @@ library(tictoc)
 library(sybil)
 load('~/GitHub/PathwayMining/data/pao_model/pao_model.RData')
 
+output_file <- '~/GitHub/PathwayMining/scripts/pao_g1_coupling.csv'
+
 pao_falcon_model <- GRB_generate_falcon_model(pao_model)
 
 n <- pao_falcon_model$get_sizes()$NumVars
@@ -309,12 +311,12 @@ non_gene_assc_rxns <- which(pao_model@genes == "")
 gene_indexes <- grep('Ex_a', pao_falcon_model$get_names()$VarName)
 suppr_indexes <- c(non_gene_assc_rxns, gene_indexes)
 
-coupling_vector <- read_coupling_csv('~/GitHub/PathwayMining/scripts/pao_coupling.csv')
-avoid_rxns <- coupling_vector$completed_idxs
+#coupling_vector <- read_coupling_csv(output_file)
+avoid_rxns <- c() #coupling_vector$completed_idxs
 
 ptm <- proc.time()
 tic()
-coupling_vector_list <- GRB_generate_set_lists_cluster(pao_falcon_model, suppression_idxs = suppr_indexes, reaction_indexes = suppr_indexes, compare_known_r0_sets = TRUE, optimize_suppr=TRUE, cores = 6, avoid_idxs = avoid_rxns, file_output = '~/GitHub/PathwayMining/scripts/pao_coupling.csv')
+coupling_vector_list <- GRB_generate_set_lists_cluster(pao_falcon_model, suppression_idxs = suppr_indexes, reaction_indexes = suppr_indexes, compare_known_init_sets = TRUE, optimize_suppr=TRUE, cores = 6, avoid_idxs = avoid_rxns, file_output = output_file)
 save(coupling_vector_list, file = 'pao_coupling_vector.RData')
 toc()
 print(proc.time() - ptm)

@@ -1,3 +1,4 @@
+rm(list = ls())
 source('~/GitHub/PathwayMining/raptor_coupling.R')
 source('~/GitHub/PathwayMining/grb_tools.R')
 source('~/GitHub/PathwayMining/load_mod.R')
@@ -16,8 +17,18 @@ model_data_generation <- function(sybil_model, grb_model, model_name,
 
   falcon_n <- falcon_model$get_sizes()$NumVars
   falcon_vars <- falcon_model$get_names()$VarName
+  non_vars <- grep('conversion', falcon_vars)
+
+  non_gene_assc_rxns <- which(sybil_model@genes == "")
+  gene_indexes <- grep('Ex_a', falcon_model$get_names()$VarName)
+  falcon_rxn_idxs <- c(non_gene_assc_rxns, gene_indexes)
+
+  falcon_full_rxn_idxs <- 1:(non_vars[1]-1)
+
   falcon_gene_rxn_idxs <- grep('Ex_a_', falcon_vars)
-  falcon_rxn_idxs <- 1:(falcon_gene_rxn_idxs[length(falcon_gene_rxn_idxs)])
+  if (length(falcon_rxn_idxs) == 0){
+    falcon_rxn_idxs <- 1:(falcon_gene_rxn_idxs[length(falcon_gene_rxn_idxs)])
+  }
 
   gpr <- generate_gpr(sybil_model)
   if (gpr_save){
@@ -35,7 +46,7 @@ model_data_generation <- function(sybil_model, grb_model, model_name,
     print(proc.time() - ptm)
     ptm <- proc.time()
     tic()
-    r0_sets <- get_list_of_sets(return_couples(r0_coupling_mtx))
+    r0_sets <- get_list_of_sets_from_mtx(r0_coupling_mtx) #get_list_of_sets(return_couples(r0_coupling_mtx))
     toc()
     print(proc.time() - ptm)
 
@@ -56,7 +67,7 @@ model_data_generation <- function(sybil_model, grb_model, model_name,
 
     ptm <- proc.time()
     tic()
-    g0_coupling_mtx <- flux_coupling_raptor(falcon_model, reaction_indexes = falcon_rxn_idxs)$coupled
+    g0_coupling_mtx <- flux_coupling_raptor(falcon_model, reaction_indexes = falcon_full_rxn_idxs)$coupled
     toc()
     print(proc.time() - ptm)
     save(g0_coupling_mtx, file = paste('final_paper_data/', model_name, '_g0_coupling_mtx.RData', sep = ''))
@@ -77,7 +88,7 @@ model_data_generation <- function(sybil_model, grb_model, model_name,
 
     ptm <- proc.time()
     tic()
-    coupling_vector_list <- GRB_generate_set_lists_cluster(grb_model, 1:n, compare_known_r0_sets = TRUE, optimize_suppr=TRUE, cores = cores)
+    coupling_vector_list <- GRB_generate_set_lists_cluster(grb_model, 1:n, compare_known_init_sets = TRUE, optimize_suppr=TRUE, cores = cores)
     toc()
     print(proc.time() - ptm)
     save(coupling_vector_list, file = paste('final_paper_data/', model_name, '_r1_coupling_vector_list.RData', sep = ''))
@@ -110,7 +121,7 @@ model_data_generation <- function(sybil_model, grb_model, model_name,
     ptm <- proc.time()
     tic()
     coupling_vector_list <- GRB_generate_set_lists_cluster(falcon_model, suppression_idxs = suppr_indexes, reaction_indexes = suppr_indexes,
-                                                           compare_known_r0_sets = TRUE, optimize_suppr=TRUE, cores = cores)
+                                                           compare_known_init_sets = TRUE, optimize_suppr=TRUE, cores = cores)
     toc()
     print(proc.time() - ptm)
     save(coupling_vector_list, file = paste('final_paper_data/', model_name, '_g1_coupling_vector_list.RData', sep = ''))
@@ -128,7 +139,6 @@ model_data_generation <- function(sybil_model, grb_model, model_name,
 }
 
 # PAO MODEL
-rm(list = ls())
 source('~/GitHub/PathwayMining/raptor_coupling.R')
 source('~/GitHub/PathwayMining/grb_tools.R')
 source('~/GitHub/PathwayMining/load_mod.R')
@@ -141,4 +151,4 @@ library(sybil)
 load('~/GitHub/PathwayMining/data/pao_model/pao_model.RData')
 pao <- GRB_pao_model()
 
-#model_data_generation(pao_model, pao, 'pao', g0 = FALSE, r1 = FALSE, gr1 = FALSE, g1 = FALSE)
+model_data_generation(pao_model, pao, 'pao', r0 = FALSE, gr0 = TRUE, g0 = FALSE, r1 = TRUE, gr1 = TRUE, g1 = TRUE)
