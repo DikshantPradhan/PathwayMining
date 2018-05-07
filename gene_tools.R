@@ -409,14 +409,14 @@ enrichment_test_seq <- function(gene_data, gi_e_matrix, e_vals){
   return(enrichment_data)
 }
 
-get_num_interactions_in_set <- function(set, e_matrix){
+get_num_interactions_in_set <- function(set, e_matrix, clear = FALSE){
   row <- which(set %in% rownames(e_matrix))
   col <- which(set %in% colnames(e_matrix))
   #print(row_remove)
   #print(col_remove)
   row_set <- set[row]
   col_set <- set[col]
-  if (length(row_set) < 2 & length(col_set) < 2){return(0)}
+  if (length(row_set) < 2 & length(col_set) < 2){return(list(matrix = e_matrix, total = 0))}
   # Mp <- (abs(e_matrix) > threshold)
   # print(row_set)
   # print(col_set)
@@ -424,13 +424,17 @@ get_num_interactions_in_set <- function(set, e_matrix){
   # print(sub_Mp)
   # total <- sum(colSums(sub_Mp))# / 2
   total <- sum(sub_Mp)
+  if (clear){
+    e_matrix[row_set, col_set] <- 0
+  }
   # Mp[r,r] <- 0
-  return(total)
+  # return(total)
+  list(matrix = e_matrix, total = total)
 }
 
 # quicker running function for finding number of gene interactions
 # e matrix is mtx of binary values, needs to differ for each threshold
-get_num_interactions <- function(set_list, e_matrix, threshold = 0.0){
+get_num_interactions <- function(set_list, e_matrix, threshold = 0.0, clear = FALSE){
 
   # Mp <- e_matrix
   Mp <- (e_matrix >= threshold)
@@ -439,7 +443,9 @@ get_num_interactions <- function(set_list, e_matrix, threshold = 0.0){
 
   for (r in set_list) {
     # if (length(r) < 2){next}
-    total_int <- total_int + get_num_interactions_in_set(r, Mp)
+    output <- get_num_interactions_in_set(r, Mp, clear = clear)
+    total_int <- total_int + output$total
+    Mp <- output$matrix
     # rm <- which(!(r %in% rownames(Mp)))
     # r <- r[-c(rm)]
     #print(r)
