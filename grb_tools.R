@@ -138,6 +138,10 @@ GRB_generate_falcon_model <- function(sybil_model, falcon_model = FALSE, r0_gene
     fwd <- split_fwd_rxns[i]
     rev <- split_rev_rxns[i]
 
+    #print('fwd, rev')
+    #print(fwd)
+    #print(rev)
+
     # get bounds (care about fwd_ub & rev_lb)
     fwd_ub <- grb_falcon_model$getattr("UB")[[fwd]]
     fwd_lb <- grb_falcon_model$getattr("LB")[[fwd]]
@@ -159,16 +163,25 @@ GRB_generate_falcon_model <- function(sybil_model, falcon_model = FALSE, r0_gene
     fwd_name <- paste(fwd, 'I', sep = ' ')
     rev_name <- paste(rev, 'I', sep = ' ')
 
-    .Call("GRB_updatemodel", grb_falcon_model$exptr)
-    .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(fwd_idxs-1), fwd_vec, ">=", 0.0,
+    print('...')
+    print(fwd_idxs)
+    print(fwd_vec)
+    print(rev_idxs)
+    print(rev_vec)
+
+    .Call("GRB_updatemodel", grb_falcon_model$exptr) ##
+    #.Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(fwd_idxs-1), fwd_vec, ">=", 0.0,
+    #  fwd_name)
+    #.Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(rev_idxs-1), rev_vec, "<=", (-1*rev_lb),
+    #  rev_name)
+    .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(fwd_idxs), fwd_vec, ">=", 0.0,
       fwd_name)
-    .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(rev_idxs-1), rev_vec, "<=", (-1*rev_lb),
+    .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(rev_idxs), rev_vec, "<=", (-1*rev_lb),
       rev_name)
     .Call("GRB_updatemodel", grb_falcon_model$exptr)
-    #grb_falcon_model$addconstr(paste(fwd, '*', I, sep = ''),
-    #    sense="<=", rhs= fwd_ub, name = paste(a_rxn, 'fwd', sep = '_')) # bound on fwd conversion
-    #grb_falcon_model$addconstr(paste(rev, '*(1 - ', I, ')',  sep = ''),
-    #    sense=">=", rhs= rev_lb, name = paste(a_rxn, 'rev', sep = '_')) # bound on rev conversion
+    #grb_falcon_model$addconstr(paste(fwd, '*', I, sep = ''), sense="<=", rhs= fwd_ub, name = paste(a_rxn, 'fwd', sep = '_')) # bound on fwd conversion
+    #grb_falcon_model$addconstr(paste(rev, '*(1 - ', I, ')',  sep = ''), sense=">=", rhs= rev_lb, name = paste(a_rxn, 'rev', sep = '_')) # bound on rev conversion
+    #.Call("GRB_updatemodel", grb_falcon_model$exptr)
   }
 
   # for each reaction w fwd and rev components:
