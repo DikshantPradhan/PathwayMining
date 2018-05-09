@@ -155,8 +155,8 @@ GRB_generate_falcon_model <- function(sybil_model, falcon_model = FALSE, r0_gene
     rev_idx <- which(vars == rev)
 
     #print(paste(fwd, fwd_ub, fwd_lb, rev, rev_ub, rev_lb, I))
-    fwd_vec <- c(fwd_ub, -1) #c(3.2, 1)
-    rev_vec <- c(-1*rev_lb, -1) #c(3.2, 1)
+    fwd_vec <- c(fwd_ub, -1)
+    rev_vec <- c(-1*rev_ub, -1)
     fwd_idxs <- c(i_idx, which(vars == fwd))
     rev_idxs <- c(i_idx, which(vars == rev))
 
@@ -170,14 +170,16 @@ GRB_generate_falcon_model <- function(sybil_model, falcon_model = FALSE, r0_gene
     print(rev_vec)
 
     .Call("GRB_updatemodel", grb_falcon_model$exptr) ##
-    #.Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(fwd_idxs-1), fwd_vec, ">=", 0.0,
-    #  fwd_name)
+    .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(fwd_idxs-1), fwd_vec, ">=", 0.0,
+      fwd_name)
     #.Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(rev_idxs-1), rev_vec, "<=", (-1*rev_lb),
     #  rev_name)
-    .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(fwd_idxs), fwd_vec, ">=", 0.0,
-      fwd_name)
-    .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(rev_idxs), rev_vec, "<=", (-1*rev_lb),
+    .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(rev_idxs-1), rev_vec, ">=", (-1*rev_ub),
       rev_name)
+    #.Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(fwd_idxs), fwd_vec, ">=", 0.0,
+    #  fwd_name)
+    #.Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(rev_idxs), rev_vec, "<=", (-1*rev_lb),
+    #  rev_name)
     .Call("GRB_updatemodel", grb_falcon_model$exptr)
     #grb_falcon_model$addconstr(paste(fwd, '*', I, sep = ''), sense="<=", rhs= fwd_ub, name = paste(a_rxn, 'fwd', sep = '_')) # bound on fwd conversion
     #grb_falcon_model$addconstr(paste(rev, '*(1 - ', I, ')',  sep = ''), sense=">=", rhs= rev_lb, name = paste(a_rxn, 'rev', sep = '_')) # bound on rev conversion

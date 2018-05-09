@@ -72,12 +72,13 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
     met_list <- c(unlist(old_met_list), unlist(new_met_list))
     met_list <- met_list[!is.na(met_list)]
 
-    if (!simple){ # add reverse reaction if needed
-
+    if (!simple){ # add reverse reaction if needed # change from 0 -> 1000 & -1000 -> 0
+      lowbnd <- model@lowbnd[rxn_idx]
+      uppbnd <- model@uppbnd[rxn_idx]
       model <- addReact(model, paste(rxn_id, identifier, 'fwd', sep = '_'), met = met_list,
-                        Scoef = c(old_met_coeff, rep(-1, length(new_met_list))), lb = 0, ub = 1000, reversible = FALSE)
+                        Scoef = c(old_met_coeff, rep(-1, length(new_met_list))), lb = 0, ub = uppbnd, reversible = FALSE)
       model <- addReact(model, paste(rxn_id, identifier, 'rev', sep = '_'), met = met_list,
-                        Scoef = c(old_met_coeff, rep(1, length(new_met_list))), lb = -1000, ub = 0, reversible = FALSE)
+                        Scoef = c(old_met_coeff, rep(1, length(new_met_list))), lb = lowbnd, ub = 0, reversible = FALSE)
       # rxn_removal_ids <- c(rxn_removal_ids, rxn_id)
 
       ## NEED CONSTRAINTS TO PREVENT MODEL FROM PUSHING FLUX THROUGH BOTH DIRECTIONS AT ONCE

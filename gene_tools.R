@@ -211,7 +211,7 @@ build_gi_matrix <- function(gi_ExE, gi_NxN, gi_ExN_NxE){
     # print(i)
     query <- gi_ExE$"Query Strain ID"[i]
     array <- gi_ExE$"Array Strain ID"[i]
-    e <- gi_ExE$"Genetic interaction score (ε)"[i]
+    # e <- gi_ExE$"Genetic interaction score (ε)"[i]
     p <- gi_ExE$"P-value"[i]
     if (abs(e) > abs(gi_e_matrix[query, array])){
       gi_e_matrix[query, array] <- e
@@ -224,7 +224,7 @@ build_gi_matrix <- function(gi_ExE, gi_NxN, gi_ExN_NxE){
     # print(i)
     query <- gi_NxN$"Query Strain ID"[i]
     array <- gi_NxN$"Array Strain ID"[i]
-    e <- gi_NxN$"Genetic interaction score (ε)"[i]
+    # e <- gi_NxN$"Genetic interaction score (ε)"[i]
     p <- gi_NxN$"P-value"[i]
     if (abs(e) > abs(gi_e_matrix[query, array])){
       gi_e_matrix[query, array] <- e
@@ -237,7 +237,7 @@ build_gi_matrix <- function(gi_ExE, gi_NxN, gi_ExN_NxE){
     # print(i)
     query <- gi_ExN_NxE$"Query Strain ID"[i]
     array <- gi_ExN_NxE$"Array Strain ID"[i]
-    e <- gi_ExN_NxE$"Genetic interaction score (ε)"[i]
+    # e <- gi_ExN_NxE$"Genetic interaction score (ε)"[i]
     p <- gi_ExN_NxE$"P-value"[i]
     if (abs(e) > abs(gi_e_matrix[query, array])){
       gi_e_matrix[query, array] <- e
