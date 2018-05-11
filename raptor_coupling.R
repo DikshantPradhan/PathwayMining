@@ -311,20 +311,15 @@ fill_coupling_matrix <- function(coupled){
 
   for (i in 1:nrow(coupled)){
     #identify set
+    # if (!coupled[i,i]){next}
     set <- which(coupled[i,]) # true values in row
     if (length(set) < 1){next}
-
-    # fill in TRUE for all pairs in set
-    for (j in 1:length(set)){
-      idx1 <- set[j]
-      for (k in j:length(set)){
-        idx2 <- set[k]
-        coupled[idx1, idx2] <- TRUE
-      }
-    }
+    set <- unique(c(i, set))
+    coupled[set,set] <- TRUE
 
   }
 
+  coupled[lower.tri(coupled)] <- FALSE
   return(coupled)
 }
 

@@ -98,6 +98,8 @@ GRB_pao_falcon_model <- function(){
   return(pao_falcon)
 }
 
+## FUNCTIONS
+
 GRB_generate_falcon_model <- function(sybil_model, falcon_model = FALSE, r0_gene_set = c(), r0_rxn_set_list = c()){
 
   sybil_falcon_model <- sybil_model
@@ -163,23 +165,13 @@ GRB_generate_falcon_model <- function(sybil_model, falcon_model = FALSE, r0_gene
     fwd_name <- paste(fwd, 'I', sep = ' ')
     rev_name <- paste(rev, 'I', sep = ' ')
 
-    print('...')
-    print(fwd_idxs)
-    print(fwd_vec)
-    print(rev_idxs)
-    print(rev_vec)
-
-    .Call("GRB_updatemodel", grb_falcon_model$exptr) ##
+    #.Call("GRB_updatemodel", grb_falcon_model$exptr) ##
     .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(fwd_idxs-1), fwd_vec, ">=", 0.0,
       fwd_name)
     #.Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(rev_idxs-1), rev_vec, "<=", (-1*rev_lb),
     #  rev_name)
     .Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(rev_idxs-1), rev_vec, ">=", (-1*rev_ub),
       rev_name)
-    #.Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(fwd_idxs), fwd_vec, ">=", 0.0,
-    #  fwd_name)
-    #.Call("GRB_addconstr", grb_falcon_model$exptr, 2L, as.integer(rev_idxs), rev_vec, "<=", (-1*rev_lb),
-    #  rev_name)
     .Call("GRB_updatemodel", grb_falcon_model$exptr)
     #grb_falcon_model$addconstr(paste(fwd, '*', I, sep = ''), sense="<=", rhs= fwd_ub, name = paste(a_rxn, 'fwd', sep = '_')) # bound on fwd conversion
     #grb_falcon_model$addconstr(paste(rev, '*(1 - ', I, ')',  sep = ''), sense=">=", rhs= rev_lb, name = paste(a_rxn, 'rev', sep = '_')) # bound on rev conversion
@@ -193,8 +185,6 @@ GRB_generate_falcon_model <- function(sybil_model, falcon_model = FALSE, r0_gene
   .Call("GRB_updatemodel", grb_falcon_model$exptr)
   return(grb_falcon_model)
 }
-
-## FUNCTIONS
 
 GRB_get_rxn_idx <- function(model, rxn){
   vars <- model$get_names()$VarName
@@ -468,7 +458,7 @@ GRB_flux_coupling_raptor_wrapper <- function(i, vars, model_og, reaction_indexes
 }
 
 GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reaction_indexes = c(),
-                                         compare_known_init_sets = FALSE, optimize_suppr = FALSE, cores = 1, avoid_idxs = c(), file_output = NULL){
+                                         compare_known_init_sets = FALSE, optimize_suppr = FALSE, optimize_rxns = FALSE, cores = 1, avoid_idxs = c(), file_output = NULL){
 
   n <- model_og$get_sizes()$NumVars
   vars <- model_og$get_names()$VarName
@@ -509,6 +499,10 @@ GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reac
 
       }
       i <- i+1
+    }
+
+    if (optimize_rxns){
+      reaction_indexes <- which(suppr_vector)
     }
   }
 
@@ -585,7 +579,7 @@ GRB_get_blocked <- function(model){
   return(model$get_names()$VarName[blocked])
 }
 
-GRB_maximize <- function(model_og, obj, suppress = c()){ # suppress is characters
+GRB_maximize <- function(model_og, obj, suppress = c(), max = TRUE){ # suppress is characters
   model <- model_og$copy()
 
   n <- model$get_sizes()$NumVars
@@ -604,6 +598,9 @@ GRB_maximize <- function(model_og, obj, suppress = c()){ # suppress is character
   # set obj
   model$setattr("Obj", setNames(1.0, vars[obj]))
   model$set_model_sense(maximize=TRUE)
+  if (!max){
+    model$set_model_sense(minimize=TRUE)
+  }
   model$optimize()
   sol <- model$get_solution()
   obj_max <- sol$ObjVal

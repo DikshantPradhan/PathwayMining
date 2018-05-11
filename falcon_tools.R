@@ -26,13 +26,13 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
 
   # clean gene sets, if passed in
   if (gene_set_bool){
-  for (i in 1:length(gene_sets)){
-    set <- gene_sets[[i]]
-    removal <- which(set == "")
-    if (length(removal) > 0){
-      gene_sets[[i]] <- set[-c(which(set == ""))]
+    for (i in 1:length(gene_sets)){
+      set <- gene_sets[[i]]
+      removal <- which(set == "")
+      if (length(removal) > 0){
+        gene_sets[[i]] <- set[-c(which(set == ""))]
+      }
     }
-  }
   }
 
   # add all exchange reactions
@@ -95,14 +95,14 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
   }
 
   # used for direct addition of gene/enzyme to reaction; not used when reaction_activity is needed (or case)
-  simple_add <- function(model, new_met_list, rxn_id, simple = FALSE){
+  simple_add <- function(model, new_met_list, rxn_id, simple = TRUE){
     # print(c(rxn_id, ":", new_met_list))
     model <- normal_add(model, new_met_list, rxn_id, simple = TRUE)
     return(model)
   }
 
   # used for multiple gene combinations; reaction_activity needed
-  or_add <- function(model, path_list, rxn_id, simple = TRUE, split = FALSE){
+  or_add <- function(model, path_list, rxn_id, simple = TRUE, split = TRUE){
     rxn_idx <- which(og_react_id == rxn_id)
     rxn_activity <- paste('a', rxn_id, sep = "_")
 
@@ -175,7 +175,7 @@ generate_falcon_model <- function(model, gene_sets = c(), rxn_sets = c()){
       }
       genes <- unlist(genes)
       if (genes[1] == ''){next}
-      model <- or_add(model, gpr_paths, og_react_id[i])
+      model <- or_add(model, gpr_paths, og_react_id[i], split = TRUE)
       marked_genes[which(model@allGenes %in% genes)] <- TRUE
       marked_rxns[i] <- TRUE
     }

@@ -3,14 +3,16 @@
 get_set_idx <- function(rxn, rxns_list){
   idx <- grep(core_rxn_id(rxn), rxns_list)
   #print(idx)
+  sets <- c()
   for (j in idx){
     if (rxn %in% rxns_list[[j]]){
       # idx <- c()
       # idx <- j
-      return(j)
+      #return(j)
+      sets <- c(sets, j)
     }
   }
-  return(integer(0))
+  return(sets)
 }
 
 map_elements_to_set <- function(elem_list, set_list){
@@ -832,13 +834,18 @@ return_couples <- function(array){ # correlation array (output from flux_couplin
 }
 
 # generate set list from coupling mtx
-get_list_of_sets_from_mtx <- function(coupling_mtx){ #2d columns
+get_list_of_sets_from_mtx <- function(coupling_mtx, init_mtx = NULL){ #2d columns
 
   if (!all.equal(rownames(coupling_mtx), colnames(coupling_mtx))){
     print("names mismatch in coupling matrix")
     break
   }
 
+  if (!is.null(init_mtx)){
+    if (!all.equal(rownames(coupling_mtx), rownames(init_mtx)) & !all.equal(colnames(coupling_mtx), colnames(init_mtx))){
+      coupling_mtx[which(init_mtx)] <- TRUE
+    }
+  }
   coupling_mtx <- fill_coupling_matrix(coupling_mtx)
   sets <- c()
 
