@@ -28,7 +28,7 @@ GRB_ecoli_falcon_model <- function(){
 
 GRB_yeast_model <- function(){
   #maranas_model_exch_add_biom_rm/maranas_model_lipid_exch
-  load('~/GitHub/PathwayMining/data/yeast_model/Maranas_model/maranas_model_lipid_exch.RData')
+  load('~/GitHub/PathwayMining/data/yeast_model/Maranas_model/yeast_model.RData')
 
   # setwd("~/GitHub/PathwayMining/")
 
@@ -41,7 +41,7 @@ GRB_yeast_model <- function(){
 GRB_yeast_falcon_model <- function(){
 
   #load('~/GitHub/PathwayMining/data/yeast_model/Price Models/yeast_open_mod.RData')
-  load('~/GitHub/PathwayMining/data/yeast_model/Maranas_model/maranas_model_lipid_exch.RData')
+  load('~/GitHub/PathwayMining/data/yeast_model/Maranas_model/yeast_model.RData')
 
   sybil_yeast <- yeast_model
   yeast_falcon_model <- GRB_generate_falcon_model(sybil_yeast)
