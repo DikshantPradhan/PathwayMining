@@ -475,7 +475,7 @@ GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reac
   # dim: rxns_row, rxns_col, deletions
   model <- model_og$copy()
 
-  init_coupling_mtx <- c()
+  #init_coupling_mtx <- c()
   if (compare_known_init_sets){
     init_coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
     init_coupling_mtx <- fill_coupling_matrix(init_coupling_mtx)
