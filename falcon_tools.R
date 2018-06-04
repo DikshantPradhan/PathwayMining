@@ -308,17 +308,30 @@ clean_rxn_names_in_set <- function(set_list){
     new_name <- strsplit(name, 'Ex_a_')[[1]]
     return(new_name[2])
   }
+  
+  new_sets <- c()
 
   for (i in 1:length(set_list)){
+    k <- 1
+    new_set <- c()
     for (j in 1:length(set_list[[i]])){
       new_name <- clean_ex_a(set_list[[i]][j])
       if (!is.na(new_name)){
-        set_list[[i]][j] <- clean_ex_a(set_list[[i]][j])
+        # set_list[[i]][j] <- clean_ex_a(set_list[[i]][j])
+        new_set[k] <- clean_ex_a(set_list[[i]][j])
+        k <- k+1
       }
+      else {
+        # set_list[[i]][j] <- ""
+        next
+      }
+    }
+    if (length(new_set) > 0){
+      new_sets[i] <- list(new_set)
     }
   }
 
-  return(set_list)
+  return(new_sets)
 }
 
 isolate_gene_matrix <- function(coupling_matrix){

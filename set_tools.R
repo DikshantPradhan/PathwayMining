@@ -879,3 +879,28 @@ get_list_of_sets_from_mtx <- function(coupling_mtx, init_mtx = NULL){ #2d column
 core_rxn_id <- function(rxn_id){ # rxn id with parenthesis
   return(strsplit(rxn_id, split = "\\(")[[1]][1])
 }
+
+optimize_set_elements <- function(sets){
+  elems <- unique(unlist(sets))
+  n = length(elems)
+  vec <- matrix(data = TRUE, nrow = 1, ncol = n)
+  names(vec) <- elems
+  for (i in sets){
+    vec[i] <- FALSE
+    vec[i[1]] <- TRUE
+  }
+  
+  # i <- 1
+  # while (i <= n){
+  #   if (vec[i]){ # if tagged to be suppressed
+  #     set_idx <- which(r0_coupling_mtx[,i])[1] # which is first reaction (row) i is coupled to
+  #     rxn_idxs <- which(r0_coupling_mtx[set_idx,]) # other reactions in set
+  #     # only suppress first reaction in set since, theoretically, suppressing any should have the same effect
+  #     suppr_vector[rxn_idxs] <- FALSE
+  #     suppr_vector[rxn_idxs[1]] <- TRUE
+  #   }
+  #   i <- i+1
+  # }
+  
+  return(names(vec[which(vec)]))
+}
