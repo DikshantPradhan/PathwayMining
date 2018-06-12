@@ -39,7 +39,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
   # cor_iter is number of iterations after which correlation is considered in checking coupling
 
   if (!cor_check){
-    stored_obs = 0
+    stored_obs = 1
   }
 
   n <- model$get_sizes()$NumVars
@@ -211,10 +211,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       j <-  reaction_indexes[idx2]
       # check for fixed or blocked
       if (!active[j] | blocked[j]){next}
-      if (not_fixed(sub_max[j], sub_min[j])){next} # put this back in!
+      #if (not_fixed(sub_max[j], sub_min[j])){next}
+      #print(paste(sub_max[j], sub_min[j]))
 
       # check for uncoupled via correlation
-      if (stored_obs > 0){
+      if (cor_check){
         if (!correlation_check(flux, i, j)){next}
         # C <- cor(flux[,i], flux[,j])
         # if (!is.na(C) & (abs(C) < min_fva_cor)){next}
