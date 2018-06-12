@@ -340,7 +340,3 @@ set_vector <- function(coupled){
   return(set_num)
 }
 
-#ecoli <- as_GRBmodel(model)
-#ecoli$show_output(FALSE)
-#print(flux_coupling_raptor(ecoli))
-#print(get_list_of_sets(return_couples(flux_coupling_raptor(ecoli)$coupled)))
