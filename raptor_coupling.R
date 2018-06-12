@@ -324,6 +324,16 @@ fill_coupling_matrix <- function(coupled){
   return(coupled)
 }
 
+fill_coupling_matrix_from_sets <- function(mtx, sets){
+  for (set in sets){
+    mtx[set,set] <- TRUE
+  }
+  
+  mtx <- fill_coupling_matrix(mtx)
+  
+  return(mtx)
+}
+
 set_vector <- function(coupled){
   active <- matrix(data = TRUE, nrow = 1, ncol = ncol(coupled))
   set_num <- matrix(data = 0, nrow = 1, ncol = ncol(coupled))

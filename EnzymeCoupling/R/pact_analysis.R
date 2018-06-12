@@ -6,10 +6,11 @@ pao_g1_coupling <- read_coupling_csv('~/GitHub/PathwayMining/scripts/pao/pao_g1_
 pao_g1_coupling_list <- pao_g1_coupling$coupling_vector
 
 # pao_falcon <- generate_falcon_model(pao_model)
+pao_falcon <- GRB_pao_falcon_model()
 vars <- pao_falcon$get_names()$VarName #pao_falcon@react_id
 
 full_pao_coupling_mtx <- coupling_matrix_from_coupling_vector_list(pao_g1_coupling_list, n_react = length(vars), vars = vars)
-fullish_pao_coupling_mtx <- full_ish_coupling_matrix_from_coupling_vector_list(pao_g1_coupling_list, n_react = length(vars), vars = vars)
+fullish_pao_coupling_mtx <- full_ish_coupling_matrix_from_coupling_vector_list(pao_g1_coupling_list, n_react = length(vars), vars = vars, init_sets = g0_sets)
 
 uncoupled_mtx <- identify_intermediate_uncoupled(full_pao_coupling_mtx, fullish_pao_coupling_mtx, n_react = length(vars))
 
@@ -19,10 +20,10 @@ for (i in 1:nrow(uncoupled_mtx)){
     rxn_1 <- rownames(uncoupled_mtx)[i]
     rxn_2 <- colnames(uncoupled_mtx)[j]
     
-    uncoupled_pairs <- c(uncoupled_pairs, list(c(rownames(uncoupled_mtx)[i], colnames(uncoupled_mtx)[j])))
-    # if (grepl('PA', rxn_1) & grepl('PA', rxn_2)){
-    #   uncoupled_pairs <- c(uncoupled_pairs, list(c(rownames(uncoupled_mtx)[i], colnames(uncoupled_mtx)[j])))
-    # }
+    # uncoupled_pairs <- c(uncoupled_pairs, list(c(rownames(uncoupled_mtx)[i], colnames(uncoupled_mtx)[j])))
+    if (grepl('PA', rxn_1) & grepl('PA', rxn_2)){
+      uncoupled_pairs <- c(uncoupled_pairs, list(c(rownames(uncoupled_mtx)[i], colnames(uncoupled_mtx)[j])))
+    }
   }
   # for (j in 1:ncol(uncoupled_mtx)){
   #   if (uncoupled_mtx[i,j]){
