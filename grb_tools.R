@@ -547,6 +547,35 @@ coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_react, va
   return(coupling_matrix)
 }
 
+full_ish_coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_react, vars){
+  
+  #matrix_dim_size <- sqrt(len)
+  coupling_matrix <- Matrix(data = FALSE, nrow = n_react, ncol = n_react)
+  for (i in 1:length(coupling_list)){
+    if (is.null(coupling_list[[i]])){next}
+    intermediate_mtx <- Matrix(data = FALSE, nrow = n_react, ncol = n_react)
+    intermediate_mtx[coupling_list[[i]]] <- TRUE
+    intermediate_mtx <- fill_coupling_matrix(intermediate_mtx)
+    coupling_matrix[which(intermediate_mtx)] <- TRUE
+  }
+  #coupling_matrix[which(coupling_vector)] <- TRUE
+  rownames(coupling_matrix) <- vars
+  colnames(coupling_matrix) <- vars
+  
+  return(coupling_matrix)
+}
+
+identify_intermediate_uncoupled <- function(full_coupling_mtx, full_ish_coupling_mtx){
+  uncoupled_matrix <- Matrix(data = FALSE, nrow = n_react, ncol = n_react)
+  rownames(coupling_matrix) <- vars
+  colnames(coupling_matrix) <- vars
+  
+  uncoupled <- which(full_coupling_mtx & !full_ish_coupling_mtx)
+  uncoupled_matrix[uncoupled] <- TRUE
+  
+  return(uncoupled_matrix)
+}
+
 GRB_get_union_set_from_degen_pairs <- function(model, pair_lists){
 
   set_list = model$get_names()$VarName
