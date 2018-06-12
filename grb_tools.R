@@ -540,6 +540,7 @@ coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_react, va
     if (is.null(coupling_list[[i]])){next}
     coupling_matrix[coupling_list[[i]]] <- TRUE
   }
+  coupling_matrix <- fill_coupling_matrix(coupling_matrix)
   #coupling_matrix[which(coupling_vector)] <- TRUE
   rownames(coupling_matrix) <- vars
   colnames(coupling_matrix) <- vars
@@ -565,10 +566,10 @@ full_ish_coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_
   return(coupling_matrix)
 }
 
-identify_intermediate_uncoupled <- function(full_coupling_mtx, full_ish_coupling_mtx){
+identify_intermediate_uncoupled <- function(full_coupling_mtx, full_ish_coupling_mtx, n_react){
   uncoupled_matrix <- Matrix(data = FALSE, nrow = n_react, ncol = n_react)
-  rownames(coupling_matrix) <- vars
-  colnames(coupling_matrix) <- vars
+  rownames(uncoupled_matrix) <- vars
+  colnames(uncoupled_matrix) <- vars
   
   uncoupled <- which(full_coupling_mtx & !full_ish_coupling_mtx)
   uncoupled_matrix[uncoupled] <- TRUE
