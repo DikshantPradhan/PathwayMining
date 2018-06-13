@@ -211,7 +211,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       j <-  reaction_indexes[idx2]
       # check for fixed or blocked
       if (!active[j] | blocked[j]){next}
-      #if (not_fixed(sub_max[j], sub_min[j])){next}
+      if (not_fixed(sub_max[j], sub_min[j])){next}
       #print(paste(sub_max[j], sub_min[j]))
 
       # check for uncoupled via correlation
@@ -340,4 +340,3 @@ set_vector <- function(coupled){
 
   return(set_num)
 }
-
