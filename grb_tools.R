@@ -524,7 +524,7 @@ GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reac
   return(coupling)
 }
 
-coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_react, vars){
+coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_react, vars, init_sets = NULL){
 
   #len <- length(coupling_list[[1]])
   #len <- n_react*n_react
@@ -540,7 +540,13 @@ coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_react, va
     if (is.null(coupling_list[[i]])){next}
     coupling_matrix[coupling_list[[i]]] <- TRUE
   }
-  coupling_matrix <- fill_coupling_matrix(coupling_matrix)
+  
+  if (!is.null(init_sets)){
+    coupling_matrix <- fill_coupling_matrix_from_sets(coupling_matrix, init_sets)
+  }
+  else {
+    coupling_matrix <- fill_coupling_matrix(coupling_matrix)
+  }
   #coupling_matrix[which(coupling_vector)] <- TRUE
   rownames(coupling_matrix) <- vars
   colnames(coupling_matrix) <- vars
@@ -548,7 +554,7 @@ coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_react, va
   return(coupling_matrix)
 }
 
-full_ish_coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_react, vars){
+full_ish_coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_react, vars, init_sets){
   
   #matrix_dim_size <- sqrt(len)
   coupling_matrix <- Matrix(data = FALSE, nrow = n_react, ncol = n_react)
@@ -556,7 +562,7 @@ full_ish_coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_
     if (is.null(coupling_list[[i]])){next}
     intermediate_mtx <- Matrix(data = FALSE, nrow = n_react, ncol = n_react)
     intermediate_mtx[coupling_list[[i]]] <- TRUE
-    intermediate_mtx <- fill_coupling_matrix(intermediate_mtx)
+    intermediate_mtx <- fill_coupling_matrix_from_sets(intermediate_mtx, init_sets)
     coupling_matrix[which(intermediate_mtx)] <- TRUE
   }
   #coupling_matrix[which(coupling_vector)] <- TRUE
