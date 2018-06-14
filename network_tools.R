@@ -37,8 +37,18 @@ add_vertex <- function(graph, v, color = "green"){
   return(graph)
 }
 
-add_set_vertices <- function(graph, set_list, color = "green"){
+add_set_vertices <- function(graph, set_list, color = "green", df_genes = c(), de_genes = c(), dfde_genes = c()){
   for (vertex in unlist(set_list)){
+    # print(vertex)
+    if (!grepl('PA', vertex)){
+      graph <- add_vertex(graph, vertex, color = 'white')
+      next
+    }
+    snip_vertex <- strsplit(vertex, split = 'PA')[[1]][2]
+    if (any(grepl(snip_vertex, df_genes))){color <- 'blue'}
+    if (any(grepl(snip_vertex, de_genes))){color <- 'yellow'}
+    if (any(grepl(snip_vertex, dfde_genes))){color <- 'red'}
+    # print(color)
     graph <- add_vertex(graph, vertex, color = color)
   }
   
@@ -47,6 +57,22 @@ add_set_vertices <- function(graph, set_list, color = "green"){
 
 plot_graph <- function(graph){
   plot(graph,edge.arrow.size=0.3,vertex.label.color = "black",vertex.size=10)
+}
+
+graph_coupling_mtx <- function(coupling_mtx, df_genes = c(), de_genes = c(), dfde_genes = c()){
+  graph <- make_empty_graph()
+  nodes <- rownames(coupling_mtx)
+  # nodes <- unlist(clean_rxn_names_in_set(nodes))
+  # print(nodes)
+  graph <- add_set_vertices(graph, nodes, 'green', df_genes, de_genes, dfde_genes)
+  
+  for (i in 1:nrow(coupling_mtx)){
+    for (j in which(coupling_mtx[i,])){
+      graph <- add_edge(graph, nodes[i], nodes[j], 'black')
+    }
+  }
+  
+  plot_graph(graph)
 }
 
 graph_rxn_sets <- function(set_list, edge_color = "grey", show_theorietical = FALSE, direct = TRUE, sample = NULL){

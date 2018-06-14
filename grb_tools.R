@@ -536,20 +536,19 @@ coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_react, va
 
   #matrix_dim_size <- sqrt(len)
   coupling_matrix <- Matrix(data = FALSE, nrow = n_react, ncol = n_react)
+  rownames(coupling_matrix) <- vars
+  colnames(coupling_matrix) <- vars
+  if (!is.null(init_sets)){
+    coupling_matrix <- fill_coupling_matrix_from_sets(coupling_matrix, init_sets)
+  }
+  
   for (i in 1:length(coupling_list)){
     if (is.null(coupling_list[[i]])){next}
     coupling_matrix[coupling_list[[i]]] <- TRUE
   }
   
-  if (!is.null(init_sets)){
-    coupling_matrix <- fill_coupling_matrix_from_sets(coupling_matrix, init_sets)
-  }
-  else {
-    coupling_matrix <- fill_coupling_matrix(coupling_matrix)
-  }
+  coupling_matrix <- fill_coupling_matrix(coupling_matrix)
   #coupling_matrix[which(coupling_vector)] <- TRUE
-  rownames(coupling_matrix) <- vars
-  colnames(coupling_matrix) <- vars
 
   return(coupling_matrix)
 }
@@ -558,16 +557,19 @@ full_ish_coupling_matrix_from_coupling_vector_list <- function(coupling_list, n_
   
   #matrix_dim_size <- sqrt(len)
   coupling_matrix <- Matrix(data = FALSE, nrow = n_react, ncol = n_react)
+  rownames(coupling_matrix) <- vars
+  colnames(coupling_matrix) <- vars
   for (i in 1:length(coupling_list)){
     if (is.null(coupling_list[[i]])){next}
+    print(i)
     intermediate_mtx <- Matrix(data = FALSE, nrow = n_react, ncol = n_react)
+    rownames(intermediate_mtx) <- vars
+    colnames(intermediate_mtx) <- vars
     intermediate_mtx[coupling_list[[i]]] <- TRUE
     intermediate_mtx <- fill_coupling_matrix_from_sets(intermediate_mtx, init_sets)
     coupling_matrix[which(intermediate_mtx)] <- TRUE
   }
   #coupling_matrix[which(coupling_vector)] <- TRUE
-  rownames(coupling_matrix) <- vars
-  colnames(coupling_matrix) <- vars
   
   return(coupling_matrix)
 }
