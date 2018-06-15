@@ -235,7 +235,7 @@ find_composing_sets <- function(rxns, sets){
   composition <- c()
   for (i in 1:length(sets)){
     if (length(sets[[i]]) == 0){next}
-    if (all(sets[[i]] %in% rxns)){
+    if (any(sets[[i]] %in% rxns)){
       composition <- c(composition, i)
     }
   }
