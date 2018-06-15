@@ -15,6 +15,17 @@ get_set_idx <- function(rxn, rxns_list){
   return(sets)
 }
 
+get_containing_set_idx <- function(rxns, rxns_list){
+  idxs <- get_set_idx(rxns[1], rxns_list)
+  
+  for (i in idxs){
+    if (all(rxns %in% rxns_list[[i]])){
+      return(i)
+    }
+  }
+  return(0)
+}
+
 map_elements_to_set <- function(elem_list, set_list){
   elem_map <- matrix(data = NA, nrow = 1, ncol = length(elem_list))
 
