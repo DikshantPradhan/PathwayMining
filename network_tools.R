@@ -2,29 +2,35 @@
 
 library(igraph)
 
-# og_pairs <- return_couples(flux_coupling_cor(sample_og))
-# og_rxn_set <- get_list_of_sets(og_pairs)
-
-# g <- make_empty_graph()
-# g <- g + vertices(model@met_id, color = "red")
-# g <- g + vertices(model@react_id, color = "green")
-
-# 
-# for (i in 1:ncol(S)){
-#   for (j in which(S[,i] < 0)){
-#     g <- g + edge(model@met_id[j], model@react_id[i], weight = avg_sample[i])
-#   }
-#   
-#   for (j in which(S[,i] > 0)){
-#     g <- g + edge(model@react_id[i], model@met_id[j], weight = avg_sample[i])
-#   }
-# }
-# 
-# #plot(g)
-# plot(g, rescale = FALSE, ylim=c(-15,15),xlim=c(-15,15), asp = 0)
-
 add_edge <- function(graph, v1, v2, color){
-  if (!are_adjacent(graph, v1, v2)){
+  # print('test')
+  # print(v1)
+  # print(v2)
+  if (grepl('\\(', v1)){
+    v1 <- strsplit(v1, split = '\\(')[[1]][1]
+  }
+  if (grepl('\\(', v2)){
+    v2 <- strsplit(v2, split = '\\(')[[1]][1]
+  }
+  if (grepl('\\[', v1)){
+    v1 <- strsplit(v1, split = '\\[')[[1]][1]
+  }
+  if (grepl('\\[', v2)){
+    v2 <- strsplit(v2, split = '\\[')[[1]][1]
+  }
+  # if (grepl('PA', v1)){
+  #   v1 <- strsplit(v1, split = 'PA')[[1]][2]
+  # }
+  # if (grepl('PA', v2)){
+  #   v2 <- strsplit(v2, split = 'PA')[[1]][2]
+  # }
+  # print(grep(v1, names(V(graph))))
+  # print(grep(v2, names(V(graph))))
+  v1 <- names(V(graph))[grep(v1, names(V(graph)))]
+  v2 <- names(V(graph))[grep(v2, names(V(graph)))]
+  # print(names(V(graph)))
+  if (!are_adjacent(graph, v1, v2) & (length(v1) > 0) & (length(v2) > 0)){
+    if (v1 == v2){return(graph)}
     graph <- graph + edge(v1, v2, color = color)
   }
   return(graph)
@@ -59,12 +65,41 @@ plot_graph <- function(graph){
   plot(graph,edge.arrow.size=0.3,vertex.label.color = "black",vertex.size=10)
 }
 
-graph_coupling_mtx <- function(coupling_mtx, df_genes = c(), de_genes = c(), dfde_genes = c()){
+graph_coupling_mtx <- function(coupling_mtx, sets = c(), df_genes = c(), de_genes = c(), dfde_genes = c()){
   graph <- make_empty_graph()
   nodes <- rownames(coupling_mtx)
   # nodes <- unlist(clean_rxn_names_in_set(nodes))
   # print(nodes)
-  graph <- add_set_vertices(graph, nodes, 'green', df_genes, de_genes, dfde_genes)
+  if (length(sets) > 0){
+    for (set in sets){
+      # print(set)
+      node_name <- paste(set, collapse = ', ')
+      # print(node_name)
+      color <- 'white'
+      rxn <- gsub(' ', '', set[1])
+      if (grepl('\\(', rxn)){
+        rxn <- strsplit(rxn, split = '\\(')[[1]][1]
+      }
+      if (grepl('\\[', rxn)){
+        rxn <- strsplit(rxn, split = '\\[')[[1]][1]
+      }
+      idx <- grep(rxn, g0_df$sets)
+      # print(paste(idx, rxn))
+      if (g0_df$X..genes[idx] == 0){graph <- add_set_vertices(graph, node_name, color = 'gray66'); next}
+      if (g0_df$interest_frac[idx] != 0){color <- 'lightpink1'}
+      if (g0_df$interest_frac[idx] == 1){color <- 'mediumorchid1'}
+      if (g0_df$df_frac[idx] == 1){color <- 'lightskyblue'}
+      if (g0_df$de_frac[idx] == 1){color <- 'chartreuse'}
+      if (g0_df$dfde_frac[idx] == 1){color <- 'mediumpurple4'}
+      if (g0_df$pure_df_frac[idx] == 1){color <- 'blue'}
+      if (g0_df$pure_de_frac[idx] == 1){color <- 'chartreuse4'}
+      
+      graph <- add_set_vertices(graph, node_name, color = color)
+    }
+  }
+  else {
+    graph <- add_set_vertices(graph, nodes, 'green', df_genes, de_genes, dfde_genes)
+  }
   
   for (i in 1:nrow(coupling_mtx)){
     for (j in which(coupling_mtx[i,])){
@@ -264,6 +299,9 @@ graph_redundancies <- function(rxns){
   return(graph)
 }
 
+graph_g1_set <- function(idx){
+  graph_coupling_mtx(fullish_pao_coupling_mtx[pao_g1_sets[[idx]],pao_g1_sets[[idx]]], sets = g0_df$sets[find_composing_sets(unlist(pao_g1_sets[[idx]]), g0_df$sets)])
+}
 # graph_rxn_sets(list(unlist(rxn_set)))
 # rxn_sets <- get_list_of_sets(convert_pair_strings_to_vector(media_cond$gained_pairs[5]))
 # 
