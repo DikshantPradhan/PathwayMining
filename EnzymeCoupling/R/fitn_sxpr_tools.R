@@ -84,13 +84,13 @@ gene_set_expanded_dataframe <- function(set_df, sets, df_genes, de_genes, intere
 }
 
 
-plot_density <- function(mtx, ylimits=c(0, 200)){
+plot_density <- function(mtx, xlimits=c(0, 1), ylimits=c(0, 200), start = 2){
   n <- ncol(mtx)
-  plot(1, type="n", xlab="", ylab="", xlim=c(0, 1), ylim=ylimits)
+  plot(1, type="n", xlab="", ylab="", xlim=xlimits, ylim=ylimits)
   # freqs <- table(as.numeric(mtx[,2]))
   # freqs_x <- as.numeric(names(freqs))
   # plot(freqs_x, freqs)
-  for (i in 2:n){
+  for (i in start:n){
     freqs <- table(as.numeric(mtx[,i]))
     freqs_x <- as.numeric(names(freqs))
     lines(freqs_x, freqs, col = 'grey')

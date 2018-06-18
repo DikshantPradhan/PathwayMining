@@ -302,6 +302,7 @@ graph_redundancies <- function(rxns){
 graph_g1_set <- function(idx){
   graph_coupling_mtx(fullish_pao_coupling_mtx[pao_g1_sets[[idx]],pao_g1_sets[[idx]]], sets = g0_df$sets[find_composing_sets(unlist(pao_g1_sets[[idx]]), g0_df$sets)])
 }
+
 # graph_rxn_sets(list(unlist(rxn_set)))
 # rxn_sets <- get_list_of_sets(convert_pair_strings_to_vector(media_cond$gained_pairs[5]))
 # 

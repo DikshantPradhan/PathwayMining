@@ -1,5 +1,57 @@
 # PACT Analysis
 
+# functions
+
+g1_architecture_measurement <- function(coupling_mtx, df_frac, de_frac){
+  edge_list <- matrix(nrow = length(which(coupling_mtx)), ncol = 3)
+  set_idxs <- as.numeric(rownames(coupling_mtx))
+  
+  edge_idx <- 1
+  for (i in 1:nrow(coupling_mtx)){
+    for (j in which(coupling_mtx[i,])){
+      set_idx_1 <- set_idxs[i]
+      set_idx_2 <- set_idxs[j]
+      df_diff <- abs(df_frac[set_idx_1] - df_frac[set_idx_2])
+      de_diff <- abs(de_frac[set_idx_1] - de_frac[set_idx_2])
+      euclidian_diff <- sqrt((df_frac[set_idx_1] - df_frac[set_idx_2])^2 + (de_frac[set_idx_1] - de_frac[set_idx_2])^2)
+      
+      # if (is.nan(df_diff)){
+      #   df_diff <- 0
+      #   de_diff <- 0
+      #   euclidian_diff <- 0
+      # }
+      
+      edge_list[edge_idx,1] <- df_diff
+      edge_list[edge_idx,2] <- de_diff
+      edge_list[edge_idx,3] <- euclidian_diff
+      
+      edge_idx <- edge_idx + 1
+    }
+  }
+  
+  return(edge_list)
+}
+
+g1_architecture_bootstrap <- function(coupling_mtx, df_frac, de_frac, n = 1000){
+  sets <- rownames(coupling_mtx)
+  
+  boot_sets <- sample(sets, size = length(sets))
+  rownames(coupling_mtx) <- boot_sets
+  colnames(coupling_mtx) <- boot_sets
+  
+  edge_list <- g1_architecture_measurement(coupling_mtx, df_frac, de_frac)
+  
+  for (i in 2:n){
+    boot_sets <- sample(sets, size = length(sets))
+    rownames(coupling_mtx) <- boot_sets
+    colnames(coupling_mtx) <- boot_sets
+    
+    edge_list <- cbind(edge_list, g1_architecture_measurement(coupling_mtx, df_frac, de_frac))
+  }
+  
+  return(edge_list)
+}
+
 # initialization
 source('~/GitHub/PathwayMining/data_tools.R')
 pao_g1_coupling <- read_coupling_csv('~/GitHub/PathwayMining/scripts/pao/pao_g1_coupling.csv')
@@ -58,37 +110,108 @@ num_dfde <- length(dfde_genes)
 
 coupled_genes <- setdiff(genes_in_model, uncoupled_genes)
 
-print(length(df_genes))
-print(length(de_genes))
-print(length(dfde_genes))
+composing_sets_list <- lapply(g1_df$sets, function(x){find_composing_sets(x, g0_df$sets)})
+composing_sets_length_list <- lapply(g1_df$sets, function(x){length(find_composing_sets(x, g0_df$sets))})
 
-print(length(uncoupled_genes))
-print(length(coupled_genes))
+g1_df$composing_g0_sets <- composing_sets_list
+g1_df$num_composing_sets <- composing_sets_length_list
 
-print(length(intersect(de_genes, uncoupled_genes)))
-print(length(intersect(de_genes, coupled_genes)))
+sets <- unlist(g1_df$composing_g0_sets[which(g1_df$num_composing_sets >= 1)])
 
-print(length(intersect(df_genes, uncoupled_genes)))
-print(length(intersect(df_genes, coupled_genes)))
+rxns <- unlist(g0_df$sets[sets])
 
-print(length(intersect(dfde_genes, uncoupled_genes)))
-print(length(intersect(dfde_genes, coupled_genes)))
-
-uncoupled_g0_set_idxs <- c()
-for (gene in uncoupled_genes){
-  uncoupled_g0_set_idxs <- c(uncoupled_g0_set_idxs, get_set_idx(gene, g0_df$clean.sets))
-}
-uncoupled_g0_set_idxs <- unique(uncoupled_g0_set_idxs)
-
-coupled_g0_set_idxs <- setdiff(1:nrow(g0_df), uncoupled_g0_set_idxs)
-# for (gene in coupled_genes){
-#   coupled_g0_set_idxs <- c(coupled_g0_set_idxs, get_set_idx(gene, g0_df$clean.sets))
+# rxns <- c()
+# set_names <- c()
+# for (i in sets){
+#   set <- unlist(g0_df$sets[i])
+#   rxns <- c(rxns, set)
+#   name <- paste(set, collapse = ', ')
+#   set_names <- c(set_names, name)
 # }
-# coupled_g0_set_idxs <- unique(coupled_g0_set_idxs)
+# 
+# rxns <- unique(unlist(rxns))
+g1_rxns <- unlist(g1_df$sets)
+rxns <- intersect(rxns, g1_rxns)
+network_coupling_mtx <- fullish_pao_coupling_mtx[rxns, rxns]
+# rownames(network_coupling_mtx) <- rxns
+# colnames(network_coupling_mtx) <- rxns
 
-length(intersect(which(g0_df$df_frac == 1), coupled_g0_set_idxs))
-length(intersect(which(g0_df$df_frac == 1), uncoupled_g0_set_idxs))
-length(intersect(which(g0_df$de_frac == 1), uncoupled_g0_set_idxs))
-length(intersect(which(g0_df$de_frac == 1), coupled_g0_set_idxs))
-length(intersect(which(g0_df$dfde_frac == 1), coupled_g0_set_idxs))
-length(intersect(which(g0_df$dfde_frac == 1), uncoupled_g0_set_idxs))
+g0_set_coupling_mtx <- matrix(FALSE, nrow = length(sets), ncol = length(sets))
+rownames(g0_set_coupling_mtx) <- sets
+colnames(g0_set_coupling_mtx) <- sets
+
+for (i in 1:nrow(network_coupling_mtx)){
+  # print(i)
+  # print(length(which(network_coupling_mtx[i,])))
+  couplings <- unique(union(which(network_coupling_mtx[i,]), which(network_coupling_mtx[,i])))
+  if (length(couplings) < 2){print('nothing'); print(rxns[i])}
+  # print(length(which(network_coupling_mtx[i,])))
+  for (j in couplings){
+    v1 <- rxns[i]
+    v2 <- rxns[j]
+    if (grepl('\\(', v1)){
+      v1 <- strsplit(v1, split = '\\(')[[1]][1]
+    }
+    if (grepl('\\(', v2)){
+      v2 <- strsplit(v2, split = '\\(')[[1]][1]
+    }
+    if (grepl('\\[', v1)){
+      v1 <- strsplit(v1, split = '\\[')[[1]][1]
+    }
+    if (grepl('\\[', v2)){
+      v2 <- strsplit(v2, split = '\\[')[[1]][1]
+    }
+    
+    idx1 <- grep(grep(v1, g0_df$sets), sets)
+    idx2 <- grep(grep(v2, g0_df$sets), sets)
+    
+    g0_set_coupling_mtx[idx1, idx2] <- TRUE
+    g0_set_coupling_mtx[idx2, idx1] <- TRUE
+  }
+}
+
+# compositions <- g1_df$composing_g0_sets[which(g1_df$num_composing_sets > 1)]
+# sets <- unlist(compositions)
+# g0_set_coupling_mtx <- matrix(FALSE, nrow = length(sets), ncol = length(sets))
+# rownames(g0_set_coupling_mtx) <- sets
+# colnames(g0_set_coupling_mtx) <- sets
+# for (i in compositions){
+#   idxs <- which(sets %in% i)
+#   print(length(idxs))
+#   g0_set_coupling_mtx[idxs, idxs] <- TRUE
+# }
+g0_set_coupling_mtx[lower.tri(g0_set_coupling_mtx, diag = TRUE)] <- FALSE
+
+for (i in 1:nrow(g0_set_coupling_mtx)){
+  couplings <- unique(union(which(g0_set_coupling_mtx[i,]), which(g0_set_coupling_mtx[,i])))
+  if (length(couplings) < 2){print('nothing')}
+}
+
+edge_list <- matrix(nrow = length(which(g0_set_coupling_mtx)), ncol = 3)
+og_edge_list <- g1_architecture_measurement(g0_set_coupling_mtx, g0_df$pure_df_frac, g0_df$pure_de_frac)
+
+edge_list <- g1_architecture_bootstrap(g0_set_coupling_mtx, g0_df$pure_df_frac, g0_df$pure_de_frac, 100)
+
+df_edges <- edge_list[, seq(from = 1, to = 300, by = 3)]
+de_edges <- edge_list[, seq(from = 2, to = 300, by = 3)]
+euc_edges <- edge_list[, seq(from = 3, to = 300, by = 3)]
+
+# plot_density(df_edges, ylimits=c(0, 700))
+# freqs <- table(as.numeric(og_edge_list[,1])
+# freqs_x <- as.numeric(names(freqs))
+# lines(freqs_x, freqs, col = 'red')
+
+plot_density(df_edges, ylimits=c(0, 10000))
+freqs <- table(as.numeric(og_edge_list[,1]))
+freqs_x <- as.numeric(names(freqs))
+lines(freqs_x, freqs, col = 'red')
+
+plot_density(de_edges, ylimits=c(0, 10000))
+freqs <- table(as.numeric(og_edge_list[,2]))
+freqs_x <- as.numeric(names(freqs))
+lines(freqs_x, freqs, col = 'red')
+
+plot_density(euc_edges, xlimits = c(0,sqrt(2)), ylimits=c(0, 15000))
+freqs <- table(as.numeric(og_edge_list[,3]))
+freqs_x <- as.numeric(names(freqs))
+lines(freqs_x, freqs, col = 'red')
