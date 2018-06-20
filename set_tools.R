@@ -1,7 +1,8 @@
 # functions related to identification and analysis of reaction sets
 
 get_set_idx <- function(rxn, rxns_list){
-  idx <- grep(core_rxn_id(rxn), rxns_list)
+  # idx <- grep(core_rxn_id(rxn), rxns_list)
+  idx <- grep(rxn, rxns_list)
   #print(idx)
   sets <- c()
   for (j in idx){
