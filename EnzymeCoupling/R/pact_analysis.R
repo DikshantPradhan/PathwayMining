@@ -1,103 +1,20 @@
 # PACT Analysis
-
-# functions
-
-g1_architecture_measurement <- function(coupling_mtx, df_frac, de_frac){
-  edge_list <- matrix(nrow = length(which(coupling_mtx)), ncol = 3)
-  set_idxs <- as.numeric(rownames(coupling_mtx))
-  
-  edge_idx <- 1
-  for (i in 1:nrow(coupling_mtx)){
-    for (j in which(coupling_mtx[i,])){
-      set_idx_1 <- set_idxs[i]
-      set_idx_2 <- set_idxs[j]
-      df_diff <- abs(df_frac[set_idx_1] - df_frac[set_idx_2])
-      de_diff <- abs(de_frac[set_idx_1] - de_frac[set_idx_2])
-      euclidian_diff <- sqrt((df_frac[set_idx_1] - df_frac[set_idx_2])^2 + (de_frac[set_idx_1] - de_frac[set_idx_2])^2)
-      
-      # g1_set <- get_set_idx(set_idxs[i], g1_composition)
-      # print(g1_set)
-      if (is.nan(df_diff)){
-        df_diff <- -0.1
-        de_diff <- -0.1
-        euclidian_diff <- -0.1
-      }
-      
-      edge_list[edge_idx,1] <- df_diff
-      edge_list[edge_idx,2] <- de_diff
-      edge_list[edge_idx,3] <- euclidian_diff
-      # edge_list[edge_idx,4] <- g1_set
-      
-      edge_idx <- edge_idx + 1
-    }
-  }
-  
-  return(edge_list)
-}
-
-g1_architecture_measurement_binary <- function(coupling_mtx, df_frac, de_frac){
-  edge_list <- matrix(nrow = length(which(coupling_mtx)), ncol = 3)
-  set_idxs <- as.numeric(rownames(coupling_mtx))
-  
-  edge_idx <- 1
-  for (i in 1:nrow(coupling_mtx)){
-    for (j in which(coupling_mtx[i,])){
-      set_idx_1 <- set_idxs[i]
-      set_idx_2 <- set_idxs[j]
-      df_diff <- df_frac[set_idx_1]&df_frac[set_idx_2]
-      de_diff <- de_frac[set_idx_1]&de_frac[set_idx_2]
-      euclidian_diff <- (df_frac[set_idx_1]|de_frac[set_idx_1])&(df_frac[set_idx_2]&de_frac[set_idx_2])
-      
-      edge_list[edge_idx,1] <- df_diff
-      edge_list[edge_idx,2] <- de_diff
-      edge_list[edge_idx,3] <- euclidian_diff
-
-      edge_idx <- edge_idx + 1
-    }
-  }
-  
-  return(edge_list)
-}
-
-g1_architecture_bootstrap <- function(coupling_mtx, df_frac, de_frac, n = 1000){
-  sets <- rownames(coupling_mtx)
-  
-  boot_sets <- sample(sets, size = length(sets))
-  rownames(coupling_mtx) <- boot_sets
-  colnames(coupling_mtx) <- boot_sets
-  
-  edge_list <- g1_architecture_measurement_binary(coupling_mtx, df_frac, de_frac)
-  
-  for (i in 2:n){
-    boot_sets <- sample(sets, size = length(sets))
-    rownames(coupling_mtx) <- boot_sets
-    colnames(coupling_mtx) <- boot_sets
-    
-    edge_list <- cbind(edge_list, g1_architecture_measurement(coupling_mtx, df_frac, de_frac))
-  }
-  
-  return(edge_list)
-}
-
-binary_edge_histogram <- function(edge_lists, og_edges, xlimits = c(0,50)){
-  
-  bootstrapped <- c()
-  for (i in 1:ncol(edge_lists)){
-    bootstrapped <- c(bootstrapped, length(which(edge_lists[,i]==0)))
-  }
-  
-  observed <- length(which(og_edges==0))
-  
-  qplot(bootstrapped, geom = 'histogram', bins = 50, main = 'title', xlim = xlimits) + 
-    geom_vline(xintercept = observed, colour = 'red') + xlab('') + ylab('count')
-}
+library(ggplot2)
+source('~/GitHub/PathwayMining/set_tools.R')
+load("~/GitHub/PathwayMining/EnzymeCoupling/PA_FitExp.Rdata")
+load("~/GitHub/PathwayMining/EnzymeCoupling/data/pao_g1_coupling_mtxs.RData")
 
 # initialization
 
 pao_data <- pao1#pa14[which(pa14$condition == unique(pa14$condition)[1]),]
 
-sig_df_frac <- g0_df$df_frac >= 0.5
-sig_de_frac <- g0_df$de_frac >= 0.5
+sig_threshold <- 0.5
+
+sig_df_frac <- g0_df$df_frac >= sig_threshold
+sig_de_frac <- g0_df$de_frac >= sig_threshold
+
+# sig_df_frac[is.na(sig_df_frac)] <- FALSE
+# sig_de_frac[is.na(sig_de_frac)] <- FALSE
 
 # if using pa14 dataset, swap pa14 genes for pao1 homologs
 # load("~/GitHub/PathwayMining/EnzymeCoupling/data/pao1_key.Rdata")
@@ -125,10 +42,9 @@ g1_df$composing_g0_sets <- composing_sets_list
 g1_df$num_composing_sets <- composing_sets_length_list
 # g1_df <- g1_df[order(g1_df$num_composing_sets),]
 sets <- unlist(g1_df$composing_g0_sets[which(g1_df$num_composing_sets > 1)])
-sets <- intersect(sets, which(g0_df$X..genes >= 1))
+# sets <- intersect(sets, which(g0_df$X..genes >= 1))
 
 rxns <- unlist(g0_df$sets[sets])
-
 g1_rxns <- unlist(g1_df$sets)
 rxns <- intersect(rxns, g1_rxns)
 network_coupling_mtx <- fullish_pao_coupling_mtx[rxns, rxns]
@@ -157,7 +73,7 @@ g0_set_coupling_mtx[lower.tri(g0_set_coupling_mtx, diag = TRUE)] <- FALSE
 
 # og_edge_list <- g1_architecture_measurement(g0_set_coupling_mtx, g0_df$df_frac, g0_df$de_frac)#, g1_df$composing_g0_sets)
 
-og_edge_list <- g1_architecture_measurement(g0_set_coupling_mtx, sig_df_frac, sig_de_frac)
+og_edge_list <- g1_architecture_measurement_binary(g0_set_coupling_mtx, sig_df_frac, sig_de_frac)
 
 # edge_list <- g1_architecture_bootstrap(g0_set_coupling_mtx, g0_df$df_frac, g0_df$de_frac, 1000)
 edge_list <- g1_architecture_bootstrap(g0_set_coupling_mtx, sig_df_frac, sig_de_frac, 1000)
@@ -166,25 +82,33 @@ df_edges <- edge_list[, seq(from = 1, to = 3000, by = 3)]
 de_edges <- edge_list[, seq(from = 2, to = 3000, by = 3)]
 euc_edges <- edge_list[, seq(from = 3, to = 3000, by = 3)]
 
-binary_edge_histogram(df_edges, og_edge_list[,1], xlimits = c(0,100))
+binary_edge_histogram(df_edges, og_edge_list[,1], title = '', color = 'lightskyblue') # df-df_edges (threshold fraction = 0.50)
+binary_edge_histogram(de_edges, og_edge_list[,2], title = '', color = 'chartreuse3') # de-de_edges (threshold fraction = 0.50)
+binary_edge_histogram(euc_edges, og_edge_list[,3], title = '', color = 'mediumorchid') # df-de_edges (threshold fraction = 0.50)
 
-# plot_density(df_edges, xlimits = c(-0.15,1), ylimits=c(0, 75))
-# freqs <- table(as.numeric(og_edge_list[,1]))
-# freqs_x <- as.numeric(names(freqs))
-# lines(freqs_x, freqs, col = 'red')
-# title(main="df edges for g1 sets larger than 1 g0 sets", xlab="differential across edges", ylab="frequency")
-# 
-# plot_density(de_edges, xlimits = c(-0.15,1), ylimits=c(0, 75))
-# freqs <- table(as.numeric(og_edge_list[,2]))
-# freqs_x <- as.numeric(names(freqs))
-# lines(freqs_x, freqs, col = 'red')
-# title(main="de edges for g1 sets larger than 1 g0 sets", xlab="differential across edges", ylab="frequency")
-# 
-# plot_density(euc_edges, xlimits = c(-0.15,sqrt(2)), ylimits=c(0, 75))
-# freqs <- table(as.numeric(og_edge_list[,3]))
-# freqs_x <- as.numeric(names(freqs))
-# lines(freqs_x, freqs, col = 'red')
-# title(main="df&de edges for g1 sets larger than 1 g0 sets", xlab="differential across edges", ylab="frequency")
+df_degree <- node_degree(g0_set_coupling_mtx, g0_df$df_frac)
+de_degree <- node_degree(g0_set_coupling_mtx, g0_df$de_frac)
+
+plot(jitter(df_degree[2,]), jitter(df_degree[1,]), main = 'df node degree', xlab = 'df frac', ylab = 'degree')
+plot(jitter(de_degree[2,]), jitter(de_degree[1,]), main = 'de node degree', xlab = 'de frac', ylab = 'degree')
+
+plot_density(df_edges, xlimits = c(-0.15,1), ylimits=c(0, 75))
+freqs <- table(as.numeric(og_edge_list[,1]))
+freqs_x <- as.numeric(names(freqs))
+lines(freqs_x, freqs, col = 'red')
+title(main="df edges for g1 sets larger than 1 g0 sets", xlab="differential across edges", ylab="frequency")
+
+plot_density(de_edges, xlimits = c(-0.15,1), ylimits=c(0, 75))
+freqs <- table(as.numeric(og_edge_list[,2]))
+freqs_x <- as.numeric(names(freqs))
+lines(freqs_x, freqs, col = 'red')
+title(main="de edges for g1 sets larger than 1 g0 sets", xlab="differential across edges", ylab="frequency")
+
+plot_density(euc_edges, xlimits = c(-0.15,sqrt(2)), ylimits=c(0, 75))
+freqs <- table(as.numeric(og_edge_list[,3]))
+freqs_x <- as.numeric(names(freqs))
+lines(freqs_x, freqs, col = 'red')
+title(main="df&de edges for g1 sets larger than 1 g0 sets", xlab="differential across edges", ylab="frequency")
 
 # og_edge_list <- og_edge_list[order(og_edge_list[,4]),]
 # og_edge_list[,4] <- vapply(og_edge_list[,4], function(x){which(unique(og_edge_list[,4]) == x)}, c(1))

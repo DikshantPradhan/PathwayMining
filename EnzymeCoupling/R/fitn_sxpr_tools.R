@@ -98,7 +98,7 @@ plot_density <- function(mtx, xlimits=c(0, 1), ylimits=c(0, 200), start = 2){
   }
 }
 
-plot_set_characteristic_hypothesis <- function(observed, simulated, start = 2, end = 1001, title = 'test'){
+plot_set_characteristic_hypothesis <- function(observed, simulated, start = 2, end = 1001, title = '', color = 'lightskyblue'){
   obs_frac <- length(which(observed == 0 | observed == 1))/length(observed)
   sim_fracs <- c()
   
@@ -107,11 +107,25 @@ plot_set_characteristic_hypothesis <- function(observed, simulated, start = 2, e
     # print(i)
     sim_fracs <- c(sim_fracs, sim)
   }
-  print(length(sim_fracs))
+  sim_fracs <- data.frame(sim_fracs)
+  colnames(sim_fracs) <- 'frac'
+  # print(length(sim_fracs))
   # hist(sim_fracs, breaks = 50)
   # line(obs_frac)
-  qplot(sim_fracs, geom = 'histogram', bins = 50, main = title, xlim = c(0,1.1)) + 
-    geom_vline(xintercept = obs_frac, colour = 'red') + xlab('fraction of sets with 0 or 1') + ylab('count')
+  ggplot(sim_fracs, aes(x=frac)) + #ggtitle(title) + 
+    geom_histogram(aes(y=..density..),      # Histogram with density instead of count on y-axis
+                   binwidth=.01,
+                   colour="black", fill=color) +
+    geom_density() + scale_x_continuous(limits = c(0,1)) +
+    xlab('Complete Set Fraction') + ylab('Density') +
+    geom_vline(xintercept = obs_frac, colour = 'red', linetype="dashed") +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) 
+    # guide_legend('test')
+    # geom_histogram(binwidth=.01, colour="black", fill="white")
+  # ggplot(sim_fracs, aes(x = frac)) + geom_density() +
+  # qplot(sim_fracs, geom = 'histogram', bins = 50, main = title, xlim = c(0,1.1)) + geom_density() +
+  # qplot(sim_fracs, main = title, xlim = c(0,1.1)) + geom_density() +
+    # geom_vline(xintercept = obs_frac, colour = 'red') + xlab('Complete Set Fraction') + ylab('count')
 }
 
 plot_genes_barplot <- function(sets, pure_df, pure_de, dfde_list, genes_of_interest, percent = FALSE){
@@ -426,4 +440,128 @@ g1_ratio_sampling <- function(g0_categories, g1_set_comp, n, original_g1_idxs){
   # qplot(g1_ratios, geom = 'histogram', bins = 50, main = 'set composition ratios') +
   #   #   qplot(g1_ratios, geom = 'histogram', bins = 50) +
   #   xlab('fraction of g0 sets in g1 sets which are full') + ylab('frequency') #+ scale_y_continuous(formatter="percent")
+}
+
+g1_architecture_measurement <- function(coupling_mtx, df_frac, de_frac){
+  edge_list <- matrix(nrow = length(which(coupling_mtx)), ncol = 3)
+  set_idxs <- as.numeric(rownames(coupling_mtx))
+  
+  edge_idx <- 1
+  for (i in 1:nrow(coupling_mtx)){
+    for (j in which(coupling_mtx[i,])){
+      set_idx_1 <- set_idxs[i]
+      set_idx_2 <- set_idxs[j]
+      df_diff <- abs(df_frac[set_idx_1] - df_frac[set_idx_2])
+      de_diff <- abs(de_frac[set_idx_1] - de_frac[set_idx_2])
+      euclidian_diff <- sqrt((df_frac[set_idx_1] - df_frac[set_idx_2])^2 + (de_frac[set_idx_1] - de_frac[set_idx_2])^2)
+      
+      # g1_set <- get_set_idx(set_idxs[i], g1_composition)
+      # print(g1_set)
+      if (is.nan(df_diff)){
+        df_diff <- -0.1
+        de_diff <- -0.1
+        euclidian_diff <- -0.1
+      }
+      
+      edge_list[edge_idx,1] <- df_diff
+      edge_list[edge_idx,2] <- de_diff
+      edge_list[edge_idx,3] <- euclidian_diff
+      # edge_list[edge_idx,4] <- g1_set
+      
+      edge_idx <- edge_idx + 1
+    }
+  }
+  
+  return(edge_list)
+}
+
+g1_architecture_measurement_binary <- function(coupling_mtx, df_frac, de_frac){
+  edge_list <- matrix(nrow = length(which(coupling_mtx)), ncol = 3)
+  set_idxs <- as.numeric(rownames(coupling_mtx))
+  
+  edge_idx <- 1
+  for (i in 1:nrow(coupling_mtx)){
+    for (j in which(coupling_mtx[i,])){
+      set_idx_1 <- set_idxs[i]
+      set_idx_2 <- set_idxs[j]
+      df_diff <- df_frac[set_idx_1]&df_frac[set_idx_2]
+      de_diff <- de_frac[set_idx_1]&de_frac[set_idx_2]
+      euclidian_diff <-(df_frac[set_idx_1]&de_frac[set_idx_2])|(df_frac[set_idx_2]&de_frac[set_idx_1]) #((df_frac[set_idx_1]&!de_frac[set_idx_1])&(de_frac[set_idx_2]&!df_frac[set_idx_2]))|((df_frac[set_idx_2]&!de_frac[set_idx_2])&(de_frac[set_idx_1]&!df_frac[set_idx_1]))
+        #(df_frac[set_idx_1]&de_frac[set_idx_2])&(df_frac[set_idx_2]&de_frac[set_idx_1])
+      
+      # if ((i < 5) & (j < 5)){
+      #   print(paste(set_idx_1, set_idx_2, df_diff, de_diff))
+      # }
+      
+      edge_list[edge_idx,1] <- df_diff
+      edge_list[edge_idx,2] <- de_diff
+      edge_list[edge_idx,3] <- euclidian_diff
+      
+      edge_idx <- edge_idx + 1
+    }
+  }
+  
+  return(edge_list)
+}
+
+g1_architecture_bootstrap <- function(coupling_mtx, df_frac, de_frac, n = 1000){
+  sets <- rownames(coupling_mtx)
+  
+  boot_sets <- sample(sets, size = length(sets))
+  rownames(coupling_mtx) <- boot_sets
+  colnames(coupling_mtx) <- boot_sets
+  
+  edge_list <- g1_architecture_measurement_binary(coupling_mtx, df_frac, de_frac)
+  
+  for (i in 2:n){
+    boot_sets <- sample(sets, size = length(sets))
+    rownames(coupling_mtx) <- boot_sets
+    colnames(coupling_mtx) <- boot_sets
+    
+    edge_list <- cbind(edge_list, g1_architecture_measurement_binary(coupling_mtx, df_frac, de_frac))
+  }
+  
+  return(edge_list)
+}
+
+binary_edge_histogram <- function(edge_lists, og_edges, xlimits = c(0,1), title = '', color = 'lightskyblue'){
+  
+  bootstrapped <- c()
+  for (i in 1:ncol(edge_lists)){
+    bootstrapped <- c(bootstrapped, length(which(edge_lists[,i]))/nrow(edge_lists))
+  }
+  
+  observed <- length(which(og_edges))/length(og_edges)
+  # print(observed)
+  bootstrapped <- data.frame(bootstrapped)
+  colnames(bootstrapped) <- 'frac'
+  ggplot(bootstrapped, aes(x=frac)) + ggtitle(title) + 
+    geom_histogram(aes(y=..density..),      # Histogram with density instead of count on y-axis
+                   binwidth=.01,
+                   colour="black", fill=color) +
+    geom_density() + scale_x_continuous(limits = c(0,1)) +
+    geom_vline(xintercept = observed, colour = 'red', linetype="dashed") + xlab('Fraction') + ylab('Count') +
+    theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) 
+  
+  # qplot(bootstrapped, geom = 'histogram', bins = 50, xlim = xlimits, colour="black", fill=color) + 
+  #   geom_vline(xintercept = observed, colour = 'red', linetype="dashed") + xlab('Fraction') + ylab('count')
+}
+
+node_degree <- function(coupling_mtx, interest_frac){
+  set_idxs <- as.numeric(rownames(coupling_mtx))
+  
+  degree_frac <- matrix(data = 0, nrow = 2, ncol = length(set_idxs))
+  
+  for (i in 1:nrow(coupling_mtx)){
+    degree <- length(which(coupling_mtx[,i])) + length(which(coupling_mtx[i,]))
+    frac <- interest_frac[set_idxs[i]]
+    if (is.na(frac)){
+      frac <- -0.1
+    }
+    
+    degree_frac[1,i] <- degree
+    degree_frac[2,i] <- frac
+  }
+  
+  return(degree_frac)
 }

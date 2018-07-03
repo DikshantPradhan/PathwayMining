@@ -1,13 +1,13 @@
 # g1_sets <- pao_g1_sets
-# g0_sets <- clean_rxn_names_in_set(g0_sets)
-# g1_sets <- clean_rxn_names_in_set(g1_sets)
+g0_sets <- g0_df$clean.sets #clean_rxn_names_in_set(g0_sets)
+g1_sets <- g1_df$clean.sets #clean_rxn_names_in_set(g1_sets)
 
 # set data to be used:
 pao_data <- pao1#pa14[which(pa14$condition == unique(pa14$condition)[1]),]
 
 # if using pa14 dataset, swap pa14 genes for pao1 homologs
 load("~/GitHub/PathwayMining/EnzymeCoupling/data/pao1_key.Rdata")
-pao_data$gene <- pao1_key[pao_data$gene]
+# pao_data$gene <- pao1_key[pao_data$gene]
 
 g0_set_df_og <- gene_set_dataframe(g0_sets)
 g1_set_df_og <- gene_set_dataframe(g1_sets)
@@ -98,29 +98,33 @@ for (i in 1:n){
   # hist(as.numeric(sets_of_interest), breaks=20, freq = FALSE)
 }
 
-plot_density(g0_df_vec)
+plot_density(g0_df_vec, ylimits = c(0,90))
 freqs <- table(as.numeric(g0_df_obs))
 freqs_x <- as.numeric(names(freqs))
-lines(freqs_x, freqs, col = 'red')
-title(main="g0 dF set composition", xlab="% of genes with fitness defect", ylab="frequency")
+lines(freqs_x, freqs, col = 'blue')
+title(main="Differential Fitness Composition in G0 Sets", xlab="% of Genes in Set with Differential Fitness", ylab="Frequency")
+legend(0.45, 80, legend = c('bootstrapped', 'observed'), col = c('grey', 'blue'), lwd = 1)
 
-plot_density(g0_de_vec)
+plot_density(g0_de_vec, ylimits = c(0,60))
 freqs <- table(as.numeric(g0_de_obs))
 freqs_x <- as.numeric(names(freqs))
-lines(freqs_x, freqs, col = 'red')
-title(main="g0 dE set composition", xlab="% of genes with expression change", ylab="frequency")
+lines(freqs_x, freqs, col = 'chartreuse4')
+title(main="Differential Expression Composition in G0 Sets", xlab="% of Genes in Set with Differential Expression", ylab="Frequency")
+legend(0.45, 60, legend = c('bootstrapped', 'observed'), col = c('grey', 'chartreuse4'), lwd = 1)
 
-plot_density(g1_df_vec)
+plot_density(g1_df_vec, ylimits = c(0,80))
 freqs <- table(as.numeric(g1_df_obs))
 freqs_x <- as.numeric(names(freqs))
-lines(freqs_x, freqs, col = 'red')
-title(main="g1 dF set composition", xlab="% of genes with fitness defect", ylab="frequency")
+lines(freqs_x, freqs, col = 'blue')
+title(main="Differential Fitness Composition in G1 Sets", xlab="% of Genes in Set with Differential Fitness", ylab="Frequency")
+legend(0.45, 80, legend = c('bootstrapped', 'observed'), col = c('grey', 'blue'), lwd = 1)
 
-plot_density(g1_de_vec)
+plot_density(g1_de_vec, ylimits = c(0,60))
 freqs <- table(as.numeric(g1_de_obs))
 freqs_x <- as.numeric(names(freqs))
-lines(freqs_x, freqs, col = 'red')
-title(main="g1 dE set composition", xlab="% of genes with expression change", ylab="frequency")
+lines(freqs_x, freqs, col = 'chartreuse4')
+title(main="Differential Expression Composition in G1 Sets", xlab="% of Genes in Set with Differential Expression", ylab="Frequency")
+legend(0.45, 60, legend = c('bootstrapped', 'observed'), col = c('grey', 'chartreuse4'), lwd = 1)
 
 pure_df_genes <- pao_data$gene[which(pao_data$sig_df & !pao_data$sig_de)]
 pure_df_genes <- df_genes[which(pure_df_genes %in% genes_in_model)]
@@ -163,10 +167,10 @@ print(df_genes)
 print(de_genes)
 print(dfde_genes)
 
-plot_set_characteristic_hypothesis(g0_df_obs, g0_df_vec, title = "g0 df (AgNO3)")
-plot_set_characteristic_hypothesis(g0_de_obs, g0_de_vec, title = "g0 de (AgNO3)")
-plot_set_characteristic_hypothesis(g1_df_obs, g1_df_vec, title = "g1 df (AgNO3)")
-plot_set_characteristic_hypothesis(g1_de_obs, g1_de_vec, title = "g1 de (AgNO3)")
+plot_set_characteristic_hypothesis(g0_df_obs, g0_df_vec, color = 'lightskyblue') #Distribution of Differential Fitness Genes in G0 Sets
+plot_set_characteristic_hypothesis(g0_de_obs, g0_de_vec, color = 'chartreuse3') #Distribution of Differential Expression Genes in G0 Sets
+plot_set_characteristic_hypothesis(g1_df_obs, g1_df_vec, color = 'lightskyblue') #Distribution of Differential Fitness Genes in G1 Sets
+plot_set_characteristic_hypothesis(g1_de_obs, g1_de_vec, color = 'chartreuse3') #Distribution of Differential Expression Genes in G1 Sets
 
 # qplot(g1_df$dfde_frac[which(g1_df$X..genes > 1)], geom = 'histogram', xlab = 'composition', ylab = 'count', main = 'g1 dedf genes in sets', bins = 20)
 
@@ -183,7 +187,16 @@ for (i in 1:1000){
 
   bootstrapped_dfde_count <- c(bootstrapped_dfde_count, length(which(dfde_binary == 2)))
 }
-qplot(bootstrapped_dfde_count, geom = 'histogram', bins = 50, main = 'Bootstrapped DFDE gene couont', xlim = c(0,150)) + geom_vline(xintercept = num_dfde, colour = 'red') + xlab('number of dfde genes') + ylab('count')
+bootstrapped_dfde_count <- data.frame(bootstrapped_dfde_count)
+colnames(bootstrapped_dfde_count) <- 'ct'
+ggplot(bootstrapped_dfde_count, aes(x=ct)) + ggtitle('Number of Genes with Differential Fitness and Expression') + 
+  geom_histogram(aes(y=..density..),      # Histogram with density instead of count on y-axis
+                 binwidth=2,
+                 colour="black", fill='mediumpurple1') +
+  geom_density() + scale_x_continuous(limits = c(0,125)) +
+  xlab('Number of Genes') + ylab('Density') +
+  geom_vline(xintercept = num_dfde, colour = 'red', linetype="dashed")
+# qplot(bootstrapped_dfde_count, geom = 'histogram', bins = 50, main = 'Bootstrapped DFDE gene couont', xlim = c(0,150)) + geom_vline(xintercept = num_dfde, colour = 'red') + xlab('number of dfde genes') + ylab('count')
 
 # DFDE analysis: sets
 
