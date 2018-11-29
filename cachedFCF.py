@@ -35,18 +35,15 @@ def cachedFCF(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01,
       vars = model.getVars()
       n = len(vars)
 
-      print(n)
-
       # reset model
       #model.Obj = np.zeros(n)
 
       n_idxs = len(idxs)
 
       if (n_idxs < 1):
-          idxs = range(1,n+1)
+          idxs = range(0,n)
           n_idxs = n
 
-      print(n_idxs)
       coupled = np.zeros((n, n), dtype=bool)
 
       global_min = np.zeros(n)
@@ -141,7 +138,8 @@ def cachedFCF(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01,
               max = 0
               min = 0
 
-              if (idx_j == idx_j):
+              if (idx_i == idx_j):
+                  #print('default coupled')
                   coupled[idx_i, idx_j] = True
                   continue
 
@@ -172,27 +170,33 @@ def cachedFCF(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01,
                   coupled[idx_j, idx_j] = True
                   active[idx_j] = False
                   coupled[idx_i, idx_j] = True
-      df = pd.DataFrame(coupled, columns=vars, index=vars)
+      #np.savetxt("foo.csv", coupled, delimiter=",")
+      df = pd.DataFrame(data=coupled[0:,0:], columns=vars, index=vars)
+      #df.to_csv('python_output.csv', sep='\t')
+      #print(coupled)
       return(df)
 
 def sets_from_coupling_mtx(mtx):
-    elems_list = list(mtx.columns.values)
+    elems_list = np.array(mtx.columns.values)
+    coupled = mtx.values
     n = len(elems_list)
     active = np.ones(n, dtype=bool)
     sets = []
 
-    for (i in range(0, n)):
+    for i in range(0, n):
         if (not active[i]):
             continue
-        if (not mtx[i,i]):
+        if (not coupled[i,i]):
             active[i] = False
             continue
-        coupled_idxs = np.where(mtx[i,])
+        coupled_idxs = np.where(coupled[i,])
         sets.append(list(elems_list[coupled_idxs]))
         active[coupled_idxs] = False
     return(sets)
 
-fname = "/home/dikshant/GitHub/tnseq_modeling/data/ecoli_falcon.lp"
+fname = "/home/dikshant/GitHub/PathwayMining/ecoli.lp"
 model = read(fname)
-mtx = cachedFCF(model, idxs = range(0,50))
+mtx = cachedFCF(model)
 sets = sets_from_coupling_mtx(mtx)
+print(len(sets))
+print(sets)
