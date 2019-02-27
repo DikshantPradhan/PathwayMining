@@ -1,6 +1,7 @@
 library(genbankr)
 library(sybil)
 library(Matrix)
+library(Biostrings)
 
 # get_gene_dataframe <- function(gb, model){
 #   genes <- gb@genes$gene_id
@@ -109,13 +110,33 @@ cluster_gene_distances <- function(distance_matrix, threshold = 50){
   return(clusters)
 }
 
-# smu <- readGenBank('~/Documents/jensn lab/mutans_data/genome/S_mutans_UA159.gb')
-# pa <- readGenBank('~/Documents/jensn lab/pseudomonas aeruginosa/GCF_000006765.1_ASM676v1_genomic.gbff')
+alignment_score_matrix <- function(gb, ref){ # two genbank files
+  n_row <- length(gb@transcripts$locus_tag)
+  n_col <- length(ref@transcripts$locus_tag)
+  
+  alignment_scores <- matrix(data = NA, nrow = n_row, ncol = n_col)
+  rownames(alignment_scores) <- gb@transcripts$locus_tag
+  colnames(alignment_scores) <- ref@transcripts$locus_tag
+  
+  for (i in 1:n_row){
+    gb_gene <- gb@transcripts$translation[i]
+    for (j in 1:n_col){
+      ref_gene <- ref@transcripts$translation[j]
+      alignment <- pairwiseAlignment(gb_gene, ref_gene)
+      alignment_scores[i,j] <- alignment@score
+    }
+  }
+  
+  return(alignment_scores)
+}
+
+smu <- readGenBank('~/Documents/jensn lab/mutans_data/genome/S_mutans_UA159.gb')
+pa <- readGenBank('~/Documents/jensn lab/pseudomonas aeruginosa/GCF_000006765.1_ASM676v1_genomic.gbff')
 # load('~/GitHub/PathwayMining/data/pao_model/pao_model.RData')
 
-smu_gene_order <- get_gene_order_list(smu)
-smu_genome_dist_mtx <- get_genome_distance(smu_gene_order)
-smu_gene_dist_mtx <- get_gene_distance_matrix(smu)
+# smu_gene_order <- get_gene_order_list(smu)
+# smu_genome_dist_mtx <- get_genome_distance(smu_gene_order)
+# smu_gene_dist_mtx <- get_gene_distance_matrix(smu)
 # pa_genbank_genes <- pa@genes$gene_id
 # unannotated_pa_genes <- setdiff(pa_genbank_genes, pao1_active_genes)
 # unannotated_functions <- sapply(unannotated_pa_genes, function(x){pa@transcripts$product[grep(x, pa@transcripts$gene_id)]})
@@ -125,8 +146,8 @@ hclustfunc <- function(x, method = "complete", dmeth = "euclidean") {
   hclust(dist(x, method = dmeth), method = method)
 }
 
-load("~/Documents/jensn lab/Enzyme Coupling/data/mutans_g0_sets.RData")
-source('~/GitHub/PathwayMining/falcon_tools.R')
-
-g0_sets <- clean_rxn_names_in_set(g0_sets)
-g1_sets <- clean_rxn_names_in_set(mutans_g1_sets)
+# load("~/Documents/jensn lab/Enzyme Coupling/data/mutans_g0_sets.RData")
+# source('~/GitHub/PathwayMining/falcon_tools.R')
+# 
+# g0_sets <- clean_rxn_names_in_set(g0_sets)
+# g1_sets <- clean_rxn_names_in_set(mutans_g1_sets)
