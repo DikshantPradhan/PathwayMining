@@ -2,6 +2,8 @@ library(gurobi)
 library(sybil)
 library(dplyr)
 
+
+
 insert_into_list <- function(list, insert, idx){
   segment_1 <- list[1:idx]
   segment_2 <- list[(idx+1):length(list)]
@@ -10,11 +12,14 @@ insert_into_list <- function(list, insert, idx){
   return(new_list)
 }
 
+# compare_lp_files <- 
+
 rewrite_lp <- function(filename = 'temp.lp', model){
   lines <- readLines(filename)
   
   for (i in rev(1:length(model@react_id))){
     rxn <- model@react_id[i]
+    rxn <- gsub(' ', replacement = '_', rxn)
     lp_rxn_id <- paste('x_', i, sep = '')
     # print(paste(lp_rxn_id, rxn, sep = '; '))
     lines <- gsub(pattern = lp_rxn_id, replacement = rxn, lines)
@@ -22,6 +27,7 @@ rewrite_lp <- function(filename = 'temp.lp', model){
   
   for (i in rev(1:length(model@met_id))){
     met <- model@met_id[i]
+    met <- gsub(' ', replacement = '_', met)
     lp_met_id <- paste('r_', i, sep = '')
     # print(paste(lp_met_id, met, sep = '; '))
     lines <- gsub(lp_met_id, met, lines)
@@ -30,14 +36,18 @@ rewrite_lp <- function(filename = 'temp.lp', model){
   return(lines)
 }
 
-convert_sybil_to_lp <- function(sybil, output_file = "'temp.lp'", output = 'temp.lp'){
-  optimizeProb(sybil, poCmd = list(c("writeProb", "LP_PROB", output_file, "'lp'")))
-  new_lines <- rewrite_lp(output, sybil)
-  write(new_lines, file = output)
+convert_sybil_to_lp <- function(sybil, output = 'temp.lp'){
+  # optimizeProb(sybil, poCmd = list(c("writeProb", "LP_PROB", output_file, "'lp'")))
+  # new_lines <- rewrite_lp(output, sybil)
+  # write(new_lines, file = output)
+  prob <- sysBiolAlg(sybil, useNames=TRUE)
+  writeProb(problem(prob), fname = output)
 }
 
-convert_sybil_to_gurobi <- function(sybil, output_file = "'temp.lp'", output = 'temp.lp'){
-  convert_sybil_to_lp(sybil, output_file = output_file, output = output)
+convert_sybil_to_gurobi <- function(sybil, output = 'temp.lp'){
+  convert_sybil_to_lp(sybil, output = output)
+  # prob <- sysBiolAlg(sybil, useNames=TRUE)
+  # writeProb(problem(prob), fname = output)
   model <- gurobi_read(output)
   return(model)
 }
@@ -82,7 +92,9 @@ GRB_generate_falcon_model <- function(sybil_model, falcon_model = FALSE, r0_gene
   # add bounds on split conversion reactions (gene -> activity_[rxn])
   for (i in 1:length(split_fwd_rxns)){
     fwd <- split_fwd_rxns[i]
+    fwd <- gsub(pattern = ' ', replacement = '_', fwd)
     rev <- split_rev_rxns[i]
+    rev <- gsub(pattern = ' ', replacement = '_', rev)
     
     # fwd_ub <- grb_falcon_model$getattr("UB")[[fwd]]
     # fwd_lb <- grb_falcon_model$getattr("LB")[[fwd]]
@@ -114,12 +126,12 @@ GRB_generate_falcon_model <- function(sybil_model, falcon_model = FALSE, r0_gene
   
   # write and read model
   convert_sybil_to_lp(sybil_falcon_model)
+  test_model <- gurobi_read('temp.lp')
+  print('tested')
   lp_lines <- rewrite_lp(model = sybil_falcon_model)
   
-  # model <- convert_sybil_to_gurobi(sybil_falcon_model)
-  
-  constr_idx <- grep('Subject To', lp_lines)
-  lp_lines <- insert_into_list(lp_lines, new_constr, constr_idx)
+  constr_idx <- grep('Bounds', lp_lines)
+  lp_lines <- insert_into_list(lp_lines, new_constr, constr_idx-2)
   end_idx <- grep('End', lp_lines)
   lp_lines <- lp_lines <- insert_into_list(lp_lines, Binaries, (end_idx-2))
   write(lp_lines, file = 'temp.lp')
@@ -138,8 +150,7 @@ solve_model <- function(model, obj_idx, sense = 'max'){
 
 flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01,
                                  bnd_tol = 0.1, stored_obs = 4000, cor_iter = 5, cor_check = TRUE,
-                                 reaction_indexes = c(), compare_mtx = FALSE, 
-                                 known_set_mtx = Matrix(data = FALSE, nrow = 1, ncol = 1, sparse = TRUE)) {
+                                 reaction_indexes = c(), compare_mtx = FALSE, known_set_mtx = Matrix(data = FALSE, nrow = 1, ncol = 1, sparse = TRUE)) {
   
   # min_fva_cor is minimum correlation between fluxes
   # bnd_tol is allowed error in comparing max & min flux
@@ -152,7 +163,8 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     stored_obs = 1
   }
   
-  n <- length(model$varnames) #model$get_sizes()$NumVars
+  vars <- model$varnames
+  n <- length(vars)
   
   if (is.null(known_set_mtx)){
     compare_mtx <- FALSE
@@ -166,10 +178,12 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     reaction_indexes <- c(1:n)
   }
   
-  vars <- model$varnames
   prev_obj <- model$obj
-  model$obj <- rep(0, length(model$obj)) # clear the objective
+  model$obj <- rep(0,n) # clear the objective
   prev_sense <- model$modelsense
+  
+  original_ub <- model$ub
+  original_lb <- model$lb
   
   global_max <- rep(0, n)
   global_min <- rep(0, n)
@@ -200,6 +214,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     # if false, skip in depth comparison
     
     n_entries <- length(which(!near(flux[,i], 0, tol = bnd_tol) | !near(flux[,j], 0, tol = bnd_tol)))
+    # n_entries <- length(which(flux[,i] != 0 | flux[,j] != 0))
     if (n_entries > cor_iter){
       C <- cor(flux[,i], flux[,j])
       
@@ -222,11 +237,23 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
   
   # if j is coupled to i, couple the rxns known to be coupled to j to i as well
   known_set_coupling <- function(i, j, coupled, active){
+    #sets <- which(known_set_mtx[,j])
     set <- which(known_set_mtx[j,])
+    
+    #for (k in set){
+    #  coupled[i, k] <- TRUE
+    #  coupled[k, k] <- TRUE
+    #}
     
     coupled[i, set] <- TRUE
     coupled[set, set] <- TRUE
     active[set] <- FALSE
+    #for (set in sets){
+    #known_coupled_rxns <- which(known_set_mtx[set,])
+    
+    #coupled[i, known_coupled_rxns] <- TRUE
+    #active[known_coupled_rxns] <- FALSE
+    #}
     
     list(coupled = coupled, active = active)
   }
@@ -246,34 +273,43 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     }
     else {
       if (!near(model$ub[i], 0)){ #model$getattr("UB")[vars[i]] > tol
-        # maximize
-        sol <- solve_model(model, i, sense = 'max')
+        
+        model$obj[i] <- 1
+        model$modelsense <- 'max'
+        sol <- gurobi(model, list(OutputFlag = 0))
         lp_calls <- lp_calls + 1
+        #print(is.null(flux))
         global_max <- pmax(global_max, sol$x)
         global_min <- pmin(global_min, sol$x)
+        #flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
         flux[lp_calls%%stored_obs,] <- sol$x
         
         if (!near(global_max[i], 0) | !near(global_min[i], 0)){
           fixed_val <- rxn_fix(global_max[i], global_min[i])
         }
         
-        # model$setattr("Obj", setNames(0.0, vars[i]))
+        model$obj <- rep(0, n)
       }
       if (!near(model$lb[i], 0)){ #model$getattr("LB")[vars[i]] < (-1*tol_)
-        # minimize
-        sol <- solve_model(model, i, sense = 'min')
+        
+        model$obj[i] <- 1
+        model$modelsense <- 'min'
+        sol <- gurobi(model, list(OutputFlag = 0))
         lp_calls <- lp_calls + 1
+        #print(is.null(flux))
         global_max <- pmax(global_max, sol$x)
         global_min <- pmin(global_min, sol$x)
+        #flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
         flux[lp_calls%%stored_obs,] <- sol$x
         
         if (!near(global_min[i], 0) | !near(global_min[i], 0)){
           fixed_val <- rxn_fix(global_max[i], global_min[i])
         }
         
-        # model$setattr("Obj", setNames(0.0, vars[i]))
+        model$obj <- rep(0, n)
       }
       if (near(global_max[i], 0) & near(global_min[i], 0)){ #(abs(global_max[i]) < tol) & (abs(global_min[i]) < tol)
+        #print(paste('blocked:', i))
         blocked[i] <- TRUE
         active[i] <- FALSE
         next
@@ -281,8 +317,8 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     }
     
     # set new bounds for selected rxn (temporarily)
-    model$ub[i] <- fixed_val + 0.0*fix_tol_frac*abs(fixed_val)  #setattr("UB", setNames(fixed_val + 0.0*fix_tol_frac*abs(fixed_val), vars[i]))
-    model$lb[i] <- fixed_val - 0.0*fix_tol_frac*abs(fixed_val)#setattr("LB", setNames(fixed_val - 0.0*fix_tol_frac*abs(fixed_val), vars[i]))
+    model$ub[i] <- fixed_val #setattr("UB", setNames(fixed_val + 0.0*fix_tol_frac*abs(fixed_val), vars[i]))
+    model$lb[i] <- fixed_val #setattr("LB", setNames(fixed_val - 0.0*fix_tol_frac*abs(fixed_val), vars[i]))
     
     # couple reaction to itself if not blocked
     if (!blocked[i]){
@@ -298,11 +334,13 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       # check for fixed or blocked
       if (!active[j] | blocked[j]){next}
       if (not_fixed(sub_max[j], sub_min[j])){next}
+      #print(paste(sub_max[j], sub_min[j]))
       
       # check for uncoupled via correlation
       if (cor_check){
         if (!correlation_check(flux, i, j)){next}
-        
+        # C <- cor(flux[,i], flux[,j])
+        # if (!is.na(C) & (abs(C) < min_fva_cor)){next}
       }
       
       skip <- FALSE
@@ -311,15 +349,18 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       min <- 0
       
       # model$setattr("Obj", setNames(1.0, vars[j]))
+      model$obj[j] <- 1
       if (!skip) {
-        # maximize
-        sol <- solve_model(model, j, sense = 'max')
+        model$modelsense <- 'max'
+        sol <- gurobi(model, list(OutputFlag = 0))
         lp_calls <- lp_calls + 1
+        #print(is.null(flux))
         global_max <- pmax(global_max, sol$x)
         global_min <- pmin(global_min, sol$x)
         sub_max <- pmax(sub_max, sol$x)
         sub_min <- pmin(sub_min, sol$x)
         
+        #flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
         flux[lp_calls%%stored_obs,] <- sol$x
         
         max <- sol$x[j]
@@ -328,17 +369,19 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       }
       
       if (!skip) {
-        # minimize
-        sol <- solve_model(model, j, sense = 'min')
+        model$modelsense <- 'min'
+        sol <- gurobi(model, list(OutputFlag = 0))
         lp_calls <- lp_calls + 1
+        #print(is.null(flux))
         global_max <- pmax(global_max, sol$x)
         global_min <- pmin(global_min, sol$x)
         sub_max <- pmax(sub_max, sol$x)
         sub_min <- pmin(sub_min, sol$x)
         
+        #flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
         flux[lp_calls%%stored_obs,] <- sol$x
         
-        min <- sol$x[j]
+        max <- sol$x[j]
         
         skip <- not_fixed(sub_max[j], sub_min[j])
       }
@@ -357,21 +400,26 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         }
       }
       
+      # print(lp_calls)
+      
       # model$setattr("Obj", setNames(0.0, vars[j]))
+      model$obj <- rep(0, n)
     }
     
     
     # unfix i
-    model$ub[i] <- prev_ub
-    model$lb[i] <- prev_lb
-    # model$setattr("UB", prev_ub)
-    # model$setattr("LB", prev_lb)
+    model$ub <- original_ub #setattr("UB", prev_ub)
+    model$lb <- original_lb #setattr("LB", prev_lb)
   }
   
-  model$obj <- prev_obj
-  model$modelsense <- prev_sense
-  # model$setattr("Obj", prev_obj)
-  # model$setattr("ModelSense", prev_sense)
+  #i <- reaction_indexes[length(reaction_indexes)]
+  #if (!blocked[i] & active[i]){
+  #  coupled[i,i] <- TRUE
+  #  active[i] <- FALSE
+  #}
+  
+  model$obj <- prev_obj#setattr("Obj", prev_obj)
+  model$modelsense <- prev_sense #setattr("ModelSense", prev_sense)
   
   print(lp_calls)
   
@@ -381,9 +429,132 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
   )
 }
 
-data("Ec_core")
-model <- convert_sybil_to_gurobi(Ec_core)
-# falcon_model <- GRB_generate_falcon_model(Ec_core)
+GRB_get_rxn_idx <- function(model, rxn){
+  vars <- model$varnames
+  return(return(which(vars == rxn)))
+}
 
-r_mtx <- flux_coupling_raptor(model)
+GRB_generate_pair_list <- function(model_og){
+  model <- model_og
+  return(return_couples(flux_coupling_raptor(model)$coupled))
+}
+
+GRB_generate_set_list <- function(model_og, reaction_indexes = c()){
+  model <- model_og
+  return(get_list_of_sets(return_couples(flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled)))
+}
+
+GRB_flux_coupling_raptor_wrapper <- function(i, vars, model_og, reaction_indexes = 1:length(vars), compare_mtx = FALSE, init_coupling_mtx = c(), file_output = NULL){
+  print(paste('suppression index:', i))
+  
+  model <- model_og
+  
+  # block i
+  model$setattr("UB", setNames(0, vars[i]))
+  model$setattr("LB", setNames(0, vars[i]))
+  
+  coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes, compare_mtx = compare_mtx, known_set_mtx = init_coupling_mtx, stored_obs = 4000)$coupled
+  
+  coupling_idxs <- which(coupling_mtx)
+  if (!is.null(file_output)){
+    write(paste(c(i,coupling_idxs), collapse = ','),file = file_output,append=TRUE)
+  }
+  return(coupling_idxs)
+}
+
+GRB_generate_set_lists_cluster <- function(model_og, suppression_idxs = -1, reaction_indexes = c(),
+                                           compare_known_init_sets = FALSE, optimize_suppr = FALSE, optimize_rxns = FALSE, cores = 1, avoid_idxs = c(), file_output = NULL){
+  
+  vars <- model_og$varnames
+  n <- length(vars)
+  
+  if (suppression_idxs[1] == -1){
+    if (length(reaction_indexes) > 0){
+      suppression_idxs = reaction_indexes
+    }
+    else {
+      suppression_idxs = 1:n
+    }
+  }
+  
+  # dim: rxns_row, rxns_col, deletions
+  model <- model_og
+  
+  #init_coupling_mtx <- c()
+  if (compare_known_init_sets){
+    init_coupling_mtx <- flux_coupling_raptor(model, reaction_indexes = reaction_indexes)$coupled
+    init_coupling_mtx <- fill_coupling_matrix(init_coupling_mtx)
+  }
+  suppr_vector <- Matrix(data = FALSE, nrow = 1, ncol = n, sparse = TRUE)
+  suppr_vector[suppression_idxs] <- TRUE
+  if (compare_known_init_sets & optimize_suppr){
+    i <- 1
+    while (i <= n){
+      if (suppr_vector[i]){ # if tagged to be suppressed
+        set_idx <- which(init_coupling_mtx[,i])[1] # which is first reaction (row) i is coupled to
+        if (!is.na(set_idx)){
+          rxn_idxs <- which(init_coupling_mtx[set_idx,]) # other reactions in set
+          # only suppress first reaction in set since, theoretically, suppressing any should have the same effect
+          suppr_vector[rxn_idxs] <- FALSE
+          suppr_vector[rxn_idxs[1]] <- TRUE
+        }
+        else {
+          suppr_vector[i] <- FALSE
+        }
+        
+      }
+      i <- i+1
+    }
+    
+    if (optimize_rxns){
+      reaction_indexes <- which(suppr_vector)
+    }
+  }
+  
+  if (length(avoid_idxs) > 0){
+    suppr_vector[avoid_idxs] <- FALSE
+  }
+  
+  print(paste("# of suppressions:", length(which(suppr_vector)), sep = " "))
+  coupling <- mclapply(which(suppr_vector), function(x) GRB_flux_coupling_raptor_wrapper(x, vars, model_og, reaction_indexes = reaction_indexes, compare_mtx = compare_known_init_sets, init_coupling_mtx = init_coupling_mtx, file_output = file_output), mc.cores = cores)
+  
+  return(coupling)
+}
+
+GRB_maximize <- function(model_og, obj, suppress = c(), max = TRUE){ # suppress is characters
+  model <- model_og
+  
+  vars <- model$varnames
+  n <- length(vars)
+  
+  # clear obj
+  model$obj <- rep(0.0, times = n) # setattr("Obj", setNames(rep(0.0, times = n), vars))
+  
+  # set suppressions
+  if (length(suppress) > 0){
+    suppr_idxs <- which(vars %in% suppress)
+    model$ub[suppr_idxs] <- 0 #setattr("UB", setNames(rep(0.0, times = length(suppr_idxs)), vars[suppr_idxs]))
+    model$lb[suppr_idxs] <- 0 #setattr("LB", setNames(rep(0.0, times = length(suppr_idxs)), vars[suppr_idxs]))
+  }
+  
+  # set obj
+  sense <- 'max'
+  if (!max){
+    sense <- 'min' # model$set_model_sense(minimize=TRUE)
+  }
+  sol <- solve_model(model = model, obj_idx = obj, sense = sense)
+  obj_max <- sol$objval
+  return(obj_max)
+}
+
+
+data("Ec_core")
+load('GitHub/PathwayMining_Package/data/mutans_model.RData')
+# model <- mutans_model
+# optimizeProb(Ec_core, poCmd = list(c("writeProb", "LP_PROB", "'temp2.lp'", "'lp'")))
+test_model <- gurobi_read('temp2.lp')
+model <- convert_sybil_to_gurobi(Ec_core)
+# falcon_model <- GRB_generate_falcon_model(model)
+
+r_mtx <- flux_coupling_raptor(model, cor_check = FALSE)$coupled
 r_sets <- get_list_of_sets_from_mtx(r_mtx)
