@@ -587,7 +587,8 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
         #print(paste('blocked:', i))
         blocked[i] <- TRUE
         active[i] <- FALSE
-        next
+        #next
+        return(0)
       }
     }
     
@@ -605,8 +606,8 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
     # observe values for j
     skip <- FALSE
     
-    max <- 0
-    min <- 0
+    max <- Inf #0
+    min <- -Inf #0
     
     # model$setattr("Obj", setNames(1.0, vars[j]))
     model$obj[j] <- 1
@@ -625,7 +626,7 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
       
       max <- sol$x[j]
       
-      skip <- not_fixed(sub_max[j], sub_min[j])
+      #skip <- not_fixed(sub_max[j], sub_min[j])
     }
     
     if (!skip) {
@@ -643,14 +644,16 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
       
       min <- sol$x[j]
       
-      skip <- not_fixed(sub_max[j], sub_min[j])
+      #skip <- not_fixed(sub_max[j], sub_min[j])
     }
-    
-    if (!near(max, 0) | !near(min, 0)){skip = TRUE}
+    #print(paste(min, max))
+    if (length(min) < 1 | length(max) < 1){return(FALSE)} 
+    if (!near(max, 0) | !near(min, 0)){return(FALSE)}#{skip = TRUE}
     
     ## fix i to non-zero value
     
     fixed_val <- fix_flux_val(i)
+    if (fixed_val == 0){return(FALSE)}
     
     model$ub[i] <- fixed_val
     model$lb[i] <- fixed_val
@@ -768,11 +771,11 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
       #print(paste(sub_max[j], sub_min[j]))
       
       # check for uncoupled via correlation
-      if (cor_check){
-        if (!correlation_check(flux, i, j)){next}
+      #if (cor_check){
+      #  if (!correlation_check(flux, i, j)){next}
         # C <- cor(flux[,i], flux[,j])
         # if (!is.na(C) & (abs(C) < min_fva_cor)){next}
-      }
+      #}
       
       # skip <- FALSE
       # 
@@ -823,8 +826,9 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
       dir_i_j <- check_directional_coupling(i,j)
       dir_j_i <- check_directional_coupling(j,i)
       
-      coupled[i,j] <- dir_i_j
-      coupled[j,j] <- dir_j_i
+      #coupled[i,j] <- dir_i_j
+      #coupled[j,j] <- dir_j_i
+      if (dir_i_j & dir_j_i){coupled[i,j] <- TRUE; coupled[j,i] <- TRUE}
       
       # if (!skip) { # finally label as coupled
       #   coupled[i,j] <- TRUE
@@ -988,14 +992,14 @@ GRB_maximize <- function(model_og, obj, suppress = c(), max = TRUE){ # suppress 
 
 
 # data("Ec_core")
-load('GitHub/PathwayMining_Package/data/pao_model.RData')
+#load('GitHub/PathwayMining_Package/data/pao_model.RData')
 # model <- mutans_model
 # optimizeProb(Ec_core, poCmd = list(c("writeProb", "LP_PROB", "'temp2.lp'", "'lp'")))
 # test_model <- gurobi_read('temp2.lp')
 # model <- convert_sybil_to_gurobi(pao_model)
 # model <- gurobi_read('~/GitHub/PathwayMining/new_ecoli.lp')
-model <- convert_sybil_to_gurobi(Ec_core)
+#model <- convert_sybil_to_gurobi(Ec_core)
 # falcon_model <- GRB_generate_falcon_model(model)
 
-r_mtx <- flux_coupling_raptor(model, fix_tol_frac = 0.00001)$coupled
-r_sets <- get_list_of_sets_from_mtx(r_mtx)
+#r_mtx <- flux_coupling_raptor(model, fix_tol_frac = 0.00001)$coupled
+#r_sets <- get_list_of_sets_from_mtx(r_mtx)
