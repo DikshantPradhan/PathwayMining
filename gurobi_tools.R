@@ -541,7 +541,7 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
   
   fix_flux_val <- function(i){ # idx of reaction to fix
     
-    fixed_val <- 0.001
+    fixed_val <- 0
     
     if (!near(global_max[i], 0, tol = bnd_tol) | !near(global_min[i], 0, tol = bnd_tol)){
       fixed_val <- rxn_fix(global_max[i], global_min[i])
@@ -599,6 +599,21 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
   }
   
   check_directional_coupling <- function(i, j){
+    coupled <- FALSE
+    ret <- list(coupled = coupled,
+                flux = flux,
+                sub_max = sub_max,
+                sub_min = sub_min,
+                lp_calls = lp_calls)
+    
+    # check stored values
+    idxs <- which(flux[,i] == 0)
+    flag <- any(flux[idxs,j] != 0)
+    if (flag){
+      return(ret)
+    }
+    
+    
     # fix i to zero
     model$ub[i] <- 0
     model$lb[i] <- 0
@@ -622,7 +637,7 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
       sub_min <- pmin(sub_min, sol$x)
       
       #flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
-      # flux[lp_calls%%stored_obs,] <- sol$x
+      flux[lp_calls%%stored_obs,] <- sol$x
       
       max <- sol$x[j]
       
@@ -640,20 +655,34 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
       sub_min <- pmin(sub_min, sol$x)
       
       #flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
-      # flux[lp_calls%%stored_obs,] <- sol$x
+      flux[lp_calls%%stored_obs,] <- sol$x
       
       min <- sol$x[j]
       
       #skip <- not_fixed(sub_max[j], sub_min[j])
     }
+    # return flux, sub_max, sub_min, lp
+    
     #print(paste(min, max))
-    if (length(min) < 1 | length(max) < 1){return(FALSE)} 
-    if (!near(max, 0) | !near(min, 0)){return(FALSE)}#{skip = TRUE}
+    if (length(min) < 1 | length(max) < 1){
+      ret$coupled <- FALSE
+      return(ret)
+      # return(FALSE)
+      } 
+    if (!near(max, 0) | !near(min, 0)){
+      ret$coupled <- FALSE
+      return(ret)
+      # return(FALSE)
+      }#{skip = TRUE}
     
     ## fix i to non-zero value
     
     fixed_val <- fix_flux_val(i)
-    if (fixed_val == 0){return(FALSE)}
+    if (fixed_val == 0){
+      ret$coupled <- FALSE
+      return(ret)
+      # return(FALSE)
+      }
     
     model$ub[i] <- fixed_val
     model$lb[i] <- fixed_val
@@ -670,10 +699,18 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
     sub_min <- pmin(sub_min, sol$x)
     
     #flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
-    # flux[lp_calls%%stored_obs,] <- sol$x
+    flux[lp_calls%%stored_obs,] <- sol$x
     
     max <- sol$x[j]
-    if (!near(max, 0)){return(TRUE)}
+    if (!near(max, 0)){
+      ret$coupled <- TRUE
+      ret$flux <- flux
+      ret$sub_max <- sub_max
+      ret$sub_min <- sub_min
+      ret$lp_calls <- lp_calls
+      return(ret)
+      # return(TRUE)
+      }
     
     model$modelsense <- 'min'
     sol <- gurobi(model, list(OutputFlag = 0))
@@ -685,9 +722,24 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
     sub_min <- pmin(sub_min, sol$x)
     
     min <- sol$x[j]
-    if (!near(min, 0)){return(TRUE)}
+    if (!near(min, 0)){
+      ret$coupled <- TRUE
+      ret$flux <- flux
+      ret$sub_max <- sub_max
+      ret$sub_min <- sub_min
+      ret$lp_calls <- lp_calls
+      return(ret)
+      # return(TRUE)
+      }
     
-    return(FALSE)
+    ret$coupled <- FALSE
+    ret$flux <- flux
+    ret$sub_max <- sub_max
+    ret$sub_min <- sub_min
+    ret$lp_calls <- lp_calls
+    return(ret)
+    
+    # return(FALSE)
   }
   
   for (idx in 1:(length(reaction_indexes))) { # (i in 1:(n-1))
@@ -697,64 +749,11 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
     if (!active[i] | blocked[i]) next
     
     # set i to 0, check for variable or zero flux
-    sub_max <- rep(-Inf, n)
-    sub_min <- rep(Inf, n)
+    sub_max <- rep(0, n)
+    sub_min <- rep(0, n)
     prev_ub <- model$ub[i]
     prev_lb <- model$lb[i]
     
-    # if (!near(global_max[i], 0, tol = bnd_tol) | !near(global_min[i], 0, tol = bnd_tol)){
-    #   fixed_val <- rxn_fix(global_max[i], global_min[i])
-    # }
-    # else {
-    #   if (!near(model$ub[i], 0)){ #model$getattr("UB")[vars[i]] > tol
-    #     
-    #     model$obj[i] <- 1
-    #     model$modelsense <- 'max'
-    #     sol <- gurobi(model, list(OutputFlag = 0))
-    #     lp_calls <- lp_calls + 1
-    #     #print(is.null(flux))
-    #     global_max <- pmax(global_max, sol$x)
-    #     global_min <- pmin(global_min, sol$x)
-    #     #flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
-    #     flux[lp_calls%%stored_obs,] <- sol$x
-    #     
-    #     if (!near(global_max[i], 0) | !near(global_min[i], 0)){
-    #       fixed_val <- rxn_fix(global_max[i], global_min[i])
-    #     }
-    #     
-    #     model$obj <- rep(0, n)
-    #   }
-    #   if (!near(model$lb[i], 0)){ #model$getattr("LB")[vars[i]] < (-1*tol_)
-    #     
-    #     model$obj[i] <- 1
-    #     model$modelsense <- 'min'
-    #     sol <- gurobi(model, list(OutputFlag = 0))
-    #     lp_calls <- lp_calls + 1
-    #     #print(is.null(flux))
-    #     global_max <- pmax(global_max, sol$x)
-    #     global_min <- pmin(global_min, sol$x)
-    #     #flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
-    #     flux[lp_calls%%stored_obs,] <- sol$x
-    #     
-    #     if (!near(global_max[i], 0) | !near(global_min[i], 0)){
-    #       fixed_val <- rxn_fix(global_max[i], global_min[i])
-    #     }
-    #     
-    #     model$obj <- rep(0, n)
-    #   }
-    #   if (near(global_max[i], 0) & near(global_min[i], 0)){ #(abs(global_max[i]) < tol) & (abs(global_min[i]) < tol)
-    #     #print(paste('blocked:', i))
-    #     blocked[i] <- TRUE
-    #     active[i] <- FALSE
-    #     next
-    #   }
-    # }
-    # 
-    # # set new bounds for selected rxn (temporarily)
-    # model$ub[i] <- fixed_val #setattr("UB", setNames(fixed_val + 0.0*fix_tol_frac*abs(fixed_val), vars[i]))
-    # model$lb[i] <- fixed_val #setattr("LB", setNames(fixed_val - 0.0*fix_tol_frac*abs(fixed_val), vars[i]))
-    # 
-    # couple reaction to itself if not blocked
     if (!blocked[i]){
       coupled[i,i] <- TRUE
       active[i] <- FALSE
@@ -767,82 +766,34 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
       j <-  reaction_indexes[idx2]
       # check for fixed or blocked
       if (!active[j] | blocked[j]){next}
-      if (not_fixed(sub_max[j], sub_min[j])){next}
-      #print(paste(sub_max[j], sub_min[j]))
       
-      # check for uncoupled via correlation
-      #if (cor_check){
-      #  if (!correlation_check(flux, i, j)){next}
-        # C <- cor(flux[,i], flux[,j])
-        # if (!is.na(C) & (abs(C) < min_fva_cor)){next}
-      #}
+      # CHECK I -> J
+      if ((sub_max == 0) & (sub_min) == 0){
+        check <- check_directional_coupling(i,j)
+        
+        dir_i_j <- ret$coupled
+        flux <- ret$flux
+        sub_max <- ret$sub_max
+        sub_min <- ret$sub_min
+        lp_calls <- ret$lp_calls
+        
+      }
+      # CHECK J -> I
       
-      # skip <- FALSE
-      # 
-      # max <- 0
-      # min <- 0
-      # 
-      # # model$setattr("Obj", setNames(1.0, vars[j]))
-      # model$obj[j] <- 1
-      # if (!skip) {
-      #   model$modelsense <- 'max'
-      #   sol <- gurobi(model, list(OutputFlag = 0))
-      #   lp_calls <- lp_calls + 1
-      #   #print(is.null(flux))
-      #   global_max <- pmax(global_max, sol$x)
-      #   global_min <- pmin(global_min, sol$x)
-      #   sub_max <- pmax(sub_max, sol$x)
-      #   sub_min <- pmin(sub_min, sol$x)
-      #   
-      #   #flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
-      #   flux[lp_calls%%stored_obs,] <- sol$x
-      #   
-      #   max <- sol$x[j]
-      #   
-      #   skip <- not_fixed(sub_max[j], sub_min[j])
-      # }
-      # 
-      # if (!skip) {
-      #   model$modelsense <- 'min'
-      #   sol <- gurobi(model, list(OutputFlag = 0))
-      #   lp_calls <- lp_calls + 1
-      #   #print(is.null(flux))
-      #   global_max <- pmax(global_max, sol$x)
-      #   global_min <- pmin(global_min, sol$x)
-      #   sub_max <- pmax(sub_max, sol$x)
-      #   sub_min <- pmin(sub_min, sol$x)
-      #   
-      #   #flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
-      #   flux[lp_calls%%stored_obs,] <- sol$x
-      #   
-      #   max <- sol$x[j]
-      #   
-      #   skip <- not_fixed(sub_max[j], sub_min[j])
-      # }
-      # 
-      # if (near(max, 0) & near(min, 0)){skip = TRUE}
-      # 
+      check <- check_directional_coupling(j,i)
       
-      dir_i_j <- check_directional_coupling(i,j)
-      dir_j_i <- check_directional_coupling(j,i)
+      dir_j_i <- ret$coupled
+      flux <- ret$flux
+      sub_max <- ret$sub_max
+      sub_min <- ret$sub_min
+      lp_calls <- ret$lp_calls
+        
+      # dir_i_j <- check_directional_coupling(i,j)
+      # dir_j_i <- check_directional_coupling(j,i)
       
       #coupled[i,j] <- dir_i_j
       #coupled[j,j] <- dir_j_i
       if (dir_i_j & dir_j_i){coupled[i,j] <- TRUE; coupled[j,i] <- TRUE}
-      
-      # if (!skip) { # finally label as coupled
-      #   coupled[i,j] <- TRUE
-      #   coupled[j,j] <- TRUE # make sure the reaction doesn't look blocked
-      #   active[j] <- FALSE
-      #   
-      #   if (compare_mtx){
-      #     output <- known_set_coupling(i, j, coupled, active)
-      #     coupled <- output$coupled
-      #     active <- output$active
-      #   }
-      # }
-      # 
-      # print(lp_calls)
       
       # model$setattr("Obj", setNames(0.0, vars[j]))
       model$obj <- rep(0, n)
@@ -854,11 +805,6 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
     model$lb <- original_lb #setattr("LB", prev_lb)
   }
   
-  #i <- reaction_indexes[length(reaction_indexes)]
-  #if (!blocked[i] & active[i]){
-  #  coupled[i,i] <- TRUE
-  #  active[i] <- FALSE
-  #}
   
   model$obj <- prev_obj#setattr("Obj", prev_obj)
   model$modelsense <- prev_sense #setattr("ModelSense", prev_sense)
