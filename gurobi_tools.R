@@ -257,6 +257,85 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     list(coupled = coupled, active = active)
   }
   
+  check_directional_coupling <- function(i, j, fixed = TRUE){
+    
+    info <- list(lp_calls = 0,
+                 coupled = FALSE)
+    
+    prev_ub_i <- model$ub[i]
+    prev_lb_i <- model$lb[i]
+    
+    if (!fixed){
+      fixed_val <- 0.01
+      if (!near(global_max[i], 0, tol = bnd_tol) | !near(global_min[i], 0, tol = bnd_tol)){
+        fixed_val <- rxn_fix(global_max[i], global_min[i])
+      }
+      else {
+        if (!near(model$ub[i], 0)){ #model$getattr("UB")[vars[i]] > tol
+          
+          model$obj[i] <- 1
+          model$modelsense <- 'max'
+          sol <- gurobi(model, list(OutputFlag = 0))
+          info$lp_calls <- info$lp_calls + 1
+          #print(is.null(flux))
+          global_max <- pmax(global_max, sol$x)
+          global_min <- pmin(global_min, sol$x)
+          #flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
+          # flux[lp_calls%%stored_obs,] <- sol$x
+          
+          if (!near(global_max[i], 0) | !near(global_min[i], 0)){
+            fixed_val <- rxn_fix(global_max[i], global_min[i])
+          }
+          
+          model$obj <- rep(0, n)
+        }
+        if (!near(model$lb[i], 0)){ #model$getattr("LB")[vars[i]] < (-1*tol_)
+          
+          model$obj[i] <- 1
+          model$modelsense <- 'min'
+          sol <- gurobi(model, list(OutputFlag = 0))
+          info$lp_calls <- info$lp_calls + 1
+          #print(is.null(flux))
+          global_max <- pmax(global_max, sol$x)
+          global_min <- pmin(global_min, sol$x)
+          #flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
+          # flux[lp_calls%%stored_obs,] <- sol$x
+          
+          if (!near(global_max[i], 0) | !near(global_min[i], 0)){
+            fixed_val <- rxn_fix(global_max[i], global_min[i])
+          }
+          
+          model$obj <- rep(0, n)
+        }
+        
+        model$ub[i] <- fixed_val
+        model$lb[i] <- fixed_val
+    }
+    
+    prev_ub_j <- model$ub[j]
+    prev_lb_j <- model$lb[j]
+    
+    # zero out target bounds
+    model$ub[j] <- 0
+    model$lb[j] <- 0
+    
+    # check feasibility
+    sol <- gurobi(model, list(OutputFlag = 0))
+    
+    info$lp_calls <- info$lp_calls + 1
+    
+    model$ub[j] <- prev_ub_j
+    model$lb[j] <- prev_lb_j
+    
+    model$ub[i] <- prev_ub_i
+    model$lb[i] <- prev_lb_i
+    
+    feasible <- !(length(sol$x) == 0)
+    info$coupled <- feasible
+    
+    return(info)
+  }
+  
   for (idx in 1:(length(reaction_indexes))) { # (i in 1:(n-1))
     # iterate over passed in idxs instead (idx in 1:length(reaction_indexes)); i <-  reaction_indexes[idx]
     i <-  reaction_indexes[idx]
@@ -399,6 +478,10 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         }
       }
       
+      # if (skip){
+      #   
+      # }
+      
       # print(lp_calls)
       
       # model$setattr("Obj", setNames(0.0, vars[j]))
@@ -427,6 +510,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     lp_calls = lp_calls
   )
 }
+
 
 partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01,
                                  bnd_tol = 0.1, stored_obs = 4000, cor_iter = 5, cor_check = TRUE,
