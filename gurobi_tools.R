@@ -714,6 +714,7 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
       model$modelsense <- 'max'
       sol <- gurobi(model, list(OutputFlag = 0))
       lp_calls <- lp_calls + 1
+      if (length(sol$x) == 0){return(ret)}
       #print(is.null(flux))
       # global_max <- pmax(global_max, sol$x)
       # global_min <- pmin(global_min, sol$x)
@@ -732,6 +733,7 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
       model$modelsense <- 'min'
       sol <- gurobi(model, list(OutputFlag = 0))
       lp_calls <- lp_calls + 1
+      if (length(sol$x) == 0){return(ret)}
       #print(is.null(flux))
       # global_max <- pmax(global_max, sol$x)
       # global_min <- pmin(global_min, sol$x)
@@ -776,6 +778,7 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
     model$modelsense <- 'max'
     sol <- gurobi(model, list(OutputFlag = 0))
     lp_calls <- lp_calls + 1
+    if (length(sol$x) == 0){return(ret)}
     #print(is.null(flux))
     # global_max <- pmax(global_max, sol$x)
     # global_min <- pmin(global_min, sol$x)
@@ -852,8 +855,8 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
       if (!active[j] | blocked[j]){next}
       
       # CHECK I -> J
-      if ((sub_max == 0) & (sub_min) == 0){
-        check <- check_directional_coupling(i,j)
+      if ((sub_max[j] == 0) & (sub_min[j] == 0)){
+        ret <- check_directional_coupling(i,j)
         
         dir_i_j <- ret$coupled
         flux <- ret$flux
@@ -864,7 +867,7 @@ partial_flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, f
       }
       # CHECK J -> I
       
-      check <- check_directional_coupling(j,i)
+      ret <- check_directional_coupling(j,i)
       
       dir_j_i <- ret$coupled
       flux <- ret$flux
