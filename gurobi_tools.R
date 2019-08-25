@@ -1050,6 +1050,52 @@ GRB_maximize <- function(model_og, obj, suppress = c(), max = TRUE){ # suppress 
   return(obj_max)
 }
 
+## extra functions
+
+fill_coupling_matrix <- function(coupled){
+  rows <- nrow(coupled)
+  
+  for (i in 1:nrow(coupled)){
+    #identify set
+    # if (!coupled[i,i]){next}
+    set <- which(coupled[i,]) # true values in row
+    if (length(set) < 1){next}
+    set <- unique(c(i, set))
+    coupled[set,set] <- TRUE
+    
+  }
+  
+  coupled[lower.tri(coupled)] <- FALSE
+  return(coupled)
+}
+
+fill_coupling_matrix_from_sets <- function(mtx, sets){
+  for (set in sets){
+    mtx[set,set] <- TRUE
+  }
+  
+  mtx <- fill_coupling_matrix(mtx)
+  
+  return(mtx)
+}
+
+set_vector <- function(coupled){
+  active <- matrix(data = TRUE, nrow = 1, ncol = ncol(coupled))
+  set_num <- matrix(data = 0, nrow = 1, ncol = ncol(coupled))
+  
+  set_iter <- 1
+  for (i in nrow(coupled)){
+    if (!active[i]){next} # skip if already in a set
+    set <- which(coupled[i,])
+    if (length(set) < 1){next} # skip if blocked reaction (will not be coupled to itself)
+    active[set] <- FALSE
+    set_num[set] <- set_iter # enter same set # into all indexes in the same set
+    set_iter <- set_iter + 1
+  }
+  
+  return(set_num)
+}
+
 
 # data("Ec_core")
 #load('GitHub/PathwayMining_Package/data/pao_model.RData')
