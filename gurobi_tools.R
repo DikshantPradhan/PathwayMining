@@ -149,7 +149,9 @@ solve_model <- function(model, obj_idx, sense = 'max'){
 
 flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01,
                                  bnd_tol = 0.1, stored_obs = 4000, cor_iter = 5, cor_check = TRUE,
-                                 reaction_indexes = c(), compare_mtx = FALSE, known_set_mtx = Matrix(data = FALSE, nrow = 1, ncol = 1, sparse = TRUE)) {
+                                 reaction_indexes = c(), compare_mtx = FALSE, 
+                                 known_set_mtx = Matrix(data = FALSE, nrow = 1, ncol = 1, sparse = TRUE),
+                                 directional = FALSE) {
   
   # min_fva_cor is minimum correlation between fluxes
   # bnd_tol is allowed error in comparing max & min flux
@@ -277,7 +279,6 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
           model$modelsense <- 'max'
           sol <- gurobi(model, list(OutputFlag = 0))
           info$lp_calls <- info$lp_calls + 1
-          #print(is.null(flux))
           global_max <- pmax(global_max, sol$x)
           global_min <- pmin(global_min, sol$x)
           #flux <- update_flux(flux, lp_calls%%stored_obs, sol$X)
@@ -310,6 +311,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         
         model$ub[i] <- fixed_val
         model$lb[i] <- fixed_val
+      }
     }
     
     prev_ub_j <- model$ub[j]
@@ -324,17 +326,19 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     
     info$lp_calls <- info$lp_calls + 1
     
+    feasible <- !(length(sol$x) == 0)
+    info$coupled <- feasible
+    
     model$ub[j] <- prev_ub_j
     model$lb[j] <- prev_lb_j
     
     model$ub[i] <- prev_ub_i
     model$lb[i] <- prev_lb_i
     
-    feasible <- !(length(sol$x) == 0)
-    info$coupled <- feasible
     
     return(info)
   }
+  
   
   for (idx in 1:(length(reaction_indexes))) { # (i in 1:(n-1))
     # iterate over passed in idxs instead (idx in 1:length(reaction_indexes)); i <-  reaction_indexes[idx]
@@ -475,6 +479,29 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
           output <- known_set_coupling(i, j, coupled, active)
           coupled <- output$coupled
           active <- output$active
+        }
+      }
+      
+      if (skip & directional){
+        dir_i_j <- check_directional_coupling(i, j, fixed = TRUE)
+        lp_calls <- lp_calls + dir_i_j$lp_calls
+        
+        if (dir_i_j$coupled){
+          coupled[i,j] <- TRUE
+          next
+        }
+        
+        dir_j_i <- check_directional_coupling(j, i, fixed = FALSE)
+        lp_calls <- lp_calls + dir_j_i$lp_calls
+        
+        if (dir_j_i$coupled){
+          coupled[j,i] <- TRUE
+        }
+        
+        if (dir_i_j$coupled | dir_j_i$coupled){
+          coupled[i,j] <- TRUE
+          coupled[j,i] <- TRUE
+          active[j] <- FALSE
         }
       }
       
