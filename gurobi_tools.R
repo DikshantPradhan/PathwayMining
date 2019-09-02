@@ -489,7 +489,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         if (directional_coupling & dir_i_j$coupled){
           coupled[i,j] <- TRUE
           coupled[j,i] <- TRUE
-          active[j] <- FALSE
+          # active[j] <- FALSE
           next
         }
         
@@ -503,7 +503,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         if (directional_coupling & (dir_i_j$coupled | dir_j_i$coupled)){
           coupled[i,j] <- TRUE
           coupled[j,i] <- TRUE
-          active[j] <- FALSE
+          # active[j] <- FALSE
         }
         if (partial_coupling & (dir_i_j$coupled & dir_j_i$coupled)){
           coupled[i,j] <- TRUE
