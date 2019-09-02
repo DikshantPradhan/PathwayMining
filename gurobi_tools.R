@@ -151,7 +151,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
                                  bnd_tol = 0.1, stored_obs = 4000, cor_iter = 5, cor_check = TRUE,
                                  reaction_indexes = c(), compare_mtx = FALSE, 
                                  known_set_mtx = Matrix(data = FALSE, nrow = 1, ncol = 1, sparse = TRUE),
-                                 directional = FALSE) {
+                                 full_coupling = TRUE, partial_coupling = FALSE, directional_coupling = FALSE) {
   
   # min_fva_cor is minimum correlation between fluxes
   # bnd_tol is allowed error in comparing max & min flux
@@ -482,12 +482,14 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         }
       }
       
-      if (skip & directional){
+      if (skip & (partial_coupling | directional_coupling)){
         dir_i_j <- check_directional_coupling(i, j, fixed = TRUE)
         lp_calls <- lp_calls + dir_i_j$lp_calls
         
-        if (dir_i_j$coupled){
+        if (directional_coupling & dir_i_j$coupled){
           coupled[i,j] <- TRUE
+          coupled[j,i] <- TRUE
+          active[j] <- FALSE
           next
         }
         
@@ -498,7 +500,12 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
           coupled[j,i] <- TRUE
         }
         
-        if (dir_i_j$coupled | dir_j_i$coupled){
+        if (directional_coupling & (dir_i_j$coupled | dir_j_i$coupled)){
+          coupled[i,j] <- TRUE
+          coupled[j,i] <- TRUE
+          active[j] <- FALSE
+        }
+        if (partial_coupling & (dir_i_j$coupled & dir_j_i$coupled)){
           coupled[i,j] <- TRUE
           coupled[j,i] <- TRUE
           active[j] <- FALSE
