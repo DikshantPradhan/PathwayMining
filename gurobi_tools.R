@@ -473,7 +473,9 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       if (!skip) { # finally label as coupled
         coupled[i,j] <- TRUE
         coupled[j,j] <- TRUE # make sure the reaction doesn't look blocked
-        active[j] <- FALSE
+        if (full_coupling){
+          active[j] <- FALSE
+        }
         
         if (compare_mtx){
           output <- known_set_coupling(i, j, coupled, active)
