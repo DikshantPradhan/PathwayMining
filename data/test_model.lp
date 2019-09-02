@@ -5,7 +5,7 @@ Maximize
 
 Subject To
  S: + v1 - v2 - v3 = 0
- P: + v4 - v2 - 2*v3 = 0
+ P: + v4 - v2 - 2 v3 = 0
  S_P: + v2 - v5 = 0
  S_P_P: + v3 - v6 = 0
 
