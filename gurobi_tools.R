@@ -163,6 +163,9 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
   if (partial_coupling | directional_coupling){
     full_coupling <- FALSE
   }
+  if (!full_coupling){
+    cor_check <- FALSE
+  }
   
   if (!cor_check){
     stored_obs = 1
@@ -313,9 +316,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
           model$obj <- rep(0, n)
         }
         
-        model$ub[i] <- fixed_val
-        model$lb[i] <- fixed_val
+        
       }
+      model$ub[i] <- fixed_val
+      model$lb[i] <- fixed_val
+      # print(fixed_val)
     }
     
     prev_ub_j <- model$ub[j]
@@ -328,11 +333,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     # check feasibility
     sol <- gurobi(model, list(OutputFlag = 0))
     
-    print(sol)
-    
     info$lp_calls <- info$lp_calls + 1
     
-    infeasible <- !(length(sol$x) == 0)
+    infeasible <- (length(sol$x) == 0)
+    
+    print(paste(i, j, infeasible, model$ub[i], model$lb[i]))
     
     info$coupled <- infeasible
     
@@ -422,7 +427,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       j <-  reaction_indexes[idx2]
       # check for fixed or blocked
       if (!active[j] | blocked[j]){next}
-      if (not_fixed(sub_max[j], sub_min[j])){next}
+      if (full_coupling & not_fixed(sub_max[j], sub_min[j])){next}
       #print(paste(sub_max[j], sub_min[j]))
       
       # check for uncoupled via correlation
@@ -474,7 +479,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         
         skip <- not_fixed(sub_max[j], sub_min[j])
       }
-      
+      print(paste(i,j))
       if (full_coupling & near(max, 0) & near(min, 0)){skip = TRUE}
       
       if (!skip) { # finally label as coupled
@@ -495,27 +500,33 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         dir_i_j <- check_directional_coupling(i, j, fixed = TRUE)
         lp_calls <- lp_calls + dir_i_j$lp_calls
         
-        if (directional_coupling & dir_i_j$coupled){
-          coupled[i,j] <- TRUE
-          coupled[j,i] <- TRUE
-          # active[j] <- FALSE
-          next
-        }
+        # if (directional_coupling & dir_i_j$coupled){
+        # coupled[i,j] <- TRUE
+        # coupled[j,j] <- TRUE
+        # coupled[j,i] <- TRUE
+        # active[j] <- FALSE
+        # next
+        # }
         
         dir_j_i <- check_directional_coupling(j, i, fixed = FALSE)
         lp_calls <- lp_calls + dir_j_i$lp_calls
         
-        if (dir_j_i$coupled){
+        if (directional_coupling & dir_j_i$coupled){
           coupled[j,i] <- TRUE
+          coupled[j,j] <- TRUE
         }
         
-        if (directional_coupling & (dir_i_j$coupled | dir_j_i$coupled)){
+        if (directional_coupling & dir_i_j$coupled){
           coupled[i,j] <- TRUE
-          coupled[j,i] <- TRUE
+          # coupled[i,j] <- TRUE
+          coupled[j,j] <- TRUE
+          
+          # coupled[j,i] <- TRUE
           # active[j] <- FALSE
         }
         if (partial_coupling & (dir_i_j$coupled & dir_j_i$coupled)){
           coupled[i,j] <- TRUE
+          coupled[j,j] <- TRUE
           coupled[j,i] <- TRUE
           active[j] <- FALSE
         }
