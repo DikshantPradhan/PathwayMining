@@ -328,10 +328,13 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     # check feasibility
     sol <- gurobi(model, list(OutputFlag = 0))
     
+    print(sol)
+    
     info$lp_calls <- info$lp_calls + 1
     
-    feasible <- !(length(sol$x) == 0)
-    info$coupled <- feasible
+    infeasible <- !(length(sol$x) == 0)
+    
+    info$coupled <- infeasible
     
     model$ub[j] <- prev_ub_j
     model$lb[j] <- prev_lb_j
