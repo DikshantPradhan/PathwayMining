@@ -846,7 +846,9 @@ return_couples <- function(array){ # correlation array (output from flux_couplin
 }
 
 # generate set list from coupling mtx
-get_list_of_sets_from_mtx <- function(coupling_mtx, init_mtx = NULL){ #2d columns
+get_list_of_sets_from_mtx <- function(coupling_mtx, init_mtx = NULL, value = 1){ #2d columns
+  
+  coupling_mtx <- (coupling_mtx == value)
 
   if (!all.equal(rownames(coupling_mtx), colnames(coupling_mtx))){
     print("names mismatch in coupling matrix")
