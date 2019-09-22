@@ -148,7 +148,7 @@ solve_model <- function(model, obj_idx, sense = 'max'){
 }
 
 flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01,
-                                 bnd_tol = 0.1, stored_obs = 4000, cor_iter = 5, cor_check = TRUE,
+                                 bnd_tol = 0.1, stored_obs = 4000, cor_iter = 5, cor_check = TRUE, dir_check = TRUE,
                                  reaction_indexes = c(), compare_mtx = FALSE, 
                                  known_set_mtx = Matrix(data = FALSE, nrow = 1, ncol = 1, sparse = TRUE),
                                  full_coupling = TRUE, partial_coupling = FALSE, directional_coupling = FALSE) {
@@ -196,7 +196,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
   global_max <- rep(0, n)
   global_min <- rep(0, n)
   
-  coupled <- Matrix(FALSE, nrow=n, ncol=n, dimnames=list(vars, vars), sparse = TRUE)
+  coupled <- Matrix(0, nrow=n, ncol=n, dimnames=list(vars, vars), sparse = TRUE) # changed from FALSE to 0
   
   blocked <- rep(FALSE, n)
   active <- rep(TRUE, n)
@@ -227,6 +227,21 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       C <- cor(flux[,i], flux[,j])
       
       if ((is.na(C)) | (abs(C) < min_fva_cor)){
+        return(FALSE)
+      }
+    }
+    return(TRUE)
+  }
+  
+  directionality_check <- function(flux, i, j){ # return true if correlation is high, or no correlation --> continue comparing flux
+    # if false, skip in-depth comparison
+    
+    n_entries <- length(which(!near(flux[,i], 0, tol = bnd_tol) | !near(flux[,j], 0, tol = bnd_tol)))
+    if (n_entries > cor_iter){
+      # all.equal(sign(d), sign(c)) == TRUE
+      D <- (all.equal(sign(flux[,i]), sign(flux[,j])) == TRUE)
+      
+      if ((is.na(D)) | (!D)){
         return(FALSE)
       }
     }
@@ -430,6 +445,11 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       if (full_coupling & not_fixed(sub_max[j], sub_min[j])){next}
       #print(paste(sub_max[j], sub_min[j]))
       
+      # check for uncoupled via sign directionality
+      if (dir_check){
+        if (!directionality_check(flux, i, j)){next}
+      }
+      
       # check for uncoupled via correlation
       if (cor_check){
         if (!correlation_check(flux, i, j)){next}
@@ -483,8 +503,8 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
       if (full_coupling & near(max, 0) & near(min, 0)){skip = TRUE}
       
       if (!skip) { # finally label as coupled
-        coupled[i,j] <- TRUE
-        coupled[j,j] <- TRUE # make sure the reaction doesn't look blocked
+        coupled[i,j] <- 1 #TRUE
+        coupled[j,j] <- 1 #TRUE # make sure the reaction doesn't look blocked
         if (full_coupling){
           active[j] <- FALSE
         }
@@ -512,22 +532,22 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
         lp_calls <- lp_calls + dir_j_i$lp_calls
         
         if (directional_coupling & dir_j_i$coupled){
-          coupled[j,i] <- TRUE
-          coupled[j,j] <- TRUE
+          coupled[j,i] <- 3 #TRUE
+          coupled[j,j] <- 1 #TRUE
         }
         
         if (directional_coupling & dir_i_j$coupled){
-          coupled[i,j] <- TRUE
+          coupled[i,j] <- 3 #TRUE
           # coupled[i,j] <- TRUE
-          coupled[j,j] <- TRUE
+          coupled[j,j] <- 1 #TRUE
           
           # coupled[j,i] <- TRUE
           # active[j] <- FALSE
         }
         if (partial_coupling & (dir_i_j$coupled & dir_j_i$coupled)){
-          coupled[i,j] <- TRUE
-          coupled[j,j] <- TRUE
-          coupled[j,i] <- TRUE
+          coupled[i,j] <- 2 #TRUE
+          coupled[j,j] <- 1 #TRUE
+          coupled[j,i] <- 2 #TRUE
           active[j] <- FALSE
         }
       }
