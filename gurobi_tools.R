@@ -147,6 +147,27 @@ solve_model <- function(model, obj_idx, sense = 'max'){
   return(sol)
 }
 
+fill_coupling_matrix <- function(coupled, fill = 1, upper_triangular = FALSE){
+  rows <- nrow(coupled)
+  
+  for (i in 1:nrow(coupled)){
+    #identify set
+    # if (!coupled[i,i]){next}
+    set <- which(coupled[i,] == fill) # true values in row
+    if (length(set) < 1){next}
+    set <- unique(c(i, set))
+    coupled[set,set] <- j #TRUE
+    
+  }
+  
+  if (upper_triangular){
+    coupled[lower.tri(coupled)] <- 0
+  }
+  
+  return(coupled)
+}
+
+
 flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_frac=0.01,
                                  bnd_tol = 0.1, stored_obs = 4000, cor_iter = 5, cor_check = TRUE, dir_check = TRUE,
                                  reaction_indexes = c(), compare_mtx = FALSE, 
@@ -494,6 +515,7 @@ flux_coupling_raptor <- function(model, min_fva_cor=0.9, fix_frac=0.1, fix_tol_f
     return(info)
   }
   
+  coupled <- fill_coupling_matrix(coupled = coupled, fill = 1)
   
   if (partial_coupling | directional_coupling){
     active <- rep(TRUE, n)
@@ -1359,6 +1381,35 @@ fill_coupling_matrix <- function(coupled){
     coupled[set,set] <- TRUE
     
   }
+  
+  coupled[lower.tri(coupled)] <- FALSE
+  return(coupled)
+}
+
+fill_coupling_matrix <- function(coupled){
+  rows <- nrow(coupled)
+  
+  for (j in 1:3){
+    for (i in 1:nrow(coupled)){
+      #identify set
+      # if (!coupled[i,i]){next}
+      set <- which(coupled[i,] == j) # true values in row
+      if (length(set) < 1){next}
+      set <- unique(c(i, set))
+      coupled[set,set] <- j #TRUE
+      
+    }
+  }
+  
+  # for (i in 1:nrow(coupled)){
+  #   #identify set
+  #   # if (!coupled[i,i]){next}
+  #   set <- which(coupled[i,]) # true values in row
+  #   if (length(set) < 1){next}
+  #   set <- unique(c(i, set))
+  #   coupled[set,set] <- TRUE
+  #   
+  # }
   
   coupled[lower.tri(coupled)] <- FALSE
   return(coupled)
