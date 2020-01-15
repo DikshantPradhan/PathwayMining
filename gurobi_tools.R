@@ -156,7 +156,7 @@ fill_coupling_matrix <- function(coupled, fill = 1, upper_triangular = FALSE){
     set <- which(coupled[i,] == fill) # true values in row
     if (length(set) < 1){next}
     set <- unique(c(i, set))
-    coupled[set,set] <- j #TRUE
+    coupled[set,set] <- fill #TRUE
     
   }
   
