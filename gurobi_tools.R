@@ -1369,51 +1369,51 @@ GRB_maximize <- function(model_og, obj, suppress = c(), max = TRUE){ # suppress 
 
 ## extra functions
 
-fill_coupling_matrix <- function(coupled){
-  rows <- nrow(coupled)
-  
-  for (i in 1:nrow(coupled)){
-    #identify set
-    # if (!coupled[i,i]){next}
-    set <- which(coupled[i,]) # true values in row
-    if (length(set) < 1){next}
-    set <- unique(c(i, set))
-    coupled[set,set] <- TRUE
-    
-  }
-  
-  coupled[lower.tri(coupled)] <- FALSE
-  return(coupled)
-}
-
-fill_coupling_matrix <- function(coupled){
-  rows <- nrow(coupled)
-  
-  for (j in 1:3){
-    for (i in 1:nrow(coupled)){
-      #identify set
-      # if (!coupled[i,i]){next}
-      set <- which(coupled[i,] == j) # true values in row
-      if (length(set) < 1){next}
-      set <- unique(c(i, set))
-      coupled[set,set] <- j #TRUE
-      
-    }
-  }
-  
-  # for (i in 1:nrow(coupled)){
-  #   #identify set
-  #   # if (!coupled[i,i]){next}
-  #   set <- which(coupled[i,]) # true values in row
-  #   if (length(set) < 1){next}
-  #   set <- unique(c(i, set))
-  #   coupled[set,set] <- TRUE
-  #   
-  # }
-  
-  coupled[lower.tri(coupled)] <- FALSE
-  return(coupled)
-}
+# fill_coupling_matrix <- function(coupled){
+#   rows <- nrow(coupled)
+#   
+#   for (i in 1:nrow(coupled)){
+#     #identify set
+#     # if (!coupled[i,i]){next}
+#     set <- which(coupled[i,]) # true values in row
+#     if (length(set) < 1){next}
+#     set <- unique(c(i, set))
+#     coupled[set,set] <- TRUE
+#     
+#   }
+#   
+#   coupled[lower.tri(coupled)] <- FALSE
+#   return(coupled)
+# }
+# 
+# fill_coupling_matrix <- function(coupled){
+#   rows <- nrow(coupled)
+#   
+#   for (j in 1:3){
+#     for (i in 1:nrow(coupled)){
+#       #identify set
+#       # if (!coupled[i,i]){next}
+#       set <- which(coupled[i,] == j) # true values in row
+#       if (length(set) < 1){next}
+#       set <- unique(c(i, set))
+#       coupled[set,set] <- j #TRUE
+#       
+#     }
+#   }
+#   
+#   # for (i in 1:nrow(coupled)){
+#   #   #identify set
+#   #   # if (!coupled[i,i]){next}
+#   #   set <- which(coupled[i,]) # true values in row
+#   #   if (length(set) < 1){next}
+#   #   set <- unique(c(i, set))
+#   #   coupled[set,set] <- TRUE
+#   #   
+#   # }
+#   
+#   coupled[lower.tri(coupled)] <- FALSE
+#   return(coupled)
+# }
 
 fill_coupling_matrix_from_sets <- function(mtx, sets){
   for (set in sets){
